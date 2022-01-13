@@ -1,29 +1,488 @@
-<html lang="en-US"><link type="text/css" rel="stylesheet" id="dark-mode-custom-link"><link type="text/css" rel="stylesheet" id="dark-mode-general-link"><style lang="en" type="text/css" id="dark-mode-custom-style"></style><style lang="en" type="text/css" id="dark-mode-native-style"></style><head>
+<!doctype html>
+<html lang="en-US">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Begin Jekyll SEO tag v2.7.1 -->
     <title>ForzaOpenTunes</title>
-    <meta name="generator" content="Jekyll v3.9.0">
-    <meta property="og:title" content="ForzaOpenTunes">
-    <meta property="og:locale" content="en_US">
-    <meta name="description" content="Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)">
-    <meta property="og:description" content="Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)">
-    <link rel="canonical" href="https://ldalvik.github.io/ForzaOpenTuneFormatter/">
-    <meta property="og:url" content="https://ldalvik.github.io/ForzaOpenTuneFormatter/">
-    <meta property="og:site_name" content="ForzaOpenTunes">
-    <meta name="twitter:card" content="Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)">
-    <meta property="twitter:title" content="ForzaOpenTunes">
+    <meta name="generator" content="Jekyll v3.9.0"/>
+    <meta property="og:title" content="ForzaOpenTunes"/>
+    <meta property="og:locale" content="en_US"/>
+    <meta name="description"
+          content="Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)"/>
+    <meta property="og:description"
+          content="Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)"/>
+    <link rel="canonical" href="https://ldalvik.github.io/ForzaOpenTuneFormatter/"/>
+    <meta property="og:url" content="https://ldalvik.github.io/ForzaOpenTuneFormatter/"/>
+    <meta property="og:site_name" content="ForzaOpenTunes"/>
+    <meta name="twitter:card"
+          content="Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)"/>
+    <meta property="twitter:title" content="ForzaOpenTunes"/>
     <script type="application/ld+json">
-        {"description":"Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)","url":"https://pages-themes.github.io/modernist/","@type":"WebSite","headline":"Modernist theme","name":"Modernist theme","@context":"https://schema.org"}</script>
+        {
+            "description": "Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)",
+            "url": "https://pages-themes.github.io/modernist/",
+            "@type": "WebSite",
+            "headline": "Modernist theme",
+            "name": "Modernist theme",
+            "@context": "https://schema.org"
+        }</script>
     <!-- End Jekyll SEO tag -->
 
 
     <style>
-        @import url("https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700");.highlight table td{padding:5px}.highlight table pre{margin:0}.highlight,.highlight .w{color:#d0d0d0}.highlight .err{color:#151515;background-color:#ac4142}.highlight .c,.highlight .cd,.highlight .cm,.highlight .c1,.highlight .cs{color:#888}.highlight .cp{color:#f4bf75}.highlight .nt{color:#f4bf75}.highlight .o,.highlight .ow{color:#d0d0d0}.highlight .p,.highlight .pi{color:#d0d0d0}.highlight .gi{color:#90a959}.highlight .gd{color:#ac4142}.highlight .gh{color:#6a9fb5;font-weight:bold}.highlight .k,.highlight .kn,.highlight .kp,.highlight .kr,.highlight .kv{color:#aa759f}.highlight .kc{color:#d28445}.highlight .kt{color:#d28445}.highlight .kd{color:#d28445}.highlight .s,.highlight .sb,.highlight .sc,.highlight .sd,.highlight .s2,.highlight .sh,.highlight .sx,.highlight .s1{color:#90a959}.highlight .sr{color:#75b5aa}.highlight .si{color:#8f5536}.highlight .se{color:#8f5536}.highlight .nn{color:#f4bf75}.highlight .nc{color:#f4bf75}.highlight .no{color:#f4bf75}.highlight .na{color:#6a9fb5}.highlight .m,.highlight .mf,.highlight .mh,.highlight .mi,.highlight .il,.highlight .mo,.highlight .mb,.highlight .mx{color:#90a959}.highlight .ss{color:#90a959}html{background:#6C7989;background:#6C7989 linear-gradient(#6C7989, #434B55) fixed;height:100%}body{padding:50px 0;margin:0;font:14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;color:#555;font-weight:300;background:url("../images/checker.png") fixed;min-height:calc(100% - 100px)}.wrapper{width:740px;margin:0 auto;background:#DEDEDE;border-radius:8px;box-shadow:rgba(0,0,0,0.2) 0 0 0 1px,rgba(0,0,0,0.45) 0 3px 10px}header,section,footer{display:block}a{color:#069;text-decoration:none}p{margin:0 0 20px;padding:0}strong{color:#222;font-weight:700}header{border-radius:8px 8px 0 0;background:#C6EAFA;background:linear-gradient(#DDFBFC, #C6EAFA);position:relative;padding:15px 20px;border-bottom:1px solid #B2D2E1}header h1{margin:0;padding:0;font-size:24px;line-height:1.2;color:#069;text-shadow:rgba(255,255,255,0.9) 0 1px 0}header.without-description h1{margin:10px 0}header p{margin:0;color:#61778B;width:300px;font-size:13px}header p.view{display:none;font-weight:700;text-shadow:rgba(255,255,255,0.9) 0 1px 0;-webkit-font-smoothing:antialiased}header p.view a{color:#06c}header p.view small{font-weight:400}header ul{margin:0;padding:0;list-style:none;position:absolute;z-index:1;right:20px;top:20px;height:38px;padding:1px 0;background:#5198DF;background:linear-gradient(#77B9FB, #3782CD);border-radius:5px;box-shadow:inset rgba(255,255,255,0.45) 0 1px 0,inset rgba(0,0,0,0.2) 0 -1px 0;width:auto}header ul:before{content:'';position:absolute;z-index:-1;left:-5px;top:-4px;right:-5px;bottom:-6px;background:rgba(0,0,0,0.1);border-radius:8px;box-shadow:rgba(0,0,0,0.2) 0 -1px 0,inset rgba(255,255,255,0.7) 0 -1px 0}header ul li{width:79px;float:left;border-right:1px solid #3A7CBE;height:38px}header ul li.single{border:none}header ul li+li{width:78px;border-left:1px solid #8BBEF3}header ul li+li+li{border-right:none;width:79px}header ul a{line-height:1;font-size:11px;color:#fff;color:rgba(255,255,255,0.8);display:block;text-align:center;font-weight:400;padding-top:6px;height:40px;text-shadow:rgba(0,0,0,0.4) 0 -1px 0}header ul a strong{font-size:14px;display:block;color:#fff;-webkit-font-smoothing:antialiased}section{padding:15px 20px;font-size:15px;border-top:1px solid #fff;background:linear-gradient(#fafafa, #DEDEDE 700px);border-radius:0 0 8px 8px;position:relative}h1,h2,h3,h4,h5,h6{color:#222;padding:0;margin:0 0 20px;line-height:1.2}p,ul,ol,table,pre,dl{margin:0 0 20px}h1,h2,h3{line-height:1.1}h1{font-size:28px}h2{color:#393939}h3,h4,h5,h6{color:#494949}blockquote{margin:0 -20px 20px;padding:15px 20px 1px 40px;font-style:italic;background:#ccc;background:rgba(0,0,0,0.06);color:#222}img{max-width:100%}code,pre{font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;color:#333;font-size:12px;overflow-x:auto}pre{padding:20px;background:#3A3C42;color:#f8f8f2;margin:0 -20px 20px}pre code{color:#f8f8f2}li pre{margin-left:-60px;padding-left:60px}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:5px 10px;border-bottom:1px solid #aaa}dt{color:#222;font-weight:700}th{color:#222}small{font-size:11px}hr{border:0;background:#aaa;height:1px;margin:0 0 20px}kbd{background-color:#fafbfc;border:1px solid #c6cbd1;border-bottom-color:#959da5;border-radius:3px;box-shadow:inset 0 -1px 0 #959da5;color:#444d56;display:inline-block;font-size:11px;line-height:10px;padding:3px 5px;vertical-align:middle}footer{width:640px;margin:0 auto;padding:20px 0 0;color:#ccc;overflow:hidden}footer a{color:#fff;font-weight:bold}footer p{float:left}footer p+p{float:right}@media print, screen and (max-width: 740px){body{padding:0}.wrapper{border-radius:0;box-shadow:none;width:100%}footer{border-radius:0;padding:20px;width:auto}footer p{float:none;margin:0}footer p+p{float:none}}@media print, screen and (max-width: 580px){header ul{display:none}header p.view{display:block}header p{width:100%}}@media print{header p.view a small:before{content:'at https://github.com/'}}
+        @import url("https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700");
+
+        .highlight table td {
+            padding: 5px
+        }
+
+        .highlight table pre {
+            margin: 0
+        }
+
+        .highlight, .highlight .w {
+            color: #d0d0d0
+        }
+
+        .highlight .err {
+            color: #151515;
+            background-color: #ac4142
+        }
+
+        .highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+            color: #888
+        }
+
+        .highlight .cp {
+            color: #f4bf75
+        }
+
+        .highlight .nt {
+            color: #f4bf75
+        }
+
+        .highlight .o, .highlight .ow {
+            color: #d0d0d0
+        }
+
+        .highlight .p, .highlight .pi {
+            color: #d0d0d0
+        }
+
+        .highlight .gi {
+            color: #90a959
+        }
+
+        .highlight .gd {
+            color: #ac4142
+        }
+
+        .highlight .gh {
+            color: #6a9fb5;
+            font-weight: bold
+        }
+
+        .highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
+            color: #aa759f
+        }
+
+        .highlight .kc {
+            color: #d28445
+        }
+
+        .highlight .kt {
+            color: #d28445
+        }
+
+        .highlight .kd {
+            color: #d28445
+        }
+
+        .highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+            color: #90a959
+        }
+
+        .highlight .sr {
+            color: #75b5aa
+        }
+
+        .highlight .si {
+            color: #8f5536
+        }
+
+        .highlight .se {
+            color: #8f5536
+        }
+
+        .highlight .nn {
+            color: #f4bf75
+        }
+
+        .highlight .nc {
+            color: #f4bf75
+        }
+
+        .highlight .no {
+            color: #f4bf75
+        }
+
+        .highlight .na {
+            color: #6a9fb5
+        }
+
+        .highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+            color: #90a959
+        }
+
+        .highlight .ss {
+            color: #90a959
+        }
+
+        html {
+            background: #494949;
+            background: #383838 linear-gradient(#252525, #151515) fixed;
+            height: 100%
+        }
+
+        body {
+            padding: 50px 0;
+            margin: 0;
+            font: 14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            color: #cfcbcb;
+            font-weight: 300;
+            background: url("assets/images/checker.png") fixed;
+            min-height: calc(100% - 100px);
+        }
+
+        .wrapper {
+            width: 740px;
+            margin: 0 auto;
+            background: #DEDEDE;
+            border-radius: 8px;
+            box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0, 0.45) 0 3px 10px
+        }
+
+        header, section, footer {
+            display: block
+        }
+
+        a {
+            color: #069;
+            text-decoration: none
+        }
+
+        p {
+            margin: 0 0 20px;
+            padding: 0
+        }
+
+        strong {
+            color: #bde7f4;
+            font-weight: 700;
+        }
+
+        header {
+            border-radius: 5px 5px 0 0;
+            background: #000000;
+            background: linear-gradient(#191919, #191919);
+            position: relative;
+            padding: 15px 20px;
+            border-bottom: 1px solid #646464;
+        }
+
+        header h1 {
+            margin: 0;
+            padding: 0;
+            font-size: 24px;
+            line-height: 1.2;
+            color: #0aa9f9; /* text-shadow:rgba(255,255,255,0.9) 0 1px 0; */
+        }
+
+        header.without-description h1 {
+            margin: 10px 0
+        }
+
+        header p {
+            margin: 0;
+            color: #c1c1c1;
+            width: 300px;
+            font-size: 13px;
+        }
+
+        header p.view {
+            display: none;
+            font-weight: 700; /* text-shadow:rgba(255,255,255,0.9) 0 1px 0; */
+            -webkit-font-smoothing: antialiased;
+        }
+
+        header p.view a {
+            color: #3e6c9b;
+        }
+
+        header p.view small {
+            font-weight: 400
+        }
+
+        header ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            position: absolute;
+            z-index: 1;
+            right: 20px;
+            top: 20px;
+            height: 38px;
+            padding: 1px 0;
+            background: #5198DF;
+            background: linear-gradient(#77B9FB, #3782CD);
+            border-radius: 5px;
+            box-shadow: inset rgba(255, 255, 255, 0.45) 0 1px 0, inset rgba(0, 0, 0, 0.2) 0 -1px 0;
+            width: auto
+        }
+
+        header ul:before {
+            content: '';
+            position: absolute;
+            z-index: -1;
+            left: -5px;
+            top: -4px;
+            right: -5px;
+            bottom: -6px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0, inset rgba(255, 255, 255, 0.7) 0 -1px 0
+        }
+
+        header ul li {
+            width: 79px;
+            float: left;
+            border-right: 1px solid #3A7CBE;
+            height: 38px
+        }
+
+        header ul li.single {
+            border: none
+        }
+
+        header ul li + li {
+            width: 78px;
+            border-left: 1px solid #8BBEF3
+        }
+
+        header ul li + li + li {
+            border-right: none;
+            width: 79px
+        }
+
+        header ul a {
+            line-height: 1;
+            font-size: 11px;
+            color: #fff;
+            color: rgba(255, 255, 255, 0.8);
+            display: block;
+            text-align: center;
+            font-weight: 400;
+            padding-top: 6px;
+            height: 40px;
+            text-shadow: rgba(0, 0, 0, 0.4) 0 -1px 0
+        }
+
+        header ul a strong {
+            font-size: 14px;
+            display: block;
+            color: #fff;
+            -webkit-font-smoothing: antialiased
+        }
+
+        section {
+            padding: 15px 20px;
+            font-size: 15px;
+            border-top: 1px solid #181818;
+            background: linear-gradient(#181818, #181818 700px);
+            border-radius: 0 0 5px 5px;
+            position: relative;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #d1d1d1;
+            padding: 0;
+            margin: 0 0 20px;
+            line-height: 1.2;
+        }
+
+        p, ul, ol, table, pre, dl {
+            margin: 0 0 20px
+        }
+
+        h1, h2, h3 {
+            line-height: 1.1
+        }
+
+        h1 {
+            font-size: 28px
+        }
+
+        h2 {
+            color: #c6c6c6;
+        }
+
+        h3, h4, h5, h6 {
+            color: #c6c6c6;
+        }
+
+        blockquote {
+            margin: 0 -20px 20px;
+            padding: 15px 20px 1px 40px;
+            font-style: italic;
+            background: #ccc;
+            background: rgba(0, 0, 0, 0.06);
+            color: #222
+        }
+
+        img {
+            max-width: 100%
+        }
+
+        code, pre {
+            font-family: Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;
+            color: #333;
+            font-size: 12px;
+            overflow-x: auto
+        }
+
+        pre {
+            padding: 20px;
+            background: #3A3C42;
+            color: #f8f8f2;
+            margin: 0 -20px 20px
+        }
+
+        pre code {
+            color: #f8f8f2
+        }
+
+        li pre {
+            margin-left: -60px;
+            padding-left: 60px
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        th, td {
+            text-align: left;
+            padding: 5px 10px;
+            border-bottom: 1px solid #aaa
+        }
+
+        dt {
+            color: #222;
+            font-weight: 700
+        }
+
+        th {
+            color: #222
+        }
+
+        small {
+            font-size: 11px
+        }
+
+        hr {
+            border: 0;
+            background: #aaa;
+            height: 1px;
+            margin: 0 0 20px
+        }
+
+        kbd {
+            background-color: #fafbfc;
+            border: 1px solid #c6cbd1;
+            border-bottom-color: #959da5;
+            border-radius: 3px;
+            box-shadow: inset 0 -1px 0 #959da5;
+            color: #444d56;
+            display: inline-block;
+            font-size: 11px;
+            line-height: 10px;
+            padding: 3px 5px;
+            vertical-align: middle
+        }
+
+        footer {
+            width: 640px;
+            margin: 0 auto;
+            padding: 20px 0 0;
+            color: #ccc;
+            overflow: hidden
+        }
+
+        footer a {
+            color: #fff;
+            font-weight: bold
+        }
+
+        footer p {
+            float: left
+        }
+
+        footer p + p {
+            float: right
+        }
+
+        @media print, screen and (max-width: 740px) {
+            body {
+                padding: 0
+            }
+
+            .wrapper {
+                border-radius: 0;
+                box-shadow: none;
+                width: 100%
+            }
+
+            footer {
+                border-radius: 0;
+                padding: 20px;
+                width: auto
+            }
+
+            footer p {
+                float: none;
+                margin: 0
+            }
+
+            footer p + p {
+                float: none
+            }
+        }
+
+        @media print, screen and (max-width: 580px) {
+            header ul {
+                display: none
+            }
+
+            header p.view {
+                display: block
+            }
+
+            header p {
+                width: 100%
+            }
+        }
+
+        @media print {
+            header p.view a small:before {
+                content: 'at https://github.com/'
+            }
+        }
     </style>
     <script>
-        fixScale = function(doc) {
+        fixScale = function (doc) {
 
             var addEvent = 'addEventListener',
                 type = 'gesturestart',
@@ -51,7 +510,6 @@
     <![endif]-->
 
 
-
     <!-- link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico" -->
 
 
@@ -63,7 +521,8 @@
 
         <p>Format your tunes into compact and readable text for reddit (r/ForzaOpenTunes)</p>
 
-        <p class="view"><a href="https://github.com/Ldalvik/ForzaOpenTuneFormatter">View the Project on GitHub <small></small></a></p>
+        <p class="view"><a href="https://github.com/Ldalvik/ForzaOpenTuneFormatter">View the Project on GitHub
+            <small></small></a></p>
         <ul>
 
             <li><a href="https://discord.com">Join the <strong>Discord</strong></a></li>
@@ -73,41 +532,58 @@
         </ul>
     </header>
     <section>
-
+<div style="border-bottom: 1px solid #646464;">
         <h1 id="header-1">Tuning</h1>
 
-        <p>This section is for tuning. <strong>If you do not use a certain category (Ex. No front diff on RWD cars) please put <em>N/A</em> in the input field</strong>
-            If you leave something stock (Ex. brakes), or leave the default settings for a category, you should still put in the stock value.</p>
+        <p>This section is for tuning. <strong>If you do not use a certain category (Ex. No front diff on RWD cars)
+            please put <em>N/A</em> in the input field</strong>
+            If you leave something stock (Ex. brakes), or leave the default settings for a category, you should still
+            put in the stock value.</p>
         <br>
-        <h2 id="header-2">Tires</h2>
-
-        <h3 id="header-3">Tire Pressure</h3>
+</div>
         <div class="container">
-
-            <div class="row">
-                <div class="col-25">
-                    <label for="frontTirePressure">Front</label>
+            <h2 style="padding-top: 15px;">Tires</h2>
+            <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
+                <h3>Tire Pressure</h3>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="frontTirePressure">Front</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="frontTirePressure" type="text" maxlength="5" id="frontTirePressure" class="text"/>
+                    </div>
                 </div>
-                <div class="col-75">
-                    <input name="frontTirePressure" type="text" maxlength="5" id="frontTirePressure" class="text">
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="backTirePressure">Back</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="backTirePressure" type="text" maxlength="5" id="backTirePressure" class="text"/>
+                    </div>
                 </div>
             </div>
 
-            <div class="row">
+            <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
+                <div class="row">
+                    <div class="col-25">
+                        <label for="airFilter">Air Filter</label>
+                    </div>
+                    <div class="col-75">
+                        <select id="airFilter" name="airFilter">
+                            <option value="stock">Stock</option>
+                            <option value="street">Street</option>
+                            <option value="sport">Sport</option>
+                            <option value="race">Race</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
                 <div class="col-25">
-                    <label for="backTirePressure">Back</label>
+                    <label for="airFilter1">Air Filter</label>
                 </div>
                 <div class="col-75">
-                    <input name="backTirePressure" type="text" maxlength="5" id="backTirePressure" class="text">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-25">
-                    <label for="airFilter">Air Filter</label>
-                </div>
-                <div class="col-75">
-                    <select id="airFilter" name="airFilter">
+                    <select id="airFilter1" name="airFilter1">
                         <option value="stock">Stock</option>
                         <option value="street">Street</option>
                         <option value="sport">Sport</option>
@@ -123,60 +599,23 @@
         </div>
 
 
-
-
-
     </section>
 </div>
 <footer>
 
     <p>Project maintained by Root</p>
 
-    <p>Hosted on GitHub Pages — Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
 </footer>
-<!--[if !IE]><script>fixScale(document);</script><![endif]-->
-
+<!--[if !IE]>
+<script>fixScale(document);</script><![endif]-->
+</body>
 <script>
-    function generateText(){
+    function generateText() {
         var frontTirePressure = document.getElementById("frontTirePressure").value;
         var backTirePressure = document.getElementById("backTirePressure").value;
-        alert (`Front: ${frontTirePressure}\nBack: ${backTirePressure}`);
+        alert(`Front: ${frontTirePressure}\nBack: ${backTirePressure}`);
 
     }
 </script>
-
-<script>
-(function() {
-  var ws = new WebSocket('ws://' + window.location.host + '/jb-server-page?reloadServiceClientId=56');
-  ws.onmessage = function (msg) {
-      if (msg.data === 'reload') {
-          window.location.reload();
-      }
-      if (msg.data.startsWith('update-css ')) {
-          var messageId = msg.data.substring(11);
-          var links = document.getElementsByTagName('link');
-          for (var i = 0; i < links.length; i++) {
-              var link = links[i];
-              if (link.rel !== 'stylesheet') continue;
-              var clonedLink = link.cloneNode(true);
-              var newHref = link.href.replace(/(&|\?)jbUpdateLinksId=\d+/, "$1jbUpdateLinksId=" + messageId);
-              if (newHref !== link.href) {
-                clonedLink.href = newHref;
-              }
-              else {
-                var indexOfQuest = newHref.indexOf('?');
-                if (indexOfQuest >= 0) {
-                  // to support ?foo#hash 
-                  clonedLink.href = newHref.substring(0, indexOfQuest + 1) + 'jbUpdateLinksId=' + messageId + '&' + 
-                                    newHref.substring(indexOfQuest + 1);
-                }
-                else {
-                  clonedLink.href += '?' + 'jbUpdateLinksId=' + messageId;
-                }
-              }
-              link.replaceWith(clonedLink);
-          }
-      }
-  };
-})();
-</script></body></html>
+</html>
