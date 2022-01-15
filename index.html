@@ -160,8 +160,7 @@
             width: 740px;
             margin: 0 auto;
             background: #DEDEDE;
-            border-radius: 8px;
-            box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0, 0.45) 0 3px 10px
+            box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0, 0.45) 0 0 0
         }
 
         header, section, footer {
@@ -184,7 +183,6 @@
         }
 
         header {
-            border-radius: 5px 5px 0 0;
             background: #000000;
             background: linear-gradient(#191919, #191919);
             position: relative;
@@ -301,7 +299,6 @@
             font-size: 15px;
             border-top: 1px solid #181818;
             background: linear-gradient(#181818, #181818 700px);
-            border-radius: 0 0 5px 5px;
             position: relative;
         }
 
@@ -532,15 +529,16 @@
         </ul>
     </header>
     <section>
-<div style="border-bottom: 1px solid #646464;">
-        <h1 id="header-1">Tuning</h1>
+        <div style="border-bottom: 1px solid #646464;">
+            <h1 id="header-1">Tuning</h1>
 
-        <p>This section is for tuning. <strong>If you do not use a certain category (Ex. No front diff on RWD cars)
-            please put <em>N/A</em> in the input field</strong>
-            If you leave something stock (Ex. brakes), or leave the default settings for a category, you should still
-            put in the stock value.</p>
-        <br>
-</div>
+            <p>This section is for tuning. <strong>If you do not use a certain category (Ex. No front diff on RWD cars)
+                please put <em>N/A</em> in the input field</strong>
+                If you leave something stock (Ex. brakes), or leave the default settings for a category, you should
+                still
+                put in the stock value.</p>
+            <br>
+        </div>
         <div class="container">
             <h2 style="padding-top: 15px;">Tires</h2>
             <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
@@ -550,27 +548,415 @@
                         <label for="frontTirePressure">Front</label>
                     </div>
                     <div class="col-75">
-                        <input name="frontTirePressure" type="text" maxlength="5" id="frontTirePressure" class="text"/>
+                        <input name="frontTirePressure" type="text" id="frontTirePressure" class="tirePressure"/>
                     </div>
                 </div>
                 <br>
                 <div class="row">
                     <div class="col-25">
-                        <label for="backTirePressure">Back</label>
+                        <label for="rearTirePressure">Rear</label>
                     </div>
                     <div class="col-75">
-                        <input name="backTirePressure" type="text" maxlength="5" id="backTirePressure" class="text"/>
+                        <input name="rearTirePressure" type="text" id="rearTirePressure" class="tirePressure"/>
                     </div>
                 </div>
             </div>
 
+            <h2 style="padding-top: 15px;">Gearing</h2>
             <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
+                <h3>Forward Gears</h3>
                 <div class="row">
                     <div class="col-25">
-                        <label for="airFilter">Air Filter</label>
+                        <label for="finalDrive">Final Drive</label>
                     </div>
                     <div class="col-75">
-                        <select id="airFilter" name="airFilter">
+                        <input name="finalDrive" type="text" id="finalDrive" class="gearing"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="firstGear">1st</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="firstGear" type="text" id="firstGear" class="gearing"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="secondGear">2nd</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="secondGear" type="text" id="secondGear" class="gearing"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="thirdGear">3rd</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="thirdGear" type="text" id="thirdGear" class="gearing"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="fourthGear">4th</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="fourthGear" type="text" id="fourthGear" class="gearing"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="fifthGear">5th</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="fifthGear" type="text" id="fifthGear" class="gearing"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="sixthGear">6th</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="sixthGear" value="N/A" type="text" id="sixthGear" class="gearing"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="seventhGear">7th</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="seventhGear" value="N/A" type="text" id="seventhGear" class="gearing"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="eighthGear">8th</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="eighthGear" value="N/A" type="text" id="eighthGear" class="gearing"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="ninthGear">9th</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="ninthGear" value="N/A" type="text" id="ninthGear" class="gearing"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="tenthGear">10th</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="tenthGear" value="N/A" type="text" id="tenthGear" class="gearing"/>
+                    </div>
+                </div>
+            </div>
+
+            <h2 style="padding-top: 15px;">Alignment</h2>
+            <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
+                <h3>Camber</h3>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="frontCamber">Front</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="frontCamber" type="text" id="frontCamber" class="alignment"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="rearCamber">Rear</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="rearCamber" type="text" id="rearCamber" class="alignment"/>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <h3>Toe</h3>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="frontToe">Front</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="frontToe" type="text" id="frontToe" class="alignment"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="rearToe">Rear</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="rearToe" type="text" id="rearToe" class="alignment"/>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <h3>Front Caster</h3>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="frontCaster">Angle</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="frontCaster" type="text" id="frontCaster" class="alignment"/>
+                    </div>
+                </div>
+            </div>
+
+            <h2 style="padding-top: 15px;">Antiroll Bars</h2>
+            <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
+                <h3>Antiroll Bars</h3>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="frontARB">Front</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="frontARB" type="text" id="frontARB" class="antirollbars"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="rearARB">Rear</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="rearARB" type="text" id="rearARB" class="antirollbars"/>
+                    </div>
+                </div>
+            </div>
+
+            <h2 style="padding-top: 15px;">Springs</h2>
+            <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
+                <h3>Springs</h3>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="frontSprings">Front</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="frontSprings" type="text" id="frontSprings" class="springs"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="rearSprings">Rear</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="rearSprings" type="text" id="rearSprings" class="springs"/>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <h3>Ride Height</h3>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="frontHeight">Front</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="frontHeight" type="text" id="frontHeight" class="springs"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="rearHeight">Rear</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="rearHeight" type="text" id="rearHeight" class="springs"/>
+                    </div>
+                </div>
+            </div>
+
+            <h2 style="padding-top: 15px;">Damping</h2>
+            <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
+                <h3>Rebound Stiffness</h3>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="frontRebound">Front</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="frontRebound" type="text" id="frontRebound" class="damping"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="rearRebound">Rear</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="rearRebound" type="text" id="rearRebound" class="damping"/>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <h3>Bump Stiffness</h3>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="frontBump">Front</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="frontBump" type="text" id="frontBump" class="damping"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="rearBump">Rear</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="rearBump" type="text" id="rearBump" class="damping"/>
+                    </div>
+                </div>
+            </div>
+            <h2 style="padding-top: 15px;">Aero</h2>
+            <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
+                <h3>Downforce</h3>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="frontDownforce">Front</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="frontDownforce" type="text" id="frontDownforce" class="aero"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="rearDownforce">Rear</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="rearDownforce" type="text" id="rearDownforce" class="aero"/>
+                    </div>
+                </div>
+            </div>
+            <h2 style="padding-top: 15px;">Brake</h2>
+            <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
+                <h3>Braking Bias</h3>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="brakingBias">Balance</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="brakingBias" type="text" id="brakingBias" class="brake"/>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <h3>Braking Force</h3>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="brakingForce">Pressure</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="brakingForce" type="text" id="brakingForce" class="brake"/>
+                    </div>
+                </div>
+            </div>
+
+            <h2 style="padding-top: 15px;">Differential</h2>
+            <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
+                <h3>Front</h3>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="frontDiffAccel">Acceleration</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="frontDiffAccel" type="text" id="frontDiffAccel" class="differential"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="frontDiffDecel">Deceleration</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="frontDiffDecel" type="text" id="frontDiffDecel" class="differential"/>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <h3>Rear</h3>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="rearDiffAccel">Acceleration</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="rearDiffAccel" type="text" id="rearDiffAccel" class="differential"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="rearDiffDecel">Deceleration</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="rearDiffDecel" type="text" id="rearDiffDecel" class="differential"/>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <h3>Center (FWD/RWD Bias)</h3>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="centerBalance">Balance</label>
+                    </div>
+                    <div class="col-75">
+                        <input name="centerBalance" type="text" id="centerBalance" class="differential"/>
+                    </div>
+                </div>
+            </div>
+
+
+            <br>
+            <div style="border-bottom: 1px solid #646464;">
+                <h1>Upgrades</h1>
+
+                <p>This section is for upgrades. <strong>If you do not use a certain category (Ex. No natural aspiration)
+                    please put <em>N/A</em> in the input field</strong>
+                    If you leave something stock (Ex. tire width), or leave the default settings for a category, you should
+                    still put in the stock value.</p>
+                <br>
+            </div>
+
+            <div class="container">
+                <h2 style="padding-top: 15px;">Engine (WORK IN PROGRESS)</h2>
+                <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="intake">Intake</label>
+                        </div>
+                        <div class="col-75">
+                            <select id="intake" name="intake">
+                                <option value="na">N/A</option>
+                                <option value="stock">Stock</option>
+                                <option value="street">Street</option>
+                                <option value="sport">Sport</option>
+                                <option value="race">Race</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-25">
+                        <label for="fuelSystem">Fuel System</label>
+                    </div>
+                    <div class="col-75">
+                        <select id="fuelSystem" name="fuelSystem">
+                            <option value="na">N/A</option>
                             <option value="stock">Stock</option>
                             <option value="street">Street</option>
                             <option value="sport">Sport</option>
@@ -578,23 +964,16 @@
                         </select>
                     </div>
                 </div>
-                <br>
-                <div class="col-25">
-                    <label for="airFilter1">Air Filter</label>
-                </div>
-                <div class="col-75">
-                    <select id="airFilter1" name="airFilter1">
-                        <option value="stock">Stock</option>
-                        <option value="street">Street</option>
-                        <option value="sport">Sport</option>
-                        <option value="race">Race</option>
-                    </select>
-                </div>
             </div>
+
+
 
             <br>
             <div class="row">
                 <button onclick="generateText();" type="button">Generate</button>
+                <br>
+                <br>
+                <textarea id="result" name="result" rows="10" cols="93"></textarea>
             </div>
         </div>
 
@@ -612,9 +991,25 @@
 </body>
 <script>
     function generateText() {
-        var frontTirePressure = document.getElementById("frontTirePressure").value;
-        var backTirePressure = document.getElementById("backTirePressure").value;
-        alert(`Front: ${frontTirePressure}\nBack: ${backTirePressure}`);
+        var frontTirePressure =  document.getElementsByClassName("tirePressure")[0].value;
+        var rearTirePressure = document.getElementsByClassName("tirePressure")[1].value;
+
+        var finalDrive = document.getElementsByClassName("gearing")[0].value;
+        var firstGear = document.getElementsByClassName("gearing")[1].value;
+        var secondGear = document.getElementsByClassName("gearing")[2].value;
+        var thirdGear = document.getElementsByClassName("gearing")[3].value;
+        var fourthGear = document.getElementsByClassName("gearing")[4].value;
+        var fifthGear = document.getElementsByClassName("gearing")[5].value;
+        var sixthGear = document.getElementsByClassName("gearing")[6].value;
+        var seventhGear = document.getElementsByClassName("gearing")[7].value;
+        var eighthGear = document.getElementsByClassName("gearing")[8].value;
+        var ninthGear = document.getElementsByClassName("gearing")[9].value;
+        var tenthGear = document.getElementsByClassName("gearing")[10].value;
+
+
+        document.getElementById("result").innerHTML = (
+            `TIRES | PRESSURE\n:--|--:\nFRONT | ${frontTirePressure}\nREAR | ${rearTirePressure}\n\n` +
+            `GEARS | RATIO\n:--|--:\n FINAL DRIVE | ${finalDrive}\n1st | ${firstGear}`)
 
     }
 </script>
