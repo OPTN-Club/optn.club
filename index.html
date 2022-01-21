@@ -2,380 +2,569 @@
 <html lang="en-US">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title>Forza Open Tunes Formatter</title>
+    <title>Forza Open Tunes Formatter</title>
 
-  <meta property="og:title" content="ForzaOpenTunes" />
-  <meta property="og:locale" content="en_US" />
-  <meta name="description"
-    content="Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)" />
-  <meta property="og:description"
-    content="Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)" />
-  <link rel="canonical" href="https://ldalvik.github.io/ForzaOpenTuneFormatter/" />
-  <meta property="og:url" content="https://ldalvik.github.io/ForzaOpenTuneFormatter/" />
-  <meta property="og:site_name" content="ForzaOpenTunes" />
-  <meta name="twitter:card"
-    content="Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)" />
-  <meta property="twitter:title" content="ForzaOpenTunes" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta property="og:title" content="ForzaOpenTunes"/>
+    <meta property="og:locale" content="en_US"/>
+    <meta name="description"
+          content="Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)"/>
+    <meta property="og:description"
+          content="Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)"/>
+    <link rel="canonical" href="https://ldalvik.github.io/ForzaOpenTuneFormatter/"/>
+    <meta property="og:url" content="https://ldalvik.github.io/ForzaOpenTuneFormatter/"/>
+    <meta property="og:site_name" content="ForzaOpenTunes"/>
+    <meta name="twitter:card"
+          content="Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)"/>
+    <meta property="twitter:title" content="ForzaOpenTunes"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-  <link rel="stylesheet" type="text/css" href="assets/css/style.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css" media="screen"/>
 </head>
 
 <body>
-  <div class="wrapper">
+<div class="wrapper">
     <header>
-      <h1>Forza Open Tunes</h1>
+        <h1>Forza Open Tunes</h1>
 
-      <p>Format your tunes into compact and readable text for reddit (r/ForzaOpenTunes)</p>
+        <p>Format your tunes into compact and readable text for reddit (r/ForzaOpenTunes)</p>
 
-      <p class="view">
-        <a href="https://github.com/Ldalvik/ForzaOpenTuneFormatter">
-          View the Project on GitHub
-        </a>
-        <br>
-        <a href="https://discord.com/">
-          Join the discord
-        </a>
-      </p>
-  
+        <p class="view">
+            <a href="https://github.com/Ldalvik/ForzaOpenTuneFormatter">
+                View the Project on GitHub
+            </a>
+        </p>
 
-      <ul>
-        <li><a href="https://discord.com">Join the <strong>Discord</strong></a></li>
-        <li><a href="https://reddit.com">Join the <strong>Subreddit</strong></a></li>
-        <li><a href="https://github.com/Ldalvik/ForzaOpenTuneFormatter">View On <strong>GitHub</strong></a></li>
-      </ul>
+        <ul>
+            <li><a href="https://discord.com">Join the <strong>Discord</strong></a></li>
+            <li><a href="https://reddit.com">Join the <strong>Subreddit</strong></a></li>
+            <li><a href="https://github.com/Ldalvik/ForzaOpenTuneFormatter">View On <strong>GitHub</strong></a></li>
+        </ul>
     </header>
     <section>
-      <h1>Tuning</h1>
-      <p>
-        This section is for tuning.<br>
-        <strong>
-          If you do not use a certain category (Ex. No front diff on RWD cars)
-          please put <em>N/A</em> in the input field
-        </strong><br>
-        If you leave something stock (Ex. brakes), or leave the default settings for a category, you should
-        still put in the stock value.
-      </p>
+        <h1>Tuning</h1>
+        <p>
+            This section is for tuning.<br>
+            <strong>
+                If you do not use a certain category (Ex. No front diff on RWD cars)
+                please put <em>N/A</em> in the input field
+            </strong><br>
+            If you leave something stock (Ex. brakes), or leave the default settings for a category, you should
+            still put in the stock value.
+        </p>
     </section>
     <section>
-      <h2>Tires</h2>
-      <select id="unitsPressure" name="unitsPressure">
+        <h2>Tires</h2>
+        <select id="units-pressure" name="unitsPressure">
             <option value="psi">Psi</option>
             <option value="bar">Bar</option>
-          </select>
-      <div class="row">
-        <div class="control">
-          <label for="frontTirePressure">Front</label>
-          <input name="frontTirePressure" type="text" id="frontTirePressure" class="tirePressure" />
+        </select>
+        <div class="row">
+            <div class="control">
+                <label for="frontTirePressure">Front</label>
+                <input name="frontTirePressure" type="text" id="frontTirePressure" class="tirePressure"/>
+            </div>
+            <div class="control">
+                <label for="rearTirePressure">Rear</label>
+                <input name="rearTirePressure" type="text" id="rearTirePressure" class="tirePressure"/>
+            </div>
         </div>
-        <div class="control">
-          <label for="rearTirePressure">Rear</label>
-          <input name="rearTirePressure" type="text" id="rearTirePressure" class="tirePressure" />
-        </div>
-      </div>
     </section>
 
     <section>
-      <h2>Gearing</h2>
-      <div class="row">
-        <div class="control">
-          <label for="finalDrive">Final Drive</label>
-          <input name="finalDrive" type="text" id="finalDrive" class="gearing" />
+        <h2>Gearing</h2>
+        <div class="row">
+            <div class="control">
+                <label for="finalDrive">Final Drive</label>
+                <input name="finalDrive" type="text" id="finalDrive" class="gearing"/>
+            </div>
         </div>
-      </div>
-      <div class="row">
-        <div>
-          <div class="row">
-            <div class="control">
-              <label for="firstGear">1st</label>
-              <input name="firstGear" type="text" id="firstGear" class="gearing" />
+        <div class="row">
+            <div>
+                <div class="row">
+                    <div class="control">
+                        <label for="firstGear">1st</label>
+                        <input name="firstGear" type="text" id="firstGear" class="gearing"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="control">
+                        <label for="secondGear">2nd</label>
+                        <input name="secondGear" type="text" id="secondGear" class="gearing"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="control">
+                        <label for="thirdGear">3rd</label>
+                        <input name="thirdGear" type="text" id="thirdGear" class="gearing"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="control">
+                        <label for="fourthGear">4th</label>
+                        <input name="fourthGear" type="text" id="fourthGear" class="gearing"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="control">
+                        <label for="fifthGear">5th</label>
+                        <input name="fifthGear" type="text" id="fifthGear" class="gearing"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="control">
+                        <label for="sixthGear">6th</label>
+                        <input name="sixthGear" type="text" id="sixthGear" class="gearing"/>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="control">
-              <label for="secondGear">2nd</label>
-              <input name="secondGear" type="text" id="secondGear" class="gearing" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="control">
-              <label for="thirdGear">3rd</label>
-              <input name="thirdGear" type="text" id="thirdGear" class="gearing" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="control">
-              <label for="fourthGear">4th</label>
-              <input name="fourthGear" type="text" id="fourthGear" class="gearing" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="control">
-              <label for="fifthGear">5th</label>
-              <input name="fifthGear" type="text" id="fifthGear" class="gearing" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="control">
-              <label for="sixthGear">6th</label>
-              <input name="sixthGear" type="text" id="sixthGear" class="gearing" />
-            </div>
-          </div>
-        </div>
 
-        <div style="margin-left: 40px;">
-          <div class="row">
-            <div class="control">
-              <label for="seventhGear">7th</label>
-              <input name="seventhGear" value="N/A" type="text" id="seventhGear" class="gearing" />
+            <div style="margin-left: 40px;">
+                <div class="row">
+                    <div class="control">
+                        <label for="seventhGear">7th</label>
+                        <input name="seventhGear" type="text" id="seventhGear" class="gearing"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="control">
+                        <label for="eighthGear">8th</label>
+                        <input name="eighthGear" type="text" id="eighthGear" class="gearing"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="control">
+                        <label for="ninthGear">9th</label>
+                        <input name="ninthGear" type="text" id="ninthGear" class="gearing"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="control">
+                        <label for="tenthGear">10th</label>
+                        <input name="tenthGear" type="text" id="tenthGear" class="gearing"/>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="control">
-              <label for="eighthGear">8th</label>
-              <input name="eighthGear" value="N/A" type="text" id="eighthGear" class="gearing" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="control">
-              <label for="ninthGear">9th</label>
-              <input name="ninthGear" value="N/A" type="text" id="ninthGear" class="gearing" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="control">
-              <label for="tenthGear">10th</label>
-              <input name="tenthGear" value="N/A" type="text" id="tenthGear" class="gearing" />
-            </div>
-          </div>
         </div>
-      </div>
     </section>
 
     <section>
-      <h2>Alignment</h2>
-      <h3>Camber</h3>
-      <div class="row">
-        <div class="control">
-          <label for="frontCamber">Front</label>
-          <input name="frontCamber" type="text" id="frontCamber" class="camber" />
+        <h2>Alignment</h2>
+        <h3>Camber</h3>
+        <div class="row">
+            <div class="control">
+                <label for="frontCamber">Front</label>
+                <input name="frontCamber" type="text" id="frontCamber" class="camber"/>
+            </div>
+            <div class="control">
+                <label for="rearCamber">Rear</label>
+                <input name="rearCamber" type="text" id="rearCamber" class="camber"/>
+            </div>
         </div>
-        <div class="control">
-          <label for="rearCamber">Rear</label>
-          <input name="rearCamber" type="text" id="rearCamber" class="camber" />
+        <h3>Toe</h3>
+        <div class="row">
+            <div class="control">
+                <label for="frontToe">Front</label>
+                <input name="frontToe" type="text" id="frontToe" class="toe"/>
+            </div>
+            <div class="control">
+                <label for="rearToe">Rear</label>
+                <input name="rearToe" type="text" id="rearToe" class="toe"/>
+            </div>
         </div>
-      </div>
-      <h3>Toe</h3>
-      <div class="row">
+        <h3>Front Caster</h3>
         <div class="control">
-          <label for="frontToe">Front</label>
-          <input name="frontToe" type="text" id="frontToe" class="toe" />
+            <label for="frontCaster">Angle</label>
+            <input name="frontCaster" type="text" id="frontCaster" class="caster"/>
         </div>
-        <div class="control">
-          <label for="rearToe">Rear</label>
-          <input name="rearToe" type="text" id="rearToe" class="toe" />
-        </div>
-      </div>
-      <h3>Front Caster</h3>
-      <div class="control">
-        <label for="frontCaster">Angle</label>
-        <input name="frontCaster" type="text" id="frontCaster" class="caster" />
-      </div>
     </section>
 
     <section>
-      <h2>Antiroll Bars</h2>
-      <div class="row">
-        <div class="control">
-          <label for="frontARB">Front</label>
-          <input name="frontARB" type="text" id="frontARB" class="antiroll-bars" />
+        <h2>Antiroll Bars</h2>
+        <div class="row">
+            <div class="control">
+                <label for="frontARB">Front</label>
+                <input name="frontARB" type="text" id="frontARB" class="antiroll-bars"/>
+            </div>
+            <div class="control">
+                <label for="rearARB">Rear</label>
+                <input name="rearARB" type="text" id="rearARB" class="antiroll-bars"/>
+            </div>
         </div>
-        <div class="control">
-          <label for="rearARB">Rear</label>
-          <input name="rearARB" type="text" id="rearARB" class="antiroll-bars" />
-        </div>
-      </div>
     </section>
 
     <section>
-      <h2>Springs</h2>
-      <h3>Tension</h3>       
-       <select id="unitsSprings" name="unitsSprings">
+        <h2>Springs</h2>
+        <h3>Tension</h3>
+        <select id="units-springs" name="unitsSprings">
             <option value="lb">lb/in</option>
             <option value="kgf">kgf</option>
             <option value="nmm">n/mm</option>
-      </select>
-      <div class="row">
-        <div class="control">
-          <label for="frontSprings">Front</label>
-          <input name="frontSprings" type="text" id="frontSprings" class="spring-tension" />
+        </select>
+        <div class="row">
+            <div class="control">
+                <label for="frontSprings">Front</label>
+                <input name="frontSprings" type="text" id="frontSprings" class="spring-tension"/>
+            </div>
+            <div class="control">
+                <label for="rearSprings">Rear</label>
+                <input name="rearSprings" type="text" id="rearSprings" class="spring-tension"/>
+            </div>
         </div>
-        <div class="control">
-          <label for="rearSprings">Rear</label>
-          <input name="rearSprings" type="text" id="rearSprings" class="spring-tension" />
-        </div>
-      </div>
-      <h3>Ride Height</h3>
-      <select id="unitsRideHeight" name="unitsRideHeight">
+        <h3>Ride Height</h3>
+        <select id="units-rideheight" name="unitsRideHeight">
             <option value="in">in</option>
             <option value="cm">cm</option>
-      </select>
-      <div class="row">
-        <div class="control">
-          <label for="frontHeight">Front</label>
-          <input name="frontHeight" type="text" id="frontHeight" class="ride-height" />
+        </select>
+        <div class="row">
+            <div class="control">
+                <label for="frontHeight">Front</label>
+                <input name="frontHeight" type="text" id="frontHeight" class="ride-height"/>
+            </div>
+            <div class="control">
+                <label for="rearHeight">Rear</label>
+                <input name="rearHeight" type="text" id="rearHeight" class="ride-height"/>
+            </div>
         </div>
-        <div class="control">
-          <label for="rearHeight">Rear</label>
-          <input name="rearHeight" type="text" id="rearHeight" class="ride-height" />
-        </div>
-      </div>
     </section>
 
     <section>
-      <h2>Damping</h2>
-      <h3>Rebound Stiffness</h3>
-      <div class="row">
-        <div class="control">
-          <label for="frontRebound">Front</label>
-          <input name="frontRebound" type="text" id="frontRebound" class="rebound-stiffness" />
+        <h2>Damping</h2>
+        <h3>Rebound Stiffness</h3>
+        <div class="row">
+            <div class="control">
+                <label for="frontRebound">Front</label>
+                <input name="frontRebound" type="text" id="frontRebound" class="rebound-stiffness"/>
+            </div>
+            <div class="control">
+                <label for="rearRebound">Rear</label>
+                <input name="rearRebound" type="text" id="rearRebound" class="rebound-stiffness"/>
+            </div>
         </div>
-        <div class="control">
-          <label for="rearRebound">Rear</label>
-          <input name="rearRebound" type="text" id="rearRebound" class="rebound-stiffness" />
+        <h3>Bump Stiffness</h3>
+        <div class="row">
+            <div class="control">
+                <label for="frontBump">Front</label>
+                <input name="frontBump" type="text" id="frontBump" class="bump-stiffness"/>
+            </div>
+            <div class="control">
+                <label for="rearBump">Rear</label>
+                <input name="rearBump" type="text" id="rearBump" class="bump-stiffness"/>
+            </div>
         </div>
-      </div>
-      <h3>Bump Stiffness</h3>
-      <div class="row">
-        <div class="control">
-          <label for="frontBump">Front</label>
-          <input name="frontBump" type="text" id="frontBump" class="bump-stiffness" />
-        </div>
-        <div class="control">
-          <label for="rearBump">Rear</label>
-          <input name="rearBump" type="text" id="rearBump" class="bump-stiffness" />
-        </div>
-      </div>
     </section>
     <section>
-      <h2>Aero</h2>
-      <h3>Downforce</h3>
-      <select id="unitsDownforce" name="unitsDownforce">
+        <h2>Aero</h2>
+        <h3>Downforce</h3>
+        <select id="units-downforce" name="unitsDownforce">
             <option value="lb">lb/in</option>
             <option value="kgf">kgf</option>
             <option value="nmm">n/mm</option>
-      </select>
-      <div class="row">
-        <div class="control">
-          <label for="frontDownforce">Front</label>
-          <input name="frontDownforce" type="text" id="frontDownforce" class="aero" />
-        </div>
-        <div class="control">
-          <label for="rearDownforce">Rear</label>
-          <input name="rearDownforce" type="text" id="rearDownforce" class="aero" />
-        </div>
-      </div>
-    </section>
-    <section>
-      <h2>Brake</h2>
-      <h3>Braking Bias</h3>
-      <div class="row">
-        <div class="control">
-          <label for="brakingBias">Balance</label>
-          <input name="brakingBias" type="text" id="brakingBias" class="brake" />
-        </div>
-      </div>
-      <h3>Braking Force</h3>
-      <div class="control">
-        <label for="brakingForce">Pressure</label>
-        <input name="brakingForce" type="text" id="brakingForce" class="brake" />
-      </div>
-    </section>
-
-    <section>
-      <h2>Differential</h2>
-      <h3>Front</h3>
-      <div class="row">
-        <div class="control">
-          <label for="frontDiffAccel">Acceleration</label>
-          <input name="frontDiffAccel" type="text" id="frontDiffAccel" class="differential" />
-        </div>
-        <div class="control">
-          <label for="frontDiffDecel">Deceleration</label>
-          <input name="frontDiffDecel" type="text" id="frontDiffDecel" class="differential" />
-        </div>
-      </div>
-      <h3>Rear</h3>
-      <div class="row">
-        <div class="control">
-          <label for="rearDiffAccel">Acceleration</label>
-          <input name="rearDiffAccel" type="text" id="rearDiffAccel" class="differential" />
-        </div>
-        <div class="control">
-          <label for="rearDiffDecel">Deceleration</label>
-          <input name="rearDiffDecel" type="text" id="rearDiffDecel" class="differential" />
-        </div>
-      </div>
-      <h3>Center (FWD/RWD Bias)</h3>
-      <div class="control">
-        <label for="centerBalance">Balance</label>
-        <input name="centerBalance" type="text" id="centerBalance" class="differential" />
-      </div>
-    </section>
-
-    <section>
-      <h1>Upgrades</h1>
-      <p>
-        This section is for upgrades.<br>
-        <strong>
-          If you do not use a certain category (Ex. No natural aspiration)
-          please put <em>N/A</em> in the input field
-        </strong>
-        If you leave something stock (Ex. tire width), or leave the default settings for a category, you should
-        still put in the stock value.
-      </p>
-    </section>
-
-    <section>
-      <h2>Engine (WORK IN PROGRESS)</h2>
-      <div class="control">
-        <label for="intake">Intake</label>
-        <div class="col-75">
-          <select id="intake" name="intake">
-            <option value="na">N/A</option>
-            <option value="stock">Stock</option>
-            <option value="street">Street</option>
-            <option value="sport">Sport</option>
-            <option value="race">Race</option>
-          </select>
-        </div>
-      </div>
-      <br>
-      <label for="fuelSystem">Fuel System</label>
-      <div class="col-75">
-        <select id="fuelSystem" name="fuelSystem">
-          <option value="na">N/A</option>
-          <option value="stock">Stock</option>
-          <option value="street">Street</option>
-          <option value="sport">Sport</option>
-          <option value="race">Race</option>
         </select>
-      </div>
+        <div class="row">
+            <div class="control">
+                <label for="frontDownforce">Front</label>
+                <input name="frontDownforce" type="text" id="frontDownforce" class="aero"/>
+            </div>
+            <div class="control">
+                <label for="rearDownforce">Rear</label>
+                <input name="rearDownforce" type="text" id="rearDownforce" class="aero"/>
+            </div>
+        </div>
+    </section>
+    <section>
+        <h2>Brake</h2>
+        <h3>Braking Bias</h3>
+        <div class="row">
+            <div class="control">
+                <label for="brakingBias">Balance</label>
+                <input name="brakingBias" type="text" id="brakingBias" class="brake"/>
+            </div>
+        </div>
+        <h3>Braking Force</h3>
+        <div class="control">
+            <label for="brakingForce">Pressure</label>
+            <input name="brakingForce" type="text" id="brakingForce" class="brake"/>
+        </div>
     </section>
 
     <section>
-      <button id="generate-button" type="button" class="generate-button">Generate</button>
-      <textarea class="formatted-text" id="result" name="result" rows="10" cols="25"></textarea>
+        <h2>Differential</h2>
+        <h3>Front</h3>
+        <div class="row">
+            <div class="control">
+                <label for="frontDiffAccel">Acceleration</label>
+                <input name="frontDiffAccel" type="text" id="frontDiffAccel" class="differential"/>
+            </div>
+            <div class="control">
+                <label for="frontDiffDecel">Deceleration</label>
+                <input name="frontDiffDecel" type="text" id="frontDiffDecel" class="differential"/>
+            </div>
+        </div>
+        <h3>Rear</h3>
+        <div class="row">
+            <div class="control">
+                <label for="rearDiffAccel">Acceleration</label>
+                <input name="rearDiffAccel" type="text" id="rearDiffAccel" class="differential"/>
+            </div>
+            <div class="control">
+                <label for="rearDiffDecel">Deceleration</label>
+                <input name="rearDiffDecel" type="text" id="rearDiffDecel" class="differential"/>
+            </div>
+        </div>
+        <h3>Center (FWD/RWD Bias)</h3>
+        <div class="control">
+            <label for="centerBalance">Balance</label>
+            <input name="centerBalance" type="text" id="centerBalance" class="differential"/>
+        </div>
     </section>
-  </div>
 
-  <footer>
+    <section>
+        <h1>Upgrades</h1>
+        <p>
+            This section is for upgrades.<br>
+            <strong>
+                If you do not use a certain category (Ex. No natural aspiration)
+                please put <em>N/A</em> in the input field
+            </strong>
+            If you leave something stock (Ex. tire width), or leave the default settings for a category, you should
+            still put in the stock value.
+        </p>
+    </section>
+
+    <section>
+        <h2>Engine (WORK IN PROGRESS)</h2>
+        <div class="control">
+            <label for="intake">Intake</label>
+            <select id="intake" name="intake">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="street">Street</option>
+                <option value="sport">Sport</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <div class="control">
+            <label for="fuelSystem">Fuel System</label>
+            <select id="fuelSystem" name="fuelSystem">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="street">Street</option>
+                <option value="sport">Sport</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <div class="control">
+            <label for="ignition">Ignition</label>
+            <select id="ignition" name="ignition">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="street">Street</option>
+                <option value="sport">Sport</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <div class="control">
+            <label for="exhaust">Exhaust</label>
+            <select id="exhaust" name="exhaust">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="street">Street</option>
+                <option value="sport">Sport</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <div class="control">
+            <label for="camshaft">Camshaft</label>
+            <select id="camshaft" name="camshaft">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="street">Street</option>
+                <option value="sport">Sport</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <div class="control">
+            <label for="valve">Valve</label>
+            <select id="valve" name="valve">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="street">Street</option>
+                <option value="sport">Sport</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <div class="control">
+            <label for="displacement">Displacement</label>
+            <select id="displacement" name="displacement">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="street">Street</option>
+                <option value="sport">Sport</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <div class="control">
+            <label for="pistons">Pistons</label>
+            <select id="pistons" name="pistons">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="street">Street</option>
+                <option value="sport">Sport</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <div class="control">
+            <label for="turbo">Turbo</label>
+            <select id="turbo" name="turbo">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="street">Street</option>
+                <option value="sport">Sport</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <div class="control">
+            <label for="twinTurbo">Turbo</label>
+            <select id="twinTurbo" name="twinTurbo">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="street">Street</option>
+                <option value="sport">Sport</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <div class="control">
+            <label for="centrifugalSuperCharger">Centrifugal Supercharger</label>
+            <select id="centrifugalSuperCharger" name="centrifugalSuperCharger">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="street">Street</option>
+                <option value="sport">Sport</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <div class="control">
+            <label for="SuperCharger">Centrifugal Supercharger</label>
+            <select id="SuperCharger" name="SuperCharger">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="street">Street</option>
+                <option value="sport">Sport</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <div class="control">
+            <label for="intercooler">Intercooler</label>
+            <select id="intercooler" name="intercooler">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="street">Street</option>
+                <option value="sport">Sport</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <div class="control">
+            <label for="oilCooling">Oil Cooling</label>
+            <select id="oilCooling" name="oilCooling">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="street">Street</option>
+                <option value="sport">Sport</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <div class="control">
+            <label for="flywheel">Flywheel</label>
+            <select id="flywheel" name="flywheel">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="street">Street</option>
+                <option value="sport">Sport</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <h2>Platform and Handling</h2>
+        <div class="control">
+            <label for="brakes">Brakes</label>
+            <select id="brakes" name="brakes">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="street">Street</option>
+                <option value="sport">Sport</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <div class="control">
+            <label for="springsDampers">Springs and Dampers</label>
+            <select id="springsDampers" name="springsDampers">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="race">Race</option>
+                <option value="rally">Rally</option>
+                <option value="drift">Drift</option>
+            </select>
+        </div>
+        <div class="control">
+            <label for="frontAntirollBars">Front Antiroll Bars</label>
+            <select id="frontAntirollBars" name="frontAntirollBars">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <div class="control">
+            <label for="rearAntirollBars">Rear Antiroll Bars</label>
+            <select id="rearAntirollBars" name="rearAntirollBars">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <div class="control">
+            <label for="chassisReinforcement">Chassis Reinforcement / Roll Cage</label>
+            <select id="chassisReinforcement" name="chassisReinforcement">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="sport">Sport</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <div class="control">
+            <label for="weightReduction">Weight Reduction</label>
+            <select id="weightReduction" name="weightReduction">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="street">Street</option>
+                <option value="sport">Sport</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+        <h2>Drivetrain</h2>
+        <div class="control">
+            <label for="clutch">Clutch</label>
+            <select id="clutch" name="clutch">
+                <option value="na">N/A</option>
+                <option value="stock">Stock</option>
+                <option value="street">Street</option>
+                <option value="sport">Sport</option>
+                <option value="race">Race</option>
+            </select>
+        </div>
+    </section>
+
+    <section>
+        <button id="generate-button" type="button" class="generate-button">Generate</button>
+        <textarea class="formatted-text" id="result" name="result" rows="10" cols="25"></textarea>
+    </section>
+</div>
+
+<footer>
     <p>Project maintained by Root and SharpSeeEr</p>
     <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
-  </footer>
+</footer>
 </body>
 <script src="assets/js/generator.js"></script>
 
