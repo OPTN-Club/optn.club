@@ -60,7 +60,7 @@
 
     lines.push('Alignment | Caster');
     lines.push(':--|--:');
-    lines.push(`Front Caster | ${caster[0].value}°`);
+    lines.push(`Front Caster | ${caster[0].value}`);
     lines.push('\n');
 
     lines.push('Antiroll Bars | Stiffness');
