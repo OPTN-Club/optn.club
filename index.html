@@ -1,1004 +1,359 @@
 <!doctype html>
 <html lang="en-US">
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <!-- Begin Jekyll SEO tag v2.7.1 -->
-    <title>ForzaOpenTunes</title>
-    <meta property="og:title" content="ForzaOpenTunes"/>
-    <meta property="og:locale" content="en_US"/>
-    <meta name="description"
-          content="Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)"/>
-    <meta property="og:description"
-          content="Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)"/>
-    <link rel="canonical" href="https://ldalvik.github.io/ForzaOpenTuneFormatter/"/>
-    <meta property="og:url" content="https://ldalvik.github.io/ForzaOpenTuneFormatter/"/>
-    <meta property="og:site_name" content="ForzaOpenTunes"/>
-    <meta name="twitter:card"
-          content="Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)"/>
-    <meta property="twitter:title" content="ForzaOpenTunes"/>
-
-    <style>
-        @import url("https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700");
-
-        .highlight table td {
-            padding: 5px
-        }
-
-        .highlight table pre {
-            margin: 0
-        }
-
-        .highlight, .highlight .w {
-            color: #d0d0d0
-        }
-
-        .highlight .err {
-            color: #151515;
-            background-color: #ac4142
-        }
-
-        .highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
-            color: #888
-        }
-
-        .highlight .cp {
-            color: #f4bf75
-        }
-
-        .highlight .nt {
-            color: #f4bf75
-        }
-
-        .highlight .o, .highlight .ow {
-            color: #d0d0d0
-        }
-
-        .highlight .p, .highlight .pi {
-            color: #d0d0d0
-        }
-
-        .highlight .gi {
-            color: #90a959
-        }
-
-        .highlight .gd {
-            color: #ac4142
-        }
-
-        .highlight .gh {
-            color: #6a9fb5;
-            font-weight: bold
-        }
-
-        .highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
-            color: #aa759f
-        }
-
-        .highlight .kc {
-            color: #d28445
-        }
-
-        .highlight .kt {
-            color: #d28445
-        }
-
-        .highlight .kd {
-            color: #d28445
-        }
-
-        .highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
-            color: #90a959
-        }
-
-        .highlight .sr {
-            color: #75b5aa
-        }
-
-        .highlight .si {
-            color: #8f5536
-        }
-
-        .highlight .se {
-            color: #8f5536
-        }
-
-        .highlight .nn {
-            color: #f4bf75
-        }
-
-        .highlight .nc {
-            color: #f4bf75
-        }
-
-        .highlight .no {
-            color: #f4bf75
-        }
-
-        .highlight .na {
-            color: #6a9fb5
-        }
-
-        .highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
-            color: #90a959
-        }
-
-        .highlight .ss {
-            color: #90a959
-        }
-
-        html {
-            background: #494949;
-            background: #383838 linear-gradient(#252525, #151515) fixed;
-            height: 100%
-        }
-
-        body {
-            padding: 50px 0;
-            margin: 0;
-            font: 14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
-            color: #cfcbcb;
-            font-weight: 300;
-            background: url("assets/images/checker.png") fixed;
-            min-height: calc(100% - 100px);
-        }
-
-        .wrapper {
-            width: 740px;
-            margin: 0 auto;
-            background: #DEDEDE;
-            box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0, 0.45) 0 0 0
-        }
-
-        header, section, footer {
-            display: block
-        }
-
-        a {
-            color: #069;
-            text-decoration: none
-        }
-
-        p {
-            margin: 0 0 20px;
-            padding: 0
-        }
-
-        strong {
-            color: #bde7f4;
-            font-weight: 700;
-        }
-
-        header {
-            background: #000000;
-            background: linear-gradient(#191919, #191919);
-            position: relative;
-            padding: 15px 20px;
-            border-bottom: 1px solid #646464;
-        }
-
-        header h1 {
-            margin: 0;
-            padding: 0;
-            font-size: 24px;
-            line-height: 1.2;
-            color: #0aa9f9; /* text-shadow:rgba(255,255,255,0.9) 0 1px 0; */
-        }
-
-        header.without-description h1 {
-            margin: 10px 0
-        }
-
-        header p {
-            margin: 0;
-            color: #c1c1c1;
-            width: 300px;
-            font-size: 13px;
-        }
-
-        header p.view {
-            display: none;
-            font-weight: 700; /* text-shadow:rgba(255,255,255,0.9) 0 1px 0; */
-            -webkit-font-smoothing: antialiased;
-        }
-
-        header p.view a {
-            color: #3e6c9b;
-        }
-
-        header p.view small {
-            font-weight: 400
-        }
-
-        header ul {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-            position: absolute;
-            z-index: 1;
-            right: 20px;
-            top: 20px;
-            height: 38px;
-            padding: 1px 0;
-            background: #5198DF;
-            background: linear-gradient(#77B9FB, #3782CD);
-            border-radius: 5px;
-            box-shadow: inset rgba(255, 255, 255, 0.45) 0 1px 0, inset rgba(0, 0, 0, 0.2) 0 -1px 0;
-            width: auto
-        }
-
-        header ul:before {
-            content: '';
-            position: absolute;
-            z-index: -1;
-            left: -5px;
-            top: -4px;
-            right: -5px;
-            bottom: -6px;
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0, inset rgba(255, 255, 255, 0.7) 0 -1px 0
-        }
-
-        header ul li {
-            width: 79px;
-            float: left;
-            border-right: 1px solid #3A7CBE;
-            height: 38px
-        }
-
-        header ul li.single {
-            border: none
-        }
-
-        header ul li + li {
-            width: 78px;
-            border-left: 1px solid #8BBEF3
-        }
-
-        header ul li + li + li {
-            border-right: none;
-            width: 79px
-        }
-
-        header ul a {
-            line-height: 1;
-            font-size: 11px;
-            color: #fff;
-            color: rgba(255, 255, 255, 0.8);
-            display: block;
-            text-align: center;
-            font-weight: 400;
-            padding-top: 6px;
-            height: 40px;
-            text-shadow: rgba(0, 0, 0, 0.4) 0 -1px 0
-        }
-
-        header ul a strong {
-            font-size: 14px;
-            display: block;
-            color: #fff;
-            -webkit-font-smoothing: antialiased
-        }
-
-        section {
-            padding: 15px 20px;
-            font-size: 15px;
-            border-top: 1px solid #181818;
-            background: linear-gradient(#181818, #181818 700px);
-            position: relative;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            color: #d1d1d1;
-            padding: 0;
-            margin: 0 0 20px;
-            line-height: 1.2;
-        }
-
-        p, ul, ol, table, pre, dl {
-            margin: 0 0 20px
-        }
-
-        h1, h2, h3 {
-            line-height: 1.1
-        }
-
-        h1 {
-            font-size: 28px
-        }
-
-        h2 {
-            color: #c6c6c6;
-        }
-
-        h3, h4, h5, h6 {
-            color: #c6c6c6;
-        }
-
-        blockquote {
-            margin: 0 -20px 20px;
-            padding: 15px 20px 1px 40px;
-            font-style: italic;
-            background: #ccc;
-            background: rgba(0, 0, 0, 0.06);
-            color: #222
-        }
-
-        img {
-            max-width: 100%
-        }
-
-        code, pre {
-            font-family: Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;
-            color: #333;
-            font-size: 12px;
-            overflow-x: auto
-        }
-
-        pre {
-            padding: 20px;
-            background: #3A3C42;
-            color: #f8f8f2;
-            margin: 0 -20px 20px
-        }
-
-        pre code {
-            color: #f8f8f2
-        }
-
-        li pre {
-            margin-left: -60px;
-            padding-left: 60px
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse
-        }
-
-        th, td {
-            text-align: left;
-            padding: 5px 10px;
-            border-bottom: 1px solid #aaa
-        }
-
-        dt {
-            color: #222;
-            font-weight: 700
-        }
-
-        th {
-            color: #222
-        }
-
-        small {
-            font-size: 11px
-        }
-
-        hr {
-            border: 0;
-            background: #aaa;
-            height: 1px;
-            margin: 0 0 20px
-        }
-
-        kbd {
-            background-color: #fafbfc;
-            border: 1px solid #c6cbd1;
-            border-bottom-color: #959da5;
-            border-radius: 3px;
-            box-shadow: inset 0 -1px 0 #959da5;
-            color: #444d56;
-            display: inline-block;
-            font-size: 11px;
-            line-height: 10px;
-            padding: 3px 5px;
-            vertical-align: middle
-        }
-
-        footer {
-            width: 640px;
-            margin: 0 auto;
-            padding: 20px 0 0;
-            color: #ccc;
-            overflow: hidden
-        }
-
-        footer a {
-            color: #fff;
-            font-weight: bold
-        }
-
-        footer p {
-            float: left
-        }
-
-        footer p + p {
-            float: right
-        }
-
-        @media print, screen and (max-width: 740px) {
-            body {
-                padding: 0
-            }
-
-            .wrapper {
-                border-radius: 0;
-                box-shadow: none;
-                width: 100%
-            }
-
-            footer {
-                border-radius: 0;
-                padding: 20px;
-                width: auto
-            }
-
-            footer p {
-                float: none;
-                margin: 0
-            }
-
-            footer p + p {
-                float: none
-            }
-        }
-
-        @media print, screen and (max-width: 580px) {
-            header ul {
-                display: none
-            }
-
-            header p.view {
-                display: block
-            }
-
-            header p {
-                width: 100%
-            }
-        }
-
-        @media print {
-            header p.view a small:before {
-                content: 'at https://github.com/'
-            }
-        }
-    </style>
-    <script>
-        fixScale = function (doc) {
-
-            var addEvent = 'addEventListener',
-                type = 'gesturestart',
-                qsa = 'querySelectorAll',
-                scales = [1, 1],
-                meta = qsa in doc ? doc[qsa]('meta[name=viewport]') : [];
-
-            function fix() {
-                meta.content = 'width=device-width,minimum-scale=' + scales[0] + ',maximum-scale=' + scales[1];
-                doc.removeEventListener(type, fix, true);
-            }
-
-            if ((meta = meta[meta.length - 1]) && addEvent in doc) {
-                fix();
-                scales = [.25, 1.6];
-                doc[addEvent](type, fix, true);
-            }
-
-        };
-    </script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-
-    <!-- link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico" -->
-
-
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Forza Open Tunes Formatter</title>
+
+  <meta property="og:title" content="ForzaOpenTunes" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="description"
+    content="Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)" />
+  <meta property="og:description"
+    content="Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)" />
+  <link rel="canonical" href="https://ldalvik.github.io/ForzaOpenTuneFormatter/" />
+  <meta property="og:url" content="https://ldalvik.github.io/ForzaOpenTuneFormatter/" />
+  <meta property="og:site_name" content="ForzaOpenTunes" />
+  <meta name="twitter:card"
+    content="Format your tuning builds for sharing in compact, readable text for reddit. (r/ForzaOpenTunes)" />
+  <meta property="twitter:title" content="ForzaOpenTunes" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css" media="screen" />
 </head>
+
 <body>
-<div class="wrapper">
+  <div class="wrapper">
     <header>
-        <h1>ForzaOpenTunes</h1>
+      <h1>Forza Open Tunes</h1>
 
-        <p>Format your tunes into compact and readable text for reddit (r/ForzaOpenTunes)</p>
+      <p>Format your tunes into compact and readable text for reddit (r/ForzaOpenTunes)</p>
 
-        <p class="view"><a href="https://github.com/Ldalvik/ForzaOpenTuneFormatter">View the Project on GitHub
-            <small></small></a></p>
-        <ul>
+      <p class="view">
+        <a href="https://github.com/Ldalvik/ForzaOpenTuneFormatter">
+          View the Project on GitHub
+        </a>
+      </p>
 
-            <li><a href="https://discord.com">Join the <strong>Discord</strong></a></li>
-            <li><a href="https://reddit.com">Join the <strong>Subreddit</strong></a></li>
-
-            <li><a href="https://github.com/Ldalvik/ForzaOpenTuneFormatter">View On <strong>GitHub</strong></a></li>
-        </ul>
+      <ul>
+        <li><a href="https://discord.com">Join the <strong>Discord</strong></a></li>
+        <li><a href="https://reddit.com">Join the <strong>Subreddit</strong></a></li>
+        <li><a href="https://github.com/Ldalvik/ForzaOpenTuneFormatter">View On <strong>GitHub</strong></a></li>
+      </ul>
     </header>
     <section>
-        <div style="border-bottom: 1px solid #646464;">
-            <h1 id="header-1">Tuning</h1>
-
-            <p>This section is for tuning. <strong>If you do not use a certain category (Ex. No front diff on RWD cars)
-                please put <em>N/A</em> in the input field</strong>
-                If you leave something stock (Ex. brakes), or leave the default settings for a category, you should
-                still
-                put in the stock value.</p>
-            <br>
-        </div>
-        <div class="container">
-            <h2 style="padding-top: 15px;">Tires</h2>
-            <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
-                <h3>Tire Pressure</h3>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="frontTirePressure">Front</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="frontTirePressure" type="text" id="frontTirePressure" class="tirePressure"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="rearTirePressure">Rear</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="rearTirePressure" type="text" id="rearTirePressure" class="tirePressure"/>
-                    </div>
-                </div>
-            </div>
-
-            <h2 style="padding-top: 15px;">Gearing</h2>
-            <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
-                <h3>Forward Gears</h3>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="finalDrive">Final Drive</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="finalDrive" type="text" id="finalDrive" class="gearing"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="firstGear">1st</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="firstGear" type="text" id="firstGear" class="gearing"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="secondGear">2nd</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="secondGear" type="text" id="secondGear" class="gearing"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="thirdGear">3rd</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="thirdGear" type="text" id="thirdGear" class="gearing"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="fourthGear">4th</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="fourthGear" type="text" id="fourthGear" class="gearing"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="fifthGear">5th</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="fifthGear" type="text" id="fifthGear" class="gearing"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="sixthGear">6th</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="sixthGear" value="N/A" type="text" id="sixthGear" class="gearing"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="seventhGear">7th</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="seventhGear" value="N/A" type="text" id="seventhGear" class="gearing"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="eighthGear">8th</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="eighthGear" value="N/A" type="text" id="eighthGear" class="gearing"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="ninthGear">9th</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="ninthGear" value="N/A" type="text" id="ninthGear" class="gearing"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="tenthGear">10th</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="tenthGear" value="N/A" type="text" id="tenthGear" class="gearing"/>
-                    </div>
-                </div>
-            </div>
-
-            <h2 style="padding-top: 15px;">Alignment</h2>
-            <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
-                <h3>Camber</h3>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="frontCamber">Front</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="frontCamber" type="text" id="frontCamber" class="alignment"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="rearCamber">Rear</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="rearCamber" type="text" id="rearCamber" class="alignment"/>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <h3>Toe</h3>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="frontToe">Front</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="frontToe" type="text" id="frontToe" class="alignment"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="rearToe">Rear</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="rearToe" type="text" id="rearToe" class="alignment"/>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <h3>Front Caster</h3>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="frontCaster">Angle</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="frontCaster" type="text" id="frontCaster" class="alignment"/>
-                    </div>
-                </div>
-            </div>
-
-            <h2 style="padding-top: 15px;">Antiroll Bars</h2>
-            <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
-                <h3>Antiroll Bars</h3>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="frontARB">Front</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="frontARB" type="text" id="frontARB" class="antirollbars"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="rearARB">Rear</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="rearARB" type="text" id="rearARB" class="antirollbars"/>
-                    </div>
-                </div>
-            </div>
-
-            <h2 style="padding-top: 15px;">Springs</h2>
-            <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
-                <h3>Springs</h3>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="frontSprings">Front</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="frontSprings" type="text" id="frontSprings" class="springs"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="rearSprings">Rear</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="rearSprings" type="text" id="rearSprings" class="springs"/>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <h3>Ride Height</h3>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="frontHeight">Front</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="frontHeight" type="text" id="frontHeight" class="springs"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="rearHeight">Rear</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="rearHeight" type="text" id="rearHeight" class="springs"/>
-                    </div>
-                </div>
-            </div>
-
-            <h2 style="padding-top: 15px;">Damping</h2>
-            <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
-                <h3>Rebound Stiffness</h3>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="frontRebound">Front</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="frontRebound" type="text" id="frontRebound" class="damping"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="rearRebound">Rear</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="rearRebound" type="text" id="rearRebound" class="damping"/>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <h3>Bump Stiffness</h3>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="frontBump">Front</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="frontBump" type="text" id="frontBump" class="damping"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="rearBump">Rear</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="rearBump" type="text" id="rearBump" class="damping"/>
-                    </div>
-                </div>
-            </div>
-            <h2 style="padding-top: 15px;">Aero</h2>
-            <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
-                <h3>Downforce</h3>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="frontDownforce">Front</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="frontDownforce" type="text" id="frontDownforce" class="aero"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="rearDownforce">Rear</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="rearDownforce" type="text" id="rearDownforce" class="aero"/>
-                    </div>
-                </div>
-            </div>
-            <h2 style="padding-top: 15px;">Brake</h2>
-            <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
-                <h3>Braking Bias</h3>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="brakingBias">Balance</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="brakingBias" type="text" id="brakingBias" class="brake"/>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <h3>Braking Force</h3>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="brakingForce">Pressure</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="brakingForce" type="text" id="brakingForce" class="brake"/>
-                    </div>
-                </div>
-            </div>
-
-            <h2 style="padding-top: 15px;">Differential</h2>
-            <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
-                <h3>Front</h3>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="frontDiffAccel">Acceleration</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="frontDiffAccel" type="text" id="frontDiffAccel" class="differential"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="frontDiffDecel">Deceleration</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="frontDiffDecel" type="text" id="frontDiffDecel" class="differential"/>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <h3>Rear</h3>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="rearDiffAccel">Acceleration</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="rearDiffAccel" type="text" id="rearDiffAccel" class="differential"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="rearDiffDecel">Deceleration</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="rearDiffDecel" type="text" id="rearDiffDecel" class="differential"/>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <h3>Center (FWD/RWD Bias)</h3>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="centerBalance">Balance</label>
-                    </div>
-                    <div class="col-75">
-                        <input name="centerBalance" type="text" id="centerBalance" class="differential"/>
-                    </div>
-                </div>
-            </div>
-
-
-            <br>
-            <div style="border-bottom: 1px solid #646464;">
-                <h1>Upgrades</h1>
-
-                <p>This section is for upgrades. <strong>If you do not use a certain category (Ex. No natural aspiration)
-                    please put <em>N/A</em> in the input field</strong>
-                    If you leave something stock (Ex. tire width), or leave the default settings for a category, you should
-                    still put in the stock value.</p>
-                <br>
-            </div>
-
-            <div class="container">
-                <h2 style="padding-top: 15px;">Engine (WORK IN PROGRESS)</h2>
-                <div style="border-bottom: 1px solid #646464;padding: 15px 20px;">
-                    <div class="row">
-                        <div class="col-25">
-                            <label for="intake">Intake</label>
-                        </div>
-                        <div class="col-75">
-                            <select id="intake" name="intake">
-                                <option value="na">N/A</option>
-                                <option value="stock">Stock</option>
-                                <option value="street">Street</option>
-                                <option value="sport">Sport</option>
-                                <option value="race">Race</option>
-                            </select>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="col-25">
-                        <label for="fuelSystem">Fuel System</label>
-                    </div>
-                    <div class="col-75">
-                        <select id="fuelSystem" name="fuelSystem">
-                            <option value="na">N/A</option>
-                            <option value="stock">Stock</option>
-                            <option value="street">Street</option>
-                            <option value="sport">Sport</option>
-                            <option value="race">Race</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <br>
-            <div class="row">
-                <button onclick="generateText();" type="button">Generate</button>
-                <br>
-                <br>
-                <textarea id="result" name="result" rows="10" cols="25"></textarea>
-            </div>
-        </div>
-
-
+      <h1>Tuning</h1>
+      <p>
+        This section is for tuning.<br>
+        <strong>
+          If you do not use a certain category (Ex. No front diff on RWD cars)
+          please put <em>N/A</em> in the input field
+        </strong><br>
+        If you leave something stock (Ex. brakes), or leave the default settings for a category, you should
+        still put in the stock value.
+      </p>
     </section>
-</div>
-<footer>
+    <section>
+      <h2>Tires</h2>
+      <div class="row">
+        <div class="control">
+          <label for="frontTirePressure">Front</label>
+          <input name="frontTirePressure" type="text" id="frontTirePressure" class="tirePressure" />
+        </div>
+        <div class="control">
+          <label for="rearTirePressure">Rear</label>
+          <input name="rearTirePressure" type="text" id="rearTirePressure" class="tirePressure" />
+        </div>
+      </div>
+    </section>
 
-    <p>Project maintained by Root</p>
+    <section>
+      <h2>Gearing</h2>
+      <div class="row">
+        <div class="control">
+          <label for="finalDrive">Final Drive</label>
+          <input name="finalDrive" type="text" id="finalDrive" class="gearing" />
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <div class="row">
+            <div class="control">
+              <label for="firstGear">1st</label>
+              <input name="firstGear" type="text" id="firstGear" class="gearing" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="control">
+              <label for="secondGear">2nd</label>
+              <input name="secondGear" type="text" id="secondGear" class="gearing" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="control">
+              <label for="thirdGear">3rd</label>
+              <input name="thirdGear" type="text" id="thirdGear" class="gearing" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="control">
+              <label for="fourthGear">4th</label>
+              <input name="fourthGear" type="text" id="fourthGear" class="gearing" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="control">
+              <label for="fifthGear">5th</label>
+              <input name="fifthGear" type="text" id="fifthGear" class="gearing" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="control">
+              <label for="sixthGear">6th</label>
+              <input name="sixthGear" type="text" id="sixthGear" class="gearing" />
+            </div>
+          </div>
+        </div>
 
+        <div style="margin-left: 40px;">
+          <div class="row">
+            <div class="control">
+              <label for="seventhGear">7th</label>
+              <input name="seventhGear" value="N/A" type="text" id="seventhGear" class="gearing" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="control">
+              <label for="eighthGear">8th</label>
+              <input name="eighthGear" value="N/A" type="text" id="eighthGear" class="gearing" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="control">
+              <label for="ninthGear">9th</label>
+              <input name="ninthGear" value="N/A" type="text" id="ninthGear" class="gearing" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="control">
+              <label for="tenthGear">10th</label>
+              <input name="tenthGear" value="N/A" type="text" id="tenthGear" class="gearing" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Alignment</h2>
+      <h3>Camber</h3>
+      <div class="row">
+        <div class="control">
+          <label for="frontCamber">Front</label>
+          <input name="frontCamber" type="text" id="frontCamber" class="camber" />
+        </div>
+        <div class="control">
+          <label for="rearCamber">Rear</label>
+          <input name="rearCamber" type="text" id="rearCamber" class="camber" />
+        </div>
+      </div>
+      <h3>Toe</h3>
+      <div class="row">
+        <div class="control">
+          <label for="frontToe">Front</label>
+          <input name="frontToe" type="text" id="frontToe" class="toe" />
+        </div>
+        <div class="control">
+          <label for="rearToe">Rear</label>
+          <input name="rearToe" type="text" id="rearToe" class="toe" />
+        </div>
+      </div>
+      <h3>Front Caster</h3>
+      <div class="control">
+        <label for="frontCaster">Angle</label>
+        <input name="frontCaster" type="text" id="frontCaster" class="caster" />
+      </div>
+    </section>
+
+    <section>
+      <h2>Antiroll Bars</h2>
+      <div class="row">
+        <div class="control">
+          <label for="frontARB">Front</label>
+          <input name="frontARB" type="text" id="frontARB" class="antiroll-bars" />
+        </div>
+        <div class="control">
+          <label for="rearARB">Rear</label>
+          <input name="rearARB" type="text" id="rearARB" class="antiroll-bars" />
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Springs</h2>
+      <h3>Tension</h3>
+      <div class="row">
+        <div class="control">
+          <label for="frontSprings">Front</label>
+          <input name="frontSprings" type="text" id="frontSprings" class="spring-tension" />
+        </div>
+        <div class="control">
+          <label for="rearSprings">Rear</label>
+          <input name="rearSprings" type="text" id="rearSprings" class="spring-tension" />
+        </div>
+      </div>
+      <h3>Ride Height</h3>
+      <div class="row">
+        <div class="control">
+          <label for="frontHeight">Front</label>
+          <input name="frontHeight" type="text" id="frontHeight" class="ride-height" />
+        </div>
+        <div class="control">
+          <label for="rearHeight">Rear</label>
+          <input name="rearHeight" type="text" id="rearHeight" class="ride-height" />
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Damping</h2>
+      <h3>Rebound Stiffness</h3>
+      <div class="row">
+        <div class="control">
+          <label for="frontRebound">Front</label>
+          <input name="frontRebound" type="text" id="frontRebound" class="rebound-stiffness" />
+        </div>
+        <div class="control">
+          <label for="rearRebound">Rear</label>
+          <input name="rearRebound" type="text" id="rearRebound" class="rebound-stiffness" />
+        </div>
+      </div>
+      <h3>Bump Stiffness</h3>
+      <div class="row">
+        <div class="control">
+          <label for="frontBump">Front</label>
+          <input name="frontBump" type="text" id="frontBump" class="bump-stiffness" />
+        </div>
+        <div class="control">
+          <label for="rearBump">Rear</label>
+          <input name="rearBump" type="text" id="rearBump" class="bump-stiffness" />
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2>Aero</h2>
+      <h3>Downforce</h3>
+      <div class="row">
+        <div class="control">
+          <label for="frontDownforce">Front</label>
+          <input name="frontDownforce" type="text" id="frontDownforce" class="aero" />
+        </div>
+        <div class="control">
+          <label for="rearDownforce">Rear</label>
+          <input name="rearDownforce" type="text" id="rearDownforce" class="aero" />
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2>Brake</h2>
+      <h3>Braking Bias</h3>
+      <div class="row">
+        <div class="control">
+          <label for="brakingBias">Balance</label>
+          <input name="brakingBias" type="text" id="brakingBias" class="brake" />
+        </div>
+      </div>
+      <h3>Braking Force</h3>
+      <div class="control">
+        <label for="brakingForce">Pressure</label>
+        <input name="brakingForce" type="text" id="brakingForce" class="brake" />
+      </div>
+    </section>
+
+    <section>
+      <h2>Differential</h2>
+      <h3>Front</h3>
+      <div class="row">
+        <div class="control">
+          <label for="frontDiffAccel">Acceleration</label>
+          <input name="frontDiffAccel" type="text" id="frontDiffAccel" class="differential" />
+        </div>
+        <div class="control">
+          <label for="frontDiffDecel">Deceleration</label>
+          <input name="frontDiffDecel" type="text" id="frontDiffDecel" class="differential" />
+        </div>
+      </div>
+      <h3>Rear</h3>
+      <div class="row">
+        <div class="control">
+          <label for="rearDiffAccel">Acceleration</label>
+          <input name="rearDiffAccel" type="text" id="rearDiffAccel" class="differential" />
+        </div>
+        <div class="control">
+          <label for="rearDiffDecel">Deceleration</label>
+          <input name="rearDiffDecel" type="text" id="rearDiffDecel" class="differential" />
+        </div>
+      </div>
+      <h3>Center (FWD/RWD Bias)</h3>
+      <div class="control">
+        <label for="centerBalance">Balance</label>
+        <input name="centerBalance" type="text" id="centerBalance" class="differential" />
+      </div>
+    </section>
+
+    <section>
+      <h1>Upgrades</h1>
+      <p>
+        This section is for upgrades.<br>
+        <strong>
+          If you do not use a certain category (Ex. No natural aspiration)
+          please put <em>N/A</em> in the input field
+        </strong>
+        If you leave something stock (Ex. tire width), or leave the default settings for a category, you should
+        still put in the stock value.
+      </p>
+    </section>
+
+    <section>
+      <h2>Engine (WORK IN PROGRESS)</h2>
+      <div class="control">
+        <label for="intake">Intake</label>
+        <div class="col-75">
+          <select id="intake" name="intake">
+            <option value="na">N/A</option>
+            <option value="stock">Stock</option>
+            <option value="street">Street</option>
+            <option value="sport">Sport</option>
+            <option value="race">Race</option>
+          </select>
+        </div>
+      </div>
+      <br>
+      <label for="fuelSystem">Fuel System</label>
+      <div class="col-75">
+        <select id="fuelSystem" name="fuelSystem">
+          <option value="na">N/A</option>
+          <option value="stock">Stock</option>
+          <option value="street">Street</option>
+          <option value="sport">Sport</option>
+          <option value="race">Race</option>
+        </select>
+      </div>
+    </section>
+
+    <section>
+      <button id="generate-button" type="button" class="generate-button">Generate</button>
+      <textarea class="formatted-text" id="result" name="result" rows="10" cols="25"></textarea>
+    </section>
+  </div>
+
+  <footer>
+    <p>Project maintained by Root and SharpSeeEr</p>
     <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
-</footer>
-<!--[if !IE]>
-<script>fixScale(document);</script><![endif]-->
+  </footer>
 </body>
-<script>
-    function generateText() {
-        var frontTirePressure =  document.getElementsByClassName("tirePressure")[0].value;
-        var rearTirePressure = document.getElementsByClassName("tirePressure")[1].value;
+<script src="assets/js/generator.js"></script>
 
-        var finalDrive = document.getElementsByClassName("gearing")[0].value;
-        var firstGear = document.getElementsByClassName("gearing")[1].value;
-        var secondGear = document.getElementsByClassName("gearing")[2].value;
-        var thirdGear = document.getElementsByClassName("gearing")[3].value;
-        var fourthGear = document.getElementsByClassName("gearing")[4].value;
-        var fifthGear = document.getElementsByClassName("gearing")[5].value;
-        var sixthGear = document.getElementsByClassName("gearing")[6].value;
-        var seventhGear = document.getElementsByClassName("gearing")[7].value;
-        var eighthGear = document.getElementsByClassName("gearing")[8].value;
-        var ninthGear = document.getElementsByClassName("gearing")[9].value;
-        var tenthGear = document.getElementsByClassName("gearing")[10].value;
-
-
-        document.getElementById("result").innerHTML = (
-            `TIRES | PRESSURE\n:--|--:\nFRONT | ${frontTirePressure}\nREAR | ${rearTirePressure}\n\n` +
-            `GEARS | RATIO\n:--|--:\n FINAL DRIVE | ${finalDrive}\n1st | ${firstGear}`)
-
-    }
-</script>
 </html>
