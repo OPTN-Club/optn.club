@@ -21,6 +21,10 @@ body {
   box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0, 0.45) 0 0 0;
 }
 
+.hidden {
+  display: hidden;
+}
+
 header, section, footer {
   display: block;
 }
@@ -159,14 +163,25 @@ section {
 label {
   display: block;
   font-weight: bold;
+  margin: 0 0 5px 0;
 }
 
 input,
 select,
 textarea {
-  padding: 4px;
+  padding: 6px 12px;
+  border: 1px solid #999898;
   border-radius: 4px;
   background-color: #dedede;
+  box-sizing: border-box;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border: 1px solid rgb(255, 189, 51);
+  box-shadow: inset 0 1px 1px rgb(0,0,0,.08), 0 0 8px rgb(255,189,51,.6);
 }
 
 select {
@@ -183,6 +198,13 @@ img {
   /* justify-content: space-between; */
 }
 
+.row .gears-grid {
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  column-gap: 20px; 
+  row-gap: 8px;
+}
+
 .row+h3 {
   margin-top: 16px;
 }
@@ -191,31 +213,40 @@ img {
   margin: 0 0 0;
 }
 
+.column.actions {
+  width: 66%;
+  margin: 0 auto;
+}
+
 .row>.control+.control {
-  margin-left: 8px;
+  margin-left: 20px;
 }
 
 .column>.control+.control {
   margin-top: 8px;
 }
 
-.column+.column {
-  margin-left: 40px;
-}
-
-.generate-button {
+.generate-button,
+.clipboard-button {
   padding: 20px;
   border-radius: 10px;
   font-size: 2rem;
   min-width: 250px;
-  width: 66%;
+  width: 100%;
   margin: 0 auto 20px;
   display: block;
   background-color: #FFBD33;
 }
 
+.clipboard-button {
+  margin: 20px auto 0;
+  background-color: #0aa9f9;
+  font-size: .8rem;
+  padding: 10px;
+}
+
 .formatted-text {
-  width: 55%;
+  width: 100%;
   display: block;
   margin: 0 auto;
 }
@@ -287,6 +318,10 @@ footer a {
     flex-direction: column;
   }
 
+  .row .gears-grid {
+    grid-template-columns: 1fr;
+  }
+
   .row>.control+.control {
     margin-left: 0;
     margin-top: 8px;
@@ -294,6 +329,21 @@ footer a {
 
   .column+.column {
     margin-left: 0;
+  }
+
+  .column.actions {
+    width: 100%;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+  }
+
+  .generate-button,
+  .formatted-text {
+    width: 100%;
   }
 }
 
