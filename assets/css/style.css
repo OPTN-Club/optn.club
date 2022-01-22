@@ -72,6 +72,8 @@ strong {
 header {
   position: relative;
   padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
 header h1 {
@@ -109,10 +111,7 @@ header ul {
   margin: 0;
   padding: 0;
   list-style: none;
-  position: absolute;
   z-index: 1;
-  right: 20px;
-  top: 20px;
   height: 38px;
   padding: 1px 0;
   background: #5198DF;
@@ -120,40 +119,15 @@ header ul {
   border-radius: 5px;
   box-shadow: inset rgba(255, 255, 255, 0.45) 0 1px 0, inset rgba(0, 0, 0, 0.2) 0 -1px 0;
   width: auto;
-}
-
-header ul:before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  left: -5px;
-  top: -4px;
-  right: -5px;
-  bottom: -6px;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0, inset rgba(255, 255, 255, 0.7) 0 -1px 0
+  display: flex;
 }
 
 header ul li {
-  width: 79px;
-  float: left;
-  border-right: 1px solid #3A7CBE;
-  height: 38px;
-}
-
-header ul li.single {
-  border: none;
+  min-width: 79px;
 }
 
 header ul li+li {
-  width: 78px;
   border-left: 1px solid #8BBEF3;
-}
-
-header ul li+li+li {
-  border-right: none;
-  width: 79px;
 }
 
 header ul a {
@@ -161,12 +135,13 @@ header ul a {
   font-size: 11px;
   color: #fff;
   color: rgba(255, 255, 255, 0.8);
-  display: block;
   text-align: center;
   font-weight: 400;
-  padding-top: 6px;
-  height: 40px;
-  text-shadow: rgba(0, 0, 0, 0.4) 0 -1px 0
+  text-shadow: rgba(0, 0, 0, 0.4) 0 -1px 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 header ul a strong {
@@ -187,10 +162,15 @@ label {
 }
 
 input,
+select,
 textarea {
   padding: 4px;
   border-radius: 4px;
   background-color: #dedede;
+}
+
+select {
+  min-width: 75px;
 }
 
 img {
@@ -207,8 +187,20 @@ img {
   margin-top: 16px;
 }
 
-.control+.control {
+.column {
+  margin: 0 0 0;
+}
+
+.row>.control+.control {
   margin-left: 8px;
+}
+
+.column>.control+.control {
+  margin-top: 8px;
+}
+
+.column+.column {
+  margin-left: 40px;
 }
 
 .generate-button {
@@ -275,8 +267,12 @@ footer a {
 }
 
 @media print, screen and (max-width: 580px) {
+  header {
+    flex-direction: column;
+  }
+
   header ul {
-    display: none
+    margin: 16px auto 0;
   }
 
   header p.view {
@@ -285,6 +281,19 @@ footer a {
 
   header p {
     width: 100%
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .row>.control+.control {
+    margin-left: 0;
+    margin-top: 8px;
+  }
+
+  .column+.column {
+    margin-left: 0;
   }
 }
 

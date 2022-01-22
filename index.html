@@ -27,15 +27,15 @@
 <body>
 <div class="wrapper">
     <header>
-        <h1>Forza Open Tunes</h1>
-
-        <p>Format your tunes into compact and readable text for reddit (r/ForzaOpenTunes)</p>
-
-        <p class="view">
-            <a href="https://github.com/Ldalvik/ForzaOpenTuneFormatter">
-                View the Project on GitHub
-            </a>
-        </p>
+        <div>
+          <h1>Forza Open Tunes</h1>
+          <p>Format your tunes into compact and readable text for reddit (r/ForzaOpenTunes)</p>
+          <!-- <p class="view">
+              <a href="https://github.com/Ldalvik/ForzaOpenTuneFormatter">
+                  View the Project on GitHub
+              </a>
+          </p> -->
+        </div>
 
         <ul>
             <li><a href="https://discord.com">Join the <strong>Discord</strong></a></li>
@@ -57,19 +57,22 @@
     </section>
     <section>
         <h2>Tires</h2>
-        <select id="units-pressure" name="unitsPressure">
-            <option value="psi">Psi</option>
-            <option value="bar">Bar</option>
-        </select>
         <div class="row">
-            <div class="control">
-                <label for="frontTirePressure">Front</label>
-                <input name="frontTirePressure" type="text" id="frontTirePressure" class="tirePressure"/>
-            </div>
-            <div class="control">
-                <label for="rearTirePressure">Rear</label>
-                <input name="rearTirePressure" type="text" id="rearTirePressure" class="tirePressure"/>
-            </div>
+          <div class="control">
+            <label for="frontTirePressure">Front</label>
+            <input name="frontTirePressure" type="text" id="frontTirePressure" class="tirePressure"/>
+          </div>
+          <div class="control">
+            <label for="rearTirePressure">Rear</label>
+            <input name="rearTirePressure" type="text" id="rearTirePressure" class="tirePressure"/>
+          </div>
+          <div class="control">
+            <label>&nbsp;</label>
+            <select id="units-pressure" name="unitsPressure">
+                <option value="psi">Psi</option>
+                <option value="bar">Bar</option>
+            </select>
+          </div>
         </div>
     </section>
 
@@ -82,30 +85,22 @@
             </div>
         </div>
         <div class="row">
-            <div>
-                <div class="row">
-                    <div class="control">
-                        <label for="firstGear">1st</label>
-                        <input name="firstGear" type="text" id="firstGear" class="gearing"/>
-                    </div>
+            <div class="column">
+                <div class="control">
+                    <label for="firstGear">1st</label>
+                    <input name="firstGear" type="text" id="firstGear" class="gearing"/>
                 </div>
-                <div class="row">
-                    <div class="control">
-                        <label for="secondGear">2nd</label>
-                        <input name="secondGear" type="text" id="secondGear" class="gearing"/>
-                    </div>
+                <div class="control">
+                    <label for="secondGear">2nd</label>
+                    <input name="secondGear" type="text" id="secondGear" class="gearing"/>
                 </div>
-                <div class="row">
-                    <div class="control">
-                        <label for="thirdGear">3rd</label>
-                        <input name="thirdGear" type="text" id="thirdGear" class="gearing"/>
-                    </div>
+                <div class="control">
+                    <label for="thirdGear">3rd</label>
+                    <input name="thirdGear" type="text" id="thirdGear" class="gearing"/>
                 </div>
-                <div class="row">
-                    <div class="control">
-                        <label for="fourthGear">4th</label>
-                        <input name="fourthGear" type="text" id="fourthGear" class="gearing"/>
-                    </div>
+                <div class="control">
+                    <label for="fourthGear">4th</label>
+                    <input name="fourthGear" type="text" id="fourthGear" class="gearing"/>
                 </div>
                 <div class="row">
                     <div class="control">
@@ -121,30 +116,22 @@
                 </div>
             </div>
 
-            <div style="margin-left: 40px;">
-                <div class="row">
-                    <div class="control">
-                        <label for="seventhGear">7th</label>
-                        <input name="seventhGear" type="text" id="seventhGear" class="gearing"/>
-                    </div>
+            <div class="column">
+                <div class="control">
+                    <label for="seventhGear">7th</label>
+                    <input name="seventhGear" type="text" id="seventhGear" class="gearing"/>
                 </div>
-                <div class="row">
-                    <div class="control">
-                        <label for="eighthGear">8th</label>
-                        <input name="eighthGear" type="text" id="eighthGear" class="gearing"/>
-                    </div>
+                <div class="control">
+                    <label for="eighthGear">8th</label>
+                    <input name="eighthGear" type="text" id="eighthGear" class="gearing"/>
                 </div>
-                <div class="row">
-                    <div class="control">
-                        <label for="ninthGear">9th</label>
-                        <input name="ninthGear" type="text" id="ninthGear" class="gearing"/>
-                    </div>
+                <div class="control">
+                    <label for="ninthGear">9th</label>
+                    <input name="ninthGear" type="text" id="ninthGear" class="gearing"/>
                 </div>
-                <div class="row">
-                    <div class="control">
-                        <label for="tenthGear">10th</label>
-                        <input name="tenthGear" type="text" id="tenthGear" class="gearing"/>
-                    </div>
+                <div class="control">
+                    <label for="tenthGear">10th</label>
+                    <input name="tenthGear" type="text" id="tenthGear" class="gearing"/>
                 </div>
             </div>
         </div>
@@ -198,35 +185,41 @@
     <section>
         <h2>Springs</h2>
         <h3>Tension</h3>
-        <select id="units-springs" name="unitsSprings">
-            <option value="lb">lb/in</option>
-            <option value="kgf">kgf</option>
-            <option value="nmm">n/mm</option>
-        </select>
         <div class="row">
-            <div class="control">
-                <label for="frontSprings">Front</label>
-                <input name="frontSprings" type="text" id="frontSprings" class="spring-tension"/>
-            </div>
-            <div class="control">
-                <label for="rearSprings">Rear</label>
-                <input name="rearSprings" type="text" id="rearSprings" class="spring-tension"/>
-            </div>
+          <div class="control">
+            <label for="frontSprings">Front</label>
+            <input name="frontSprings" type="text" id="frontSprings" class="spring-tension"/>
+          </div>
+          <div class="control">
+            <label for="rearSprings">Rear</label>
+            <input name="rearSprings" type="text" id="rearSprings" class="spring-tension"/>
+          </div>
+          <div class="control">
+            <label>&nbsp;</label>
+            <select id="units-springs" name="unitsSprings">
+                <option value="lb">lb/in</option>
+                <option value="kgf">kgf</option>
+                <option value="nmm">n/mm</option>
+            </select>
+          </div>
         </div>
         <h3>Ride Height</h3>
-        <select id="units-rideheight" name="unitsRideHeight">
-            <option value="in">in</option>
-            <option value="cm">cm</option>
-        </select>
         <div class="row">
-            <div class="control">
-                <label for="frontHeight">Front</label>
-                <input name="frontHeight" type="text" id="frontHeight" class="ride-height"/>
-            </div>
-            <div class="control">
-                <label for="rearHeight">Rear</label>
-                <input name="rearHeight" type="text" id="rearHeight" class="ride-height"/>
-            </div>
+          <div class="control">
+            <label for="frontHeight">Front</label>
+            <input name="frontHeight" type="text" id="frontHeight" class="ride-height"/>
+          </div>
+          <div class="control">
+            <label for="rearHeight">Rear</label>
+            <input name="rearHeight" type="text" id="rearHeight" class="ride-height"/>
+          </div>
+          <div class="control">
+            <label>&nbsp;</label>
+            <select id="units-rideheight" name="unitsRideHeight">
+                <option value="in">in</option>
+                <option value="cm">cm</option>
+            </select>
+          </div>
         </div>
     </section>
 
@@ -258,20 +251,23 @@
     <section>
         <h2>Aero</h2>
         <h3>Downforce</h3>
-        <select id="units-downforce" name="unitsDownforce">
-            <option value="lb">lb/in</option>
-            <option value="kgf">kgf</option>
-            <option value="nmm">n/mm</option>
-        </select>
         <div class="row">
-            <div class="control">
-                <label for="frontDownforce">Front</label>
-                <input name="frontDownforce" type="text" id="frontDownforce" class="aero"/>
-            </div>
-            <div class="control">
-                <label for="rearDownforce">Rear</label>
-                <input name="rearDownforce" type="text" id="rearDownforce" class="aero"/>
-            </div>
+          <div class="control">
+            <label for="frontDownforce">Front</label>
+            <input name="frontDownforce" type="text" id="frontDownforce" class="aero"/>
+          </div>
+          <div class="control">
+            <label for="rearDownforce">Rear</label>
+            <input name="rearDownforce" type="text" id="rearDownforce" class="aero"/>
+          </div>
+          <div class="control">
+            <label>&nbsp;</label>
+            <select id="units-downforce" name="unitsDownforce">
+                <option value="lb">lb/in</option>
+                <option value="kgf">kgf</option>
+                <option value="nmm">n/mm</option>
+            </select>
+          </div>
         </div>
     </section>
     <section>
@@ -328,7 +324,7 @@
             <strong>
                 If you do not use a certain category (Ex. No natural aspiration)
                 just leave it as N/A
-            </strong>
+            </strong><br>
             If you leave something stock (Ex. tire width), or leave the default settings for a category, you should
             still put in the stock value.
         </p>
@@ -343,6 +339,7 @@
     <p>Project maintained by Root and SharpSeeEr</p>
 </footer>
 </body>
+<script src="assets/js/SelectValue.js"></script>
 <script src="assets/js/generator.js"></script>
 
 </html>
