@@ -21,6 +21,10 @@ body {
   box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0, 0.45) 0 0 0;
 }
 
+.hidden {
+  display: hidden;
+}
+
 header, section, footer {
   display: block;
 }
