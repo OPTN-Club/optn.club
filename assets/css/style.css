@@ -183,6 +183,13 @@ img {
   /* justify-content: space-between; */
 }
 
+.row .gears-grid {
+  display: grid; 
+  grid-template-columns: repeat(2, minmax(0, 1fr)); 
+  column-gap: 40px; 
+  row-gap: 8px;
+}
+
 .row+h3 {
   margin-top: 16px;
 }
@@ -285,6 +292,10 @@ footer a {
 
   .row {
     flex-direction: column;
+  }
+
+  .row .gears-grid {
+    grid-template-columns: 1fr;
   }
 
   .row>.control+.control {
