@@ -169,6 +169,7 @@ textarea {
   border: 1px solid #999898;
   border-radius: 4px;
   background-color: #dedede;
+  box-sizing: border-box;
 }
 
 input:focus,
@@ -208,6 +209,11 @@ img {
   margin: 0 0 0;
 }
 
+.column.actions {
+  width: 66%;
+  margin: 0 auto;
+}
+
 .row>.control+.control {
   margin-left: 20px;
 }
@@ -216,19 +222,27 @@ img {
   margin-top: 8px;
 }
 
-.generate-button {
+.generate-button,
+.clipboard-button {
   padding: 20px;
   border-radius: 10px;
   font-size: 2rem;
   min-width: 250px;
-  width: 66%;
+  width: 100%;
   margin: 0 auto 20px;
   display: block;
   background-color: #FFBD33;
 }
 
+.clipboard-button {
+  margin: 20px auto 0;
+  background-color: #0aa9f9;
+  font-size: .8rem;
+  padding: 10px;
+}
+
 .formatted-text {
-  width: 55%;
+  width: 100%;
   display: block;
   margin: 0 auto;
 }
@@ -313,11 +327,19 @@ footer a {
     margin-left: 0;
   }
 
+  .column.actions {
+    width: 100%;
+  }
+
   input,
   select,
   textarea {
     width: 100%;
-    box-sizing: border-box;
+  }
+
+  .generate-button,
+  .formatted-text {
+    width: 100%;
   }
 }
 
