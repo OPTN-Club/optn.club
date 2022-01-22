@@ -159,14 +159,24 @@ section {
 label {
   display: block;
   font-weight: bold;
+  margin: 0 0 5px 0;
 }
 
 input,
 select,
 textarea {
-  padding: 4px;
+  padding: 6px 12px;
+  border: 1px solid #999898;
   border-radius: 4px;
   background-color: #dedede;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border: 1px solid rgb(255, 189, 51);
+  box-shadow: inset 0 1px 1px rgb(0,0,0,.08), 0 0 8px rgb(255,189,51,.6);
 }
 
 select {
@@ -185,8 +195,8 @@ img {
 
 .row .gears-grid {
   display: grid; 
-  grid-template-columns: repeat(2, minmax(0, 1fr)); 
-  column-gap: 40px; 
+  grid-template-columns: 1fr 1fr; 
+  column-gap: 20px; 
   row-gap: 8px;
 }
 
@@ -199,15 +209,11 @@ img {
 }
 
 .row>.control+.control {
-  margin-left: 8px;
+  margin-left: 20px;
 }
 
 .column>.control+.control {
   margin-top: 8px;
-}
-
-.column+.column {
-  margin-left: 40px;
 }
 
 .generate-button {
@@ -305,6 +311,13 @@ footer a {
 
   .column+.column {
     margin-left: 0;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
