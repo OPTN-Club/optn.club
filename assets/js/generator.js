@@ -116,7 +116,7 @@
       lines.push(`Balance | N/A`);
       lines.push(`Pressure | N/A`);
       lines.push('\n');
-
+    }
     if (differential[0].value !== "" || differential[1].value !== "") {
       lines.push('Differential | Front');
       lines.push(':--|--:');
