@@ -4,7 +4,7 @@
   const btnClipboard = document.querySelector('#clipboard-button');
   const txtResult = document.querySelector('#result');
 
-  if (!navigator.clipboard) return;
+  if (!navigator.clipboard || !btnClipboard || !txtResult) return;
 
   btnClipboard.classList.remove('hidden');
   btnClipboard.addEventListener('click', () => {
