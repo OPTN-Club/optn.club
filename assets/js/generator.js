@@ -151,5 +151,6 @@
     e.preventDefault();
     e.stopPropagation();
     generateText();
+    result.scrollIntoView();
   });
 })();
