@@ -68,6 +68,10 @@ h4 {
   font-size: 1.1rem;
 }
 
+p, span, label {
+  font-size: 1rem;
+}
+
 strong {
   color: #bde7f4;
   font-weight: 700;
@@ -169,19 +173,58 @@ label {
 input,
 select,
 textarea {
+  font-size: 1rem;
   padding: 6px 12px;
   border: 1px solid #999898;
   border-radius: 4px;
   background-color: #dedede;
   box-sizing: border-box;
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
-  outline: none;
   border: 1px solid rgb(255, 189, 51);
   box-shadow: inset 0 1px 1px rgb(0,0,0,.08), 0 0 8px rgb(255,189,51,.6);
+}
+
+input.touched:invalid,
+select.touched:invalid,
+textarea.touched:invalid {
+  border: 1px solid #dc3545;
+  box-shadow: inset 0 1px 1px rgb(0,0,0,.08), 0 0 8px #dc3545;
+}
+
+input.touched:invalid ~ label,
+select.touched:invalid ~ label,
+textarea.touched:invalid ~ label,
+.validation-message {
+  color: #dc3545;
+}
+
+input:required ~ label::after,
+select:required ~ label::after,
+textarea:required ~ label::after {
+  content: '*';
+  margin-left: 5px;
+  color: #ffbd33
+}
+
+input.touched:invalid ~ .validation-message,
+select.touched:invalid ~ .validation-message,
+textarea.touched:invalid ~ .validation-message {
+  opacity: 1;
+}
+
+.validation-message {
+  opacity: 0;
+  font-size: 1rem;
+  margin-top: 3px;
 }
 
 select {
@@ -192,6 +235,26 @@ img {
   max-width: 100%
 }
 
+.control {
+  display: flex;
+  flex: 1;
+  flex-flow: column;
+}
+
+.control label {
+  order: 1;
+}
+
+.control input,
+.control select,
+.control textarea {
+  order: 2;
+}
+
+.control .validation-message {
+  order: 3;
+}
+
 .row {
   display: flex;
   margin: 8px 0;
@@ -200,8 +263,9 @@ img {
 
 .row .gears-grid {
   display: grid; 
+  flex: 1;
   grid-template-columns: 1fr 1fr; 
-  column-gap: 20px; 
+  column-gap: 30px; 
   row-gap: 8px;
 }
 
@@ -218,8 +282,16 @@ img {
   margin: 0 auto;
 }
 
-.row>.control+.control {
-  margin-left: 20px;
+.row > .control {
+  margin: 0 15px 0 15px;
+}
+
+.row > .control:first-child {
+  margin-left: 0;
+}
+
+.row > .control:last-child {
+  margin-right: 0;
 }
 
 .column>.control+.control {
@@ -316,6 +388,10 @@ footer a {
 
   .row {
     flex-direction: column;
+  }
+
+  .row > .control {
+    margin: 0;
   }
 
   .row .gears-grid {

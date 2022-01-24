@@ -143,9 +143,14 @@
     lines.push('^Text ^generated ^by ^https://ldalvik.github.io/ForzaOpenTuneFormatter/');
     lines.push('^If ^you ^have ^any ^questions ^or ^want ^to ^report ^a ^bug, ^please ^DM ^u/hey-im-root ^or ^u/SharpSeeEr');
     const text = lines.join('\n');
-    result.innerHTML = text;
+    result.value = text;
   }
 
-  const button = document.getElementById('generate-button');
-  button.addEventListener('click', generateText);
+  const form = document.querySelector('form[name=tuningForm]');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    generateText();
+    result.scrollIntoView();
+  });
 })();
