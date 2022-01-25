@@ -45,7 +45,7 @@ p {
 h1, h2, h3, h4, h5, h6 {
   color: #FFBD33;
   padding: 0;
-  margin: 23px 0 13px;
+  margin: 0 0 20px;
   line-height: 1.2;
 }
 
@@ -56,6 +56,7 @@ h1 {
 
 h2 {
   color: #0aa9f9;
+  padding-top: 15px;
   font-size: 1.5rem;
 }
 
