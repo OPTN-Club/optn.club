@@ -104,8 +104,8 @@
       }
       lines.push('\n');
     }
-  if (brake[0].value !== "" && brake[1].value !== "") {
-     lines.push('Brake | %');
+    if (brake[0].value !== "" && brake[1].value !== "") {
+      lines.push('Brake | %');
       lines.push(':--|--:');
       lines.push(`Balance | ${brake[0].value}%`);
       lines.push(`Pressure | ${brake[1].value}%`);
