@@ -1,5 +1,12 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700");
 
+.primary {
+  color: rgb(117, 226, 250);
+  color: rgb(0, 133, 163);
+  color: rgb(0, 42, 51);
+  color: rgb(0, 133, 108);
+}
+
 html {
   background: #383838 linear-gradient(#252525, #151515) fixed;
   height: 100%
@@ -11,7 +18,7 @@ body {
   font: 14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #cfcbcb;
   font-weight: 300;
-  background: url("../images/checker.png") fixed;
+  background: url("./checker.png") fixed;
 }
 
 .wrapper {
@@ -211,9 +218,7 @@ textarea.touched:invalid~label,
   color: #dc3545;
 }
 
-input:required~label::after,
-select:required~label::after,
-textarea:required~label::after {
+label.required::after {
   content: '*';
   margin-left: 5px;
   color: #ffbd33
