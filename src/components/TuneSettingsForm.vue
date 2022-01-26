@@ -18,7 +18,6 @@
 
     <section>
       <h2>Swaps</h2>
-      <h3>Engine</h3>
       <div class="row">
         <EngineSwapSelect v-model="form.swaps.engine" :car="form.model" />
       </div>
