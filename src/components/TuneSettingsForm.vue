@@ -1,6 +1,29 @@
 <template>
   <form>
     <section>
+      <h2>Car</h2>
+      <MakeModelSelect v-model:make="form.make" v-model:model="form.model" />
+    </section>
+
+    <section>
+      <h2>Upgrades (In progress)</h2>
+      <p>
+        This section is for upgrades.
+        <br />
+        <strong>If you do not use a certain category (Ex. No natural aspiration) just leave it as N/A</strong>
+        <br />If you leave something stock (Ex. tire width), or leave the default settings for a category, you should still
+        put in the stock value.
+      </p>
+    </section>
+
+    <section>
+      <h2>Swaps</h2>
+      <h3>Engine</h3>
+      <div class="row">
+        <EngineSwapSelect v-model="form.swaps.engine" :car="form.model" />
+      </div>
+    </section>
+    <section>
       <h2>Tires</h2>
       <div class="row">
         <NumberInput v-model="form.tires.front" label="Front" required min="0.0" step="0.01" />
@@ -153,6 +176,8 @@
 import { computed, reactive } from 'vue';
 import NumberInput from './NumberInput.vue';
 import UnitSelect from './UnitSelect.vue';
+import MakeModelSelect from './MakeModelSelect.vue';
+import EngineSwapSelect from './EngineSwapSelect.vue';
 
 const suffixes = ['th', 'st', 'nd', 'rd'];
 
@@ -162,6 +187,8 @@ function suffix(n: number) {
 }
 
 const form = reactive({
+  make: '',
+  model: '',
   tires: {
     front: '',
     rear: '',
@@ -184,7 +211,7 @@ const form = reactive({
   springs: {
     front: '',
     rear: '',
-    units: 'lbs' as 'lbs' | 'kgf' | 'n/mm',
+    units: 'lbs/in' as 'lbs/in' | 'kgf' | 'n/mm',
   },
   rideHeight: {
     front: '',
@@ -202,7 +229,7 @@ const form = reactive({
   aero: {
     front: '',
     rear: '',
-    units: 'lbs' as 'lbs' | 'kgf' | 'n/mm',
+    units: 'lbs/in' as 'lbs/in' | 'kgf' | 'n/mm',
   },
   brake: {
     bias: '50',
@@ -218,7 +245,10 @@ const form = reactive({
       decel: '',
     },
     center: '50',
-  }
+  },
+  swaps: {
+    engine: '',
+  },
 });
 
 const gears = computed(() => form.gears.slice(1));
