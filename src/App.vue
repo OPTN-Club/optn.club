@@ -12,6 +12,6 @@
 import { reactive, ref } from 'vue';
 import AppHeader from './components/AppHeader.vue'
 import NumberInput from './components/NumberInput.vue';
-import TuneSettingsForm from './components/TuneSettingsForm.vue';
+import TuneSettingsForm from './components/CarSettingsForm.vue';
 
 </script>

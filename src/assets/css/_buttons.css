@@ -1,0 +1,41 @@
+@layer base {
+  button,
+  button[type='button'],
+  button[type='reset'],
+  button[type='submit'] {
+    @apply
+      px-2
+      flex
+      items-center
+      justify-center
+      rounded
+      text-fot-blue-darkest
+      font-bold
+      bg-fot-yellow
+      border
+      border-fot-yellow
+      h-8;
+
+    /* padding: 20px;
+    border-radius: 10px;
+    font-size: 2rem;
+    min-width: 250px;
+    width: 100%;
+    margin: 0 auto 20px;
+    display: block;
+    background-color: #FFBD33; */
+  }
+
+  button.large {
+    @apply
+      p-5
+      rounded-lg
+      text-3xl
+      h-auto;
+  }
+
+  button.green {
+    @apply bg-fot-green
+      border-fot-green;
+  }
+}

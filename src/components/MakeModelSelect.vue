@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import makes from '../lib/makes';
 import byMake from '../lib/models';
+import { sortUsingProp } from '../lib/utils';
+import SelectControl from './SelectControl.vue';
 
 const props = defineProps<{
   make: string;
@@ -13,35 +15,53 @@ const emit = defineEmits<{
   (e: 'update:model', v: string): void,
 }>();
 
+const makeOptions = computed(() => makes.map((m) => ({
+  value: m,
+})));
+
 const modelOptions = computed(() => {
   if (!props.make) return [];
-  return byMake[props.make] || [];
-})
+  const models = byMake[props.make] || [];
+  return sortUsingProp(models.map((m) => ({
+    value: m.fullname,
+    label: m.shortname,
+  })), 'label', 'desc');
+});
 
-function onMakeInput(e: Event) {
-  emit('update:make', (e.target as HTMLSelectElement).value);
+watch(modelOptions, (current) => {
+  if (current.length === 1) {
+    emit('update:model', current[0].value);
+  }
+});
+
+function onMakeInput(value: string) {
+  emit('update:make', value);
   emit('update:model', '');
 }
 
-function onModelInput(e: Event) {
-  emit('update:model', (e.target as HTMLSelectElement).value);
+function onModelInput(value: string) {
+  emit('update:model', value);
 }
 
 </script>
 
 <template>
   <div class="row">
-    <div class="control">
-      <label>Manufacturer</label>
-      <select :value="make" @input="onMakeInput">
-        <option v-for="name in makes" :key="name" :value="name">{{ name }}</option>
-      </select>
-    </div>
-    <div class="control">
-      <label>Model</label>
-      <select :value="model" @input="onModelInput" :disabled="!make" style="min-width: 275px;">
-        <option v-for="m in modelOptions" :key="m.fullname" :value="m.fullname">{{ m.shortname }}</option>
-      </select>
-    </div>
+    <SelectControl
+      :modelValue="make"
+      label="Manufacturer"
+      class="w-full sm:w-auto"
+      :options="makeOptions"
+      @update:modelValue="onMakeInput"
+    />
+    <SelectControl
+      :modelValue="model"
+      label="Model"
+      :disabled="!make"
+      :options="modelOptions"
+      style="min-width: 275px;"
+      class="w-full sm:w-auto"
+      @update:modelValue="onModelInput"
+    />
   </div>
 </template>

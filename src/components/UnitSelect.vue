@@ -1,13 +1,6 @@
-<template>
-  <div class="control">
-    <label>{{ label }}</label>
-    <select :value="modelValue" @input="onInput">
-      <option v-for="option in options" :key="option.value" :value="option.value">{{ option.label }}</option>
-    </select>
-  </div>
-</template>
-
-<script setup lang="ts">import { computed } from 'vue';
+<script setup lang="ts">
+import { computed } from 'vue';
+import SelectControl from './SelectControl.vue';
 
 const props = defineProps<{
   modelValue: string,
@@ -19,7 +12,7 @@ const emit = defineEmits<{
   (e: 'update:modelValue', v: string): void,
 }>();
 
-function onInput(e: Event) {
+function onUpdate(e: Event) {
   const value = (e.target as HTMLInputElement).value;
   emit('update:modelValue', value)
 }
@@ -43,3 +36,12 @@ const units = {
 const options = computed(() => units[props.type]);
 
 </script>
+
+<template>
+  <SelectControl
+    :modelValue="modelValue"
+    :label="label"
+    :options="options"
+    @update:modelValue="onUpdate"
+  />
+</template>

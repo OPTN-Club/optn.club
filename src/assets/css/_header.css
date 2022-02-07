@@ -1,0 +1,91 @@
+header {
+  @apply
+    relative
+    px-4
+    py-4
+    flex
+    justify-between;
+}
+
+header h1 {
+  @apply m-0;
+}
+
+header p {
+  /* margin: 0;
+  width: 300px;
+  font-size: 13px; */
+}
+
+header p.view {
+  display: none;
+  font-weight: 700;
+  /* text-shadow:rgba(255,255,255,0.9) 0 1px 0; */
+  -webkit-font-smoothing: antialiased;
+}
+
+header p.view a {
+  color: #3e6c9b;
+}
+
+header p.view small {
+  font-weight: 400;
+}
+
+.link-bar {
+  @apply
+    m-0
+    p-0
+    list-none
+    h-11
+    py-[1px]
+    bg-fot-blue
+    rounded
+    w-auto
+    flex;
+}
+
+.link-bar li {
+  @apply min-w-[80px];
+}
+
+.link-bar li + li {
+  @apply border-l
+    border-l-fot-blue-light;
+}
+
+.link-bar a {
+  @apply
+    text-xs
+    leading-none
+    text-offwhite
+    text-center
+    font-semibold
+    h-full
+    flex
+    flex-col
+    justify-center;
+
+  /* line-height: 1;
+  font-size: 11px;
+  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  font-weight: 400;
+  text-shadow: rgba(0, 0, 0, 0.4) 0 -1px 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; */
+}
+
+.link-bar a strong {
+  @apply
+    text-base
+    text-offwhite
+    leading-none;
+  /* font-size: 14px;
+  display: block;
+  color: #fff;
+  -webkit-font-smoothing: antialiased; */
+}
