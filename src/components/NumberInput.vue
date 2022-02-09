@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import InputControl from './InputControl.vue';
+
 const props = withDefaults(defineProps<{
   modelValue: string,
   label: string,
@@ -13,6 +14,7 @@ const props = withDefaults(defineProps<{
   step: 1,
   min: 0,
   max: 9999,
+  errorMsg: '',
 });
 
 const emit = defineEmits<{
@@ -20,7 +22,7 @@ const emit = defineEmits<{
 }>();
 
 function onUpdate(value: string) {
-  emit('update:modelValue', value)
+  emit('update:modelValue', value);
 }
 </script>
 

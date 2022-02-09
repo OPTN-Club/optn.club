@@ -1,4 +1,6 @@
 <script lang="ts">
+import { v1 as uuid } from 'uuid';
+
 export default {
   inheritAttrs: false,
 };
@@ -20,23 +22,29 @@ const props = withDefaults(defineProps<{
   errorMsg: '',
   required: false,
   type: 'text',
+  step: 1,
+  min: 0,
+  max: 9999,
 });
 
 const emit = defineEmits<{
   (e: 'update:modelValue', v: string): void,
 }>();
 
+const id = uuid();
+
 function onInput(e: Event) {
   const value = (e.target as HTMLInputElement).value;
-  emit('update:modelValue', value)
+  emit('update:modelValue', value);
 }
 
 </script>
 
 <template>
   <div class="control">
-    <label :class="{ required }">{{ label }}</label>
+    <label :for="`#${id}`" :class="{ required }">{{ label }}</label>
     <input
+      :id="id"
       :value="modelValue"
       :type="type"
       :required="required"
