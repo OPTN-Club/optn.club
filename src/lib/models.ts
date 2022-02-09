@@ -1,5 +1,5 @@
 import makes from './makes';
-import importedCars from './cars.json';
+import importedCars from './cars';
 import { sortUsingProp } from './utils';
 
 interface BaseCarModel {
@@ -96,12 +96,14 @@ export interface Car {
 
 const cars: Car[] = importedCars;
 
+const byFullname: Record<string, Car> = {};
 const byMake: Record<string, CarModel[]> = makes.reduce((acc, make) => ({
   ...acc,
   [make]: [],
 }), {});
 
 cars.forEach((car) => {
+  byFullname[car.fullname] = car;
   if (car.fh5) {
     if (!(car.make in byMake)) console.log(`${car.make} not found in byMake`);
     byMake[car.make].push({
@@ -119,4 +121,7 @@ Object.keys(byMake).forEach((make) => {
   byMake[make] = sortUsingProp(byMake[make], 'sortname');
 });
 
-export default byMake;
+export {
+  byFullname,
+  byMake,
+};

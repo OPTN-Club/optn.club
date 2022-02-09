@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue';
 import makes from '../lib/makes';
-import byMake from '../lib/models';
+import { byMake } from '../lib/models';
 import { sortUsingProp } from '../lib/utils';
 import SelectControl from './SelectControl.vue';
 

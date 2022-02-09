@@ -10,6 +10,7 @@ const props = withDefaults(defineProps<{
   min?: number | string,
   max?: number | string,
 }>(), {
+  label: '',
   required: false,
   step: 1,
   min: 0,

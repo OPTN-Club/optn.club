@@ -3,10 +3,23 @@ module.exports = {
 
   env: {
     node: true,
+    'vue/setup-compiler-macros': true,
   },
 
   parserOptions: {
     parser: '@typescript-eslint/parser',
+  },
+
+  settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+    'import/resolver': {
+      typescript: {
+        project: '.',
+        alwaysTryTypes: true,
+      }
+    }
   },
 
   ignorePatterns: [
@@ -50,16 +63,6 @@ module.exports = {
 
     }],
     'no-param-reassign': ['error', { props: false }],
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
-      },
-    ],
     'spaced-comment': [
       'error',
       'always',
@@ -82,15 +85,17 @@ module.exports = {
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': ['error'],
+    '@typescript-eslint/no-unused-vars': ['off'],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'no-spaced-func': 'off', // deprecated, so disabling here
+    'func-call-spacing': 'off',
+    '@typescript-eslint/func-call-spacing': ['error'],
 
     // ** Vue specific rules ** //
     'vue/max-attributes-per-line': ['error', {
-      singleline: 3,
+      singleline: 2,
       multiline: {
         max: 1,
-        allowFirstLine: false,
       },
     }],
     'vue/singleline-html-element-content-newline': ['off', {
@@ -99,8 +104,29 @@ module.exports = {
       ignores: ['pre', 'textarea'],
     }],
     'vue/attributes-order': 'error',
+    'vue/attribute-hyphenation': ['error', 'never'],
     'vue/order-in-components': 'error',
     'vue/this-in-template': 'error',
+    'vue/v-on-event-hyphenation': ['error', 'never'],
+    'vuejs-accessibility/form-control-has-label': 'off',
+    'vuejs-accessibility/label-has-for': [
+      'error',
+      {
+        required: {
+          some: ['nesting', 'id'],
+        },
+      },
+    ],
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
   },
 
   overrides: [

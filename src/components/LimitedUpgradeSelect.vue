@@ -21,7 +21,7 @@ function onUpdate(value: string) {
     :modelValue="modelValue"
     :label="label"
     :type="LimitedUpgrade"
-    root-class="upgrade-select"
+    rootClass="upgrade-select"
     @update:modelValue="onUpdate"
   />
 </template>

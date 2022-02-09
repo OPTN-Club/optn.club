@@ -28,9 +28,9 @@
 
   button.large {
     @apply
-      p-5
+      p-2
       rounded-lg
-      text-3xl
+      text-2xl
       h-auto;
   }
 

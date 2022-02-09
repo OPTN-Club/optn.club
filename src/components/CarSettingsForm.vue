@@ -1,12 +1,23 @@
 <script setup lang="ts">
 import { reactive, ref, watch } from 'vue';
-import { Drivetrain, ForceUnit, FullUpgrade, LengthUnit, LimitedUpgrade, PressureUnit, RimStyleType, SettingsForm, TireCompound, TransmissionUpgrade, Upgrade } from '../lib/types';
+import {
+  Drivetrain,
+  ForceUnit,
+  FullUpgrade,
+  LengthUnit,
+  LimitedUpgrade,
+  PressureUnit,
+  RimStyleType,
+  SettingsForm,
+  TireCompound,
+  TransmissionUpgrade,
+  Upgrade,
+} from '../lib/types';
 import MakeModelSelect from './MakeModelSelect.vue';
 import BuildSettingsForm from './BuildSettingsForm.vue';
 import TuneSettingsForm from './TuneSettingsForm.vue';
 import GlobalUnitSelect from './GlobalUnitSelect.vue';
 import FormattedTuneTextarea from './FormattedTuneTextarea.vue';
-
 
 const form = reactive<SettingsForm>({
   make: '',
@@ -56,7 +67,7 @@ const form = reactive<SettingsForm>({
     },
     brake: {
       bias: '50',
-      pressure: '100'
+      pressure: '100',
     },
     diff: {
       front: {
@@ -161,16 +172,16 @@ watch(globalUnit, (current) => {
     <TuneSettingsForm v-model="form.tune" />
 
     <FormattedTuneTextarea :form="form" />
-    <section>
+    <!-- <section>
       <div class="column actions">
         <button type="submit" class="large w-full mb-4">Generate</button>
-        <textarea class="formatted-text" id="result" name="result" rows="10" cols="25"></textarea>
+        <textarea id="result" class="formatted-text" name="result" rows="10" cols="25" />
         <button
           id="clipboard-button"
           type="button"
           class="green w-full mt-4 mb-10"
         >Copy To Clipboard</button>
       </div>
-    </section>
+    </section> -->
   </form>
 </template>
