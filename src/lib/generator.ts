@@ -1,9 +1,15 @@
 import { convertForce, convertLength, convertPressure } from './conversions';
-import { byFullname, Car } from './models';
+import { byFullname } from './models';
 import {
   BuildSettings,
   ForceUnit,
-  FrontAndRearSettings, FrontAndRearWithUnits, LengthUnit, PressureUnit, SettingsForm, TuneSettings,
+  FrontAndRearSettings,
+  FrontAndRearWithUnits,
+  LengthUnit,
+  PressureUnit,
+  SettingsForm,
+  TuneSettings,
+  Car,
 } from './types';
 import { ensureArray, suffix as suffixize } from './utils';
 
