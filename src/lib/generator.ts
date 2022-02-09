@@ -171,12 +171,12 @@ function formatDifferential(tune: TuneSettings, car: Car): string[] {
   const front = ['Front', 'N/A', 'N/A'];
   const rear = ['Rear', 'N/A', 'N/A'];
   const body: string[][] = [];
-  if (['fwd', 'awd'].includes(car.drive.toLowerCase())) {
+  if (['fwd', 'awd'].includes((car.drive || 'awd').toLowerCase())) {
     body.push(front);
     front[1] = `${tune.diff.front.accel}%`;
     front[2] = `${tune.diff.front.decel}%`;
   }
-  if (['rwd', 'awd'].includes(car.drive.toLowerCase())) {
+  if (['rwd', 'awd'].includes((car.drive || 'awd').toLowerCase())) {
     body.push(rear);
     rear[1] = `${tune.diff.rear.accel}%`;
     rear[2] = `${tune.diff.rear.decel}%`;
@@ -184,7 +184,7 @@ function formatDifferential(tune: TuneSettings, car: Car): string[] {
 
   const table = formatTableArray(header, body);
 
-  if (car.drive.toLowerCase() === 'awd') {
+  if ((car.drive || 'awd').toLowerCase() === 'awd') {
     table.push(...formatTableArray(
       ['Differential', 'Center'],
       [['Balance', `${tune.diff.center}%`]],
@@ -301,6 +301,9 @@ export function formatBuild(build: BuildSettings): string[] {
 }
 
 export function generateRedditMarkdown(form: SettingsForm) {
+  if (!form.model) {
+    return 'A Make and Model must be selected before output can be generated';
+  }
   return [
     ...formatTune(form.tune, form.model),
     ...formatBuild(form.build),
