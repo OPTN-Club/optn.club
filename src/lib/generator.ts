@@ -1,6 +1,9 @@
-import { convertPressure } from './conversions';
-import { BuildSettings, FrontAndRearSettings, FrontAndRearWithUnits, PressureUnit, TuneSettings } from './types';
-import { ensureArray, suffix } from './utils';
+import { convertForce, convertLength, convertPressure } from './conversions';
+import {
+  ForceUnit,
+  FrontAndRearSettings, LengthUnit, PressureUnit, TuneSettings,
+} from './types';
+import { ensureArray, suffix as suffixize } from './utils';
 
 interface TableRow {
   label: string;
@@ -82,6 +85,42 @@ function formatPressure(pressure: string, unit: PressureUnit) {
   ];
 }
 
+function formatForce(force: string, unit: ForceUnit) {
+  const f = parseFloat(force).toFixed(1);
+  if (unit === ForceUnit.kgf) {
+    return [
+      `${f} kgf/mm`,
+      `${convertForce(f, unit, ForceUnit.lbs)} lbs/in`,
+    ];
+  }
+  if (unit === ForceUnit.lbs) {
+    return [
+      `${f} lbs/in`,
+      `${convertForce(f, unit, ForceUnit.kgf)} kgf/mm`,
+    ];
+  }
+  return [
+    `${f} ${ForceUnit.nmm}`,
+    `${convertForce(f, unit, ForceUnit.lbs)} lbs/in`,
+    `${convertForce(f, unit, ForceUnit.kgf)} kgf/mm`,
+  ];
+}
+
+function formatLength(length: string, unit: LengthUnit) {
+  const l = parseFloat(length).toFixed(1);
+  const c = convertLength(length, unit);
+  if (unit === LengthUnit.cm) {
+    return [
+      `${l} cm`,
+      `${c} in`,
+    ];
+  }
+  return [
+    `${l} in`,
+    `${c} cm`,
+  ];
+}
+
 // export function formatBuild(build: BuildSettings): string[] {
 
 // }
@@ -91,7 +130,7 @@ function formatGears(tune: TuneSettings): TableRow[] {
   for (let index = 1; index < tune.gears.length; index++) {
     const value = tune.gears[index];
     if (value) {
-      rows.push({ label: `${index}${suffix(index)}`, values: [value] });
+      rows.push({ label: `${index}${suffixize(index)}`, values: [value] });
     }
   }
 
@@ -108,47 +147,22 @@ export function formatTune(tune: TuneSettings): string[] {
     ...formatFrontRear('Alignment', 'Camber', tune.camber, '°'),
     ...formatFrontRear('Alignment', 'Toe', tune.toe, '°'),
     ...formatTable('Alignment', 'Caster', [{ label: 'Front', values: [tune.caster] }]),
+    ...formatFrontRear('Antiroll Bars', 'Stiffness', tune.arb),
+    ...formatTable('Springs', 'Tension', [
+      { label: 'Front', values: formatForce(tune.springs.front, tune.springs.units) },
+      { label: 'Rear', values: formatForce(tune.springs.rear, tune.springs.units) },
+    ]),
+    ...formatTable('Springs', 'Ride Height', [
+      { label: 'Front', values: formatLength(tune.rideHeight.front, tune.rideHeight.units) },
+      { label: 'Rear', values: formatLength(tune.rideHeight.rear, tune.rideHeight.units) },
+    ]),
+    ...formatFrontRear('Damping', 'Rebound Stiffness', tune.damping),
+    ...formatFrontRear('Damping', 'Bump Stiffness', tune.bump),
   ];
 }
 
-
 // function generateText() {
 //   const lines = [];
-//   lines.push('Alignment | Camber');
-//   lines.push(':--|--:');
-//   lines.push(`Front | ${camber[0].value}°`);
-//   lines.push(`Rear | ${camber[1].value}°`);
-//   lines.push('\n');
-
-//   lines.push('Alignment | Toe');
-//   lines.push(':--|--:');
-//   lines.push(`Front | ${toe[0].value}°`);
-//   lines.push(`Rear | ${toe[1].value}°`);
-//   lines.push('\n');
-
-
-//   lines.push('Alignment | Caster');
-//   lines.push(':--|--:');
-//   lines.push(`Front Caster | ${caster[0].value}`);
-//   lines.push('\n');
-
-//   lines.push('Antiroll Bars | Stiffness');
-//   lines.push(':--|--:');
-//   lines.push(`Front | ${antirollBars[0].value}`);
-//   lines.push(`Rear | ${antirollBars[1].value}`);
-//   lines.push('\n');
-
-//   lines.push('Springs | Tension');
-//   lines.push(':--|--:');
-//   lines.push(`Front | ${springTension[0].value} ${springsUnit}`);
-//   lines.push(`Rear | ${springTension[1].value} ${springsUnit}`);
-//   lines.push('\n');
-
-//   lines.push('Springs | Ride Height');
-//   lines.push(':--|--:');
-//   lines.push(`Front | ${rideHeight[0].value} ${rideheightUnit}`);
-//   lines.push(`Rear | ${rideHeight[1].value} ${rideheightUnit}`);
-//   lines.push('\n');
 
 //   lines.push('Damping | Rebound Stiffness');
 //   lines.push(':--|--:');
