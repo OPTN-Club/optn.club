@@ -37,8 +37,8 @@ export enum LimitedUpgrade {
 export enum FullUpgrade {
   na = 'N/A',
   stock = 'Stock',
-  sport = 'Sport',
   street = 'Street',
+  sport = 'Sport',
   race = 'Race',
   rally = 'Rally',
   drift = 'Drift',
@@ -77,7 +77,7 @@ export enum RimStyleType {
   specialized = 'Specialized',
 }
 
-export enum Drivetrain {
+export enum DriveType {
   na = '',
   fwd = 'FWD',
   rwd = 'RWD',
@@ -89,8 +89,22 @@ export interface FrontAndRearSettings {
   rear: string;
 }
 
-export interface FrontAndRearWithUnits<U extends PressureUnit | ForceUnit | LengthUnit> extends FrontAndRearSettings {
+export type UnitOfMeasure = PressureUnit | ForceUnit | LengthUnit;
+
+export interface FrontAndRearWithUnits<U extends UnitOfMeasure = UnitOfMeasure> extends FrontAndRearSettings {
   units: U;
+}
+
+export interface DifferentialTuneSettings {
+  front: {
+    accel: string;
+    decel: string;
+  },
+  rear: {
+    accel: string;
+    decel: string;
+  },
+  center: string;
 }
 
 export interface TuneSettings {
@@ -109,23 +123,13 @@ export interface TuneSettings {
     bias: string;
     pressure: string;
   },
-  diff: {
-    front: {
-      accel: string;
-      decel: string;
-    },
-    rear: {
-      accel: string;
-      decel: string;
-    },
-    center: string;
-  },
+  diff: DifferentialTuneSettings,
 }
 
 export interface BuildSettings {
   conversions: {
     engine: string;
-    drivetrain: Drivetrain;
+    drivetrain: DriveType;
     aspiration: string;
     bodyKit: string;
   };

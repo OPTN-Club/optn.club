@@ -1,7 +1,11 @@
 <template>
   <header>
     <div class="md:mr-8 text-center md:text-left">
-      <img src="/images/FOT_logo_color.png" alt="FOT Logo" class="w-auto" />
+      <img
+        src="/images/FOT_logo_color.png"
+        alt="FOT Logo"
+        class="w-auto"
+      >
     </div>
 
     <div>

@@ -1,12 +1,11 @@
-<script setup lang="ts">import { computed } from 'vue';
+<script setup lang="ts">
+import { computed } from 'vue';
 import { generateRedditMarkdown } from '../lib/generator';
-import { SettingsForm } from '../lib/types';
+import { useFormattingForm } from '../lib/useFormattingForm';
 
-const props = defineProps<{
-  form: SettingsForm;
-}>();
+const { form } = useFormattingForm();
 
-const text = computed(() => generateRedditMarkdown(props.form));
+const text = computed(() => generateRedditMarkdown(form));
 
 function onCopyClick() {
   navigator.clipboard.writeText(text.value);

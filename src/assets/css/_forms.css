@@ -47,7 +47,8 @@ input[type=number] {
 
 input[type=checkbox],
 input[type=radio] {
-  @apply w-auto;
+  @apply w-auto
+    h-auto;
 }
 
 select {

@@ -1,4 +1,4 @@
-import { ForceUnit, LengthUnit, PressureUnit, SelectOption } from './types';
+import { SelectOption } from './types';
 
 export function stringCompareFunction(a: string, b: string): number {
   const upperA = a.toUpperCase();
@@ -38,13 +38,13 @@ export function sortUsingProp<T>(ary: T[], key: keyof PickByValue<T, string | nu
 
 const suffixes = ['th', 'st', 'nd', 'rd'];
 
-export function suffix(n: number) {
-  const d = (n | 0) % 100;
+export function addSuffix(n: number) {
+  const d = (n || 0) % 100;
   return d > 3 && d < 21 ? 'th' : suffixes[d % 10] || 'th';
 }
 
 export function enumKeys<O extends object, K extends keyof O = keyof O>(obj: O): K[] {
-  return Object.keys(obj).filter(k => Number.isNaN(+k)) as K[];
+  return Object.keys(obj).filter((k) => Number.isNaN(+k)) as K[];
 }
 
 export function enumToOptions<E extends object>(source: E): SelectOption<E[keyof E]>[] {
@@ -56,4 +56,9 @@ export function enumToOptions<E extends object>(source: E): SelectOption<E[keyof
 
 export function ensureArray<T>(value: T | T[]): T[] {
   return Array.isArray(value) ? value : [value];
+}
+
+export function formatFloat(value: string | number, precision: number, suffix: string) {
+  const f = typeof value === 'string' ? parseFloat(value) : value;
+  return `${f.toFixed(precision)}${suffix}`;
 }
