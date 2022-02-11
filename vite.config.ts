@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     port: 3333,
   },
-  base: '/ForzaOpenTuneFormatter/',
+  base: '',
   build: {
     outDir: 'docs',
   },
