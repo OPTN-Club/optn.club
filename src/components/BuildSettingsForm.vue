@@ -63,7 +63,7 @@ const {
       />
       <LimitedUpgradeSelect
         v-model="form.build.engine.oilCooling"
-        label="Oil Coolling"
+        label="Oil Cooling"
       />
       <UpgradeSelect v-model="form.build.engine.flywheel" label="Flywheel" />
     </div>
