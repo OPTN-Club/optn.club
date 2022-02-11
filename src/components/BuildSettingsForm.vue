@@ -35,10 +35,7 @@ const {
     <div class="row">
       <UpgradeSelect v-model="form.build.engine.intake" label="Intake" />
       <UpgradeSelect v-model="form.build.engine.fuelSystem" label="Fuel System" />
-      <LimitedUpgradeSelect
-        v-model="form.build.engine.ignition"
-        label="ignition"
-      />
+      <LimitedUpgradeSelect v-model="form.build.engine.ignition" label="Ignition" />
       <UpgradeSelect v-model="form.build.engine.exhaust" label="Exhaust" />
       <UpgradeSelect v-model="form.build.engine.camshaft" label="Camshaft" />
       <UpgradeSelect v-model="form.build.engine.valves" label="Valves" />
