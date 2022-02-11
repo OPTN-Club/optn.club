@@ -1,0 +1,77 @@
+@layer base {
+  html {
+    background: #383838 linear-gradient(#252525, #151515) fixed;
+    height: 100%
+  }
+
+  body {
+    font: 14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: var(--offwhite);
+  }
+
+  .wrapper {
+    @apply
+      max-w-3xl
+      my-0
+      mx-auto
+      bg-fot-blue-darkest;
+
+    /* width: 740px;
+    margin: 0 auto;
+    background-color: rgb(24, 25, 26);
+    box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0, 0.45) 0 0 0; */
+  }
+
+  a {
+    @apply
+      text-fot-blue-light
+      no-underline;
+  }
+
+  p, ul, ol, table, pre, dl {
+    margin: 0 0 20px;
+  }
+
+  p {
+    padding: 0;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply p-0
+      font-bold
+      text-fot-green;
+  }
+
+  h1 {
+    @apply
+      text-fot-blue
+      text-3xl;
+  }
+
+  h2 {
+    @apply
+      text-fot-blue-light
+      text-2xl;
+  }
+
+  h3 {
+    @apply text-xl;
+  }
+
+  h4 {
+    font-size: 1.1rem;
+  }
+
+  h2 + h3 {
+    @apply mt-2;
+  }
+
+  p, span, label {
+    font-size: 1rem;
+  }
+
+  strong {
+    color: var(--light-blue);
+    font-weight: 700;
+  }
+}

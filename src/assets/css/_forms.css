@@ -1,0 +1,177 @@
+
+
+label {
+  @apply
+    font-bold
+    mb-1
+    block;
+}
+
+label.checkbox,
+label.radio {
+  @apply font-normal;
+}
+
+label.inline.checkbox + label.inline.checkbox,
+label.inline.radio + label.inline.radio {
+  @apply ml-4;
+}
+
+input,
+select,
+textarea {
+  @apply
+    px-2
+    py-1
+    border
+    border-gray-400
+    rounded
+    text-offwhite
+    bg-gray-900
+    outline-none
+    leading-5;
+}
+
+input,
+select {
+  @apply h-8;
+}
+
+textarea {
+  @apply resize-y;
+}
+
+input[type=number] {
+  @apply w-24;
+}
+
+input[type=checkbox],
+input[type=radio] {
+  @apply w-auto
+    h-auto;
+}
+
+select {
+  @apply min-w-[96px];
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  @apply
+    border-fot-yellow
+    shadow-inner;
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled {
+  @apply
+    border-gray-500
+    bg-gray-700
+    cursor-not-allowed;
+}
+
+input.touched:invalid,
+select.touched:invalid,
+textarea.touched:invalid {
+  border: 1px solid #dc3545;
+  box-shadow: inset 0 1px 1px rgb(0, 0, 0, .08), 0 0 8px #dc3545;
+}
+
+input.touched:invalid~label,
+select.touched:invalid~label,
+textarea.touched:invalid~label,
+.validation-message {
+  color: #dc3545;
+}
+
+input.touched:invalid~.validation-message,
+select.touched:invalid~.validation-message,
+textarea.touched:invalid~.validation-message {
+  opacity: 1;
+}
+
+.validation-message {
+  @apply
+    text-sm;
+  opacity: 0;
+  font-size: 0.8rem;
+  margin-top: 3px;
+  min-width: 230px;
+}
+
+.row {
+  @apply
+    flex
+    flex-wrap
+    items-end;
+}
+
+.gears-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  column-gap: 30px;
+  row-gap: 8px;
+}
+
+.upgrade-select {
+  @apply w-28;
+}
+
+.upgrade-select label {
+  @apply
+    h-12
+    flex
+    items-end;
+}
+
+.row + h3 {
+  @apply mt-2;
+}
+
+.row > h3 {
+  @apply
+    w-24
+    mr-4
+    mb-2;
+}
+
+.column {
+  margin: 0 0 0;
+}
+
+.column.actions {
+  width: 66%;
+  margin: 0 auto;
+}
+
+.row > .control {
+  @apply
+    mr-4
+    mb-2;
+}
+
+.row > .control:first-child {
+  @apply ml-0;
+}
+
+.row > .control:last-child {
+  @apply mr-0;
+}
+
+.column > .control + .control {
+  @apply mt-2;
+}
+
+.row.bottom {
+  @apply items-end;
+}
+
+.h2 + .row.wrap.bottom {
+  @apply mb-0;
+}
+
+.engine .control {
+  min-width: 100px;
+}
