@@ -5,6 +5,7 @@ import NumberInput from './NumberInput.vue';
 import UnitSelect from './UnitSelect.vue';
 import useUpgrades from '../lib/useUpgrades';
 import { useFormattingForm } from '../lib/useFormattingForm';
+import { PressureUnit } from '../lib/types';
 
 const {
   form,
@@ -15,6 +16,8 @@ const {
 } = useFormattingForm();
 
 const gears = computed(() => form.tune.gears.slice(1, show.value.gears.count + 1));
+
+const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.bar ? '0.01' : '0.1'));
 
 </script>
 <template>
@@ -40,14 +43,14 @@ const gears = computed(() => form.tune.gears.slice(1, show.value.gears.count + 1
         label="Front"
         required
         min="0.0"
-        step="0.1"
+        :step="tirePressureStep"
       />
       <NumberInput
         v-model="form.tune.tires.rear"
         label="Rear"
         required
         min="0.0"
-        step="0.1"
+        :step="tirePressureStep"
       />
       <UnitSelect
         v-model="form.tune.tires.units"
@@ -73,6 +76,7 @@ const gears = computed(() => form.tune.gears.slice(1, show.value.gears.count + 1
         v-model="form.tune.gears[index + 1]"
         :disabled="!show.gears.final && show.gears.count >= index"
         :label="`${index + 1}${addSuffix(index + 1)}`"
+        min="0"
         step="0.01"
       />
     </div>
