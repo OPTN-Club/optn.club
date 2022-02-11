@@ -22,12 +22,12 @@ import useUpgrades, { UseUpgrades } from './useUpgrades';
 
 const providerKey = 'formatting-form';
 
-// const testing = true;
+const testing = true;
 
 function createFormattingForm(): SettingsForm {
-  // if (testing) {
-  //   return getTestForm();
-  // }
+  if (testing) {
+    return getTestForm();
+  }
   return {
     make: '',
     model: '',
