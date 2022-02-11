@@ -14,6 +14,11 @@ function onCopyClick() {
 <template>
   <section>
     <div class="column actions">
+      <p class="font-bold text-center">
+        NOTE:<br>
+        Be sure the editor is in &quot;Markdown&quot; mode<br>
+        when creating your post on Reddit!
+      </p>
       <button
         type="button"
         class="large w-full mt-4 mb-4"
