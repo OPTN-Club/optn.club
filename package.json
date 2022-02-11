@@ -7,6 +7,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "express": "^4.17.2",
+    "serve-static": "^1.14.2",
     "uuid": "^8.3.2",
     "vue": "^3.2.25"
   },
