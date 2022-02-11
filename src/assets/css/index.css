@@ -118,10 +118,6 @@ footer a {
     flex-direction: column;
   }
 
-  .link-bar {
-    margin: 16px auto 0;
-  }
-
   .row .gears-grid {
     grid-template-columns: 1fr;
   }

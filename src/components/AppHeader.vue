@@ -8,8 +8,8 @@
       >
     </div>
 
-    <div>
-      <ul class="link-bar ml-2">
+    <div class="flex flex-col">
+      <ul class="link-bar">
         <li>
           <a href="https://discord.com">
             Join the

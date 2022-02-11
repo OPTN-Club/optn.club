@@ -34,7 +34,8 @@ header p.view small {
 
 .link-bar {
   @apply
-    m-0
+    my-4
+    mx-auto
     p-0
     list-none
     h-11
@@ -88,4 +89,8 @@ header p.view small {
   display: block;
   color: #fff;
   -webkit-font-smoothing: antialiased; */
+}
+
+@screen md {
+
 }
