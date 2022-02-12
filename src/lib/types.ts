@@ -19,6 +19,24 @@ export enum LengthUnit {
   in = 'in',
 }
 
+export interface ForceValues<T extends string | number> {
+  kgf: T;
+  lbs: T;
+  newtons: T;
+}
+
+export interface PressureValues<T extends string | number> {
+  bar: T;
+  psi: T;
+}
+
+export interface LengthValues<T extends string | number> {
+  cm: T;
+  in: T;
+}
+
+export type UnitValues<T extends string | number> = ForceValues<T> | PressureValues<T> | LengthValues<T>;
+
 export enum Upgrade {
   na = 'N/A',
   stock = 'Stock',
