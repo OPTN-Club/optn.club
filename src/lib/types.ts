@@ -246,11 +246,11 @@ export interface Car {
   weight?: number | null;
   weightPerHp?: number | null;
   weightDistribution?: number | null;
-  displ?: number | null;
+  displ: number | null;
   aspiration: string;
   engineType: string;
   cylinders: number | string | null;
-  enginePlacement?: string;
+  enginePlacement: string;
   drive: string;
   rTireWidth: number | string | null;
   trackWidth: string;
@@ -282,7 +282,7 @@ export interface Car {
   unknown?: number;
   latestgame?: string;
   newtoForza?: string;
-  fh5?: string;
+  fh5: string;
   fh4?: string;
   fm7?: string;
   fh3?: string;
