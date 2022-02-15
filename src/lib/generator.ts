@@ -119,6 +119,10 @@ function formatAero(tune: TuneSettings): string[] {
 }
 
 function formatBrakes(tune: TuneSettings): string[] {
+  if (!tune.brake.bias && !tune.brake.pressure) {
+    return [];
+  }
+
   return formatTable(['Brakes', '%'], [
     ['Balance', formatFloat(tune.brake.bias, 0, '%')],
     ['Pressure', formatFloat(tune.brake.pressure, 0, '%')],
