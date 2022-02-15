@@ -61,10 +61,10 @@ export interface UseUpgrades {
 }
 
 function getGearCount(form: SettingsForm, car: ComputedRef<Car | null>): number {
-  if (gearRatios.includes(form.build.drivetrain.transmission)) {
-    return gearCounts[form.build.drivetrain.transmission];
-  }
-  return 6;
+  // if (gearRatios.includes(form.build.drivetrain.transmission)) {
+  //   return gearCounts[form.build.drivetrain.transmission];
+  // }
+  return 10; // Always return 10 for now, as a car might have 10 tunable gears with its stock transmission
 }
 
 // function hasAdjustableFrontAero(form: SettingsForm, car: ComputedRef<Car | null>): boolean {

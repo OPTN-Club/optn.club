@@ -60,11 +60,10 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
     </div>
   </section>
 
-  <section :class="{ disabled: !show.gears.final }">
+  <section>
     <h2>Gearing</h2>
     <NumberInput
       v-model="form.tune.gears[0]"
-      :disabled="!show.gears.final"
       label="Final Drive"
       min="0.0"
       step="0.01"
@@ -74,7 +73,6 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
         v-for="(value, index) in gears"
         :key="index"
         v-model="form.tune.gears[index + 1]"
-        :disabled="!show.gears.final && show.gears.count >= index"
         :label="`${index + 1}${addSuffix(index + 1)}`"
         min="0"
         step="0.01"
@@ -262,7 +260,6 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
     <div class="row">
       <NumberInput
         v-model="form.tune.brake.bias"
-        :disabled="!show.brakes"
         label="Balance"
         min="0"
         max="100"
@@ -270,7 +267,6 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
       />
       <NumberInput
         v-model="form.tune.brake.pressure"
-        :disabled="!show.brakes"
         label="Pressure"
         min="0"
         max="200"
