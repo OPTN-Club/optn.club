@@ -95,6 +95,13 @@ export enum RimStyleType {
   specialized = 'Specialized',
 }
 
+export enum TrackWidthType {
+  stock = 'Stock',
+  first = 'First',
+  second = 'Second',
+  third = 'Third',
+}
+
 export enum DriveType {
   na = '',
   fwd = 'FWD',
@@ -190,6 +197,10 @@ export interface BuildSettings {
       name: string;
     };
     rimSize: FrontAndRearSettings;
+    trackWidth: {
+      front: TrackWidthType;
+      rear: TrackWidthType;
+    };
   };
   aeroAndAppearance: {
     frontBumper: string;

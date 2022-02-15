@@ -211,9 +211,10 @@ function formatConversions(build: BuildSettings): string[] {
 function formatTiresAndRims(build: BuildSettings): string[] {
   return formatTable(['Tires And Rims', ''], [
     ['Compound', build.tiresAndRims.compound],
-    ['Width', `Front ${build.tiresAndRims.width.front} mm, Rear ${build.tiresAndRims.width.rear} mm`],
+    ['Tire Width', `Front ${build.tiresAndRims.width.front} mm, Rear ${build.tiresAndRims.width.rear} mm`],
     ['Rim Style', `${build.tiresAndRims.rimStyle.type} ${build.tiresAndRims.rimStyle.name}`],
     ['Rim Size', `Front ${build.tiresAndRims.rimSize.front} in, Rear ${build.tiresAndRims.rimSize.rear} in`],
+    ['Track Width', `Front ${build.tiresAndRims.trackWidth.front}, Rear ${build.tiresAndRims.trackWidth.rear}`],
   ]);
 }
 

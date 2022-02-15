@@ -17,6 +17,7 @@ import {
   DriveType,
   Car,
   SettingsForm,
+  TrackWidthType,
 } from './types';
 import useUpgrades, { UseUpgrades } from './useUpgrades';
 
@@ -141,6 +142,10 @@ function createFormattingForm(): SettingsForm {
         rimSize: {
           front: 'Stock',
           rear: 'Stock',
+        },
+        trackWidth: {
+          front: TrackWidthType.stock,
+          rear: TrackWidthType.stock,
         },
       },
       aeroAndAppearance: {

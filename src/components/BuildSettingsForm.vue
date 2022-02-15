@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  TransmissionUpgrade, TireCompound, RimStyleType,
+  TransmissionUpgrade, TireCompound, RimStyleType, TrackWidthType
 } from '../lib/types';
 import { useFormattingForm } from '../lib/useFormattingForm';
 import FullUpgradeSelect from './FullUpgradeSelect.vue';
@@ -115,7 +115,7 @@ const {
         :type="TireCompound"
       />
     </div>
-    <FrontRearInputs v-model="form.build.tiresAndRims.width" label="Width" />
+    <FrontRearInputs v-model="form.build.tiresAndRims.width" label="Tire Width" />
     <h3>Rims</h3>
     <div class="row">
       <EnumSelect
@@ -130,6 +130,19 @@ const {
       />
     </div>
     <FrontRearInputs v-model="form.build.tiresAndRims.rimSize" label="Rim Size" />
+    <h3>Track Width</h3>
+    <div class="row">
+      <EnumSelect
+        v-model="form.build.tiresAndRims.trackWidth.front"
+        label="Front"
+        :type="TrackWidthType"
+      />
+      <EnumSelect
+        v-model="form.build.tiresAndRims.trackWidth.rear"
+        label="Rear"
+        :type="TrackWidthType"
+      />
+    </div>
   </section>
 
   <section>
