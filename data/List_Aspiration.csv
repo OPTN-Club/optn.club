@@ -1,0 +1,9 @@
+AspirationID,Aspiration,DisplayName,ShortDisplayName,KeyPartEnum
+1,Natural,Normally Aspirated,NA,21
+2,Turbo,Turbocharged,T,24
+3,Twin Turbo,Twin Turbocharged,TT,25
+4,Quad Turbo,Quad Turbocharged,QT,26
+5,DSC,Positive Displacement Supercharged,PDSC,28
+6,CSC,Centrifugal Supercharged,CSC,27
+7,Both Turbo/SC,N/A,N/A,-1
+8,None,?,?,-1
