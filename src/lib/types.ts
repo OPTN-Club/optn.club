@@ -207,6 +207,7 @@ export interface BuildSettings {
     rearBumper: string;
     rearWing: string;
     sideSkirts: string;
+    hood: string;
   };
 }
 

@@ -153,6 +153,7 @@ function createFormattingForm(): SettingsForm {
         rearBumper: 'N/A',
         rearWing: 'Stock',
         sideSkirts: 'N/A',
+        hood: 'N/A',
       },
     },
   };

@@ -175,6 +175,13 @@ const {
         class="min-w-[300px] max-w-full"
       />
     </div>
+    <div class="row">
+      <InputControl
+        v-model="form.build.aeroAndAppearance.hood"
+        label="Hood"
+        class="min-w-[300px] max-w-full"
+      />
+    </div>
   </section>
 
   <section>

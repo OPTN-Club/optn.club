@@ -232,6 +232,9 @@ function formatAeroBuild(build: BuildSettings): string[] {
   if (build.aeroAndAppearance.sideSkirts) {
     aero.push(['Side Skirts', build.aeroAndAppearance.sideSkirts]);
   }
+  if (build.aeroAndAppearance.hood) {
+    aero.push(['Hood', build.aeroAndAppearance.hood]);
+  }
 
   if (aero.length === 0) return [];
 
