@@ -7,7 +7,7 @@ const multipliers = {
   newtonsKgf: 0.1019716213,
   newtonsLbs: 0.5710147163,
   pressure: 0.0689476,
-  length: 0.393701,
+  length: 0.39370078740214,
 };
 
 export function convertPressure(value: string | number, from: PressureUnit) {
@@ -37,9 +37,9 @@ export function convertPressureFrom(value: string | number, from: PressureUnit):
 export function convertLength(value: string | number, from: LengthUnit) {
   const v = ensureFloat(value);
   if (from === LengthUnit.cm) {
-    return v / multipliers.length;
+    return v * multipliers.length;
   }
-  return v * multipliers.length;
+  return v / multipliers.length;
 }
 
 export function convertLengthFrom(value: string | number, from: LengthUnit): LengthValues<number> {
