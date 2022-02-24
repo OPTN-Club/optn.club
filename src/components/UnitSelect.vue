@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { ForceUnit, LengthUnit, PressureUnit } from '../lib/types';
+import { SpringRateUnit, LengthUnit, PressureUnit, ForceUnit } from '../lib/types';
 import SelectControl from './SelectControl.vue';
 
 const props = defineProps<{
   modelValue: string,
   label: string,
-  type: 'pressure' | 'height' | 'force',
+  type: 'pressure' | 'height' | 'force' | 'springrate',
 }>();
 
 const emit = defineEmits<{
@@ -22,14 +22,18 @@ const units = {
     { label: PressureUnit.bar, value: PressureUnit.bar },
     { label: PressureUnit.psi, value: PressureUnit.psi },
   ],
-  force: [
-    { label: 'kgf', value: ForceUnit.kgf },
-    { label: 'lbs/in', value: ForceUnit.lbs },
-    { label: 'n/mm', value: ForceUnit.nmm },
+  springrate: [
+    { label: 'kgf/mm', value: SpringRateUnit.kgf },
+    { label: 'lbs/in', value: SpringRateUnit.lbs },
+    { label: 'n/mm', value: SpringRateUnit.nmm },
   ],
   height: [
     { label: 'cm', value: LengthUnit.cm },
     { label: 'in', value: LengthUnit.in },
+  ],
+  force: [
+    { label: 'kgf', value: ForceUnit.kgf },
+    { label: 'lbs', value: ForceUnit.lbf },
   ],
 };
 

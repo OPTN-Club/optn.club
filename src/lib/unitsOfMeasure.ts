@@ -1,28 +1,8 @@
-import { convertPressureFrom, convertForceFrom, convertLengthFrom } from './conversions';
+import { convertPressureFrom, convertSpringRateFrom, convertLengthFrom, convertForce, convertForceFrom } from './conversions';
 import {
-  ForceUnit, ForceValues, LengthUnit, PressureUnit, UnitOfMeasure, UnitValues,
+  SpringRateUnit, SpringRateValues, LengthUnit, PressureUnit, UnitOfMeasure, UnitValues, ForceUnit,
 } from './types';
 import { formatFloat } from './utils';
-
-const pressureUnitHeaders: UnitValues<string> = { bar: 'bar', psi: 'psi' };
-const forceUnitHeaders: UnitValues<string> = { newtons: 'newtons', kgf: 'kgf', lbs: 'lbs' };
-const lengthUnitHeaders: UnitValues<string> = { cm: 'cm', in: 'in' };
-
-const unitOfMeasuresOrder: Record<UnitOfMeasure, string[]> = {
-  [ForceUnit.kgf]: ['kgf', 'lbs', 'newtons'],
-  [ForceUnit.lbs]: ['lbs', 'kgf', 'newtons'],
-  [ForceUnit.nmm]: ['newtons', 'kgf', 'lbs'],
-  [LengthUnit.cm]: ['cm', 'in'],
-  [LengthUnit.in]: ['in', 'cm'],
-  [PressureUnit.bar]: ['bar', 'psi'],
-  [PressureUnit.psi]: ['psi', 'bar'],
-};
-
-export function orderUnitValues<T extends UnitValues<string>, U extends UnitOfMeasure>(values: T, unit: U) {
-  const order = unitOfMeasuresOrder[unit];
-  if (order) return order.map((key) => values[key as keyof T]);
-  throw new Error(`Invalid Unit of Measure: ${unit}`);
-}
 
 export function formatPressure(pressure: string | number, unit: PressureUnit, precision = 1, includeUnit = false) {
   const values = convertPressureFrom(pressure, unit);
@@ -32,8 +12,16 @@ export function formatPressure(pressure: string | number, unit: PressureUnit, pr
   ];
 }
 
-export function formatForce(force: string | number, unit: ForceUnit, precision = 1, includeUnit = false) {
-  const values = convertForceFrom(force, unit);
+export function formatForce(pressure: string | number, unit: ForceUnit, precision = 1, includeUnit = false) {
+  const values = convertForceFrom(pressure, unit);
+  return [
+    formatFloat(values.kgf, precision, ' kgf', includeUnit),
+    formatFloat(values.lbf, precision, ' lbf', includeUnit),
+  ];
+}
+
+export function formatSpringRate(force: string | number, unit: SpringRateUnit, precision = 1, includeUnit = false) {
+  const values = convertSpringRateFrom(force, unit);
   return [
     formatFloat(values.kgf, precision, ' kgf/mm', includeUnit),
     formatFloat(values.lbs, precision, ' lbs/in', includeUnit),
@@ -57,13 +45,17 @@ export function isForceUnit(unit: UnitOfMeasure): unit is ForceUnit {
   return Object.values(ForceUnit).includes(unit as ForceUnit);
 }
 
+export function isSpringRateUnit(unit: UnitOfMeasure): unit is SpringRateUnit {
+  return Object.values(SpringRateUnit).includes(unit as SpringRateUnit);
+}
+
 export function isLengthUnit(unit: UnitOfMeasure): unit is LengthUnit {
   return Object.values(LengthUnit).includes(unit as LengthUnit);
 }
 
 export function getUnits(unit: UnitOfMeasure) {
   if (isPressureUnit(unit)) return PressureUnit;
-  if (isForceUnit(unit)) return ForceUnit;
+  if (isSpringRateUnit(unit)) return SpringRateUnit;
   if (isLengthUnit(unit)) return LengthUnit;
   throw new Error(`Invalid Unit of Measure: ${unit}`);
 }
@@ -72,17 +64,21 @@ export function formatUnit(value: string | number, unit: UnitOfMeasure, precisio
   if (isPressureUnit(unit)) {
     return formatPressure(value, unit, precision, includeUnit);
   }
-  if (isForceUnit(unit)) {
-    return formatForce(value, unit, precision, includeUnit);
+  if (isSpringRateUnit(unit)) {
+    return formatSpringRate(value, unit, precision, includeUnit);
   }
   if (isLengthUnit(unit)) {
     return formatLength(value, unit, precision, includeUnit);
+  }
+  if (isForceUnit(unit)) {
+    return formatForce(value, unit, precision, includeUnit);
   }
   throw new Error(`Invalid Unit of Measure: ${unit}`);
 }
 
 const unitHeaders = {
-  force: ['kgf/mm', 'lbs/in', 'n/mm'],
+  springRate: ['kgf/mm', 'lbs/in', 'n/mm'],
+  force: ['kgf', 'lb'],
   pressure: ['bar', 'psi'],
   length: ['cm', 'in'],
 };
@@ -91,11 +87,14 @@ export function formatUnitHeaders(unit: UnitOfMeasure) {
   if (isPressureUnit(unit)) {
     return unitHeaders.pressure;
   }
-  if (isForceUnit(unit)) {
-    return unitHeaders.force;
+  if (isSpringRateUnit(unit)) {
+    return unitHeaders.springRate;
   }
   if (isLengthUnit(unit)) {
     return unitHeaders.length;
+  }
+  if (isForceUnit(unit)) {
+    return unitHeaders.force;
   }
   throw new Error(`Invalid Unit of Measure: ${unit}`);
 }

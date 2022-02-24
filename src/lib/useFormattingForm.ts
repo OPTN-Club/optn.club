@@ -6,7 +6,7 @@ import { byFullname } from './models';
 import getTestForm from './testForm';
 import {
   PressureUnit,
-  ForceUnit,
+  SpringRateUnit,
   LengthUnit,
   Upgrade,
   LimitedUpgrade,
@@ -18,17 +18,18 @@ import {
   Car,
   SettingsForm,
   TrackWidthType,
+  ForceUnit,
 } from './types';
 import useUpgrades, { UseUpgrades } from './useUpgrades';
 
 const providerKey = 'formatting-form';
 
-// const testing = true;
+const testing = true;
 
 function createFormattingForm(): SettingsForm {
-  // if (testing) {
-  //   return getTestForm();
-  // }
+  if (testing) {
+    return getTestForm();
+  }
   return {
     make: '',
     model: '',
@@ -55,7 +56,7 @@ function createFormattingForm(): SettingsForm {
       springs: {
         front: '',
         rear: '',
-        units: ForceUnit.kgf,
+        units: SpringRateUnit.kgf,
       },
       rideHeight: {
         front: '',
@@ -180,12 +181,12 @@ export function useFormattingFormProvider() {
   watch(globalUnit, (current) => {
     if (current === 'Imperial') {
       form.tune.tires.units = PressureUnit.psi;
-      form.tune.springs.units = ForceUnit.lbs;
+      form.tune.springs.units = SpringRateUnit.lbs;
       form.tune.rideHeight.units = LengthUnit.in;
-      form.tune.aero.units = ForceUnit.lbs;
+      form.tune.aero.units = ForceUnit.lbf;
     } else {
       form.tune.tires.units = PressureUnit.bar;
-      form.tune.springs.units = ForceUnit.kgf;
+      form.tune.springs.units = SpringRateUnit.kgf;
       form.tune.rideHeight.units = LengthUnit.cm;
       form.tune.aero.units = ForceUnit.kgf;
     }

@@ -1,8 +1,8 @@
 import {
-  PressureUnit, ForceUnit, LengthUnit, DriveType, Upgrade, LimitedUpgrade, FullUpgrade, TransmissionUpgrade, TireCompound, RimStyleType,
+  PressureUnit, SpringRateUnit, LengthUnit, DriveType, Upgrade, LimitedUpgrade, FullUpgrade, TransmissionUpgrade, TireCompound, RimStyleType, SettingsForm, TrackWidthType, ForceUnit,
 } from './types';
 
-export default function getTestForm() {
+export default function getTestForm(): SettingsForm {
   return {
     make: 'Ferrari',
     model: '2019 Ferrari 488 Pista',
@@ -27,9 +27,9 @@ export default function getTestForm() {
         rear: '26',
       },
       springs: {
-        front: '174',
-        rear: '123',
-        units: ForceUnit.kgf,
+        front: '705.1',
+        rear: '943.1',
+        units: SpringRateUnit.lbs,
       },
       rideHeight: {
         front: '14',
@@ -117,12 +117,17 @@ export default function getTestForm() {
           front: 'Stock',
           rear: 'Stock',
         },
+        trackWidth: {
+          front: TrackWidthType.stock,
+          rear: TrackWidthType.stock,
+        },
       },
       aeroAndAppearance: {
         frontBumper: 'Stock',
         rearBumper: 'N/A',
         rearWing: 'Stock',
         sideSkirts: 'N/A',
+        hood: 'N/A',
       },
     },
   };

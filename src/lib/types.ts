@@ -9,6 +9,11 @@ export enum PressureUnit {
 }
 
 export enum ForceUnit {
+  kgf = 'kgf',
+  lbf = 'lb',
+}
+
+export enum SpringRateUnit {
   kgf = 'kgf/mm',
   lbs = 'lbs/in',
   nmm = 'n/mm',
@@ -20,6 +25,11 @@ export enum LengthUnit {
 }
 
 export interface ForceValues<T extends string | number> {
+  kgf: T;
+  lbf: T;
+}
+
+export interface SpringRateValues<T extends string | number> {
   kgf: T;
   lbs: T;
   newtons: T;
@@ -35,7 +45,7 @@ export interface LengthValues<T extends string | number> {
   in: T;
 }
 
-export type UnitValues<T extends string | number> = ForceValues<T> | PressureValues<T> | LengthValues<T>;
+export type UnitValues<T extends string | number> = SpringRateValues<T> | PressureValues<T> | LengthValues<T>;
 
 export enum Upgrade {
   na = 'N/A',
@@ -114,7 +124,7 @@ export interface FrontAndRearSettings {
   rear: string;
 }
 
-export type UnitOfMeasure = PressureUnit | ForceUnit | LengthUnit;
+export type UnitOfMeasure = PressureUnit | SpringRateUnit | LengthUnit | ForceUnit;
 
 export interface FrontAndRearWithUnits<U extends UnitOfMeasure = UnitOfMeasure> extends FrontAndRearSettings {
   units: U;
@@ -139,7 +149,7 @@ export interface TuneSettings {
   toe: FrontAndRearSettings;
   caster: string;
   arb: FrontAndRearSettings;
-  springs: FrontAndRearWithUnits<ForceUnit>;
+  springs: FrontAndRearWithUnits<SpringRateUnit>;
   rideHeight: FrontAndRearWithUnits<LengthUnit>;
   damping: FrontAndRearSettings;
   bump: FrontAndRearSettings;

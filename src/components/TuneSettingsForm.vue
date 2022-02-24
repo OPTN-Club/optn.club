@@ -25,12 +25,12 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
     <h2>Tuning</h2>
     <p>
       This section is for tuning.
-      <br>
+      <br />
       <strong>
         If you do not use a certain category (Ex. No front diff on RWD cars) just leave it blank. It will be
         omitted automatically.
       </strong>
-      <br>If you leave something stock (Ex. brakes), or leave the default settings for a category, you should still put in
+      <br />If you leave something stock (Ex. brakes), or leave the default settings for a category, you should still put in
       the stock value.
     </p>
   </section>
@@ -52,22 +52,13 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
         min="0.0"
         :step="tirePressureStep"
       />
-      <UnitSelect
-        v-model="form.tune.tires.units"
-        label="Units"
-        type="pressure"
-      />
+      <UnitSelect v-model="form.tune.tires.units" label="Units" type="pressure" />
     </div>
   </section>
 
   <section>
     <h2>Gearing</h2>
-    <NumberInput
-      v-model="form.tune.gears[0]"
-      label="Final Drive"
-      min="0.0"
-      step="0.01"
-    />
+    <NumberInput v-model="form.tune.gears[0]" label="Final Drive" min="0.0" step="0.01" />
     <div class="gears-grid">
       <NumberInput
         v-for="(value, index) in gears"
@@ -84,47 +75,17 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
     <h2>Alignment</h2>
     <h3>Camber</h3>
     <div class="row">
-      <NumberInput
-        v-model="form.tune.camber.front"
-        label="Front"
-        required
-        min="-10"
-        step="0.1"
-      />
-      <NumberInput
-        v-model="form.tune.camber.rear"
-        label="Rear"
-        required
-        min="-10"
-        step="0.1"
-      />
+      <NumberInput v-model="form.tune.camber.front" label="Front" required min="-10" step="0.1" />
+      <NumberInput v-model="form.tune.camber.rear" label="Rear" required min="-10" step="0.1" />
     </div>
     <h3>Toe</h3>
     <div class="row">
-      <NumberInput
-        v-model="form.tune.toe.front"
-        label="Front"
-        required
-        min="-10"
-        step="0.1"
-      />
-      <NumberInput
-        v-model="form.tune.toe.rear"
-        label="Rear"
-        required
-        min="-10"
-        step="0.1"
-      />
+      <NumberInput v-model="form.tune.toe.front" label="Front" required min="-10" step="0.1" />
+      <NumberInput v-model="form.tune.toe.rear" label="Rear" required min="-10" step="0.1" />
     </div>
     <h3>Front Caster</h3>
     <div class="row">
-      <NumberInput
-        v-model="form.tune.caster"
-        label="Angle"
-        required
-        max="7"
-        step="0.1"
-      />
+      <NumberInput v-model="form.tune.caster" label="Angle" required max="7" step="0.1" />
     </div>
   </section>
 
@@ -152,43 +113,15 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
     <h2>Springs</h2>
     <h3>Tension</h3>
     <div class="row">
-      <NumberInput
-        v-model="form.tune.springs.front"
-        label="Front"
-        min="0.0"
-        step="1"
-      />
-      <NumberInput
-        v-model="form.tune.springs.rear"
-        label="Rear"
-        min="0.0"
-        step="1"
-      />
-      <UnitSelect
-        v-model="form.tune.springs.units"
-        label="Units"
-        type="force"
-      />
+      <NumberInput v-model="form.tune.springs.front" label="Front" min="0.0" step="1" />
+      <NumberInput v-model="form.tune.springs.rear" label="Rear" min="0.0" step="1" />
+      <UnitSelect v-model="form.tune.springs.units" label="Units" type="springrate" />
     </div>
     <h3>Ride Height</h3>
     <div class="row">
-      <NumberInput
-        v-model="form.tune.rideHeight.front"
-        label="Front"
-        min="0.0"
-        step="0.1"
-      />
-      <NumberInput
-        v-model="form.tune.rideHeight.rear"
-        label="Rear"
-        min="0.0"
-        step="0.1"
-      />
-      <UnitSelect
-        v-model="form.tune.rideHeight.units"
-        label="Units"
-        type="height"
-      />
+      <NumberInput v-model="form.tune.rideHeight.front" label="Front" min="0.0" step="0.1" />
+      <NumberInput v-model="form.tune.rideHeight.rear" label="Rear" min="0.0" step="0.1" />
+      <UnitSelect v-model="form.tune.rideHeight.units" label="Units" type="height" />
     </div>
   </section>
   <section :class="{ disabled: !show.springs }">
@@ -236,15 +169,15 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
         v-model="form.tune.aero.front"
         :disabled="!show.aero"
         label="Front"
-        min="0.0"
-        step="0.1"
+        min="0"
+        step="1"
       />
       <NumberInput
         v-model="form.tune.aero.rear"
         :disabled="!show.aero"
         label="Rear"
-        min="0.0"
-        step="0.1"
+        min="0"
+        step="1"
       />
       <UnitSelect
         v-model="form.tune.aero.units"
@@ -258,20 +191,8 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
   <section>
     <h2>Brakes</h2>
     <div class="row">
-      <NumberInput
-        v-model="form.tune.brake.bias"
-        label="Balance"
-        min="0"
-        max="100"
-        step="1"
-      />
-      <NumberInput
-        v-model="form.tune.brake.pressure"
-        label="Pressure"
-        min="0"
-        max="200"
-        step="1"
-      />
+      <NumberInput v-model="form.tune.brake.bias" label="Balance" min="0" max="100" step="1" />
+      <NumberInput v-model="form.tune.brake.pressure" label="Pressure" min="0" max="200" step="1" />
     </div>
   </section>
 
@@ -318,13 +239,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
     <template v-if="show.diff.center">
       <h3>Center</h3>
       <div class="row">
-        <NumberInput
-          v-model="form.tune.diff.center"
-          label="Balance"
-          min="0"
-          max="100"
-          step="1"
-        />
+        <NumberInput v-model="form.tune.diff.center" label="Balance" min="0" max="100" step="1" />
       </div>
     </template>
   </section>
