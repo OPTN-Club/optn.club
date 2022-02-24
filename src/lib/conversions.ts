@@ -1,12 +1,15 @@
 import {
-  PressureUnit, LengthUnit, ForceUnit, ForceValues, PressureValues, LengthValues,
+  PressureUnit, LengthUnit, SpringRateUnit, SpringRateValues, PressureValues, LengthValues, ForceUnit, ForceValues,
 } from './types';
 import { ensureFloat } from './utils';
 
 const multipliers = {
-  newtonsKgf: 0.1019716213,
-  newtonsLbs: 0.5710147163,
-  pressure: 0.0689476,
+  springs: {
+    newtonsKgf: 0.1019716212978,
+    newtonsLbs: 0.57101471743224,
+  },
+  force: 0.45359236844386,
+  pressure: 0.0689475728,
   length: 0.39370078740214,
 };
 
@@ -17,6 +20,15 @@ export function convertPressure(value: string | number, from: PressureUnit) {
   }
   return v * multipliers.pressure;
 }
+// Spring rate kg /mm to lb/in 55.9974146
+// Springs: kgf/mm lb/in
+// 1234.7 n/mm 1651.6 n/mm
+// 705.1 lb/in 943.1 lb/in
+// 125.9 kgf/mm 168.4 kgf/mm
+// Aero: kgf lb
+// 53 kgf 268 kgf
+// 116 lb 590 lb
+//
 
 export function convertPressureFrom(value: string | number, from: PressureUnit): PressureValues<number> {
   const v = ensureFloat(value);
@@ -58,35 +70,59 @@ export function convertLengthFrom(value: string | number, from: LengthUnit): Len
   };
 }
 
-function convertForceToNewtons(value: string | number, from: ForceUnit): number {
+export function convertForce(value: string | number, from: ForceUnit) {
   const v = ensureFloat(value);
   if (from === ForceUnit.kgf) {
-    return v / multipliers.newtonsKgf;
-  } if (from === ForceUnit.lbs) {
-    return v / multipliers.newtonsLbs;
+    return v / multipliers.force;
+  }
+  return v * multipliers.force;
+}
+
+export function convertForceFrom(value: string | number, from: ForceUnit): ForceValues<number> {
+  const v = ensureFloat(value);
+  const c = convertForce(v, from);
+
+  if (from === ForceUnit.kgf) {
+    return {
+      kgf: v,
+      lbf: c,
+    };
+  }
+  return {
+    kgf: c,
+    lbf: v,
+  };
+}
+
+function convertSpringRateToNewtons(value: string | number, from: SpringRateUnit): number {
+  const v = ensureFloat(value);
+  if (from === SpringRateUnit.kgf) {
+    return v / multipliers.springs.newtonsKgf;
+  } if (from === SpringRateUnit.lbs) {
+    return v / multipliers.springs.newtonsLbs;
   }
 
   return v;
 }
 
-function convertForceFromNewtons(value: number | number, to: ForceUnit): number {
-  if (to === ForceUnit.kgf) {
-    return value * multipliers.newtonsKgf;
-  } if (to === ForceUnit.lbs) {
-    return value * multipliers.newtonsLbs;
+function convertSpringRateFromNewtons(value: number | number, to: SpringRateUnit): number {
+  if (to === SpringRateUnit.kgf) {
+    return value * multipliers.springs.newtonsKgf;
+  } if (to === SpringRateUnit.lbs) {
+    return value * multipliers.springs.newtonsLbs;
   }
   return value;
 }
 
-export function convertForce(value: string | number, from: ForceUnit, to: ForceUnit) {
-  const newtons = convertForceToNewtons(value, from);
-  return convertForceFromNewtons(newtons, to);
+export function convertSpringRate(value: string | number, from: SpringRateUnit, to: SpringRateUnit) {
+  const newtons = convertSpringRateToNewtons(value, from);
+  return convertSpringRateFromNewtons(newtons, to);
 }
 
-export function convertForceFrom(value: string | number, from: ForceUnit): ForceValues<number> {
-  const newtons = convertForceToNewtons(value, from);
-  const kgf = convertForceFromNewtons(newtons, ForceUnit.kgf);
-  const lbs = convertForceFromNewtons(newtons, ForceUnit.lbs);
+export function convertSpringRateFrom(value: string | number, from: SpringRateUnit): SpringRateValues<number> {
+  const newtons = convertSpringRateToNewtons(value, from);
+  const kgf = convertSpringRateFromNewtons(newtons, SpringRateUnit.kgf);
+  const lbs = convertSpringRateFromNewtons(newtons, SpringRateUnit.lbs);
   return {
     newtons,
     kgf,
