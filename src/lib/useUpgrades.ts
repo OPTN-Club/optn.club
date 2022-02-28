@@ -92,6 +92,7 @@ export default function useUpgrades(form: SettingsForm, car: ComputedRef<Car | n
       front: [DriveType.awd, DriveType.fwd].includes(driveType.value),
       rear: [DriveType.awd, DriveType.rwd].includes(driveType.value),
       center: DriveType.awd === driveType.value,
+      stock: driveType.value,
     },
   }));
   return enabled;

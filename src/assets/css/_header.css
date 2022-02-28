@@ -94,3 +94,7 @@ header p.view small {
 @screen md {
 
 }
+
+.footer-text {
+  font-size: small;
+}

@@ -113,7 +113,6 @@ export enum TrackWidthType {
 }
 
 export enum DriveType {
-  na = '',
   fwd = 'FWD',
   rwd = 'RWD',
   awd = 'AWD',

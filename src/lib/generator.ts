@@ -1,16 +1,16 @@
-import { capitalCase } from 'change-case';
-import { byFullname } from './models';
+import {capitalCase} from 'change-case';
+import {byFullname} from './models';
 import {
   BuildSettings,
+  Car,
+  DriveType,
   FrontAndRearSettings,
   FrontAndRearWithUnits,
   SettingsForm,
   TuneSettings,
-  Car,
-  DriveType,
 } from './types';
-import { addSuffix as suffixize, formatFloat } from './utils';
-import { formatUnit, formatUnitHeaders } from './unitsOfMeasure';
+import {addSuffix as suffixize, formatFloat} from './utils';
+import {formatUnit, formatUnitHeaders} from './unitsOfMeasure';
 
 const tableSeparator = '\n######\n';
 const hr = '---';

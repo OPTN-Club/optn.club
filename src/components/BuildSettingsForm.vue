@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  TransmissionUpgrade, TireCompound, RimStyleType, TrackWidthType
+  TransmissionUpgrade, DriveType, TireCompound, RimStyleType, TrackWidthType
 } from '../lib/types';
 import { useFormattingForm } from '../lib/useFormattingForm';
 import FullUpgradeSelect from './FullUpgradeSelect.vue';
@@ -194,9 +194,10 @@ const {
       />
     </div>
     <div class="row">
-      <InputControl
+      <EnumSelect
         v-model="form.build.conversions.drivetrain"
-        label="Drivetrain"
+        label="Drivetrain (If stock, change it the corresponding drivetype)"
+        :type="DriveType"
         class="min-w-[300px] max-w-full"
       />
     </div>

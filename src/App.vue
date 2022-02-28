@@ -3,6 +3,7 @@
   <div class="wrapper">
     <AppHeader />
     <CarSettingsForm />
+    <Footer />
   </div>
 </template>
 
@@ -11,4 +12,5 @@
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import AppHeader from './components/AppHeader.vue'
 import CarSettingsForm from './components/CarSettingsForm.vue';
+import Footer from "./components/Footer.vue";
 </script>

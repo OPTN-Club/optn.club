@@ -25,11 +25,6 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
     <h2>Tuning</h2>
     <p>
       This section is for tuning.
-      <br />
-      <strong>
-        If you do not use a certain category (Ex. No front diff on RWD cars) just leave it blank. It will be
-        omitted automatically.
-      </strong>
       <br />If you leave something stock (Ex. brakes), or leave the default settings for a category, you should still put in
       the stock value.
     </p>

@@ -68,7 +68,7 @@ export default function getTestForm(): SettingsForm {
     build: {
       conversions: {
         engine: 'Stock',
-        drivetrain: DriveType.na,
+        drivetrain: DriveType.awd,
         aspiration: 'Stock',
         bodyKit: '',
       },
