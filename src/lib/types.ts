@@ -189,7 +189,7 @@ export interface BuildSettings {
     supercharger: LimitedUpgrade; // sport and race only
     centrifigulSupercharger: LimitedUpgrade; // sport and race only
     intercooler: LimitedUpgrade; // sport and race only
-    oilCooling: LimitedUpgrade; // sport and race only
+    oilCooling: Upgrade; // sport and race only
     flywheel: Upgrade;
   };
   platformAndHandling: {

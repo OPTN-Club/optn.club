@@ -124,7 +124,7 @@ function createFormattingForm(): SettingsForm {
         supercharger: LimitedUpgrade.na,
         centrifigulSupercharger: LimitedUpgrade.na,
         intercooler: LimitedUpgrade.stock,
-        oilCooling: LimitedUpgrade.stock,
+        oilCooling: Upgrade.stock,
         flywheel: Upgrade.stock,
       },
       platformAndHandling: {

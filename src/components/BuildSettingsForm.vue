@@ -56,11 +56,14 @@ const { form } = useFormattingForm();
         v-model="form.build.engine.intercooler"
         label="Intercooler"
       />
-      <LimitedUpgradeSelect
+      <UpgradeSelect
         v-model="form.build.engine.oilCooling"
         label="Oil Cooling"
       />
-      <UpgradeSelect v-model="form.build.engine.flywheel" label="Flywheel" />
+      <UpgradeSelect
+        v-model="form.build.engine.flywheel"
+        label="Flywheel"
+      />
     </div>
   </section>
 
