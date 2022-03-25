@@ -10888,7 +10888,45 @@ const cars: Car[] = [
     aspirationOptions: 'none',
     naturallyAspirated: 'no',
     fh5: 'cu'
-  }
-];  
+  },
+  {
+    fullname: "2010 Noble M600",
+    nickname: "Noble M600",
+    year: 2010,
+    make: "Noble",
+    model: "M600",
+    displ: 4439,
+    aspiration: "TT",
+    engineType: "V",
+    cylinders: 8,
+    enginePlacement: "M",
+    drive: "RWD",
+    rTireWidth: 335,
+    trackWidth: "Both",
+    aeroorkitOptions: "Forza",
+    aspirationOptions: "none",
+    naturallyAspirated: "no",
+    fh5: "cu",
+  },
+  {
+    fullname: "2006 Noble M400",
+    nickname: "Noble M400",
+    year: 2006,
+    make: "Noble",
+    model: "M400",
+    displ: 2970,
+    aspiration: "TT",
+    engineType: "V",
+    cylinders: 6,
+    enginePlacement: "M",
+    drive: "RWD",
+    rTireWidth: 265,
+    trackWidth: "Both",
+    aeroorkitOptions: "Forza",
+    aspirationOptions: "none",
+    naturallyAspirated: "eng",
+    fh5: "DLC",
+  },
+];
 
 export default cars;

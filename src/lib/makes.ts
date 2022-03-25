@@ -68,6 +68,7 @@ export default [
   'Mosler',
   'Napier',
   'Nissan',
+  'Noble',
   'Opel',
   'Pagani',
   'Peel',
