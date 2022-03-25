@@ -230,11 +230,15 @@ export function formatTune(form: SettingsForm, model: string): string[] {
   return text;
 }
 
-function formatConversions(build: BuildSettings): string[] {
+function formatConversions(build: BuildSettings, model: string): string[] {
   const headers = ['Conversions', ''];
+
+  const car = byFullname[model];
+  const drivetrain = build.conversions.drivetrain === car.drive ? 'Stock' : build.conversions.drivetrain;
+
   const body = [
     ['Engine', build.conversions.engine || 'Stock'],
-    ['Drivetrain', build.conversions.drivetrain || 'Stock'],
+    ['Drivetrain', drivetrain || 'Stock'],
   ];
   if (build.conversions.aspiration) {
     body.push(['Aspiration', build.conversions.aspiration || 'Stock']);
@@ -283,9 +287,9 @@ function formatBuildSection<T>(section: T) {
   return keys.map((key) => [capitalCase(key), section[key as keyof T]]);
 }
 
-export function formatBuild(build: BuildSettings): string[] {
+export function formatBuild(build: BuildSettings, model: string): string[] {
   const text = [
-    ...formatConversions(build),
+    ...formatConversions(build, model),
     ...formatTable(['Engine', ''], formatBuildSection(build.engine)),
     ...formatTable(['Platform And Handling', ''], formatBuildSection(build.platformAndHandling)),
     ...formatTable(['Drivetrain', ''], formatBuildSection(build.drivetrain)),
@@ -303,7 +307,7 @@ export function generateRedditMarkdown(form: SettingsForm) {
   return [
     `#${form.model}\n`,
     '## Build\n',
-    ...formatBuild(form.build),
+    ...formatBuild(form.build, form.model),
     '---\n',
     '## Tune\n',
     ...formatTune(form, form.model),
