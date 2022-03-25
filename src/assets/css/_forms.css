@@ -12,6 +12,10 @@ label.radio {
   @apply font-normal;
 }
 
+label input[type=checkbox] {
+  @apply mr-1;
+}
+
 label.inline.checkbox + label.inline.checkbox,
 label.inline.radio + label.inline.radio {
   @apply ml-4;

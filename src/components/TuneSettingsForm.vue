@@ -1,17 +1,19 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { addSuffix } from '../lib/utils';
-import NumberInput from './NumberInput.vue';
-import UnitSelect from './UnitSelect.vue';
 import { useFormattingForm } from '../lib/useFormattingForm';
 import { PressureUnit } from '../lib/types';
+import NumberInput from './NumberInput.vue';
+import UnitSelect from './UnitSelect.vue';
+import CheckboxControl from './CheckboxControl.vue';
 
 const { form, show } = useFormattingForm();
 
-const gears = computed(() => form.tune.gears.slice(1, show.value.gears.count + 1));
+const gears = computed(() => form.tune.gears.ratios.slice(1, show.value.gears.count + 1));
 
 const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.bar ? '0.01' : '0.1'));
 </script>
+
 <template>
   <section>
     <h2>Tuning</h2>
@@ -49,8 +51,10 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
 
   <section>
     <h2>Gearing</h2>
+    <CheckboxControl v-model="form.tune.gears.na" label="Not Applicable" />
     <NumberInput
-      v-model="form.tune.gears[0]"
+      v-model="form.tune.gears.ratios[0]"
+      :disabled="form.tune.gears.na"
       label="Final Drive"
       min="0.0"
       step="0.01"
@@ -59,7 +63,8 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
       <NumberInput
         v-for="(_, index) in gears"
         :key="index"
-        v-model="form.tune.gears[index + 1]"
+        v-model="form.tune.gears.ratios[index + 1]"
+        :disabled="form.tune.gears.na"
         :label="`${index + 1}${addSuffix(index + 1)}`"
         min="0"
         step="0.01"
@@ -117,6 +122,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
 
   <section>
     <h2>Antiroll Bars</h2>
+    <CheckboxControl v-model="form.tune.arb.na" label="Not Applicable" />
     <div class="row">
       <NumberInput
         v-model="form.tune.arb.front"
@@ -135,6 +141,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
 
   <section>
     <h2>Springs</h2>
+    <CheckboxControl v-model="form.tune.springs.na" label="Not Applicable" />
     <h3>Tension</h3>
     <div class="row">
       <NumberInput
@@ -178,6 +185,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
   </section>
   <section>
     <h2>Damping</h2>
+    <CheckboxControl v-model="form.tune.damping.na" label="Not Applicable" />
     <h3>Rebound Stiffness</h3>
     <div class="row">
       <NumberInput
@@ -212,6 +220,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
 
   <section>
     <h2>Aero Downforce</h2>
+    <CheckboxControl v-model="form.tune.aero.na" label="Not Applicable" />
     <div class="row">
       <NumberInput
         v-model="form.tune.aero.front"
@@ -235,6 +244,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
 
   <section>
     <h2>Brakes</h2>
+    <CheckboxControl v-model="form.tune.brake.na" label="Not Applicable" />
     <div class="row">
       <NumberInput
         v-model="form.tune.brake.bias"
@@ -255,6 +265,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
 
   <section>
     <h2>Differential</h2>
+    <CheckboxControl v-model="form.tune.diff.na" label="Not Applicable" />
     <template v-if="show.diff.front">
       <h3>Front</h3>
       <div class="row">

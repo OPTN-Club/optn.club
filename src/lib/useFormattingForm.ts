@@ -24,7 +24,7 @@ import useUpgrades, { UseUpgrades } from './useUpgrades';
 
 const providerKey = 'formatting-form';
 
-const testing = true;
+const testing = false;
 
 function createFormattingForm(): SettingsForm {
   if (testing) {
@@ -39,7 +39,10 @@ function createFormattingForm(): SettingsForm {
         rear: '2',
         units: PressureUnit.bar,
       },
-      gears: ['', '', '', '', '', '', '', '', '', '', ''],
+      gears: {
+        ratios: ['', '', '', '', '', '', '', '', '', '', ''],
+        na: true,
+      },
       camber: {
         front: '-1',
         rear: '-1',
@@ -52,31 +55,38 @@ function createFormattingForm(): SettingsForm {
       arb: {
         front: '',
         rear: '',
+        na: false,
       },
       springs: {
         front: '',
         rear: '',
         units: SpringRateUnit.kgf,
+        na: false,
       },
       rideHeight: {
         front: '',
         rear: '',
         units: LengthUnit.cm,
+        na: false,
       },
       damping: {
         front: '',
         rear: '',
+        na: false,
       },
       bump: {
         front: '',
         rear: '',
+        na: false,
       },
       aero: {
         front: '',
         rear: '',
         units: ForceUnit.kgf,
+        na: true,
       },
       brake: {
+        na: true,
         bias: '50',
         pressure: '100',
       },
@@ -90,6 +100,7 @@ function createFormattingForm(): SettingsForm {
           decel: '',
         },
         center: '50',
+        na: false,
       },
     },
     build: {
@@ -177,6 +188,12 @@ export function useFormattingFormProvider() {
   const globalUnit = ref<'Metric' | 'Imperial'>('Metric');
 
   const show = useUpgrades(form, car, driveType);
+
+  watch(car, (current) => {
+    if (current) {
+      form.build.conversions.drivetrain = current.drive as DriveType;
+    }
+  });
 
   watch(globalUnit, (current) => {
     if (current === 'Imperial') {

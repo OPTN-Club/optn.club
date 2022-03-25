@@ -1,6 +1,8 @@
-import { convertPressureFrom, convertSpringRateFrom, convertLengthFrom, convertForce, convertForceFrom } from './conversions';
 import {
-  SpringRateUnit, SpringRateValues, LengthUnit, PressureUnit, UnitOfMeasure, UnitValues, ForceUnit,
+  convertPressureFrom, convertSpringRateFrom, convertLengthFrom, convertForceFrom,
+} from './conversions';
+import {
+  SpringRateUnit, LengthUnit, PressureUnit, UnitOfMeasure, ForceUnit,
 } from './types';
 import { formatFloat } from './utils';
 

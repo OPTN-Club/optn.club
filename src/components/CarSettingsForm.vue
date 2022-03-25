@@ -25,16 +25,5 @@ const {
     <TuneSettingsForm />
 
     <FormattedTuneTextarea />
-    <!-- <section>
-      <div class="column actions">
-        <button type="submit" class="large w-full mb-4">Generate</button>
-        <textarea id="result" class="formatted-text" name="result" rows="10" cols="25" />
-        <button
-          id="clipboard-button"
-          type="button"
-          class="green w-full mt-4 mb-10"
-        >Copy To Clipboard</button>
-      </div>
-    </section> -->
   </form>
 </template>

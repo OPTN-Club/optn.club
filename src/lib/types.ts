@@ -121,6 +121,7 @@ export enum DriveType {
 export interface FrontAndRearSettings {
   front: string;
   rear: string;
+  na?: boolean;
 }
 
 export type UnitOfMeasure = PressureUnit | SpringRateUnit | LengthUnit | ForceUnit;
@@ -139,11 +140,17 @@ export interface DifferentialTuneSettings {
     decel: string;
   },
   center: string;
+  na?: boolean;
+}
+
+export interface GearTuneSettings {
+  na?: boolean;
+  ratios: string[];
 }
 
 export interface TuneSettings {
   tires: FrontAndRearWithUnits<PressureUnit>;
-  gears: string[],
+  gears: GearTuneSettings,
   camber: FrontAndRearSettings;
   toe: FrontAndRearSettings;
   caster: string;
@@ -154,6 +161,7 @@ export interface TuneSettings {
   bump: FrontAndRearSettings;
   aero: FrontAndRearWithUnits<ForceUnit>;
   brake: {
+    na: boolean;
     bias: string;
     pressure: string;
   },

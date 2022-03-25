@@ -1,5 +1,17 @@
 import {
-  PressureUnit, SpringRateUnit, LengthUnit, DriveType, Upgrade, LimitedUpgrade, FullUpgrade, TransmissionUpgrade, TireCompound, RimStyleType, SettingsForm, TrackWidthType, ForceUnit,
+  PressureUnit,
+  SpringRateUnit,
+  LengthUnit,
+  DriveType,
+  Upgrade,
+  LimitedUpgrade,
+  FullUpgrade,
+  TransmissionUpgrade,
+  TireCompound,
+  RimStyleType,
+  SettingsForm,
+  TrackWidthType,
+  ForceUnit,
 } from './types';
 
 export default function getTestForm(): SettingsForm {
@@ -12,7 +24,10 @@ export default function getTestForm(): SettingsForm {
         rear: '2',
         units: PressureUnit.bar,
       },
-      gears: ['4.82', '3.90', '3.11', '2.74', '2.44', '2.01', '1.88', '1.55', '1.44', '1.33', '1.22'],
+      gears: {
+        ratios: ['4.82', '3.90', '3.11', '2.74', '2.44', '2.01', '1.88', '1.55', '1.44', '1.33', '1.22'],
+        na: false,
+      },
       camber: {
         front: '-1',
         rear: '-1',
@@ -50,6 +65,7 @@ export default function getTestForm(): SettingsForm {
         units: ForceUnit.kgf,
       },
       brake: {
+        na: false,
         bias: '50',
         pressure: '100',
       },

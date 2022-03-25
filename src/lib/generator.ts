@@ -1,5 +1,5 @@
-import {capitalCase} from 'change-case';
-import {byFullname} from './models';
+import { capitalCase } from 'change-case';
+import { byFullname } from './models';
 import {
   BuildSettings,
   Car,
@@ -9,11 +9,10 @@ import {
   SettingsForm,
   TuneSettings,
 } from './types';
-import {addSuffix as suffixize, formatFloat} from './utils';
-import {formatUnit, formatUnitHeaders} from './unitsOfMeasure';
+import { addSuffix as suffixize, formatFloat } from './utils';
+import { formatUnit, formatUnitHeaders } from './unitsOfMeasure';
 
 const tableSeparator = '\n######\n';
-const hr = '---';
 
 function bold(value: string): string {
   if (!value) return value;
@@ -40,6 +39,10 @@ function formatTable(header: string[], body: string[][], boldFirstCol = false): 
 }
 
 function formatFrontRear(headers: string[], values: FrontAndRearSettings[], precision = 1, suffix = ''): string[] {
+  if (values.every((v) => v.na)) {
+    const cells = Array.from({ length: values.length }, () => '');
+    return formatTable(headers, [['Not Applicable', ...cells]]);
+  }
   const body: string[][] = [
     ['Front', ...values.map((value) => formatFloat(value.front, precision, suffix))],
     ['Rear', ...values.map((value) => formatFloat(value.rear, precision, suffix))],
@@ -53,6 +56,10 @@ function formatFrontRearWithUnit(header: string, value: FrontAndRearWithUnits, p
     header,
     ...formatUnitHeaders(value.units),
   ];
+
+  if (value.na) {
+    return formatTable(headers, [['Not Applicable', ...formatUnit('', value.units, precision)]]);
+  }
 
   const body: string[][] = [
     ['Front', ...formatUnit(value.front, value.units, precision)],
@@ -69,16 +76,21 @@ function formatTires(tune: TuneSettings): string[] {
 function formatGears(tune: TuneSettings): string[] {
   const precision = 2;
   const headers = ['Gears', 'Ratio'];
+
+  if (tune.gears.na) {
+    return formatTable(headers, [['Not Applicable', '']]);
+  }
+
   const body: string[][] = [
-    ['Final Drive', parseFloat(tune.gears[0]).toFixed(precision)],
+    ['Final Drive', parseFloat(tune.gears.ratios[0]).toFixed(precision)],
   ];
-  for (let index = 1; index < tune.gears.length; index++) {
-    const value = parseFloat(tune.gears[index]);
+  for (let index = 1; index < tune.gears.ratios.length; index++) {
+    const value = parseFloat(tune.gears.ratios[index]);
     if (!value) break;
     body.push([`${index}${suffixize(index)}`, value.toFixed(precision)]);
   }
 
-  if (body.length === 1 && tune.gears[0] === '') return [];
+  if (body.length === 1 && tune.gears.ratios[0] === '') return [];
 
   return formatTable(headers, body);
 }
@@ -88,10 +100,18 @@ function formatAlignment(tune: TuneSettings): string[] {
 }
 
 function formatAntiRollbars(tune: TuneSettings): string[] {
-  return formatFrontRear(['ARBs', ''], [tune.arb]);
+  const headers = ['ARBs', ''];
+  if (tune.arb.na) {
+    return formatTable(headers, [['Not Applicable', '']]);
+  }
+  return formatFrontRear(headers, [tune.arb]);
 }
 
 function formatSprings(tune: TuneSettings): string[] {
+  const headers = ['ARBs', ''];
+  if (tune.arb.na) {
+    return formatTable(headers, [['Not Applicable', '']]);
+  }
   return [
     ...formatFrontRearWithUnit('Springs', tune.springs, 1),
     ...formatFrontRearWithUnit('Ride Height', tune.rideHeight, 1),
@@ -103,6 +123,12 @@ function formatDamping(tune: TuneSettings): string[] {
 }
 
 function formatAero(tune: TuneSettings): string[] {
+  const headers = ['Aero', ...formatUnitHeaders(tune.aero.units)];
+
+  if (tune.aero.na) {
+    return formatTable(headers, [['Not Applicable', ...formatUnit('', tune.aero.units)]]);
+  }
+
   const front = ['Front'];
   const rear = ['Rear'];
   if (tune.aero.front === '') {
@@ -115,15 +141,17 @@ function formatAero(tune: TuneSettings): string[] {
   } else {
     rear.push(...formatUnit(tune.aero.rear, tune.aero.units, 1));
   }
-  return formatTable(['Aero', ...formatUnitHeaders(tune.aero.units)], [front, rear]);
+  return formatTable(headers, [front, rear]);
 }
 
 function formatBrakes(tune: TuneSettings): string[] {
+  const headers = ['Brakes', '%'];
+
   if (!tune.brake.bias && !tune.brake.pressure) {
-    return [];
+    return formatTable(headers, [['Not Applicable', '']]);
   }
 
-  return formatTable(['Brakes', '%'], [
+  return formatTable(headers, [
     ['Balance', formatFloat(tune.brake.bias, 0, '%')],
     ['Pressure', formatFloat(tune.brake.pressure, 0, '%')],
   ]);
@@ -147,6 +175,11 @@ export function getDrivetrain(build: BuildSettings, stockDriveType: string): Dri
 function formatDifferential(form: SettingsForm, car: Car): string[] {
   const drivetrain = getDrivetrain(form.build, car.drive);
   const header = ['Differential', 'Accel', 'Decel'];
+
+  if (form.tune.diff.na) {
+    return formatTable(header, [['Not Applicable', '', '']]);
+  }
+
   const front = ['Front', 'N/A', 'N/A'];
   const rear = ['Rear', 'N/A', 'N/A'];
   const center = ['Center', '', ''];
