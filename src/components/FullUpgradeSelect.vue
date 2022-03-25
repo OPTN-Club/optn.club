@@ -1,8 +1,8 @@
-<script setup lang="ts">import { computed } from 'vue';
+<script setup lang="ts">
 import { FullUpgrade } from '../lib/types';
 import EnumSelect from './EnumSelect.vue';
 
-const props = defineProps<{
+defineProps<{
   modelValue: FullUpgrade;
   label: string;
 }>();
@@ -21,7 +21,7 @@ function onUpdate(value: string) {
     :modelValue="modelValue"
     :label="label"
     :type="FullUpgrade"
-    root-class="upgrade-select"
+    rootClass="upgrade-select"
     @update:modelValue="onUpdate"
   />
 </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  TransmissionUpgrade, DriveType, TireCompound, RimStyleType, TrackWidthType
+  TransmissionUpgrade, DriveType, TireCompound, RimStyleType, TrackWidthType,
 } from '../lib/types';
 import { useFormattingForm } from '../lib/useFormattingForm';
 import FullUpgradeSelect from './FullUpgradeSelect.vue';
@@ -10,12 +10,7 @@ import UpgradeSelect from './UpgradeSelect.vue';
 import LimitedUpgradeSelect from './LimitedUpgradeSelect.vue';
 import FrontRearInputs from './FrontRearInputs.vue';
 
-const {
-  form,
-  car,
-  driveType,
-  globalUnit,
-} = useFormattingForm();
+const { form } = useFormattingForm();
 
 </script>
 <template>

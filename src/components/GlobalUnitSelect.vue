@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   modelValue: 'Metric' | 'Imperial';
 }>();
 
@@ -23,7 +23,7 @@ function onInput(e: Event) {
         name="globalUnit"
         value="Metric"
         @input="onInput"
-      />
+      >
       Metric
     </label>
     <label class="inline radio">
@@ -33,7 +33,7 @@ function onInput(e: Event) {
         name="globalUnit"
         value="Imperial"
         @input="onInput"
-      />
+      >
       Imperial
     </label>
   </div>

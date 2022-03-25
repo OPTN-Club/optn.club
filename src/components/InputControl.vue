@@ -7,7 +7,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
   modelValue: string,
   label: string,
   errorMsg?: string,
@@ -53,7 +53,7 @@ function onInput(e: Event) {
       :max="max"
       v-bind="$attrs"
       @input="onInput"
-    />
+    >
     <span v-if="errorMsg" class="validation-message">{{ errorMsg }}</span>
   </div>
 </template>

@@ -2,7 +2,7 @@
 import { Upgrade } from '../lib/types';
 import EnumSelect from './EnumSelect.vue';
 
-const props = defineProps<{
+defineProps<{
   modelValue: Upgrade;
   label: string;
 }>();
@@ -21,7 +21,7 @@ function onUpdate(value: string) {
     :modelValue="modelValue"
     :label="label"
     :type="Upgrade"
-    root-class="upgrade-select"
+    rootClass="upgrade-select"
     @update:modelValue="onUpdate"
   />
 </template>

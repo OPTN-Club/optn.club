@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import InputControl from './InputControl.vue';
 
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
   modelValue: string,
   label: string,
   errorMsg?: string,
@@ -28,7 +28,7 @@ function onUpdate(value: string) {
 
 <template>
   <InputControl
-    :model-value="modelValue"
+    :modelValue="modelValue"
     :label="label"
     :step="step"
     :min="min"

@@ -2,7 +2,7 @@
 import { LimitedUpgrade } from '../lib/types';
 import EnumSelect from './EnumSelect.vue';
 
-const props = defineProps<{
+defineProps<{
   modelValue: LimitedUpgrade;
   label: string;
 }>();

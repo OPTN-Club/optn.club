@@ -8,8 +8,6 @@ import FormattedTuneTextarea from './FormattedTuneTextarea.vue';
 
 const {
   form,
-  car,
-  driveType,
   globalUnit,
 } = useFormattingFormProvider();
 
