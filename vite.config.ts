@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     port: 3333,
   },
-  base: 'ForzaOpenTuneFormatter',
+  base: process.env.NODE_ENV === 'production' ? '/ForzaOpenTuneFormatter/' : './',
   build: {
     outDir: 'docs',
   },
