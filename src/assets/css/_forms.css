@@ -114,6 +114,7 @@ textarea.touched:invalid~.validation-message {
 
 .gears-grid {
   display: grid;
+  /* grid-template-columns: 1fr; */
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   column-gap: 30px;
   row-gap: 8px;
@@ -146,9 +147,14 @@ textarea.touched:invalid~.validation-message {
 }
 
 .column.actions {
-  width: 66%;
-  margin: 0 auto;
+  @apply
+    w-full
+    sm:w-2/3
+    mx-auto
+    my-0;
 }
+
+
 
 .row > .control {
   @apply

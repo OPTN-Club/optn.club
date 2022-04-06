@@ -13,7 +13,7 @@ function onCopyClick() {
 </script>
 <template>
   <section>
-    <div class="column actions">
+    <div class="column actions w-full md:">
       <p class="font-bold text-center">
         NOTE:<br>
         Be sure the editor is in &quot;Markdown&quot; mode<br>

@@ -19,6 +19,7 @@ import {
   SettingsForm,
   TrackWidthType,
   ForceUnit,
+  PIClass,
 } from './types';
 import useUpgrades, { UseUpgrades } from './useUpgrades';
 
@@ -112,6 +113,8 @@ function createFormattingForm(): SettingsForm {
       },
       engine: {
         intake: Upgrade.stock,
+        intakeManifold: Upgrade.na,
+        carburator: Upgrade.na,
         fuelSystem: Upgrade.stock,
         ignition: LimitedUpgrade.stock,
         exhaust: Upgrade.stock,
@@ -122,7 +125,7 @@ function createFormattingForm(): SettingsForm {
         turbo: LimitedUpgrade.na,
         twinTurbo: LimitedUpgrade.na,
         supercharger: LimitedUpgrade.na,
-        centrifigulSupercharger: LimitedUpgrade.na,
+        centrifugalSupercharger: LimitedUpgrade.na,
         intercooler: LimitedUpgrade.stock,
         oilCooling: Upgrade.stock,
         flywheel: Upgrade.stock,
@@ -167,6 +170,18 @@ function createFormattingForm(): SettingsForm {
         sideSkirts: 'N/A',
         hood: 'N/A',
       },
+    },
+    stats: {
+      pi: 0,
+      classification: PIClass.A,
+      hp: 0,
+      torque: 0,
+      weight: 0,
+      balance: 0,
+      topSpeed: 0,
+      zeroToSixty: 0,
+      zeroToHundred: 0,
+      shareCode: '',
     },
   };
 }

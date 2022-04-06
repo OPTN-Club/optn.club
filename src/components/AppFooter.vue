@@ -1,7 +1,6 @@
 <template>
-  <section>
-    <p class="footer-text">
-      Created by Root, SharpSeeEr, and Doubiez. Last updated 7:20PM Feb. 27th 2022
-    </p>
-  </section>
+  <footer class="text-center text-sm">
+    Created by Root, SharpSeeEr, and Doubiez.  Tune Calculator based off of
+    <a href="https://www.reddit.com/user/diquee/" target="_blank">u/diquee's</a> tune calculator spreadsheet
+  </footer>
 </template>

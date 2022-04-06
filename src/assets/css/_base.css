@@ -1,25 +1,24 @@
 @layer base {
   html {
     background: #383838 linear-gradient(#252525, #151515) fixed;
-    height: 100%
+    height: 100%;
   }
 
   body {
-    font: 14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: var(--offwhite);
+    font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    @apply text-offwhite;
   }
 
   .wrapper {
     @apply
-      max-w-3xl
+      flex
+      flex-col
+      min-h-screen
+      max-w-4xl
       my-0
       mx-auto
       bg-fot-blue-darkest;
-
-    /* width: 740px;
-    margin: 0 auto;
-    background-color: rgb(24, 25, 26);
-    box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0, 0.45) 0 0 0; */
   }
 
   a {
@@ -29,11 +28,7 @@
   }
 
   p, ul, ol, table, pre, dl {
-    margin: 0 0 20px;
-  }
-
-  p {
-    padding: 0;
+    @apply m-0 mb-4;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -44,7 +39,7 @@
 
   h1 {
     @apply
-      text-fot-blue
+      text-fot-blue-light
       text-3xl;
   }
 
@@ -59,19 +54,41 @@
   }
 
   h4 {
-    font-size: 1.1rem;
+    @apply text-lg;
   }
 
   h2 + h3 {
     @apply mt-2;
   }
 
-  p, span, label {
-    font-size: 1rem;
+  strong {
+    @apply font-bold;
   }
 
-  strong {
-    color: var(--light-blue);
-    font-weight: 700;
+  section {
+    @apply
+      py-4
+      px-5
+      border-t
+      border-gray-500;
+  }
+
+  footer {
+    @apply
+      p-4
+      overflow-hidden;
+  }
+
+  footer a {
+    @apply
+      text-white
+      font-bold;
+  }
+
+  .formatted-text {
+    @apply w-full
+      block
+      mx-auto
+      mb-10;
   }
 }

@@ -29,6 +29,8 @@ const { form } = useFormattingForm();
     <h2 class="m-0">Engine</h2>
     <div class="row">
       <UpgradeSelect v-model="form.build.engine.intake" label="Intake" />
+      <UpgradeSelect v-model="form.build.engine.intakeManifold" label="Intake Manifold" />
+      <UpgradeSelect v-model="form.build.engine.carburator" label="Carburator" />
       <UpgradeSelect v-model="form.build.engine.fuelSystem" label="Fuel System" />
       <LimitedUpgradeSelect v-model="form.build.engine.ignition" label="Ignition" />
       <UpgradeSelect v-model="form.build.engine.exhaust" label="Exhaust" />
@@ -49,7 +51,7 @@ const { form } = useFormattingForm();
         label="Supercharger"
       />
       <LimitedUpgradeSelect
-        v-model="form.build.engine.centrifigulSupercharger"
+        v-model="form.build.engine.centrifugalSupercharger"
         label="Centrifugal Supercharger"
       />
       <LimitedUpgradeSelect

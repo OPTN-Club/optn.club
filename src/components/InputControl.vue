@@ -8,7 +8,7 @@ export default {
 
 <script setup lang="ts">
 withDefaults(defineProps<{
-  modelValue: string,
+  modelValue: string | number,
   label: string,
   errorMsg?: string,
   error?: boolean,
@@ -28,7 +28,7 @@ withDefaults(defineProps<{
 });
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', v: string): void,
+  (e: 'update:modelValue', v: string | number): void,
 }>();
 
 const id = uuid();

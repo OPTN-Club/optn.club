@@ -2,7 +2,7 @@
 import InputControl from './InputControl.vue';
 
 withDefaults(defineProps<{
-  modelValue: string,
+  modelValue: string | number,
   label: string,
   errorMsg?: string,
   error?: boolean,
@@ -18,10 +18,10 @@ withDefaults(defineProps<{
 });
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', v: string): void,
+  (e: 'update:modelValue', v: string | number): void,
 }>();
 
-function onUpdate(value: string) {
+function onUpdate(value: string | number) {
   emit('update:modelValue', value);
 }
 </script>

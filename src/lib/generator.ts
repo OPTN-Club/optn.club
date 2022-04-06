@@ -1,6 +1,7 @@
 import { capitalCase } from 'change-case';
 import { byFullname } from './models';
 import {
+  BuildSectionUpgrades,
   BuildSettings,
   Car,
   DriveType,
@@ -282,9 +283,14 @@ function formatAeroBuild(build: BuildSettings): string[] {
   return formatTable(['Aero and Appearance', ''], aero);
 }
 
-function formatBuildSection<T>(section: T) {
+function formatBuildSection<T extends BuildSectionUpgrades>(section: T) {
   const keys = Object.keys(section);
-  return keys.map((key) => [capitalCase(key), section[key as keyof T]]);
+  return keys
+    .filter((key) => {
+      const value = section[key as keyof T];
+      return value && value.toString() !== 'N/A';
+    })
+    .map((key) => [capitalCase(key), section[key as keyof T]]);
 }
 
 export function formatBuild(build: BuildSettings, model: string): string[] {

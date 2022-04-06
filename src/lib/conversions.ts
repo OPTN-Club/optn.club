@@ -3,7 +3,7 @@ import {
 } from './types';
 import { ensureFloat } from './utils';
 
-const multipliers = {
+export const multipliers = {
   springs: {
     newtonsKgf: 0.1019716212978,
     newtonsLbs: 0.57101471743224,

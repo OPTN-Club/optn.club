@@ -4,8 +4,13 @@ header {
     px-4
     py-4
     flex
-    justify-between;
+    flex-col
+    md:flex-row;
 }
+
+/* header + div > section {
+  @apply border-t;
+} */
 
 header h1 {
   @apply m-0;
@@ -66,18 +71,6 @@ header p.view small {
     flex
     flex-col
     justify-center;
-
-  /* line-height: 1;
-  font-size: 11px;
-  color: #fff;
-  color: rgba(255, 255, 255, 0.8);
-  text-align: center;
-  font-weight: 400;
-  text-shadow: rgba(0, 0, 0, 0.4) 0 -1px 0;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; */
 }
 
 .link-bar a strong {
@@ -91,10 +84,18 @@ header p.view small {
   -webkit-font-smoothing: antialiased; */
 }
 
-@screen md {
-
+.nav-link {
+  @apply
+    p-2
+    text-fot-blue-light
+    font-bold
+    text-lg
+    border-b-4
+    border-b-transparent;
 }
 
-.footer-text {
-  font-size: small;
+.nav-link.router-link-active,
+.nav-link:hover {
+  @apply
+    border-b-fot-blue;
 }

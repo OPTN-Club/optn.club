@@ -1,14 +1,14 @@
 <template>
   <header>
-    <div class="md:mr-8 text-center md:text-left">
+    <div class="md:mr-8">
       <img
         src="/images/FOT_logo_color.png"
         alt="FOT Logo"
-        class="w-auto"
+        class="w-auto h-28 mx-auto md:mx-0"
       >
     </div>
 
-    <div class="flex flex-col">
+    <div class="flex flex-col grow justify-between">
       <ul class="link-bar">
         <li>
           <a href="https://discord.com">
@@ -29,13 +29,11 @@
           </a>
         </li>
       </ul>
-      <h1 class="m-0">Tune Formatter</h1>
-      <p class="m-0">
-        Format your tunes into compact and readable text for
-        <a
-          href="https://reddit.com/r/ForzaOpenTunes"
-        >r/ForzaOpenTunes on Reddit</a>
-      </p>
+
+      <div class="-mb-2 text-center md:text-left">
+        <router-link class="nav-link" to="/">Formatter</router-link>
+        <router-link class="nav-link" to="/calculator">Calculator</router-link>
+      </div>
     </div>
   </header>
 </template>
