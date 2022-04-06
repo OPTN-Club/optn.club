@@ -22,7 +22,7 @@ module.exports = {
     },
   },
 
-  ignorePatterns: ["/dist/**", "/*.js", "/.*.js"],
+  ignorePatterns: ["/dist/**", "/*.js", "/.*.js", "/*.ts"],
 
   extends: [
     "plugin:vue/vue3-strongly-recommended",
