@@ -132,12 +132,13 @@ export default function useTuneCalculator() {
   }));
 
   const tune = computed<TuneCalculatorResult>(() => ({
+    weightBalance: weightBalance.value,
     springs: springs.value,
     rebound: rebound.value,
     bump: bump.value,
     arbs: arbs.value,
-    brakeBalance: weightBalance.value.rear + modifierPercents.value.brakeOffset,
-    centerDiff: weightBalance.value.rear,
+    brakeBalance: (weightBalance.value.rear + modifierPercents.value.brakeOffset) * 100,
+    centerDiff: weightBalance.value.rear * 100,
   }));
 
   return {

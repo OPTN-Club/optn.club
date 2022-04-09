@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  computed, reactive, ref, onBeforeUnmount, watch,
+  computed, reactive, onBeforeUnmount, watch,
 } from 'vue';
 import { v4 as uuid } from 'uuid';
 import RepeatButton, { Modifiers } from './RepeatButton.vue';
@@ -42,23 +42,25 @@ watch(() => props.modelValue, (current) => {
   state.value = current;
 });
 
+watch(() => state.value, (current) => {
+  emitModelValue();
+});
+
 const modifiedStep = computed(() => {
   if (state.modifiers.control) return 10;
   if (state.modifiers.alt) return 100;
   return props.step;
 });
 
-const focused = ref(false);
-
-const containerClass = computed(() => (focused.value ? 'border-fot-yellow' : 'border-gray-400'));
+const containerClass = computed(() => (state.focused ? 'border-fot-yellow' : 'border-gray-400'));
 
 function emitModelValue() {
-  emit('update:modelValue', state.value);
+  if (!state.pressed) emit('update:modelValue', state.value);
 }
 
 function onPressed(v: boolean) {
   state.pressed = v;
-  if (!v) emitModelValue();
+  emitModelValue();
 }
 
 const constraints = computed(() => ({
@@ -78,16 +80,25 @@ function onDecrementClick() {
   updateValue(state.value - modifiedStep.value);
 }
 
+function onKeyDown() {
+  state.pressed = true;
+}
+
 function onKeyUp() {
+  state.pressed = false;
   emitModelValue();
 }
 
 function onFocus() {
-  focused.value = true;
+  state.focused = true;
 }
 
 function onBlur() {
-  focused.value = false;
+  state.focused = false;
+}
+
+function onTouchEnd(e: TouchEvent) {
+  (e.target as HTMLInputElement).select();
 }
 
 function updateModifier(e: KeyboardEvent, value: boolean) {
@@ -149,6 +160,8 @@ onBeforeUnmount(() => {
           @focus="onFocus"
           @blur="onBlur"
           @keyup.down.up="onKeyUp"
+          @keydown.down.up="onKeyDown"
+          @touchend="onTouchEnd"
         >
         <div>
           <slot />

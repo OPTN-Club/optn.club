@@ -24,12 +24,11 @@ const formatted = computed(() => ({
 </script>
 <template>
   <div class="calculator-results">
-    <div class="sm:fixed">
-      <table class="sm:text-lg text-white mx-auto">
+    <div class="sticky top-[70px]">
+      <h3 class="text-center">Results</h3>
+
+      <table class="hidden sm:table sm:text-lg text-white mx-auto">
         <thead>
-          <tr class="header-row">
-            <th colspan="5"><h3>Calculated Results</h3></th>
-          </tr>
           <tr>
             <th>&nbsp;</th>
             <th>Front</th>
@@ -79,6 +78,78 @@ const formatted = computed(() => ({
           </tr>
         </tbody>
       </table>
+      <table class="sm:hidden sm:text-lg text-white mx-auto">
+        <tbody>
+          <tr class="header-row">
+            <th colspan="3">ARB's</th>
+          </tr>
+          <tr>
+            <th>Front</th>
+            <td>{{ formatted.arbs.front }}</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>Rear</th>
+            <td>{{ formatted.arbs.rear }}</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr class="header-row">
+            <th colspan="3">Springs</th>
+          </tr>
+          <tr>
+            <th>Front</th>
+            <td>{{ formatted.springs.front }}</td>
+            <td class="unit">kgf</td>
+          </tr>
+          <tr>
+            <th>Rear</th>
+            <td>{{ formatted.springs.rear }}</td>
+            <td class="unit">kgf</td>
+          </tr>
+          <tr class="header-row">
+            <th colspan="3">Rebound</th>
+          </tr>
+          <tr>
+            <th>Front</th>
+            <td>{{ formatted.rebound.front }}</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>Rear</th>
+            <td>{{ formatted.rebound.rear }}</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr class="header-row">
+            <th colspan="3">Bump</th>
+          </tr>
+          <tr>
+            <th>Front</th>
+            <td>{{ formatted.bump.front }}</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>Rear</th>
+            <td>{{ formatted.bump.rear }}</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr class="header-row">
+            <th colspan="3">Brake Balance</th>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>{{ formatted.brakeBalance }}</td>
+            <td class="unit">%</td>
+          </tr>
+          <tr class="header-row">
+            <th colspan="3">Center Diff</th>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>{{ formatted.centerDiff }}</td>
+            <td class="unit">%</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -87,8 +158,9 @@ const formatted = computed(() => ({
 .calculator-results {
   @apply
     bg-fot-blue-darkest
-    grow sticky
-    top-[70px]
+    grow
+    /* sticky
+    top-[70px] */
     border-b
     border-gray-500
     sm:border-b-0
