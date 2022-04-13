@@ -15,6 +15,8 @@ function formatFrontRear(value: FrontRear, precision = 1) {
 const formatted = computed(() => ({
   arbs: formatFrontRear(props.tune.arbs),
   springs: formatFrontRear(props.tune.springs),
+  springRates: formatFrontRear(props.tune.springRates),
+  springRatesInNewtons: formatFrontRear(props.tune.springRatesInNewtons),
   rebound: formatFrontRear(props.tune.rebound),
   bump: formatFrontRear(props.tune.bump),
   brakeBalance: props.tune.brakeBalance.toFixed(0),
@@ -50,6 +52,13 @@ const formatted = computed(() => ({
             <td>{{ formatted.springs.front }}</td>
             <td class="unit">kgf</td>
             <td>{{ formatted.springs.rear }}</td>
+            <td class="unit">kgf</td>
+          </tr>
+          <tr>
+            <th>Spring Rates</th>
+            <td>{{ formatted.springRates.front }}</td>
+            <td class="unit">kgf</td>
+            <td>{{ formatted.springRates.rear }}</td>
             <td class="unit">kgf</td>
           </tr>
           <tr>

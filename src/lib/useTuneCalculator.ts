@@ -3,41 +3,49 @@ import {
   watch,
   computed,
 } from 'vue';
-import { multipliers } from './conversions';
+import { convertSpringRate, convertWeightToMass, multipliers } from './conversions';
 import {
   defaultSpringTypeModifiersMap,
   SpringTypeModifiersMap,
   TuneInputs,
   TuneModifiers,
   defaultARBClassModifiersMap,
-  ArbClassModifiersMap,
+  ClassModifiersMap,
   valueDeltas,
   calcSpringsDeltas,
   FrontRear,
   SpringsType,
   TuneCalculatorResult,
+  defaultFrequencyClassModifiersMap,
 } from './tune-calculator';
 import {
-  DriveType, PIClass,
+  DriveType, PIClass, SpringRateUnit, WeightUnit,
 } from './types';
 
 export default function useTuneCalculator() {
   const inputs = reactive<TuneInputs>({
     drivetrain: DriveType.rwd,
     springs: SpringsType.race,
-    piClass: PIClass.A,
-    weight: 1670,
-    weightBalance: 52,
+    piClass: PIClass.S1,
+    weight: 2832,
+    weightBalance: 40,
     frontAero: 112,
     tireWidth: {
-      front: 255,
-      rear: 295,
+      front: 275,
+      rear: 345,
     },
   });
 
   const springTypeModifiersMap = reactive<SpringTypeModifiersMap>({ ...defaultSpringTypeModifiersMap });
-  const arbClassModifiersMap = reactive<ArbClassModifiersMap>({ ...defaultARBClassModifiersMap });
+  const arbClassModifiersMap = reactive<ClassModifiersMap>({ ...defaultARBClassModifiersMap });
+  const freqClassModifiersMap = reactive<ClassModifiersMap>({ ...defaultFrequencyClassModifiersMap });
 
+  function getFrequencyModifiers() {
+    return {
+      front: freqClassModifiersMap[inputs.piClass],
+      rear: Math.floor(freqClassModifiersMap[inputs.piClass] * 0.92 * 10) / 10,
+    };
+  }
   const modifiers = reactive<TuneModifiers>({
     brakeOffset: 1,
     driveOffset: 5,
@@ -45,6 +53,12 @@ export default function useTuneCalculator() {
     rebound: springTypeModifiersMap[inputs.springs].rebound,
     bump: springTypeModifiersMap[inputs.springs].bump,
     arb: arbClassModifiersMap[inputs.piClass],
+    freq: getFrequencyModifiers(),
+    unsprungCornerWeight: 0,
+    motionRatio: {
+      front: 100,
+      rear: 100,
+    },
   });
 
   watch(() => modifiers.arb, (current) => {
@@ -66,6 +80,7 @@ export default function useTuneCalculator() {
 
   watch(() => inputs.piClass, (current) => {
     modifiers.arb = arbClassModifiersMap[current];
+    modifiers.freq = getFrequencyModifiers();
   });
 
   const modifierPercents = computed<TuneModifiers>(() => ({
@@ -75,6 +90,12 @@ export default function useTuneCalculator() {
     rebound: modifiers.rebound / 100,
     bump: modifiers.bump / 100,
     arb: modifiers.arb / 100,
+    freq: modifiers.freq,
+    unsprungCornerWeight: modifiers.unsprungCornerWeight,
+    motionRatio: {
+      front: modifiers.motionRatio.front / 100,
+      rear: modifiers.motionRatio.rear / 100,
+    },
   }));
 
   const deltas = computed(() => ({
@@ -94,6 +115,31 @@ export default function useTuneCalculator() {
       rear: inputs.tireWidth.rear / totalWidth,
     };
   });
+
+  const carWeight = computed<FrontRear>(() => ({
+    front: inputs.weight * carWeightBalance.value.front,
+    rear: inputs.weight * carWeightBalance.value.rear,
+  }));
+
+  const cornerWeight = computed<FrontRear>(() => ({
+    front: carWeight.value.front / 2 - modifiers.unsprungCornerWeight,
+    rear: carWeight.value.rear / 2 - modifiers.unsprungCornerWeight,
+  }));
+
+  const cornerMass = computed<FrontRear>(() => ({
+    front: convertWeightToMass(cornerWeight.value.front, WeightUnit.kg),
+    rear: convertWeightToMass(cornerWeight.value.rear, WeightUnit.kg),
+  }));
+
+  const springRatesInNewtons = computed<FrontRear>(() => ({
+    front: (2 * modifiers.freq.front * Math.PI) ** 2 * cornerMass.value.front * (modifierPercents.value.motionRatio.front ** 2),
+    rear: (2 * modifiers.freq.rear * Math.PI) ** 2 * cornerMass.value.rear * (modifierPercents.value.motionRatio.rear ** 2),
+  }));
+
+  const springRates = computed<FrontRear>(() => ({
+    front: convertSpringRate(springRatesInNewtons.value.front, SpringRateUnit.nmm, SpringRateUnit.kgf) / 100,
+    rear: convertSpringRate(springRatesInNewtons.value.rear, SpringRateUnit.nmm, SpringRateUnit.kgf) / 100,
+  }));
 
   const weightBalance = computed(() => ({
     front: (tireWeightBalance.value.front + carWeightBalance.value.front) / 2,
@@ -134,6 +180,8 @@ export default function useTuneCalculator() {
   const tune = computed<TuneCalculatorResult>(() => ({
     weightBalance: weightBalance.value,
     springs: springs.value,
+    springRates: springRates.value,
+    springRatesInNewtons: springRatesInNewtons.value,
     rebound: rebound.value,
     bump: bump.value,
     arbs: arbs.value,
@@ -145,6 +193,7 @@ export default function useTuneCalculator() {
     inputs,
     modifiers,
     tune,
+    deltas,
     springTypeModifiersMap,
   };
 }

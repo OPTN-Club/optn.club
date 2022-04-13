@@ -82,12 +82,66 @@ const state = useTuneCalculator();
       </div>
 
       <h3>Modifiers</h3>
+
+      <div class="font-bold">Motion Ratio</div>
+      <div class="row">
+        <CounterInput
+          v-model="state.modifiers.motionRatio.front"
+          label="Front"
+          min="1"
+          max="100"
+          :step="1"
+        >
+          %
+        </CounterInput>
+        <CounterInput
+          v-model="state.modifiers.motionRatio.rear"
+          label="Rear"
+          min="1"
+          max="100"
+          :step="1"
+        >
+          %
+        </CounterInput>
+      </div>
+
+      <div class="font-bold">Target Frequency</div>
+      <div class="row">
+        <CounterInput
+          v-model="state.modifiers.freq.front"
+          label="Front"
+          min="1"
+          max="10"
+          :step="0.1"
+        />
+        <CounterInput
+          v-model="state.modifiers.freq.rear"
+          label="Rear"
+          min="1"
+          max="10"
+          :step="0.1"
+        />
+      </div>
+
+      <div class="row">
+        <CounterInput
+          v-model="state.modifiers.unsprungCornerWeight"
+          label="Unsprung Corner Weight"
+          min="0"
+          max="125"
+          :step="1"
+        >
+          kg
+        </CounterInput>
+      </div>
+
       <div class="row">
         <CounterInput
           v-model="state.modifiers.general"
           label="Springs"
           min="0"
           max="200"
+          :step="1"
         >
           %
         </CounterInput>

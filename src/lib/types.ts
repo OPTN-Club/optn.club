@@ -13,6 +13,12 @@ export enum ForceUnit {
   lbf = 'lb',
 }
 
+export enum WeightUnit {
+  kg = 'kg',
+  lbs = 'lbs',
+  n = 'n',
+}
+
 export enum SpringRateUnit {
   kgf = 'kgf/mm',
   lbs = 'lbs/in',

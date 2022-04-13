@@ -1,5 +1,5 @@
 import {
-  PressureUnit, LengthUnit, SpringRateUnit, SpringRateValues, PressureValues, LengthValues, ForceUnit, ForceValues,
+  PressureUnit, LengthUnit, SpringRateUnit, SpringRateValues, PressureValues, LengthValues, ForceUnit, ForceValues, WeightUnit,
 } from './types';
 import { ensureFloat } from './utils';
 
@@ -11,7 +11,16 @@ export const multipliers = {
   force: 0.45359236844386,
   pressure: 0.0689475728,
   length: 0.39370078740214,
+  weightNewtonsToMass: 9.80665,
 };
+
+export function convertWeightToMass(value: string | number, from: WeightUnit) {
+  const v = ensureFloat(value);
+  const newtons = from === WeightUnit.kg
+    ? v / multipliers.springs.newtonsKgf
+    : v / multipliers.springs.newtonsLbs;
+  return newtons / multipliers.weightNewtonsToMass;
+}
 
 export function convertPressure(value: string | number, from: PressureUnit) {
   const v = ensureFloat(value);
@@ -28,7 +37,6 @@ export function convertPressure(value: string | number, from: PressureUnit) {
 // Aero: kgf lb
 // 53 kgf 268 kgf
 // 116 lb 590 lb
-//
 
 export function convertPressureFrom(value: string | number, from: PressureUnit): PressureValues<number> {
   const v = ensureFloat(value);

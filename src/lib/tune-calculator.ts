@@ -32,10 +32,15 @@ export interface GeneralModifiers {
   brakeOffset: number;
   driveOffset: number;
   arb: number;
+  freq: FrontRear;
+  unsprungCornerWeight: number;
+  motionRatio: FrontRear;
 }
 
 export interface TuneCalculatorResult {
   springs: FrontRear;
+  springRates: FrontRear;
+  springRatesInNewtons: FrontRear;
   rebound: FrontRear;
   bump: FrontRear;
   arbs: FrontRear;
@@ -45,16 +50,26 @@ export interface TuneCalculatorResult {
 
 export type TuneModifiers = SpringTypeModifiers & GeneralModifiers;
 
-export type ArbClassModifiersMap = Record<PIClass, number>;
+export type ClassModifiersMap = Record<PIClass, number>;
 
-export const defaultARBClassModifiersMap: ArbClassModifiersMap = {
+export const defaultARBClassModifiersMap: ClassModifiersMap = {
   [PIClass.D]: 50,
-  [PIClass.C]: 600,
+  [PIClass.C]: 60,
   [PIClass.B]: 70,
   [PIClass.A]: 80,
   [PIClass.S1]: 90,
   [PIClass.S2]: 100,
   [PIClass.X]: 100,
+};
+
+export const defaultFrequencyClassModifiersMap: ClassModifiersMap = {
+  [PIClass.D]: 1.0,
+  [PIClass.C]: 1.4,
+  [PIClass.B]: 1.8,
+  [PIClass.A]: 2.1,
+  [PIClass.S1]: 2.5,
+  [PIClass.S2]: 2.7,
+  [PIClass.X]: 3.0,
 };
 
 export type SpringTypeModifiersMap = Record<SpringsType, SpringTypeModifiers>;
@@ -86,6 +101,9 @@ export interface ValueRange {
   max: FrontRear;
   min: FrontRear;
 }
+
+// Porsche 911 GT3 RS Springs max 261.9 min 52.4 weight 2832 S1 40%  max 10.813287514 min 54.045801527
+// Porsche 911 GT3    Springs max 290.5 min 58.1 weight 3141 B  38%
 
 export const springRangeMultipliers: Record<SpringsType, ValueRange> = {
   [SpringsType.race]: {
@@ -194,6 +212,23 @@ export function calcSpringsDeltas(tuneType: SpringsType, weight: number): FrontR
     rear: weight * multipliers.max.rear - weight * multipliers.min.rear,
   };
 }
+
+/*
+ShockRideHeight = RideHeightPercent * ShockTravelLength
+SprungWeight = CornerWeight - UnsprungWeight
+MotionRatio = (DimensionA / DimensionB) * sin(SpringAngle)
+StaticLoad = SprungWeight / MotionRatio
+SpringRate = StaticLoad / ShockRideHeight
+
+Desired Freq, Hz: 1.5 - 2.0 Hz for racecars, 3.0 - 5.0+ Hz for high downforce racecars
+SpringRate = (2 * Desired Freq, Hz * Math.pi())^2 * SprungCornerWeight
+WheelRate = MotionRatio^2 * CalculatedSpringRate
+NaturalFreq = Math.sqrt(SpringRate / SprungCornerWeight) / (2 * Math.pi())
+
+Damping:
+https://suspensionsecrets.co.uk/dampers/
+
+*/
 
 /*
 Calculations:
