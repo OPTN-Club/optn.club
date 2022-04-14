@@ -64,8 +64,6 @@ function onBlur(e: Event) {
 <template>
   <button
     type="button"
-    class="rounded-l rounded-r-none"
-    data-action="decrement"
     @mousedown="onMouseDown"
     @mouseup="onMouseUp"
     @mouseleave="onMouseUp"
