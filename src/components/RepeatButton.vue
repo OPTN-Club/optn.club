@@ -69,8 +69,6 @@ function onBlur(e: Event) {
     @mousedown="onMouseDown"
     @mouseup="onMouseUp"
     @mouseleave="onMouseUp"
-    @touchstart="onMouseDown"
-    @touchend="onMouseUp"
     @touchmove="onMouseUp"
     @blur="onBlur"
   >
