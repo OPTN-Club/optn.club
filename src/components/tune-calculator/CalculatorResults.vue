@@ -1,8 +1,9 @@
 <script setup lang="ts">import { computed } from 'vue';
-import { FrontRear, TuneCalculatorResult } from '../../lib/tune-calculator';
+import { FrontRear, TuneCalculatorResult, TuneInputs } from '../../lib/tune-calculator';
 
 const props = defineProps<{
   tune: TuneCalculatorResult;
+  inputs: TuneInputs;
 }>();
 
 function formatFrontRear(value: FrontRear, precision = 1) {
@@ -80,7 +81,7 @@ const formatted = computed(() => ({
             <td>{{ formatted.brakeBalance }}</td>
             <td colspan="3" class="unit">%</td>
           </tr>
-          <tr>
+          <tr v-if="inputs.drivetrain === 'AWD'">
             <th>Center Diff</th>
             <td>{{ formatted.centerDiff }}</td>
             <td colspan="3" class="unit">%</td>
@@ -113,6 +114,19 @@ const formatted = computed(() => ({
           <tr>
             <th>Rear</th>
             <td>{{ formatted.springs.rear }}</td>
+            <td class="unit">kgf</td>
+          </tr>
+          <tr class="header-row">
+            <th colspan="3">Spring Rates</th>
+          </tr>
+          <tr>
+            <th>Front</th>
+            <td>{{ formatted.springRates.front }}</td>
+            <td class="unit">kgf</td>
+          </tr>
+          <tr>
+            <th>Rear</th>
+            <td>{{ formatted.springRates.rear }}</td>
             <td class="unit">kgf</td>
           </tr>
           <tr class="header-row">
@@ -149,14 +163,16 @@ const formatted = computed(() => ({
             <td>{{ formatted.brakeBalance }}</td>
             <td class="unit">%</td>
           </tr>
-          <tr class="header-row">
-            <th colspan="3">Center Diff</th>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>{{ formatted.centerDiff }}</td>
-            <td class="unit">%</td>
-          </tr>
+          <template v-if="inputs.drivetrain === 'AWD'">
+            <tr class="header-row">
+              <th colspan="3">Center Diff</th>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td>{{ formatted.centerDiff }}</td>
+              <td class="unit">%</td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </div>

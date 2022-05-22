@@ -198,7 +198,7 @@ const state = useTuneCalculator();
       </div>
     </form>
 
-    <CalculatorResults :tune="state.tune.value" />
+    <CalculatorResults :tune="state.tune.value" :inputs="state.inputs" />
   </section>
   <template />
 </template>
