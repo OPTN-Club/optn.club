@@ -63,13 +63,13 @@ export const defaultARBClassModifiersMap: ClassModifiersMap = {
 };
 
 export const defaultFrequencyClassModifiersMap: ClassModifiersMap = {
-  [PIClass.D]: 1.0,
-  [PIClass.C]: 1.4,
-  [PIClass.B]: 1.8,
-  [PIClass.A]: 2.1,
-  [PIClass.S1]: 2.5,
-  [PIClass.S2]: 2.7,
-  [PIClass.X]: 3.0,
+  [PIClass.D]: 2.8,
+  [PIClass.C]: 2.9,
+  [PIClass.B]: 3.0,
+  [PIClass.A]: 3.0,
+  [PIClass.S1]: 3.1,
+  [PIClass.S2]: 3.2,
+  [PIClass.X]: 3.3,
 };
 
 export type SpringTypeModifiersMap = Record<SpringsType, SpringTypeModifiers>;
