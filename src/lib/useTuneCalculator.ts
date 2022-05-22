@@ -27,8 +27,8 @@ export default function useTuneCalculator() {
     drivetrain: DriveType.rwd,
     springs: SpringsType.race,
     piClass: PIClass.S1,
-    weight: 2832,
-    weightBalance: 40,
+    weight: 1500,
+    weightBalance: 50,
     frontAero: 112,
     tireWidth: {
       front: 275,
@@ -43,7 +43,7 @@ export default function useTuneCalculator() {
   function getFrequencyModifiers() {
     return {
       front: freqClassModifiersMap[inputs.piClass],
-      rear: Math.floor(freqClassModifiersMap[inputs.piClass] * 0.92 * 10) / 10,
+      rear: freqClassModifiersMap[inputs.piClass], // Math.floor(freqClassModifiersMap[inputs.piClass] * 0.92 * 10) / 10,
     };
   }
   const modifiers = reactive<TuneModifiers>({
