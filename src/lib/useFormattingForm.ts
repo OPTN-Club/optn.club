@@ -197,7 +197,7 @@ interface UseFormattingForm {
 export function useFormattingFormProvider() {
   const form = reactive(createFormattingForm());
 
-  const car = computed<Car | null>(() => byFullname[form.model] || null);
+  const car = computed<Car | null>(() => byFullname.get(form.model) || null);
   const driveType = computed(() => (car.value ? getDrivetrain(form.build, car.value.drive) : DriveType.awd));
 
   const globalUnit = ref<'Metric' | 'Imperial'>('Metric');
