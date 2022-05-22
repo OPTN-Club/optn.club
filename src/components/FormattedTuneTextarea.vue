@@ -1,14 +1,33 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onBeforeUnmount, ref } from 'vue';
 import { generateRedditMarkdown } from '../lib/generator';
 import { useFormattingForm } from '../lib/useFormattingForm';
 
 const { form } = useFormattingForm();
 
+const buttonText = ref('Copy To Clipboard');
+const timeout = ref(0);
+
+const textareaRef = ref<HTMLTextAreaElement | null>(null);
+
 const text = computed(() => generateRedditMarkdown(form));
 
+onBeforeUnmount(() => {
+  clearTimeout(timeout.value);
+});
+
 function onCopyClick() {
-  navigator.clipboard.writeText(text.value);
+  try {
+    navigator.clipboard.writeText(text.value);
+    buttonText.value = 'Copied!';
+    timeout.value = window.setTimeout(() => {
+      buttonText.value = 'Copy To Clipboard';
+    }, 2000);
+  } catch (error) {
+    buttonText.value = 'Clipboard Error - Copy Manually';
+    textareaRef.value?.select();
+    textareaRef.value?.focus();
+  }
 }
 </script>
 <template>
@@ -24,10 +43,11 @@ function onCopyClick() {
         class="large w-full mt-4 mb-4"
         @click="onCopyClick"
       >
-        Copy To Clipboard
+        {{ buttonText }}
       </button>
       <!-- <button type="submit" class="large w-full mb-4">Generate</button> -->
       <textarea
+        ref="textareaRef"
         :value="text"
         readonly
         class="formatted-text mb-10"
