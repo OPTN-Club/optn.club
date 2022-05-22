@@ -45,9 +45,15 @@ const modelOptions = computed(() => {
   return sorted;
 });
 
+function getFullOtherModel() {
+  return [state.otherMake, state.otherModel]
+    .join(' ')
+    .trim();
+}
+
 watch(modelOptions, (current) => {
-  if (current.length === 1) {
-    emit('update:model', current[0].value);
+  if (current.length === 2) {
+    emit('update:model', current[1].value);
   }
 });
 
@@ -68,7 +74,7 @@ watch(() => state.model, (current) => {
 
 watch([() => state.otherMake, () => state.otherModel], () => {
   emit('update:make', state.otherMake);
-  emit('update:model', state.otherModel);
+  emit('update:model', getFullOtherModel());
 });
 </script>
 
@@ -91,7 +97,7 @@ watch([() => state.otherMake, () => state.otherModel], () => {
       <SelectControl
         v-model="state.model"
         label="Model"
-        :disabled="!make"
+        :disabled="!make || modelOptions.length === 1"
         :options="modelOptions"
         class="w-full sm:w-auto min-w-[275px]"
       />
