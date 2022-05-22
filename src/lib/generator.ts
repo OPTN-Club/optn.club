@@ -26,10 +26,16 @@ function formatTableRow(row: string[], boldFirstCol = false) {
   return `|${r.join('|')}|`;
 }
 
-function formatTable(header: string[], body: string[][], boldFirstCol = false): string[] {
-  const rowSeparator = [':--', '--:'];
+enum TextAlign {
+  left = ':--',
+  right = '--:',
+  center = ':-:',
+}
+
+function formatTable(header: string[], body: string[][], boldFirstCol = false, textAlign = TextAlign.right): string[] {
+  const rowSeparator = [':--', textAlign];
   for (let index = 2; index < header.length; index++) {
-    rowSeparator.push('--:');
+    rowSeparator.push(textAlign);
   }
   return [
     formatTableRow(header.map(bold)),
@@ -173,8 +179,8 @@ export function getDrivetrain(build: BuildSettings, stockDriveType: string): Dri
   return DriveType.awd;
 }
 
-function formatDifferential(form: SettingsForm, car: Car): string[] {
-  const drivetrain = getDrivetrain(form.build, car.drive);
+function formatDifferential(form: SettingsForm, car: Car | undefined): string[] {
+  const drivetrain = getDrivetrain(form.build, car?.drive || '');
   const header = ['Differential', 'Accel', 'Decel'];
 
   if (form.tune.diff.na) {
@@ -215,7 +221,7 @@ function formatDifferential(form: SettingsForm, car: Car): string[] {
 }
 
 export function formatTune(form: SettingsForm, model: string): string[] {
-  const car = byFullname[model];
+  const car = byFullname.get(model);
   const text = [
     ...formatTires(form.tune),
     ...formatGears(form.tune),
@@ -234,8 +240,8 @@ export function formatTune(form: SettingsForm, model: string): string[] {
 function formatConversions(build: BuildSettings, model: string): string[] {
   const headers = ['Conversions', ''];
 
-  const car = byFullname[model];
-  const drivetrain = build.conversions.drivetrain === car.drive ? 'Stock' : build.conversions.drivetrain;
+  const car = byFullname.get(model);
+  const drivetrain = build.conversions.drivetrain === car?.drive ? 'Stock' : build.conversions.drivetrain;
 
   const body = [
     ['Engine', build.conversions.engine || 'Stock'],
@@ -251,13 +257,18 @@ function formatConversions(build: BuildSettings, model: string): string[] {
 }
 
 function formatTiresAndRims(build: BuildSettings): string[] {
-  return formatTable(['Tires And Rims', ''], [
-    ['Compound', build.tiresAndRims.compound],
-    ['Tire Width', `Front ${build.tiresAndRims.width.front} mm, Rear ${build.tiresAndRims.width.rear} mm`],
-    ['Rim Style', `${build.tiresAndRims.rimStyle.type} ${build.tiresAndRims.rimStyle.name}`],
-    ['Rim Size', `Front ${build.tiresAndRims.rimSize.front} in, Rear ${build.tiresAndRims.rimSize.rear} in`],
-    ['Track Width', `Front ${build.tiresAndRims.trackWidth.front}, Rear ${build.tiresAndRims.trackWidth.rear}`],
-  ]);
+  return formatTable(
+    ['Tires And Rims', ''],
+    [
+      ['Compound', build.tiresAndRims.compound],
+      ['Tire Width', `Front ${build.tiresAndRims.width.front} mm, Rear ${build.tiresAndRims.width.rear} mm`],
+      ['Rim Style', `${build.tiresAndRims.rimStyle.type} ${build.tiresAndRims.rimStyle.name}`],
+      ['Rim Size', `Front ${build.tiresAndRims.rimSize.front} in, Rear ${build.tiresAndRims.rimSize.rear} in`],
+      ['Track Width', `Front ${build.tiresAndRims.trackWidth.front}, Rear ${build.tiresAndRims.trackWidth.rear}`],
+    ],
+    false,
+    TextAlign.left,
+  );
 }
 
 function formatAeroBuild(build: BuildSettings): string[] {
@@ -280,7 +291,7 @@ function formatAeroBuild(build: BuildSettings): string[] {
 
   if (aero.length === 0) return [];
 
-  return formatTable(['Aero and Appearance', ''], aero);
+  return formatTable(['Aero and Appearance', ''], aero, false, TextAlign.left);
 }
 
 function formatBuildSection<T extends BuildSectionUpgrades>(section: T) {
@@ -296,9 +307,9 @@ function formatBuildSection<T extends BuildSectionUpgrades>(section: T) {
 export function formatBuild(build: BuildSettings, model: string): string[] {
   const text = [
     ...formatConversions(build, model),
-    ...formatTable(['Engine', ''], formatBuildSection(build.engine)),
-    ...formatTable(['Platform And Handling', ''], formatBuildSection(build.platformAndHandling)),
-    ...formatTable(['Drivetrain', ''], formatBuildSection(build.drivetrain)),
+    ...formatTable(['Engine', ''], formatBuildSection(build.engine), false, TextAlign.left),
+    ...formatTable(['Platform And Handling', ''], formatBuildSection(build.platformAndHandling), false, TextAlign.left),
+    ...formatTable(['Drivetrain', ''], formatBuildSection(build.drivetrain), false, TextAlign.left),
     ...formatTiresAndRims(build),
     ...formatAeroBuild(build),
   ];
@@ -307,11 +318,10 @@ export function formatBuild(build: BuildSettings, model: string): string[] {
 }
 
 export function generateRedditMarkdown(form: SettingsForm) {
-  if (!form.model) {
-    return 'A Make and Model must be selected before output can be generated';
-  }
+  const md: string[] = [];
+  if (form.model) md.push(`#${form.model}\n`);
   return [
-    `#${form.model}\n`,
+    ...md,
     '## Build\n',
     ...formatBuild(form.build, form.model),
     '---\n',
