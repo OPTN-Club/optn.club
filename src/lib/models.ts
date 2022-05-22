@@ -5,29 +5,33 @@ import { Car, CarModel } from './types';
 
 const cars: Car[] = importedCars;
 
-const byFullname: Record<string, Car> = {};
-const byMake: Record<string, CarModel[]> = makes.reduce((acc, make) => ({
-  ...acc,
-  [make]: [],
-}), {});
+const byFullname: Map<string, Car> = new Map();
 
+const byMake: Map<string, CarModel[]> = new Map();
+makes.forEach((make) => {
+  byMake.set(make, []);
+});
 cars.forEach((car) => {
-  byFullname[car.fullname] = car;
+  byFullname.set(car.fullname, car);
   if (car.fh5) {
     if (!(car.make in byMake)) console.log(`${car.make} not found in byMake`);
-    byMake[car.make].push({
-      year: car.year,
-      make: car.make,
-      model: car.model,
-      fullname: car.fullname,
-      shortname: `${car.year} ${car.model}`,
-      sortname: `${car.model} ${car.year}`,
-    });
+    const m = byMake.get(car.make);
+    if (m) {
+      m.push({
+        year: car.year,
+        make: car.make,
+        model: car.model,
+        fullname: car.fullname,
+        shortname: `${car.year} ${car.model}`,
+        sortname: `${car.model} ${car.year}`,
+      });
+    }
   }
 });
 
 Object.keys(byMake).forEach((make) => {
-  byMake[make] = sortUsingProp(byMake[make], 'sortname');
+  const m = byMake.get(make) || [];
+  byMake.set(make, sortUsingProp(m, 'sortname'));
 });
 
 export {
