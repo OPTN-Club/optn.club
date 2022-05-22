@@ -68,16 +68,17 @@ const constraints = computed(() => ({
   max: Number(props.max),
 }));
 
-function updateValue(value: number) {
-  state.value = Math.max(constraints.value.min, Math.min(constraints.value.max, value));
+function updateValueBy(value: number) {
+  const updated = ((state.value * 100) + (value * 100)) / 100;
+  state.value = Math.max(constraints.value.min, Math.min(constraints.value.max, updated));
 }
 
 function onIncrementClick() {
-  updateValue(state.value + modifiedStep.value);
+  updateValueBy(modifiedStep.value);
 }
 
 function onDecrementClick() {
-  updateValue(state.value - modifiedStep.value);
+  updateValueBy(-modifiedStep.value);
 }
 
 function onKeyDown() {
