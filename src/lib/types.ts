@@ -51,7 +51,10 @@ export interface LengthValues<T extends string | number> {
   in: T;
 }
 
-export type UnitValues<T extends string | number> = SpringRateValues<T> | PressureValues<T> | LengthValues<T>;
+export type UnitValues<T extends string | number> =
+  | SpringRateValues<T>
+  | PressureValues<T>
+  | LengthValues<T>;
 
 export enum Upgrade {
   na = 'N/A',
@@ -103,6 +106,8 @@ export enum TireCompound {
   offroad = 'Offroad',
   snow = 'Snow',
   drag = 'Drag',
+  whitewall = 'Vintage Whitewall',
+  vintage = 'Vintage Race',
 }
 
 export enum RimStyleType {
@@ -131,9 +136,14 @@ export interface FrontAndRearSettings {
   na?: boolean;
 }
 
-export type UnitOfMeasure = PressureUnit | SpringRateUnit | LengthUnit | ForceUnit;
+export type UnitOfMeasure =
+  | PressureUnit
+  | SpringRateUnit
+  | LengthUnit
+  | ForceUnit;
 
-export interface FrontAndRearWithUnits<U extends UnitOfMeasure = UnitOfMeasure> extends FrontAndRearSettings {
+export interface FrontAndRearWithUnits<U extends UnitOfMeasure = UnitOfMeasure>
+  extends FrontAndRearSettings {
   units: U;
 }
 
@@ -141,11 +151,11 @@ export interface DifferentialTuneSettings {
   front: {
     accel: string;
     decel: string;
-  },
+  };
   rear: {
     accel: string;
     decel: string;
-  },
+  };
   center: string;
   na?: boolean;
 }
@@ -163,7 +173,7 @@ export interface BrakeTuneSettings {
 
 export interface TuneSettings {
   tires: FrontAndRearWithUnits<PressureUnit>;
-  gears: GearTuneSettings,
+  gears: GearTuneSettings;
   camber: FrontAndRearSettings;
   toe: FrontAndRearSettings;
   caster: string;
@@ -173,8 +183,8 @@ export interface TuneSettings {
   damping: FrontAndRearSettings;
   bump: FrontAndRearSettings;
   aero: FrontAndRearWithUnits<ForceUnit>;
-  brake: BrakeTuneSettings,
-  diff: DifferentialTuneSettings,
+  brake: BrakeTuneSettings;
+  diff: DifferentialTuneSettings;
 }
 
 export interface ConversionSettings {
@@ -184,7 +194,11 @@ export interface ConversionSettings {
   bodyKit: string;
 }
 
-type BuildUpgrade = Upgrade | FullUpgrade | TransmissionUpgrade | LimitedUpgrade;
+type BuildUpgrade =
+  | Upgrade
+  | FullUpgrade
+  | TransmissionUpgrade
+  | LimitedUpgrade;
 
 export interface BuildSectionUpgrades {
   [k: string]: BuildUpgrade;
@@ -382,4 +396,9 @@ export interface Car {
   fm1?: string;
   titlesCount?: number | null;
   xboxgen?: string | number;
+}
+
+export interface FormData {
+  form: SettingsForm;
+  isFromURLParam?: boolean;
 }

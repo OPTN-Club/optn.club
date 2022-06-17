@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RouteLocation, useRoute } from 'vue-router';
 import { useFormattingFormProvider } from '../lib/useFormattingForm';
 import MakeModelSelect from './MakeModelSelect.vue';
 import BuildSettingsForm from './BuildSettingsForm.vue';
@@ -6,10 +7,11 @@ import TuneSettingsForm from './TuneSettingsForm.vue';
 import GlobalUnitSelect from './GlobalUnitSelect.vue';
 import FormattedTuneTextarea from './FormattedTuneTextarea.vue';
 
+const route: RouteLocation = useRoute();
 const {
   form,
   globalUnit,
-} = useFormattingFormProvider();
+} = useFormattingFormProvider(route.params);
 
 </script>
 
