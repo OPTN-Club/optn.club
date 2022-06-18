@@ -8,6 +8,7 @@ import InputControl from './InputControl.vue';
 import EnumSelect from './EnumSelect.vue';
 import UpgradeSelect from './UpgradeSelect.vue';
 import LimitedUpgradeSelect from './LimitedUpgradeSelect.vue';
+import RestrictorUpgradeSelect from './RestrictorUpgradeSelect.vue';
 import FrontRearInputs from './FrontRearInputs.vue';
 
 const { form } = useFormattingForm();
@@ -38,34 +39,14 @@ const { form } = useFormattingForm();
       <UpgradeSelect v-model="form.build.engine.valves" label="Valves" />
       <UpgradeSelect v-model="form.build.engine.displacement" label="Displacement" />
       <UpgradeSelect v-model="form.build.engine.pistons" label="Pistons" />
-      <LimitedUpgradeSelect
-        v-model="form.build.engine.turbo"
-        label="Turbo"
-      />
-      <LimitedUpgradeSelect
-        v-model="form.build.engine.twinTurbo"
-        label="Twin Turbo"
-      />
-      <LimitedUpgradeSelect
-        v-model="form.build.engine.supercharger"
-        label="Supercharger"
-      />
-      <LimitedUpgradeSelect
-        v-model="form.build.engine.centrifugalSupercharger"
-        label="Centrifugal Supercharger"
-      />
-      <LimitedUpgradeSelect
-        v-model="form.build.engine.intercooler"
-        label="Intercooler"
-      />
-      <UpgradeSelect
-        v-model="form.build.engine.oilCooling"
-        label="Oil Cooling"
-      />
-      <UpgradeSelect
-        v-model="form.build.engine.flywheel"
-        label="Flywheel"
-      />
+      <LimitedUpgradeSelect v-model="form.build.engine.turbo" label="Turbo" />
+      <LimitedUpgradeSelect v-model="form.build.engine.twinTurbo" label="Twin Turbo" />
+      <LimitedUpgradeSelect v-model="form.build.engine.supercharger" label="Supercharger" />
+      <LimitedUpgradeSelect v-model="form.build.engine.centrifugalSupercharger" label="Centrifugal Supercharger" />
+      <LimitedUpgradeSelect v-model="form.build.engine.intercooler" label="Intercooler" />
+      <UpgradeSelect v-model="form.build.engine.oilCooling" label="Oil Cooling" />
+      <UpgradeSelect v-model="form.build.engine.flywheel" label="Flywheel" />
+      <RestrictorUpgradeSelect v-model="form.build.engine.restrictorPlate" label="Restrictor Plate" />
     </div>
   </section>
 
