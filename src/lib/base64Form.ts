@@ -20,7 +20,7 @@ import {
 } from './types';
 
 // Reverse mangleLookup
-const unmangleLookup: any = Reflect.ownKeys(mangleLookup).reduce(
+const unmangleLookup: any = Object.keys(mangleLookup).reduce(
   (prev, cur) => Object.assign(prev, { [(mangleLookup as any)[cur]]: cur }),
   {},
 );
@@ -29,7 +29,7 @@ const unmangleLookup: any = Reflect.ownKeys(mangleLookup).reduce(
 function mangleObject(object: any, reverse = false): any {
   const lookup = reverse ? unmangleLookup : mangleLookup;
   const mangled: any = {};
-  const keys = Reflect.ownKeys(object);
+  const keys = Object.keys(object);
 
   for (let i = 0; i < keys.length; i += 1) {
     const key = keys[i];
@@ -54,6 +54,10 @@ export function getBase64FromForm(form: SettingsForm) {
     formDiff.tune.gears.ratios = form.tune.gears.ratios;
   }
 
+  if (!Object.keys(formDiff).length) {
+    return '';
+  }
+
   const mangled = mangleObject(formDiff);
   return window.btoa(JSON.stringify(mangled));
 }
@@ -63,7 +67,7 @@ export function getFormFromBase64(base64Tune: string): SettingsForm {
   const parsed = JSON.parse(json);
   const form = mangleObject(parsed, true);
 
-  if (!form || !Reflect.ownKeys(form).length) {
+  if (!form || !Object.keys(form).length) {
     throw new Error('Undefined or empty object.');
   }
 
@@ -90,8 +94,8 @@ export function getFormFromBase64(base64Tune: string): SettingsForm {
       },
       caster: form.tune?.caster || '5',
       arb: {
-        front: form.tune?.arb.front || '',
-        rear: form.tune?.arb.rear || '',
+        front: form.tune?.arb?.front || '',
+        rear: form.tune?.arb?.rear || '',
         na: form.tune?.arb?.na === undefined ? true : form.tune?.arb?.na,
       },
       springs: {
