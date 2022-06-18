@@ -71,6 +71,13 @@ export enum LimitedUpgrade {
   race = 'Race',
 }
 
+export enum RestrictorUpgrade {
+  na = 'N/A',
+  stock = 'Stock Restrictor Plate',
+  none = 'No Restrictor Plate',
+  removed = 'Remove Restrictor',
+}
+
 export enum FullUpgrade {
   na = 'N/A',
   stock = 'Stock',
@@ -136,11 +143,7 @@ export interface FrontAndRearSettings {
   na?: boolean;
 }
 
-export type UnitOfMeasure =
-  | PressureUnit
-  | SpringRateUnit
-  | LengthUnit
-  | ForceUnit;
+export type UnitOfMeasure = PressureUnit | SpringRateUnit | LengthUnit | ForceUnit;
 
 export interface FrontAndRearWithUnits<U extends UnitOfMeasure = UnitOfMeasure>
   extends FrontAndRearSettings {
@@ -198,7 +201,8 @@ type BuildUpgrade =
   | Upgrade
   | FullUpgrade
   | TransmissionUpgrade
-  | LimitedUpgrade;
+  | LimitedUpgrade
+  | RestrictorUpgrade;
 
 export interface BuildSectionUpgrades {
   [k: string]: BuildUpgrade;
@@ -222,6 +226,7 @@ export interface EngineUpgrades extends BuildSectionUpgrades {
   intercooler: LimitedUpgrade; // sport and race only
   oilCooling: Upgrade;
   flywheel: Upgrade;
+  restrictorPlate: RestrictorUpgrade;
 }
 
 export interface PlatformAndHandlingUpgrades extends BuildSectionUpgrades {
