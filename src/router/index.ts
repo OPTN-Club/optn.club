@@ -6,9 +6,11 @@ import TuneCalculator from '../components/tune-calculator/TuneCalculator.vue';
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', component: CarSettingsForm },
+    { path: '/', redirect: '/formatter' },
+    { path: '/formatter/:base64Tune?', component: CarSettingsForm },
     { path: '/calculator', component: TuneCalculator },
     { path: '/cars', component: MakesAndModels },
+    { path: '/:pathMatch(.*)*', redirect: '/formatter' },
   ],
 });
 
