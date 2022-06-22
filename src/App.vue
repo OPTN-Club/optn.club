@@ -2,7 +2,7 @@
   <div class="wrapper">
     <AppHeader />
     <div class="grow">
-      <router-view />
+      <router-view :key="$route.fullPath" />
     </div>
     <AppFooter />
   </div>

@@ -43,7 +43,7 @@ async function onShareURLClick() {
   const url = [
     location,
     getBase64FromForm(form),
-  ].join('/');
+  ].join(location.endsWith('/') ? '' : '/');
 
   try {
     if (navigator.share && window.location.protocol.includes('https')) {

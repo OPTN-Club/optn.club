@@ -13,6 +13,7 @@ import {
   ForceUnit,
   PIClass,
   SettingsForm,
+  RestrictorUpgrade,
 } from './types';
 
 export default (): SettingsForm => ({
@@ -113,6 +114,7 @@ export default (): SettingsForm => ({
       intercooler: LimitedUpgrade.stock,
       oilCooling: Upgrade.stock,
       flywheel: Upgrade.stock,
+      restrictorPlate: RestrictorUpgrade.na,
     },
     platformAndHandling: {
       brakes: Upgrade.stock,

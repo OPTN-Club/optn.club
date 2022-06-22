@@ -13,6 +13,7 @@ import {
   TrackWidthType,
   ForceUnit,
   PIClass,
+  RestrictorUpgrade,
 } from './types';
 
 export default function getTestForm(): SettingsForm {
@@ -26,7 +27,19 @@ export default function getTestForm(): SettingsForm {
         units: PressureUnit.bar,
       },
       gears: {
-        ratios: ['4.82', '3.90', '3.11', '2.74', '2.44', '2.01', '1.88', '1.55', '1.44', '1.33', '1.22'],
+        ratios: [
+          '4.82',
+          '3.90',
+          '3.11',
+          '2.74',
+          '2.44',
+          '2.01',
+          '1.88',
+          '1.55',
+          '1.44',
+          '1.33',
+          '1.22',
+        ],
         na: false,
       },
       camber: {
@@ -107,6 +120,7 @@ export default function getTestForm(): SettingsForm {
         intercooler: LimitedUpgrade.stock,
         oilCooling: Upgrade.stock,
         flywheel: Upgrade.stock,
+        restrictorPlate: RestrictorUpgrade.na,
       },
       platformAndHandling: {
         brakes: Upgrade.sport,
