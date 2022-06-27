@@ -8,6 +8,16 @@ module.exports = {
       colors: {
         'dark': 'hsl(191, 30%, 5%)',
         'dark-accent': 'hsl(191, 30%, 9%)',
+        'optn': {
+          'dark': '#4c4c47',
+          'darker': '#2d2d2a',
+          'darkest': '#1e1e1e',
+          'blue': 'hsl(191, 100%, 32%)',
+          'blue-light': 'hsl(191, 93%, 72%)',
+          'red': '#ed254e',
+          'teal': '#35c1c0',
+          'yellow': 'rgb(255, 189, 51)',
+        },
         'fot-blue': {
           DEFAULT: 'hsl(191, 100%, 32%)',
           accent: 'hsl(191, 100%, 36%)',
@@ -35,6 +45,7 @@ module.exports = {
         'offwhite': {
           DEFAULT: 'rgb(250, 245, 236)',
         },
+
       },
     },
   },
