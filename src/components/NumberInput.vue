@@ -2,14 +2,15 @@
 import InputControl from './InputControl.vue';
 
 withDefaults(defineProps<{
-  modelValue: string | number,
-  label: string,
-  errorMsg?: string,
-  error?: boolean,
-  required?: boolean,
-  step?: number | string,
-  min?: number | string,
-  max?: number | string,
+  modelValue: string | number;
+  label: string;
+  errorMsg?: string;
+  error?: boolean;
+  required?: boolean;
+  step?: number | string;
+  min?: number | string;
+  max?: number | string;
+  disabled?: boolean;
 }>(), {
   step: 1,
   min: 0,
@@ -33,6 +34,7 @@ function onUpdate(value: string | number) {
     :step="step"
     :min="min"
     :max="max"
+    :disabled="disabled"
     type="number"
     @update:modelValue="onUpdate"
   />

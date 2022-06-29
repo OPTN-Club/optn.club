@@ -39,8 +39,6 @@ header p.view small {
 
 .link-bar {
   @apply
-    my-4
-    mx-auto
     p-0
     list-none
     h-11
@@ -52,12 +50,12 @@ header p.view small {
 }
 
 .link-bar li {
-  @apply min-w-[80px];
+  @apply min-w-[86px];
 }
 
 .link-bar li + li {
   @apply border-l
-    border-l-fot-blue-light;
+    border-l-fot-blue-accent;
 }
 
 .link-bar a {
@@ -70,7 +68,8 @@ header p.view small {
     h-full
     flex
     flex-col
-    justify-center;
+    justify-center
+    hover:bg-fot-blue-accent;
 }
 
 .link-bar a strong {

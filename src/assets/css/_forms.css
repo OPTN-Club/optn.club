@@ -1,187 +1,241 @@
+@layer base {
+  label,
+  .label {
+    @apply
+      font-bold
+      mb-1
+      block;
+  }
+
+  label.checkbox,
+  label.radio {
+    @apply font-normal;
+  }
+
+  label input[type=checkbox] {
+    @apply mr-1;
+  }
+
+  label.inline.checkbox + label.inline.checkbox,
+  label.inline.radio + label.inline.radio {
+    @apply ml-4;
+  }
+
+  .disabled label,
+  .disabled .label {
+    @apply
+      text-gray-500;
+  }
+
+  input,
+  select,
+  textarea {
+    @apply
+      px-2
+      py-1
+      border
+      border-gray-400
+      rounded
+      text-offwhite
+      bg-gray-900
+      outline-none;
+  }
+
+  input,
+  select {
+    @apply
+      h-8
+      leading-8;
+  }
+
+  select {
+    padding-bottom: 5px;
+  }
+
+  textarea {
+    @apply resize-y;
+  }
+
+  input[type=number] {
+    @apply w-24;
+  }
+
+  input[type=checkbox],
+  input[type=radio] {
+    @apply w-auto
+      h-auto;
+  }
+
+  select {
+    @apply min-w-[96px];
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    @apply
+      border-fot-yellow
+      shadow-inner;
+  }
+
+  input:disabled,
+  select:disabled,
+  textarea:disabled {
+    @apply
+      border-gray-600
+      opacity-70
+      cursor-not-allowed
+      bg-gray-600;
+  }
+
+  input.touched:invalid,
+  select.touched:invalid,
+  textarea.touched:invalid {
+    border: 1px solid #dc3545;
+    box-shadow: inset 0 1px 1px rgb(0, 0, 0, .08), 0 0 8px #dc3545;
+  }
+
+  input.touched:invalid~label,
+  select.touched:invalid~label,
+  textarea.touched:invalid~label,
+  .validation-message {
+    color: #dc3545;
+  }
+
+  input.touched:invalid~.validation-message,
+  select.touched:invalid~.validation-message,
+  textarea.touched:invalid~.validation-message {
+    opacity: 1;
+  }
+
+  .validation-message {
+    @apply
+      text-sm;
+    opacity: 0;
+    font-size: 0.8rem;
+    margin-top: 3px;
+    min-width: 230px;
+  }
+
+  .row {
+    @apply
+      flex
+      flex-wrap
+      items-end;
+  }
+
+  .gears-grid {
+    display: grid;
+    /* grid-template-columns: 1fr; */
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    column-gap: 30px;
+    row-gap: 8px;
+
+    @apply
+      mb-2
+      gap-x-8
+      gap-y-2;
+  }
+
+  .upgrade-select {
+    @apply w-28;
+  }
+
+  .upgrade-select label {
+    @apply
+      flex
+      items-end;
+  }
+
+  .set + .set {
+    @apply
+      mt-6
+  }
+
+  .set h3 {
+    @apply
+      m-0
+      ml-4;
+  }
+
+  .set-upgrades {
+    @apply
+      border
+      border-fot-blue
+      rounded-xl
+      mt-1
+      p-4
+      pb-2
+      flex
+      flex-wrap
+      items-end;
+  }
+
+  .set-upgrades.vertical {
+    @apply
+      flex-col
+      items-start;
+  }
+
+  .row + h1,
+  .row + h2,
+  .row + h3,
+  .row + h4 {
+    @apply
+      mt-8;
+  }
+
+  .row > h3 {
+    @apply
+      w-24
+      mr-4
+      mb-2;
+  }
+
+  .column {
+    margin: 0 0 0;
+  }
+
+  .column.actions {
+    @apply
+      w-full
+      sm:w-2/3
+      mx-auto
+      my-0;
+  }
 
 
-label {
-  @apply
-    font-bold
-    mb-1
-    block;
-}
 
-label.checkbox,
-label.radio {
-  @apply font-normal;
-}
+  .row > .control,
+  .set-upgrades > .control {
+    @apply
+      mr-4
+      mb-2;
+  }
 
-label input[type=checkbox] {
-  @apply mr-1;
-}
+  .row > .control:first-child,
+  .set-upgrades > .control:first-child {
+    @apply ml-0;
+  }
 
-label.inline.checkbox + label.inline.checkbox,
-label.inline.radio + label.inline.radio {
-  @apply ml-4;
-}
+  .row > .control:last-child,
+  .set-upgrades > .control:last-child {
+    @apply mr-0;
+  }
 
-input,
-select,
-textarea {
-  @apply
-    px-2
-    py-1
-    border
-    border-gray-400
-    rounded
-    text-offwhite
-    bg-gray-900
-    outline-none
-    leading-5;
-}
+  .column > .control + .control {
+    @apply mt-2;
+  }
 
-input,
-select {
-  @apply h-8;
-}
+  .row.bottom {
+    @apply items-end;
+  }
 
-textarea {
-  @apply resize-y;
-}
+  .h2 + .row.wrap.bottom {
+    @apply mb-0;
+  }
 
-input[type=number] {
-  @apply w-24;
-}
-
-input[type=checkbox],
-input[type=radio] {
-  @apply w-auto
-    h-auto;
-}
-
-select {
-  @apply min-w-[96px];
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  @apply
-    border-fot-yellow
-    shadow-inner;
-}
-
-input:disabled,
-select:disabled,
-textarea:disabled {
-  @apply
-    border-gray-500
-    bg-gray-700
-    cursor-not-allowed;
-}
-
-input.touched:invalid,
-select.touched:invalid,
-textarea.touched:invalid {
-  border: 1px solid #dc3545;
-  box-shadow: inset 0 1px 1px rgb(0, 0, 0, .08), 0 0 8px #dc3545;
-}
-
-input.touched:invalid~label,
-select.touched:invalid~label,
-textarea.touched:invalid~label,
-.validation-message {
-  color: #dc3545;
-}
-
-input.touched:invalid~.validation-message,
-select.touched:invalid~.validation-message,
-textarea.touched:invalid~.validation-message {
-  opacity: 1;
-}
-
-.validation-message {
-  @apply
-    text-sm;
-  opacity: 0;
-  font-size: 0.8rem;
-  margin-top: 3px;
-  min-width: 230px;
-}
-
-.row {
-  @apply
-    flex
-    flex-wrap
-    items-end;
-}
-
-.gears-grid {
-  display: grid;
-  /* grid-template-columns: 1fr; */
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  column-gap: 30px;
-  row-gap: 8px;
-}
-
-.upgrade-select {
-  @apply w-28;
-}
-
-.upgrade-select label {
-  @apply
-    h-12
-    flex
-    items-end;
-}
-
-.row + h3 {
-  @apply mt-2;
-}
-
-.row > h3 {
-  @apply
-    w-24
-    mr-4
-    mb-2;
-}
-
-.column {
-  margin: 0 0 0;
-}
-
-.column.actions {
-  @apply
-    w-full
-    sm:w-2/3
-    mx-auto
-    my-0;
-}
-
-
-
-.row > .control {
-  @apply
-    mr-4
-    mb-2;
-}
-
-.row > .control:first-child {
-  @apply ml-0;
-}
-
-.row > .control:last-child {
-  @apply mr-0;
-}
-
-.column > .control + .control {
-  @apply mt-2;
-}
-
-.row.bottom {
-  @apply items-end;
-}
-
-.h2 + .row.wrap.bottom {
-  @apply mb-0;
-}
-
-.engine .control {
-  min-width: 100px;
+  .engine .control {
+    min-width: 100px;
+  }
 }

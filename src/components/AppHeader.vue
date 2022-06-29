@@ -2,33 +2,35 @@
   <header>
     <div class="md:mr-8">
       <img
-        src="/images/FOT_logo_color.png"
-        alt="FOT Logo"
+        src="/assets/images/OPTN_logo.png"
+        alt="OPTN Logo"
         class="w-auto h-28 mx-auto md:mx-0"
       >
     </div>
 
     <div class="flex flex-col grow justify-between">
-      <ul class="link-bar">
-        <li>
-          <a href="https://discord.com">
-            Join the
-            <strong>Discord</strong>
-          </a>
-        </li>
-        <li>
-          <a href="https://reddit.com">
-            Join the
-            <strong>Subreddit</strong>
-          </a>
-        </li>
-        <li>
-          <a href="https://github.com/Ldalvik/ForzaOpenTuneFormatter">
-            View On
-            <strong>GitHub</strong>
-          </a>
-        </li>
-      </ul>
+      <div class="flex justify-end">
+        <ul class="link-bar">
+          <li>
+            <a href="https://discord.gg/K2Kk5Kj6PP">
+              Join the
+              <strong>Discord</strong>
+            </a>
+          </li>
+          <li>
+            <a href="https://reddit.com/r/ForzaOpenTunes">
+              Join the
+              <strong>Subreddit</strong>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/Ldalvik/ForzaOpenTuneFormatter">
+              View On
+              <strong>GitHub</strong>
+            </a>
+          </li>
+        </ul>
+      </div>
 
       <div class="-mb-2 text-center md:text-left">
         <router-link class="nav-link" :to="{ name: 'formatter' }">Formatter</router-link>

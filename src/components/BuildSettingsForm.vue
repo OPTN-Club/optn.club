@@ -10,191 +10,170 @@ import UpgradeSelect from './UpgradeSelect.vue';
 import LimitedUpgradeSelect from './LimitedUpgradeSelect.vue';
 import RestrictorUpgradeSelect from './RestrictorUpgradeSelect.vue';
 import FrontRearInputs from './FrontRearInputs.vue';
+import FrontRearSelects from './FrontRearSelects.vue';
+import { enumToOptions } from '../lib/utils';
 
 const { form } = useFormattingForm();
+const trackWidthOptions = enumToOptions(TrackWidthType);
 
 </script>
 <template>
   <section>
-    <h2>Upgrades (In progress)</h2>
+    <h2>Upgrades</h2>
     <p>
-      This section is for upgrades.
-      <br>
-      <strong>If you do not use a certain category (Ex. No natural aspiration) just leave it as N/A</strong>
+      <strong>If you do not use a certain category (Ex. No natural aspiration) mark it as N/A</strong>
       <br>If you leave something stock (Ex. tire width), or leave the default settings for a category, you should still
       put in the stock value.
     </p>
-  </section>
 
-  <section>
-    <h2 class="m-0">Engine</h2>
-    <div class="row">
-      <UpgradeSelect v-model="form.build.engine.intake" label="Intake" />
-      <UpgradeSelect v-model="form.build.engine.intakeManifold" label="Intake Manifold" />
-      <UpgradeSelect v-model="form.build.engine.carburator" label="Carburator" />
-      <UpgradeSelect v-model="form.build.engine.fuelSystem" label="Fuel System" />
-      <LimitedUpgradeSelect v-model="form.build.engine.ignition" label="Ignition" />
-      <UpgradeSelect v-model="form.build.engine.exhaust" label="Exhaust" />
-      <UpgradeSelect v-model="form.build.engine.camshaft" label="Camshaft" />
-      <UpgradeSelect v-model="form.build.engine.valves" label="Valves" />
-      <UpgradeSelect v-model="form.build.engine.displacement" label="Displacement" />
-      <UpgradeSelect v-model="form.build.engine.pistons" label="Pistons" />
-      <LimitedUpgradeSelect v-model="form.build.engine.turbo" label="Turbo" />
-      <LimitedUpgradeSelect v-model="form.build.engine.twinTurbo" label="Twin Turbo" />
-      <LimitedUpgradeSelect v-model="form.build.engine.supercharger" label="Supercharger" />
-      <LimitedUpgradeSelect v-model="form.build.engine.centrifugalSupercharger" label="Centrifugal Supercharger" />
-      <LimitedUpgradeSelect v-model="form.build.engine.intercooler" label="Intercooler" />
-      <UpgradeSelect v-model="form.build.engine.oilCooling" label="Oil Cooling" />
-      <UpgradeSelect v-model="form.build.engine.flywheel" label="Flywheel" />
-      <RestrictorUpgradeSelect v-model="form.build.engine.restrictorPlate" label="Restrictor Plate" />
+    <div class="set">
+      <h3 class="m-0 ml-4">Engine</h3>
+      <div class="set-upgrades">
+        <UpgradeSelect v-model="form.build.engine.intake" label="Intake" />
+        <UpgradeSelect v-model="form.build.engine.intakeManifold" label="Intake Manifold" />
+        <UpgradeSelect v-model="form.build.engine.carburator" label="Carburator" />
+        <UpgradeSelect v-model="form.build.engine.fuelSystem" label="Fuel System" />
+        <LimitedUpgradeSelect v-model="form.build.engine.ignition" label="Ignition" />
+        <UpgradeSelect v-model="form.build.engine.exhaust" label="Exhaust" />
+        <UpgradeSelect v-model="form.build.engine.camshaft" label="Camshaft" />
+        <UpgradeSelect v-model="form.build.engine.valves" label="Valves" />
+        <UpgradeSelect v-model="form.build.engine.displacement" label="Displacement" />
+        <UpgradeSelect v-model="form.build.engine.pistons" label="Pistons" />
+        <LimitedUpgradeSelect v-model="form.build.engine.turbo" label="Turbo" />
+        <LimitedUpgradeSelect v-model="form.build.engine.twinTurbo" label="Twin Turbo" />
+        <LimitedUpgradeSelect v-model="form.build.engine.supercharger" label="Supercharger" />
+        <LimitedUpgradeSelect v-model="form.build.engine.centrifugalSupercharger" label="Centrifugal Supercharger" />
+        <LimitedUpgradeSelect v-model="form.build.engine.intercooler" label="Intercooler" />
+        <UpgradeSelect v-model="form.build.engine.oilCooling" label="Oil Cooling" />
+        <UpgradeSelect v-model="form.build.engine.flywheel" label="Flywheel" />
+        <RestrictorUpgradeSelect v-model="form.build.engine.restrictorPlate" label="Restrictor Plate" />
+      </div>
     </div>
-  </section>
 
-  <section>
-    <h2>Platform and Handling</h2>
-    <div class="row">
-      <UpgradeSelect v-model="form.build.platformAndHandling.brakes" label="Brakes" />
-      <FullUpgradeSelect v-model="form.build.platformAndHandling.springs" label="Springs" />
-      <UpgradeSelect
-        v-model="form.build.platformAndHandling.frontArb"
-        label="Front ARB"
-      />
-      <UpgradeSelect v-model="form.build.platformAndHandling.rearArb" label="Rear ARB" />
-      <UpgradeSelect
-        v-model="form.build.platformAndHandling.chassisReinforcement"
-        label="Chassis Reinforcement"
-      />
-      <UpgradeSelect
-        v-model="form.build.platformAndHandling.weightReduction"
-        label="Weight Reduction"
-      />
+    <div class="set">
+      <h3>Platform and Handling</h3>
+      <div class="set-upgrades">
+        <UpgradeSelect v-model="form.build.platformAndHandling.brakes" label="Brakes" />
+        <FullUpgradeSelect v-model="form.build.platformAndHandling.springs" label="Springs" />
+        <UpgradeSelect
+          v-model="form.build.platformAndHandling.frontArb"
+          label="Front ARB"
+        />
+        <UpgradeSelect v-model="form.build.platformAndHandling.rearArb" label="Rear ARB" />
+        <UpgradeSelect
+          v-model="form.build.platformAndHandling.chassisReinforcement"
+          label="Chassis Reinforcement"
+        />
+        <UpgradeSelect
+          v-model="form.build.platformAndHandling.weightReduction"
+          label="Weight Reduction"
+        />
+      </div>
     </div>
-  </section>
 
-  <section>
-    <h2>Drivetrain</h2>
-    <div class="row">
-      <UpgradeSelect v-model="form.build.drivetrain.clutch" label="Clutch" />
-      <EnumSelect
-        v-model="form.build.drivetrain.transmission"
-        label="Transmission"
-        :type="TransmissionUpgrade"
-      />
+    <div class="set">
+      <h3>Drivetrain</h3>
+      <div class="set-upgrades">
+        <UpgradeSelect v-model="form.build.drivetrain.clutch" label="Clutch" />
+        <EnumSelect
+          v-model="form.build.drivetrain.transmission"
+          label="Transmission"
+          :type="TransmissionUpgrade"
+        />
+        <UpgradeSelect v-model="form.build.drivetrain.driveline" label="Driveline" />
+        <FullUpgradeSelect v-model="form.build.drivetrain.differential" label="Differential" />
+      </div>
     </div>
-    <div class="row">
-      <UpgradeSelect v-model="form.build.drivetrain.driveline" label="Driveline" />
-      <FullUpgradeSelect v-model="form.build.drivetrain.differential" label="Differential" />
-    </div>
-  </section>
 
-  <section>
-    <h2>Tires and Rims</h2>
-    <div class="row">
-      <EnumSelect
-        v-model="form.build.tiresAndRims.compound"
-        label="Compound"
-        :type="TireCompound"
-      />
+    <div class="set">
+      <h3>Tires and Rims</h3>
+      <div class="set-upgrades flex-col !items-start">
+        <div class="row">
+          <EnumSelect
+            v-model="form.build.tiresAndRims.compound"
+            label="Compound"
+            :type="TireCompound"
+          />
+          <FrontRearInputs v-model="form.build.tiresAndRims.width" label="Tire Width" />
+          <FrontRearSelects
+            v-model="form.build.tiresAndRims.trackWidth"
+            label="Track Width"
+            :options="trackWidthOptions"
+          />
+        </div>
+        <div class="row">
+          <EnumSelect
+            v-model="form.build.tiresAndRims.rimStyle.type"
+            label="Rims Style"
+            :type="RimStyleType"
+          />
+          <InputControl
+            v-model="form.build.tiresAndRims.rimStyle.name"
+            label="Name"
+            :disabled="form.build.tiresAndRims.rimStyle.type === RimStyleType.stock"
+          />
+          <FrontRearInputs v-model="form.build.tiresAndRims.rimSize" label="Size" />
+        </div>
+      </div>
     </div>
-    <FrontRearInputs v-model="form.build.tiresAndRims.width" label="Tire Width" />
-    <h3>Rims</h3>
-    <div class="row">
-      <EnumSelect
-        v-model="form.build.tiresAndRims.rimStyle.type"
-        label="Style"
-        :type="RimStyleType"
-      />
-      <InputControl
-        v-model="form.build.tiresAndRims.rimStyle.name"
-        label="Name"
-        :disabled="form.build.tiresAndRims.rimStyle.type === RimStyleType.stock"
-      />
-    </div>
-    <FrontRearInputs v-model="form.build.tiresAndRims.rimSize" label="Rim Size" />
-    <h3>Track Width</h3>
-    <div class="row">
-      <EnumSelect
-        v-model="form.build.tiresAndRims.trackWidth.front"
-        label="Front"
-        :type="TrackWidthType"
-      />
-      <EnumSelect
-        v-model="form.build.tiresAndRims.trackWidth.rear"
-        label="Rear"
-        :type="TrackWidthType"
-      />
-    </div>
-  </section>
 
-  <section>
-    <h2>Aero and Appearance</h2>
-    <div class="row">
-      <InputControl
-        v-model="form.build.aeroAndAppearance.frontBumper"
-        label="Front Bumper"
-        class="min-w-[300px] max-w-full"
-      />
+    <div class="set">
+      <h3>Aero and Appearance</h3>
+      <div class="set-upgrades">
+        <InputControl
+          v-model="form.build.aeroAndAppearance.frontBumper"
+          label="Front Bumper"
+          class="min-w-[300px] max-w-full"
+        />
+        <InputControl
+          v-model="form.build.aeroAndAppearance.rearBumper"
+          label="Rear Bumper"
+          class="min-w-[300px] max-w-full"
+        />
+        <InputControl
+          v-model="form.build.aeroAndAppearance.rearWing"
+          label="Rear Wing"
+          class="min-w-[300px] max-w-full"
+        />
+        <InputControl
+          v-model="form.build.aeroAndAppearance.sideSkirts"
+          label="Side Skirts"
+          class="min-w-[300px] max-w-full"
+        />
+        <InputControl
+          v-model="form.build.aeroAndAppearance.hood"
+          label="Hood"
+          class="min-w-[300px] max-w-full"
+        />
+      </div>
     </div>
-    <div class="row">
-      <InputControl
-        v-model="form.build.aeroAndAppearance.rearBumper"
-        label="Rear Bumper"
-        class="min-w-[300px] max-w-full"
-      />
-    </div>
-    <div class="row">
-      <InputControl
-        v-model="form.build.aeroAndAppearance.rearWing"
-        label="Rear Wing"
-        class="min-w-[300px] max-w-full"
-      />
-    </div>
-    <div class="row">
-      <InputControl
-        v-model="form.build.aeroAndAppearance.sideSkirts"
-        label="Side Skirts"
-        class="min-w-[300px] max-w-full"
-      />
-    </div>
-    <div class="row">
-      <InputControl
-        v-model="form.build.aeroAndAppearance.hood"
-        label="Hood"
-        class="min-w-[300px] max-w-full"
-      />
-    </div>
-  </section>
 
-  <section>
-    <h2>Conversions</h2>
-    <div class="row">
-      <InputControl
-        v-model="form.build.conversions.engine"
-        label="Engine"
-        class="min-w-[300px] max-w-full"
-      />
-    </div>
-    <div class="row">
-      <EnumSelect
-        v-model="form.build.conversions.drivetrain"
-        label="Drivetrain (If stock, change it the corresponding drivetype)"
-        :type="DriveType"
-        class="min-w-[300px] max-w-full"
-      />
-    </div>
-    <div class="row">
-      <InputControl
-        v-model="form.build.conversions.aspiration"
-        label="Aspiration"
-        class="min-w-[300px] max-w-full"
-      />
-    </div>
-    <div class="row">
-      <InputControl
-        v-model="form.build.conversions.bodyKit"
-        label="Body Kit"
-        class="min-w-[300px] max-w-full"
-      />
+    <div class="set">
+      <h3>Conversions</h3>
+      <div class="set-upgrades">
+        <InputControl
+          v-model="form.build.conversions.engine"
+          label="Engine"
+          class="min-w-[300px] max-w-full"
+        />
+        <EnumSelect
+          v-model="form.build.conversions.drivetrain"
+          rootClass="w-[300px]"
+          label="Drivetrain (If stock, change it the corresponding drivetype)"
+          :type="DriveType"
+          class="w-full"
+        />
+        <InputControl
+          v-model="form.build.conversions.aspiration"
+          label="Aspiration"
+          class="min-w-[300px] max-w-full"
+        />
+        <InputControl
+          v-model="form.build.conversions.bodyKit"
+          label="Body Kit"
+          class="min-w-[300px] max-w-full"
+        />
+      </div>
     </div>
   </section>
 </template>

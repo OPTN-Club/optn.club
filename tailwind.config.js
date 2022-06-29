@@ -8,6 +8,7 @@ module.exports = {
       colors: {
         'fot-blue': {
           DEFAULT: 'hsl(191, 100%, 32%)',
+          accent: 'hsl(191, 100%, 36%)',
           light: 'hsl(191, 93%, 72%)',
           dark: 'hsl(191, 100%, 10%)',
           darkest: 'hsl(191, 100%, 5%)',

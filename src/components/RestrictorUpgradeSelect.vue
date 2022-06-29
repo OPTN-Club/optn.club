@@ -21,7 +21,6 @@ function onUpdate(value: string) {
     :modelValue="modelValue"
     :label="label"
     :type="RestrictorUpgrade"
-    rootClass="upgrade-select"
     @update:modelValue="onUpdate"
   />
 </template>

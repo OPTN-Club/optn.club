@@ -150,15 +150,14 @@ export interface FrontAndRearWithUnits<U extends UnitOfMeasure = UnitOfMeasure>
   units: U;
 }
 
+export interface AccelDecelSettings {
+  accel: string;
+  decel: string;
+}
+
 export interface DifferentialTuneSettings {
-  front: {
-    accel: string;
-    decel: string;
-  };
-  rear: {
-    accel: string;
-    decel: string;
-  };
+  front: AccelDecelSettings;
+  rear: AccelDecelSettings;
   center: string;
   na?: boolean;
 }

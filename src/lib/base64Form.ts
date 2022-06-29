@@ -48,7 +48,7 @@ function mangleObject(object: any, reverse = false): any {
 }
 
 export function getBase64FromForm(form: SettingsForm) {
-  const formDiff: any = diff(getDefaultForm(), form);
+  const formDiff: Partial<SettingsForm> = diff(getDefaultForm(), form);
 
   // diff will convert arrays to objects, we need to revert that by replacing it with the original values
   if (formDiff.tune?.gears?.ratios) {

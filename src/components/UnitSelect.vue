@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { SpringRateUnit, LengthUnit, PressureUnit, ForceUnit } from '../lib/types';
+import {
+  SpringRateUnit, LengthUnit, PressureUnit, ForceUnit,
+} from '../lib/types';
 import SelectControl from './SelectControl.vue';
 
 const props = defineProps<{
   modelValue: string,
-  label: string,
   type: 'pressure' | 'height' | 'force' | 'springrate',
 }>();
 
@@ -44,7 +45,6 @@ const options = computed(() => units[props.type]);
 <template>
   <SelectControl
     :modelValue="modelValue"
-    :label="label"
     :options="options"
     @update:modelValue="onUpdate"
   />
