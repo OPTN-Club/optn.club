@@ -51,3 +51,35 @@ module.exports = {
   },
   plugins: [],
 };
+
+/*
+Regex's for formatting export from coolers.co:
+
+"hex": "([0-9a-fA-F]+)"
+"hex": "#$1"
+
+"(rgb|hsb|hsl|lab)": \[\n\s+(-?\d+),\n\s+(-?\d+),\n\s+(-?\d+)\n\s+\]
+"$1": "$1($2, $3, $4)"
+
+hsl\((\d+), (\d+), (\d+)\)
+hsl($1, $2%, $3%)
+
+"cmyk": \[\n\s+(\d+),\n\s+(\d+),\n\s+(\d+),\n\s+(\d+)\n\s+\]
+"cmyk": "cmyk($1, $2, $3, $4)"
+
+^\s+"(cmyk|hsb|lab)": .*,?\n
+<empty>
+
+,(\n\s+\})
+$1
+
+
+fot-blue: #0085A3
+fot-light-blue: #75E2FA
+#0095b7
+#00151a
+fot-dark-blue: #002A33
+fot-green: #00CCA7
+fot-yellow: #FFBD33
+offwhite: #FAF5EC
+*/
