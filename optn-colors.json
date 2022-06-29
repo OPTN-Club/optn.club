@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Ghost White",
+    "hex": "#f4f4f9",
+    "rgb": "rgb(244, 244, 249)",
+    "hsl": "hsl(240, 29%, 97%)"
+  },
+  {
+    "name": "Sky Blue Crayola",
+    "hex": "#75e2fa",
+    "rgb": "rgb(117, 226, 250)",
+    "hsl": "hsl(191, 93%, 72%)"
+  },
+  {
+    "name": "Blue Munsell",
+    "hex": "#0085a3",
+    "rgb": "rgb(0, 133, 163)",
+    "hsl": "hsl(191, 100%, 32%)"
+  },
+  {
+    "name": "Gunmetal",
+    "hex": "#002a33",
+    "rgb": "rgb(0, 42, 51)",
+    "hsl": "hsl(191, 100%, 10%)"
+  },
+  {
+    "name": "Rich Black FOGRA 29",
+    "hex": "#00151a",
+    "rgb": "rgb(0, 21, 26)",
+    "hsl": "hsl(192, 100%, 5%)"
+  },
+  {
+    "name": "Generic Viridian",
+    "hex": "#00856c",
+    "rgb": "rgb(0, 133, 108)",
+    "hsl": "hsl(169, 100%, 26%)"
+  },
+  {
+    "name": "Caribbean Green",
+    "hex": "#00cca7",
+    "rgb": "rgb(0, 204, 167)",
+    "hsl": "hsl(169, 100%, 40%)"
+  },
+  {
+    "name": "Red Crayola",
+    "hex": "#ed254e",
+    "rgb": "rgb(237, 37, 78)",
+    "hsl": "hsl(348, 85%, 54%)"
+  },
+  {
+    "name": "Selective Yellow",
+    "hex": "#ffbd33",
+    "rgb": "rgb(255, 189, 51)",
+    "hsl": "hsl(41, 100%, 60%)"
+  }
+]
