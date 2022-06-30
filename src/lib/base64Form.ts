@@ -65,7 +65,7 @@ export function getBase64FromForm(form: SettingsForm) {
 
 export function getFormFromBase64(base64Tune: string): SettingsForm {
   const json = decompressFromBase64(base64Tune);
-  const parsed = JSON.parse(json);
+  const parsed = JSON.parse(json || '');
   const form = mangleObject(parsed, true);
 
   if (!form || !Object.keys(form).length) {
@@ -207,8 +207,10 @@ export function getFormFromBase64(base64Tune: string): SettingsForm {
           rear: form.build?.tiresAndRims?.rimSize?.rear || 'Stock',
         },
         trackWidth: {
-          front: (form.build?.tiresAndRims?.trackWidth?.front as TrackWidthType) || TrackWidthType.stock,
-          rear: (form.build?.tiresAndRims?.trackWidth?.rear as TrackWidthType) || TrackWidthType.stock,
+          front:
+            (form.build?.tiresAndRims?.trackWidth?.front as TrackWidthType) || TrackWidthType.stock,
+          rear:
+            (form.build?.tiresAndRims?.trackWidth?.rear as TrackWidthType) || TrackWidthType.stock,
         },
       },
       aeroAndAppearance: {
