@@ -1,50 +1,94 @@
 import { compressToBase64, decompressFromBase64 } from 'lz-string';
 import { diff } from 'deep-object-diff';
-import mangleLookup from './mangle-lookup.json';
+import { mangleKeyMap, mangleValueMap } from './mangle-lookup';
 import getDefaultForm from './defaultForm';
 import {
-  PressureUnit,
-  SpringRateUnit,
-  LengthUnit,
-  DriveType,
-  Upgrade,
-  LimitedUpgrade,
-  FullUpgrade,
-  TransmissionUpgrade,
-  TireCompound,
-  RimStyleType,
   SettingsForm,
-  TrackWidthType,
-  ForceUnit,
-  PIClass,
-  RestrictorUpgrade,
 } from './types';
 
 // Reverse mangleLookup
-const unmangleLookup: any = Object.keys(mangleLookup).reduce(
-  (prev, cur) => Object.assign(prev, { [(mangleLookup as any)[cur]]: cur }),
-  {},
-);
+const unmangleKeyMap: Record<string, string> = Object
+  .keys(mangleKeyMap)
+  .reduce(
+    (prev, cur) => ({
+      ...prev,
+      [mangleKeyMap[cur]]: cur,
+    }),
+    {},
+  );
+
+const unmangleValueMap: Record<string, string> = Object
+  .keys(mangleValueMap)
+  .reduce(
+    (prev, cur) => ({
+      ...prev,
+      [mangleValueMap[cur]]: cur,
+    }),
+    {},
+  );
+
+function mangleKey(key: string) {
+  return mangleKeyMap[key] || key;
+}
+
+function unmangleKey(key: string) {
+  return unmangleKeyMap[key] || key;
+}
+
+function mangleValue(value: unknown) {
+  if (typeof value === 'boolean') return value ? 't' : 'f';
+  if (typeof value === 'string' && value in mangleValueMap) return mangleValueMap[value];
+  return value;
+}
+
+function unmangleValue<T>(value: string | number) {
+  if (value === 't') return true;
+  if (value === 'f') return false;
+  if (typeof value === 'string' && value in unmangleValueMap) {
+    return unmangleValueMap[value];
+  }
+  return value;
+}
 
 // Replace the objects keys with abbreviations to save characters, reducing the base64 strings length
-function mangleObject(object: any, reverse = false): any {
-  const lookup = reverse ? unmangleLookup : mangleLookup;
-  const mangled: any = {};
-  const keys = Object.keys(object);
+function mangleObject<T>(object: T, reverse = false) {
+  const mangled: Record<string, any> = {};
+  const keys = Object.keys(object) as (keyof T)[];
 
-  for (let i = 0; i < keys.length; i += 1) {
-    const key = keys[i];
-    const isObject = typeof object[key] === 'object' && !Array.isArray(object[key]);
-    const mangledKey = lookup[key] || key;
+  keys.forEach((key) => {
+    const value = object[key];
+    const isObject = typeof value === 'object' && !Array.isArray(value);
+    const mangledKey = mangleKey(key as string);
+    const mangledValue = mangleValue(value);
 
     if (isObject) {
       mangled[mangledKey] = mangleObject(object[key], reverse);
     } else {
-      mangled[mangledKey] = object[key];
+      mangled[mangledKey] = mangledValue;
     }
-  }
+  });
 
   return mangled;
+}
+
+// Replace the objects keys with abbreviations to save characters, reducing the base64 strings length
+function unmangleObject<T>(mangled: Record<string, any>, target: T): T {
+  const keys = Object.keys(mangled);
+
+  keys.forEach((key) => {
+    const value = mangled[key];
+    const isObject = typeof value === 'object' && !Array.isArray(value);
+    const unmangledKey = unmangleKey(key) as keyof T;
+    const unmangledValue = unmangleValue(value);
+
+    if (isObject) {
+      target[unmangledKey] = unmangleObject(mangled[key], target[unmangledKey]);
+    } else {
+      target[unmangledKey] = unmangledValue as any;
+    }
+  });
+
+  return target;
 }
 
 export function getBase64FromForm(form: SettingsForm) {
@@ -60,178 +104,179 @@ export function getBase64FromForm(form: SettingsForm) {
   }
 
   const mangled = mangleObject(formDiff);
-  return compressToBase64(JSON.stringify(mangled));
+  const json = JSON.stringify(mangled);
+  return compressToBase64(json);
 }
 
 export function getFormFromBase64(base64Tune: string): SettingsForm {
-  const json = decompressFromBase64(base64Tune);
-  const parsed = JSON.parse(json || '');
-  const form = mangleObject(parsed, true);
+  const json = window.atob(base64Tune);
+  const parsed = JSON.parse(json);
+  const form = unmangleObject(parsed, getDefaultForm());
 
   if (!form || !Object.keys(form).length) {
     throw new Error('Undefined or empty object.');
   }
 
-  return {
-    make: form.make || '',
-    model: form.model || '',
-    tune: {
-      tires: {
-        front: form.tune?.tires?.front || '2',
-        rear: form.tune?.tires?.rear || '2',
-        units: (form.tune?.tires?.units as PressureUnit) || PressureUnit.bar,
-      },
-      gears: {
-        ratios: form.tune?.gears?.ratios || ['', '', '', '', '', '', '', '', '', '', ''],
-        na: form.tune?.gears?.na === undefined ? false : form.tune?.gears?.na,
-      },
-      camber: {
-        front: form.tune?.camber?.front || '-1',
-        rear: form.tune?.camber?.rear || '-1',
-      },
-      toe: {
-        front: form.tune?.toe?.front || '0',
-        rear: form.tune?.toe?.rear || '0',
-      },
-      caster: form.tune?.caster || '5',
-      arb: {
-        front: form.tune?.arb?.front || '',
-        rear: form.tune?.arb?.rear || '',
-        na: form.tune?.arb?.na === undefined ? false : form.tune?.arb?.na,
-      },
-      springs: {
-        front: form.tune?.springs?.front || '',
-        rear: form.tune?.springs?.rear || '',
-        units: (form.tune?.springs?.units as SpringRateUnit) || SpringRateUnit.kgf,
-        na: form.tune?.springs?.na === undefined ? false : form.tune?.springs?.na,
-      },
-      rideHeight: {
-        front: form.tune?.rideHeight?.front || '',
-        rear: form.tune?.rideHeight?.rear || '',
-        units: (form.tune?.rideHeight?.units as LengthUnit) || LengthUnit.cm,
-        na: form.tune?.rideHeight?.na === undefined ? false : form.tune?.rideHeight?.na,
-      },
-      damping: {
-        front: form.tune?.damping?.front || '',
-        rear: form.tune?.damping?.rear || '',
-        na: form.tune?.damping?.na === undefined ? false : form.tune?.damping?.na,
-      },
-      bump: {
-        front: form.tune?.bump?.front || '',
-        rear: form.tune?.bump?.rear || '',
-        na: form.tune?.bump?.na === undefined ? false : form.tune?.bump?.na,
-      },
-      aero: {
-        front: form.tune?.aero?.front || '',
-        rear: form.tune?.aero?.rear || '',
-        units: (form.tune?.aero?.units as ForceUnit) || ForceUnit.kgf,
-        na: form.tune?.aero?.na === undefined ? false : form.tune?.aero?.na,
-      },
-      brake: {
-        na: form.tune?.brake?.na === undefined ? false : form.tune?.brake?.na,
-        bias: form.tune?.brake?.bias || '50',
-        pressure: form.tune?.brake?.pressure || '100',
-      },
-      diff: {
-        front: {
-          accel: form.tune?.diff?.front?.accel || '',
-          decel: form.tune?.diff?.front?.decel || '',
-        },
-        rear: {
-          accel: form.tune?.diff?.rear?.accel || '',
-          decel: form.tune?.diff?.rear?.decel || '',
-        },
-        center: form.tune?.diff?.center || '',
-        na: form.tune?.diff?.na === undefined ? false : form.tune?.diff?.na,
-      },
-    },
-    build: {
-      conversions: {
-        engine: form.build?.conversions?.engine || 'Stock',
-        drivetrain: (form.build?.conversions?.drivetrain as DriveType) || DriveType.awd,
-        aspiration: form.build?.conversions?.aspiration || 'Stock',
-        bodyKit: form.build?.conversions?.bodyKit || '',
-      },
-      engine: {
-        intake: (form.build?.engine?.intake as Upgrade) || Upgrade.stock,
-        intakeManifold: (form.build?.engine?.intakeManifold as Upgrade) || Upgrade.na,
-        carburator: (form.build?.engine?.carburator as Upgrade) || Upgrade.na,
-        fuelSystem: (form.build?.engine?.fuelSystem as Upgrade) || Upgrade.stock,
-        ignition: (form.build?.engine?.ignition as LimitedUpgrade) || LimitedUpgrade.stock,
-        exhaust: (form.build?.engine?.exhaust as Upgrade) || Upgrade.stock,
-        camshaft: (form.build?.engine?.camshaft as Upgrade) || Upgrade.stock,
-        valves: (form.build?.engine?.valves as Upgrade) || Upgrade.stock,
-        displacement: (form.build?.engine?.displacement as Upgrade) || Upgrade.stock,
-        pistons: (form.build?.engine?.pistons as Upgrade) || Upgrade.stock,
-        turbo: (form.build?.engine?.turbo as LimitedUpgrade) || LimitedUpgrade.na,
-        twinTurbo: (form.build?.engine?.twinTurbo as LimitedUpgrade) || LimitedUpgrade.na,
-        supercharger: (form.build?.engine?.supercharger as LimitedUpgrade) || LimitedUpgrade.na,
-        centrifugalSupercharger:
-          (form.build?.engine?.centrifugalSupercharger as LimitedUpgrade) || LimitedUpgrade.na,
-        intercooler: (form.build?.engine?.intercooler as LimitedUpgrade) || LimitedUpgrade.stock,
-        oilCooling: (form.build?.engine?.oilCooling as Upgrade) || Upgrade.stock,
-        flywheel: (form.build?.engine?.flywheel as Upgrade) || Upgrade.stock,
-        restrictorPlate:
-          (form.build?.engine?.restrictorPlate as RestrictorUpgrade) || RestrictorUpgrade.na,
-      },
-      platformAndHandling: {
-        brakes: (form.build?.platformAndHandling?.brakes as Upgrade) || Upgrade.stock,
-        springs: (form.build?.platformAndHandling?.springs as FullUpgrade) || FullUpgrade.race,
-        frontArb: (form.build?.platformAndHandling?.frontArb as Upgrade) || Upgrade.race,
-        rearArb: (form.build?.platformAndHandling?.rearArb as Upgrade) || Upgrade.race,
-        chassisReinforcement:
-          (form.build?.platformAndHandling?.chassisReinforcement as Upgrade) || Upgrade.stock,
-        weightReduction:
-          (form.build?.platformAndHandling?.weightReduction as Upgrade) || Upgrade.stock,
-      },
-      drivetrain: {
-        clutch: (form.build?.drivetrain?.clutch as Upgrade) || Upgrade.stock,
-        transmission:
-          (form.build?.drivetrain?.transmission as TransmissionUpgrade) ||
-          TransmissionUpgrade.stock,
-        driveline: (form.build?.drivetrain?.driveline as Upgrade) || Upgrade.stock,
-        differential: (form.build?.drivetrain?.differential as FullUpgrade) || FullUpgrade.race,
-      },
-      tiresAndRims: {
-        compound: (form.build?.tiresAndRims?.compound as TireCompound) || TireCompound.stock,
-        width: {
-          front: form.build?.tiresAndRims?.width?.front || 'Stock',
-          rear: form.build?.tiresAndRims?.width?.rear || 'Stock',
-        },
-        rimStyle: {
-          type: (form.build?.tiresAndRims?.rimStyle?.type as RimStyleType) || RimStyleType.stock,
-          name: form.build?.tiresAndRims?.rimStyle?.name || '',
-        },
-        rimSize: {
-          front: form.build?.tiresAndRims?.rimSize?.front || 'Stock',
-          rear: form.build?.tiresAndRims?.rimSize?.rear || 'Stock',
-        },
-        trackWidth: {
-          front:
-            (form.build?.tiresAndRims?.trackWidth?.front as TrackWidthType) || TrackWidthType.stock,
-          rear:
-            (form.build?.tiresAndRims?.trackWidth?.rear as TrackWidthType) || TrackWidthType.stock,
-        },
-      },
-      aeroAndAppearance: {
-        frontBumper: form.build?.aeroAndAppearance?.frontBumper || 'Stock',
-        rearBumper: form.build?.aeroAndAppearance?.rearBumper || 'N/A',
-        rearWing: form.build?.aeroAndAppearance?.rearWing || 'Stock',
-        sideSkirts: form.build?.aeroAndAppearance?.sideSkirts || 'N/A',
-        hood: form.build?.aeroAndAppearance?.hood || 'N/A',
-      },
-    },
-    stats: {
-      pi: form.stats?.pi || 0,
-      classification: (form.stats?.classification as PIClass) || PIClass.A,
-      hp: form.stats?.hp || 0,
-      torque: form.stats?.torque || 0,
-      weight: form.stats?.weight || 0,
-      balance: form.stats?.balance || 0,
-      topSpeed: form.stats?.topSpeed || 0,
-      zeroToSixty: form.stats?.zeroToSixty || 0,
-      zeroToHundred: form.stats?.zeroToHundred || 0,
-      shareCode: form.stats?.shareCode || '',
-    },
-  };
+  return form;
+
+  // return {
+  //   make: form.make || '',
+  //   model: form.model || '',
+  //   tune: {
+  //     tires: {
+  //       front: form.tune?.tires?.front || '2',
+  //       rear: form.tune?.tires?.rear || '2',
+  //       units: (form.tune?.tires?.units as PressureUnit) || PressureUnit.bar,
+  //     },
+  //     gears: {
+  //       ratios: form.tune?.gears?.ratios || ['', '', '', '', '', '', '', '', '', '', ''],
+  //       na: form.tune?.gears?.na === undefined ? true : form.tune?.gears?.na,
+  //     },
+  //     camber: {
+  //       front: form.tune?.camber?.front || '-1',
+  //       rear: form.tune?.camber?.rear || '-1',
+  //     },
+  //     toe: {
+  //       front: form.tune?.toe?.front || '0',
+  //       rear: form.tune?.toe?.rear || '0',
+  //     },
+  //     caster: form.tune?.caster || '5',
+  //     arb: {
+  //       front: form.tune?.arb?.front || '',
+  //       rear: form.tune?.arb?.rear || '',
+  //       na: form.tune?.arb?.na === undefined ? true : form.tune?.arb?.na,
+  //     },
+  //     springs: {
+  //       front: form.tune?.springs?.front || '',
+  //       rear: form.tune?.springs?.rear || '',
+  //       units: (form.tune?.springs?.units as SpringRateUnit) || SpringRateUnit.kgf,
+  //       na: form.tune?.springs?.na === undefined ? true : form.tune?.springs?.na,
+  //     },
+  //     rideHeight: {
+  //       front: form.tune?.rideHeight?.front || '',
+  //       rear: form.tune?.rideHeight?.rear || '',
+  //       units: (form.tune?.rideHeight?.units as LengthUnit) || LengthUnit.cm,
+  //       na: form.tune?.rideHeight?.na === undefined ? true : form.tune?.rideHeight?.na,
+  //     },
+  //     damping: {
+  //       front: form.tune?.damping?.front || '',
+  //       rear: form.tune?.damping?.rear || '',
+  //       na: form.tune?.damping?.na === undefined ? true : form.tune?.damping?.na,
+  //     },
+  //     bump: {
+  //       front: form.tune?.bump?.front || '',
+  //       rear: form.tune?.bump?.rear || '',
+  //       na: form.tune?.bump?.na === undefined ? true : form.tune?.bump?.na,
+  //     },
+  //     aero: {
+  //       front: form.tune?.aero?.front || '',
+  //       rear: form.tune?.aero?.rear || '',
+  //       units: (form.tune?.aero?.units as ForceUnit) || ForceUnit.kgf,
+  //       na: form.tune?.aero?.na === undefined ? true : form.tune?.aero?.na,
+  //     },
+  //     brake: {
+  //       na: form.tune?.brake?.na === undefined ? true : form.tune?.brake?.na,
+  //       bias: form.tune?.brake?.bias || '50',
+  //       pressure: form.tune?.brake?.pressure || '100',
+  //     },
+  //     diff: {
+  //       front: {
+  //         accel: form.tune?.diff?.front?.accel || '',
+  //         decel: form.tune?.diff?.front?.decel || '',
+  //       },
+  //       rear: {
+  //         accel: form.tune?.diff?.rear?.accel || '',
+  //         decel: form.tune?.diff?.rear?.decel || '',
+  //       },
+  //       center: form.tune?.diff?.center || '',
+  //       na: form.tune?.diff?.na === undefined ? true : form.tune?.diff?.na,
+  //     },
+  //   },
+  //   build: {
+  //     conversions: {
+  //       engine: form.build?.conversions?.engine || 'Stock',
+  //       drivetrain: (form.build?.conversions?.drivetrain as DriveType) || DriveType.awd,
+  //       aspiration: form.build?.conversions?.aspiration || 'Stock',
+  //       bodyKit: form.build?.conversions?.bodyKit || '',
+  //     },
+  //     engine: {
+  //       intake: (form.build?.engine?.intake as Upgrade) || Upgrade.stock,
+  //       intakeManifold: (form.build?.engine?.intakeManifold as Upgrade) || Upgrade.na,
+  //       carburator: (form.build?.engine?.carburator as Upgrade) || Upgrade.na,
+  //       fuelSystem: (form.build?.engine?.fuelSystem as Upgrade) || Upgrade.stock,
+  //       ignition: (form.build?.engine?.ignition as LimitedUpgrade) || LimitedUpgrade.stock,
+  //       exhaust: (form.build?.engine?.exhaust as Upgrade) || Upgrade.stock,
+  //       camshaft: (form.build?.engine?.camshaft as Upgrade) || Upgrade.stock,
+  //       valves: (form.build?.engine?.valves as Upgrade) || Upgrade.stock,
+  //       displacement: (form.build?.engine?.displacement as Upgrade) || Upgrade.stock,
+  //       pistons: (form.build?.engine?.pistons as Upgrade) || Upgrade.stock,
+  //       turbo: (form.build?.engine?.turbo as LimitedUpgrade) || LimitedUpgrade.na,
+  //       twinTurbo: (form.build?.engine?.twinTurbo as LimitedUpgrade) || LimitedUpgrade.na,
+  //       supercharger: (form.build?.engine?.supercharger as LimitedUpgrade) || LimitedUpgrade.na,
+  //       centrifugalSupercharger:
+  //         (form.build?.engine?.centrifugalSupercharger as LimitedUpgrade) || LimitedUpgrade.na,
+  //       intercooler: (form.build?.engine?.intercooler as LimitedUpgrade) || LimitedUpgrade.stock,
+  //       oilCooling: (form.build?.engine?.oilCooling as Upgrade) || Upgrade.stock,
+  //       flywheel: (form.build?.engine?.flywheel as Upgrade) || Upgrade.stock,
+  //       restrictorPlate:
+  //         (form.build?.engine?.restrictorPlate as RestrictorUpgrade) || RestrictorUpgrade.na,
+  //     },
+  //     platformAndHandling: {
+  //       brakes: (form.build?.platformAndHandling?.brakes as Upgrade) || Upgrade.stock,
+  //       springs: (form.build?.platformAndHandling?.springs as FullUpgrade) || FullUpgrade.race,
+  //       frontArb: (form.build?.platformAndHandling?.frontArb as Upgrade) || Upgrade.race,
+  //       rearArb: (form.build?.platformAndHandling?.rearArb as Upgrade) || Upgrade.race,
+  //       chassisReinforcement:
+  //         (form.build?.platformAndHandling?.chassisReinforcement as Upgrade) || Upgrade.stock,
+  //       weightReduction:
+  //         (form.build?.platformAndHandling?.weightReduction as Upgrade) || Upgrade.stock,
+  //     },
+  //     drivetrain: {
+  //       clutch: (form.build?.drivetrain?.clutch as Upgrade) || Upgrade.stock,
+  //       transmission:
+  //         (form.build?.drivetrain?.transmission as TransmissionUpgrade) ||
+  //         TransmissionUpgrade.stock,
+  //       driveline: (form.build?.drivetrain?.driveline as Upgrade) || Upgrade.stock,
+  //       differential: (form.build?.drivetrain?.differential as FullUpgrade) || FullUpgrade.race,
+  //     },
+  //     tiresAndRims: {
+  //       compound: (form.build?.tiresAndRims?.compound as TireCompound) || TireCompound.stock,
+  //       width: {
+  //         front: form.build?.tiresAndRims?.width?.front || 'Stock',
+  //         rear: form.build?.tiresAndRims?.width?.rear || 'Stock',
+  //       },
+  //       rimStyle: {
+  //         type: (form.build?.tiresAndRims?.rimStyle?.type as RimStyleType) || RimStyleType.stock,
+  //         name: form.build?.tiresAndRims?.rimStyle?.name || '',
+  //       },
+  //       rimSize: {
+  //         front: form.build?.tiresAndRims?.rimSize?.front || 'Stock',
+  //         rear: form.build?.tiresAndRims?.rimSize?.rear || 'Stock',
+  //       },
+  //       trackWidth: {
+  //         front: (form.build?.tiresAndRims?.trackWidth?.front as TrackWidthType) || TrackWidthType.stock,
+  //         rear: (form.build?.tiresAndRims?.trackWidth?.rear as TrackWidthType) || TrackWidthType.stock,
+  //       },
+  //     },
+  //     aeroAndAppearance: {
+  //       frontBumper: form.build?.aeroAndAppearance?.frontBumper || 'Stock',
+  //       rearBumper: form.build?.aeroAndAppearance?.rearBumper || 'N/A',
+  //       rearWing: form.build?.aeroAndAppearance?.rearWing || 'Stock',
+  //       sideSkirts: form.build?.aeroAndAppearance?.sideSkirts || 'N/A',
+  //       hood: form.build?.aeroAndAppearance?.hood || 'N/A',
+  //     },
+  //   },
+  //   stats: {
+  //     pi: form.stats?.pi || 0,
+  //     classification: (form.stats?.classification as PIClass) || PIClass.A,
+  //     hp: form.stats?.hp || 0,
+  //     torque: form.stats?.torque || 0,
+  //     weight: form.stats?.weight || 0,
+  //     balance: form.stats?.balance || 0,
+  //     topSpeed: form.stats?.topSpeed || 0,
+  //     zeroToSixty: form.stats?.zeroToSixty || 0,
+  //     zeroToHundred: form.stats?.zeroToHundred || 0,
+  //     shareCode: form.stats?.shareCode || '',
+  //   },
+  // };
 }
