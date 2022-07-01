@@ -1,3 +1,4 @@
+import { compressToBase64, decompressFromBase64 } from 'lz-string';
 import { diff } from 'deep-object-diff';
 import mangleLookup from './mangle-lookup.json';
 import getDefaultForm from './defaultForm';
@@ -59,12 +60,12 @@ export function getBase64FromForm(form: SettingsForm) {
   }
 
   const mangled = mangleObject(formDiff);
-  return window.btoa(JSON.stringify(mangled));
+  return compressToBase64(JSON.stringify(mangled));
 }
 
 export function getFormFromBase64(base64Tune: string): SettingsForm {
-  const json = window.atob(base64Tune);
-  const parsed = JSON.parse(json);
+  const json = decompressFromBase64(base64Tune);
+  const parsed = JSON.parse(json || '');
   const form = mangleObject(parsed, true);
 
   if (!form || !Object.keys(form).length) {
@@ -82,7 +83,7 @@ export function getFormFromBase64(base64Tune: string): SettingsForm {
       },
       gears: {
         ratios: form.tune?.gears?.ratios || ['', '', '', '', '', '', '', '', '', '', ''],
-        na: form.tune?.gears?.na === undefined ? true : form.tune?.gears?.na,
+        na: form.tune?.gears?.na === undefined ? false : form.tune?.gears?.na,
       },
       camber: {
         front: form.tune?.camber?.front || '-1',
@@ -96,38 +97,38 @@ export function getFormFromBase64(base64Tune: string): SettingsForm {
       arb: {
         front: form.tune?.arb?.front || '',
         rear: form.tune?.arb?.rear || '',
-        na: form.tune?.arb?.na === undefined ? true : form.tune?.arb?.na,
+        na: form.tune?.arb?.na === undefined ? false : form.tune?.arb?.na,
       },
       springs: {
         front: form.tune?.springs?.front || '',
         rear: form.tune?.springs?.rear || '',
         units: (form.tune?.springs?.units as SpringRateUnit) || SpringRateUnit.kgf,
-        na: form.tune?.springs?.na === undefined ? true : form.tune?.springs?.na,
+        na: form.tune?.springs?.na === undefined ? false : form.tune?.springs?.na,
       },
       rideHeight: {
         front: form.tune?.rideHeight?.front || '',
         rear: form.tune?.rideHeight?.rear || '',
         units: (form.tune?.rideHeight?.units as LengthUnit) || LengthUnit.cm,
-        na: form.tune?.rideHeight?.na === undefined ? true : form.tune?.rideHeight?.na,
+        na: form.tune?.rideHeight?.na === undefined ? false : form.tune?.rideHeight?.na,
       },
       damping: {
         front: form.tune?.damping?.front || '',
         rear: form.tune?.damping?.rear || '',
-        na: form.tune?.damping?.na === undefined ? true : form.tune?.damping?.na,
+        na: form.tune?.damping?.na === undefined ? false : form.tune?.damping?.na,
       },
       bump: {
         front: form.tune?.bump?.front || '',
         rear: form.tune?.bump?.rear || '',
-        na: form.tune?.bump?.na === undefined ? true : form.tune?.bump?.na,
+        na: form.tune?.bump?.na === undefined ? false : form.tune?.bump?.na,
       },
       aero: {
         front: form.tune?.aero?.front || '',
         rear: form.tune?.aero?.rear || '',
         units: (form.tune?.aero?.units as ForceUnit) || ForceUnit.kgf,
-        na: form.tune?.aero?.na === undefined ? true : form.tune?.aero?.na,
+        na: form.tune?.aero?.na === undefined ? false : form.tune?.aero?.na,
       },
       brake: {
-        na: form.tune?.brake?.na === undefined ? true : form.tune?.brake?.na,
+        na: form.tune?.brake?.na === undefined ? false : form.tune?.brake?.na,
         bias: form.tune?.brake?.bias || '50',
         pressure: form.tune?.brake?.pressure || '100',
       },
@@ -141,7 +142,7 @@ export function getFormFromBase64(base64Tune: string): SettingsForm {
           decel: form.tune?.diff?.rear?.decel || '',
         },
         center: form.tune?.diff?.center || '',
-        na: form.tune?.diff?.na === undefined ? true : form.tune?.diff?.na,
+        na: form.tune?.diff?.na === undefined ? false : form.tune?.diff?.na,
       },
     },
     build: {
@@ -206,8 +207,10 @@ export function getFormFromBase64(base64Tune: string): SettingsForm {
           rear: form.build?.tiresAndRims?.rimSize?.rear || 'Stock',
         },
         trackWidth: {
-          front: (form.build?.trackWidth?.front as TrackWidthType) || TrackWidthType.stock,
-          rear: (form.build?.trackWidth?.rear as TrackWidthType) || TrackWidthType.stock,
+          front:
+            (form.build?.tiresAndRims?.trackWidth?.front as TrackWidthType) || TrackWidthType.stock,
+          rear:
+            (form.build?.tiresAndRims?.trackWidth?.rear as TrackWidthType) || TrackWidthType.stock,
         },
       },
       aeroAndAppearance: {

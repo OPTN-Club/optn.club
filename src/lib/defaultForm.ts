@@ -27,7 +27,7 @@ export default (): SettingsForm => ({
     },
     gears: {
       ratios: ['', '', '', '', '', '', '', '', '', '', ''],
-      na: true,
+      na: false,
     },
     camber: {
       front: '-1',
@@ -69,10 +69,10 @@ export default (): SettingsForm => ({
       front: '',
       rear: '',
       units: ForceUnit.kgf,
-      na: true,
+      na: false,
     },
     brake: {
-      na: true,
+      na: false,
       bias: '50',
       pressure: '100',
     },
