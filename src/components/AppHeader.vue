@@ -9,7 +9,7 @@
     </div>
 
     <div class="flex flex-col grow justify-between">
-      <div class="flex justify-end">
+      <div class="flex justify-center mt-8 sm:mt-0 sm:justify-end">
         <ul class="link-bar">
           <li>
             <a href="https://discord.gg/K2Kk5Kj6PP">
