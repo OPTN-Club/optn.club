@@ -26,14 +26,15 @@ const {
     </p>
     <GlobalUnitSelect v-model="globalUnit" class="mt-4" />
   </section>
-  <form>
-    <section>
-      <h2>Car</h2>
-      <MakeModelSelect v-model:make="form.make" v-model:model="form.model" />
-    </section>
-
-    <BuildSettingsForm />
-    <TuneSettingsForm />
+  <form class="md:flex md:items-start">
+    <div>
+      <section>
+        <h2>Car</h2>
+        <MakeModelSelect v-model:make="form.make" v-model:model="form.model" />
+      </section>
+      <BuildSettingsForm />
+      <TuneSettingsForm />
+    </div>
 
     <FormattedTuneTextarea />
   </form>

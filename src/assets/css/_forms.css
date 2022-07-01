@@ -34,10 +34,10 @@
       px-2
       py-1
       border
-      border-gray-400
+      border-neutral-400
       rounded
       text-offwhite
-      bg-gray-900
+      bg-dark-accent
       outline-none;
   }
 
@@ -195,16 +195,6 @@
   .column {
     margin: 0 0 0;
   }
-
-  .column.actions {
-    @apply
-      w-full
-      sm:w-2/3
-      mx-auto
-      my-0;
-  }
-
-
 
   .row > .control,
   .set-upgrades > .control {

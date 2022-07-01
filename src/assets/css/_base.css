@@ -1,7 +1,9 @@
 @layer base {
   html {
-    background: #383838 linear-gradient(#252525, #151515) fixed;
-    height: 100%;
+    @apply
+      bg-neutral-800
+      h-full;
+
   }
 
   body {
@@ -18,12 +20,13 @@
       max-w-6xl
       my-0
       mx-auto
-      bg-fot-blue-darkest;
+      bg-dark
+      overflow-visible;
   }
 
   a {
     @apply
-      text-fot-blue-light
+      text-fot-blue-200
       no-underline;
   }
 
@@ -31,29 +34,18 @@
     @apply m-0 mb-4;
   }
 
-  h1, h2, h3, h4 {
+  h1, h2, h3, h4, h5, h6 {
     @apply p-0
       font-bold
-      text-fot-green;
-  }
-
-  h5, h6 {
-    @apply
-      p-0
-      font-bold
-      text-offwhite;
+      text-fot-blue-300;
   }
 
   h1 {
-    @apply
-      text-fot-green
-      text-3xl;
+    @apply text-3xl;
   }
 
   h2 {
-    @apply
-      text-fot-green
-      text-2xl;
+    @apply text-2xl;
   }
 
   h3 {
@@ -62,10 +54,6 @@
 
   h4 {
     @apply text-lg;
-  }
-
-  h2 + h3 {
-    @apply mt-2;
   }
 
   strong {

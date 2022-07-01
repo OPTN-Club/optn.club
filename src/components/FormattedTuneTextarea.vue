@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import {
+  computed, onBeforeUnmount, ref, watch,
+} from 'vue';
+import { useRouter } from 'vue-router';
 import { generateRedditMarkdown } from '../lib/generator';
 import { useFormattingForm } from '../lib/useFormattingForm';
 import { getBase64FromForm } from '../lib/base64Form';
 
-const route = useRoute();
+const router = useRouter();
+
 const { form } = useFormattingForm();
 
 const copyButtonText = ref('Copy To Clipboard');
@@ -16,6 +19,17 @@ const shareTimeout = ref(0);
 const textareaRef = ref<HTMLTextAreaElement | null>(null);
 
 const text = computed(() => generateRedditMarkdown(form));
+const encodedForm = computed(() => getBase64FromForm(form));
+
+watch(encodedForm, (current) => {
+  router.replace({
+    name: 'formatter',
+    params: {
+      ...router.currentRoute.value.params,
+      base64Tune: encodedForm.value,
+    },
+  });
+});
 
 onBeforeUnmount(() => {
   clearTimeout(copyTimeout.value);
@@ -37,12 +51,13 @@ function onCopyClick() {
 }
 
 async function onShareURLClick() {
-  const base64TuneParam = route?.params?.base64Tune;
-  const location = base64TuneParam ? window.location.href.replace(`/${base64TuneParam}`, '') : window.location.href;
+  const location = window.location.href.replace(window.location.hash, '');
+
+  const base64 = getBase64FromForm(form);
 
   const url = [
     location,
-    getBase64FromForm(form),
+    base64,
   ].join(location.endsWith('/') ? '' : '/');
 
   try {
@@ -62,36 +77,47 @@ async function onShareURLClick() {
 
 </script>
 <template>
-  <section>
-    <div class="column actions w-full md:">
-      <p class="font-bold text-center">
-        NOTE:<br>
-        Be sure the editor is in &quot;Markdown&quot; mode<br>
-        when creating your post on Reddit!
-      </p>
-      <button
-        type="button"
-        class="large w-full mt-4 mb-4"
-        @click="onCopyClick"
-      >
-        {{ copyButtonText }}
-      </button>
-      <button
-        type="button"
-        class="w-full mt-4 mb-4"
-        @click="onShareURLClick"
-      >
-        {{ shareButtonText }}
-      </button>
-      <!-- <button type="submit" class="large w-full mb-4">Generate</button> -->
-      <textarea
-        ref="textareaRef"
-        :value="text"
-        readonly
-        class="formatted-text mb-10"
-        rows="10"
-        cols="25"
-      />
-    </div>
+  <section class="actions">
+    <button
+      type="button"
+      class="w-full mb-4"
+      @click="onShareURLClick"
+    >
+      {{ shareButtonText }}
+    </button>
+    <button
+      type="button"
+      class="large w-full my-4"
+      @click="onCopyClick"
+    >
+      {{ copyButtonText }}
+    </button>
+    <!-- <button type="submit" class="large w-full mb-4">Generate</button> -->
+    <textarea
+      ref="textareaRef"
+      :value="text"
+      readonly
+      class="formatted-text mb-4"
+      rows="10"
+      cols="25"
+    />
+    <p class="font-bold text-center mb-10">
+      NOTE:<br>
+      Be sure the editor is in &quot;Markdown&quot; mode<br>
+      when creating your post on Reddit!
+    </p>
   </section>
 </template>
+
+<style>
+.actions {
+  @apply
+    w-full
+    sm:w-2/3
+    md:w-[800px]
+    sticky
+    top-0
+    mx-auto
+    my-0;
+}
+</style>
