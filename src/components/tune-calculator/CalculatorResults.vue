@@ -182,7 +182,6 @@ const formatted = computed(() => ({
 <style scoped>
 .calculator-results {
   @apply
-    bg-fot-blue-darkest
     grow
     /* sticky
     top-[70px] */

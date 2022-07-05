@@ -10,8 +10,14 @@ const state = useTuneCalculator();
 </script>
 
 <template>
-  <section class="sticky top-0 bg-fot-blue-darkest border-b z-10">
+  <section class="sticky top-0 border-b z-10 bg-dark">
     <h1>Tune Calculator</h1>
+    <p class="mb-0 mt-2">
+      Based on diqque's tune calculator spreadsheet.
+      <br>
+      <span class="bg-fot-yellow text-black font-bold px-1">Note:</span>
+      This calculator is still very much a work in progress. It is intended to give a decent starting point.
+    </p>
   </section>
   <section class="flex sm:flex-row">
     <form class="">
@@ -22,15 +28,11 @@ const state = useTuneCalculator();
           label="Type of Springs"
           :type="SpringsType"
         />
-      </div>
-      <div class="row">
         <EnumSelect
           v-model="state.inputs.drivetrain"
           label="Drive Type"
           :type="DriveType"
         />
-      </div>
-      <div class="row">
         <EnumSelect
           v-model="state.inputs.piClass"
           label="Class"
@@ -45,8 +47,6 @@ const state = useTuneCalculator();
         >
           kg
         </CounterInput>
-      </div>
-      <div class="row">
         <CounterInput
           v-model="state.inputs.weightBalance"
           label="Front Weight"
@@ -56,13 +56,13 @@ const state = useTuneCalculator();
           %
         </CounterInput>
       </div>
-      <div class="row">
+      <!-- <div class="row">
         <CounterInput
           v-model="state.inputs.frontAero"
           label="Front Aero"
           min="0"
         />
-      </div>
+      </div> -->
       <div class="font-bold">Tire Width</div>
       <div class="row">
         <CounterInput
@@ -83,7 +83,7 @@ const state = useTuneCalculator();
 
       <h3>Modifiers</h3>
 
-      <div class="font-bold">Motion Ratio</div>
+      <!-- <div class="font-bold">Motion Ratio</div>
       <div class="row">
         <CounterInput
           v-model="state.modifiers.motionRatio.front"
@@ -103,7 +103,7 @@ const state = useTuneCalculator();
         >
           %
         </CounterInput>
-      </div>
+      </div> -->
 
       <div class="font-bold">Target Frequency</div>
       <div class="row">
@@ -123,7 +123,7 @@ const state = useTuneCalculator();
         />
       </div>
 
-      <div class="row">
+      <!-- <div class="row">
         <CounterInput
           v-model="state.modifiers.unsprungCornerWeight"
           label="Unsprung Corner Weight"
@@ -133,7 +133,7 @@ const state = useTuneCalculator();
         >
           kg
         </CounterInput>
-      </div>
+      </div> -->
 
       <div class="row">
         <CounterInput
@@ -155,8 +155,6 @@ const state = useTuneCalculator();
         >
           %
         </CounterInput>
-      </div>
-      <div class="row">
         <CounterInput
           v-model="state.modifiers.bump"
           label="Bump"
@@ -166,6 +164,7 @@ const state = useTuneCalculator();
           %
         </CounterInput>
       </div>
+
       <div class="row">
         <CounterInput
           v-model="state.modifiers.arb"
@@ -185,8 +184,6 @@ const state = useTuneCalculator();
         >
           %
         </CounterInput>
-      </div>
-      <div class="row">
         <CounterInput
           v-model="state.modifiers.driveOffset"
           label="Drive Offset"
