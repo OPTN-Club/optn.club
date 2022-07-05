@@ -71,6 +71,11 @@ const data: ChartData = {
 <template>
   <section>
     <h1>Tuning Troubleshooting Chart</h1>
+    <p class="mt-2 text-lg">
+      This chart assumes that your base tune has no glaring issues:<br>
+      Be sure your car doesn't bottom out and doesn't roll excessively during cornering.<br>
+      Otherwise this chart will create more issues than it solves.
+    </p>
   </section>
   <section class="tune-chart">
     <ChartRow label="To Fix Understeer" :data="data.understeer" />
@@ -83,6 +88,19 @@ const data: ChartData = {
       <div><span class="asterisk">*</span> Available only in Forza</div>
       <div><span class="asterisk">**</span> Available only in Gran Turismo</div>
     </div>
+  </section>
+  <section>
+    <h4>General Tips</h4>
+    <ul class="list-disc list-inside">
+      <li>Don't lower the car too much.  A car touching the ground will never handle properly.</li>
+      <li>Increasing damping is an easy way to make the car react quicker to inputs.</li>
+      <li>Generally speaking if you need more than 0.2&deg; of toe there are issues elsewhere in the tune.</li>
+      <li>If you lower the car you will need stiffer springs to avoid bottoming out</li>
+      <li>
+        If you increase downforce you will need stiffer springs to compensate,
+        as well as stiffer damping so the car doesn't feel too heavy in corners.
+      </li>
+    </ul>
   </section>
 </template>
 
