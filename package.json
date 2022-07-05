@@ -1,5 +1,5 @@
 {
-  "name": "forzaopentunesformatter",
+  "name": "optn.club",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
@@ -12,11 +12,11 @@
     "change-case": "^4.1.2",
     "compression": "^1.7.4",
     "deep-object-diff": "^1.1.7",
-    "express": "^4.17.3",
+    "express": "^4.18.1",
     "lz-string": "^1.4.4",
     "uuid": "^8.3.2",
-    "vue": "^3.2.31",
-    "vue-router": "^4.0.14"
+    "vue": "^3.2.37",
+    "vue-router": "^4.1.1"
   },
   "devDependencies": {
     "@babel/types": "^7.17.0",

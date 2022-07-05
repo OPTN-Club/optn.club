@@ -1,49 +1,52 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref } from 'vue';
-import { useRoute } from 'vue-router';
-import { generateRedditMarkdown } from '../lib/generator';
+import { onBeforeUnmount, ref } from 'vue';
 import { useFormattingForm } from '../lib/useFormattingForm';
-import { getBase64FromForm } from '../lib/base64Form';
 
-const route = useRoute();
-const { form } = useFormattingForm();
+const state = useFormattingForm();
 
 const copyButtonText = ref('Copy To Clipboard');
 const shareButtonText = ref('Share URL');
+const errorText = ref('');
+
 const copyTimeout = ref(0);
 const shareTimeout = ref(0);
+const errorTimeout = ref(0);
 
 const textareaRef = ref<HTMLTextAreaElement | null>(null);
-
-const text = computed(() => generateRedditMarkdown(form));
 
 onBeforeUnmount(() => {
   clearTimeout(copyTimeout.value);
   clearTimeout(shareTimeout.value);
+  clearTimeout(errorTimeout.value);
 });
+
+function showError(message: string) {
+  errorText.value = message;
+  errorTimeout.value = window.setTimeout(() => {
+    errorText.value = '';
+  }, 6000);
+}
+
+function onResetClick() {
+  state.reset();
+}
 
 function onCopyClick() {
   try {
-    navigator.clipboard.writeText(text.value);
+    navigator.clipboard.writeText(state.markdown.value);
     copyButtonText.value = 'Copied!';
     copyTimeout.value = window.setTimeout(() => {
       copyButtonText.value = 'Copy To Clipboard';
     }, 2000);
   } catch (error) {
-    copyButtonText.value = 'Clipboard Error - Copy Manually';
+    showError('Clipboard Error - Copy Manually');
     textareaRef.value?.select();
     textareaRef.value?.focus();
   }
 }
 
 async function onShareURLClick() {
-  const base64TuneParam = route?.params?.base64Tune;
-  const location = base64TuneParam ? window.location.href.replace(`/${base64TuneParam}`, '') : window.location.href;
-
-  const url = [
-    location,
-    getBase64FromForm(form),
-  ].join(location.endsWith('/') ? '' : '/');
+  const url = window.location.href;
 
   try {
     if (navigator.share && window.location.protocol.includes('https')) {
@@ -56,42 +59,59 @@ async function onShareURLClick() {
       }, 2000);
     }
   } catch (error) {
-    window.prompt('Copy this URL to share it with others:', url);
+    showError('Error - Copy URL from address Bar!');
   }
 }
 
 </script>
 <template>
-  <section>
-    <div class="column actions w-full md:">
-      <p class="font-bold text-center">
-        NOTE:<br>
-        Be sure the editor is in &quot;Markdown&quot; mode<br>
-        when creating your post on Reddit!
-      </p>
-      <button
-        type="button"
-        class="large w-full mt-4 mb-4"
-        @click="onCopyClick"
-      >
-        {{ copyButtonText }}
-      </button>
-      <button
-        type="button"
-        class="w-full mt-4 mb-4"
-        @click="onShareURLClick"
-      >
-        {{ shareButtonText }}
-      </button>
-      <!-- <button type="submit" class="large w-full mb-4">Generate</button> -->
-      <textarea
-        ref="textareaRef"
-        :value="text"
-        readonly
-        class="formatted-text mb-10"
-        rows="10"
-        cols="25"
-      />
-    </div>
+  <section class="actions">
+    <button
+      type="button"
+      class="plain mx-auto mb-2"
+      @click="onResetClick"
+    >
+      Reset Form
+    </button>
+    <button
+      type="button"
+      class="w-full mb-4"
+      @click="onShareURLClick"
+    >
+      {{ shareButtonText }}
+    </button>
+    <button
+      type="button"
+      class="large w-full my-4"
+      @click="onCopyClick"
+    >
+      {{ copyButtonText }}
+    </button>
+    <textarea
+      ref="textareaRef"
+      :value="state.markdown.value"
+      readonly
+      class="formatted-text mb-4"
+      rows="10"
+      cols="25"
+    />
+    <p class="font-bold text-center mb-10">
+      NOTE:<br>
+      Be sure the editor is in &quot;Markdown&quot; mode<br>
+      when creating your post on Reddit!
+    </p>
   </section>
 </template>
+
+<style>
+.actions {
+  @apply
+    w-full
+    sm:w-2/3
+    md:w-[800px]
+    sticky
+    top-0
+    mx-auto
+    my-0;
+}
+</style>

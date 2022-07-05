@@ -6,12 +6,14 @@ import { PressureUnit } from '../lib/types';
 import NumberInput from './NumberInput.vue';
 import UnitSelect from './UnitSelect.vue';
 import CheckboxControl from './CheckboxControl.vue';
+import FrontRearInputs from './FrontRearInputs.vue';
+import AccelDecelInputs from './AccelDecelInputs.vue';
 
 const { form, show } = useFormattingForm();
 
-const gears = computed(() => form.tune.gears.ratios.slice(1, show.value.gears.count + 1));
+const gears = computed(() => form.value.tune.gears.ratios.slice(1, show.value.gears.count + 1));
 
-const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.bar ? '0.01' : '0.1'));
+const tirePressureStep = computed(() => (form.value.tune.tires.units === PressureUnit.bar ? '0.01' : '0.1'));
 </script>
 
 <template>
@@ -22,299 +24,269 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
       <br>If you leave something stock (Ex. brakes), or leave the default
       settings for a category, you should still put in the stock value.
     </p>
-  </section>
 
-  <section>
-    <h2>Tires</h2>
-    <div class="row">
-      <NumberInput
-        v-model="form.tune.tires.front"
-        label="Front"
-        required
-        min="0.0"
-        :step="tirePressureStep"
-      />
-      <NumberInput
-        v-model="form.tune.tires.rear"
-        label="Rear"
-        required
-        min="0.0"
-        :step="tirePressureStep"
-      />
-      <UnitSelect
-        v-model="form.tune.tires.units"
-        label="Units"
-        type="pressure"
-      />
+    <div class="set">
+      <h3>Tires</h3>
+      <div class="set-upgrades">
+        <div class="flex items-end control">
+          <FrontRearInputs
+            v-model="form.tune.tires"
+            label="Pressure"
+            attachRight
+            :step="tirePressureStep"
+          />
+          <UnitSelect
+            v-model="form.tune.tires.units"
+            type="pressure"
+            class="rounded-l-none"
+          />
+        </div>
+      </div>
     </div>
-  </section>
-
-  <section>
-    <h2>Gearing</h2>
-    <CheckboxControl v-model="form.tune.gears.na" label="Not Applicable" />
-    <NumberInput
-      v-model="form.tune.gears.ratios[0]"
-      :disabled="form.tune.gears.na"
-      label="Final Drive"
-      min="0.0"
-      step="0.01"
-    />
-    <div class="gears-grid">
-      <NumberInput
-        v-for="(_, index) in gears"
-        :key="index"
-        v-model="form.tune.gears.ratios[index + 1]"
-        :disabled="form.tune.gears.na"
-        :label="`${index + 1}${addSuffix(index + 1)}`"
-        min="0"
-        step="0.01"
-      />
-    </div>
-  </section>
-
-  <section>
-    <h2>Alignment</h2>
-    <h3>Camber</h3>
-    <div class="row">
-      <NumberInput
-        v-model="form.tune.camber.front"
-        label="Front"
-        required
-        min="-10"
-        step="0.1"
-      />
-      <NumberInput
-        v-model="form.tune.camber.rear"
-        label="Rear"
-        required
-        min="-10"
-        step="0.1"
-      />
-    </div>
-    <h3>Toe</h3>
-    <div class="row">
-      <NumberInput
-        v-model="form.tune.toe.front"
-        label="Front"
-        required
-        min="-10"
-        step="0.1"
-      />
-      <NumberInput
-        v-model="form.tune.toe.rear"
-        label="Rear"
-        required
-        min="-10"
-        step="0.1"
-      />
-    </div>
-    <h3>Front Caster</h3>
-    <div class="row">
-      <NumberInput
-        v-model="form.tune.caster"
-        label="Angle"
-        required
-        max="7"
-        step="0.1"
-      />
-    </div>
-  </section>
-
-  <section>
-    <h2>Antiroll Bars</h2>
-    <CheckboxControl v-model="form.tune.arb.na" label="Not Applicable" />
-    <div class="row">
-      <NumberInput
-        v-model="form.tune.arb.front"
-        label="Front"
-        min="0.0"
-        step="0.1"
-      />
-      <NumberInput
-        v-model="form.tune.arb.rear"
-        label="Rear"
-        min="0.0"
-        step="0.1"
-      />
-    </div>
-  </section>
-
-  <section>
-    <h2>Springs</h2>
-    <CheckboxControl v-model="form.tune.springs.na" label="Not Applicable" />
-    <h3>Tension</h3>
-    <div class="row">
-      <NumberInput
-        v-model="form.tune.springs.front"
-        label="Front"
-        min="0.0"
-        step="1"
-      />
-      <NumberInput
-        v-model="form.tune.springs.rear"
-        label="Rear"
-        min="0.0"
-        step="1"
-      />
-      <UnitSelect
-        v-model="form.tune.springs.units"
-        label="Units"
-        type="springrate"
-      />
-    </div>
-    <h3>Ride Height</h3>
-    <div class="row">
-      <NumberInput
-        v-model="form.tune.rideHeight.front"
-        label="Front"
-        min="0.0"
-        step="0.1"
-      />
-      <NumberInput
-        v-model="form.tune.rideHeight.rear"
-        label="Rear"
-        min="0.0"
-        step="0.1"
-      />
-      <UnitSelect
-        v-model="form.tune.rideHeight.units"
-        label="Units"
-        type="height"
-      />
-    </div>
-  </section>
-  <section>
-    <h2>Damping</h2>
-    <CheckboxControl v-model="form.tune.damping.na" label="Not Applicable" />
-    <h3>Rebound Stiffness</h3>
-    <div class="row">
-      <NumberInput
-        v-model="form.tune.damping.front"
-        label="Front"
-        min="0.0"
-        step="0.1"
-      />
-      <NumberInput
-        v-model="form.tune.damping.rear"
-        label="Rear"
-        min="0.0"
-        step="0.1"
-      />
-    </div>
-    <h3>Bump Stiffness</h3>
-    <div class="row">
-      <NumberInput
-        v-model="form.tune.bump.front"
-        label="Front"
-        min="0.0"
-        step="0.1"
-      />
-      <NumberInput
-        v-model="form.tune.bump.rear"
-        label="Rear"
-        min="0.0"
-        step="0.1"
-      />
-    </div>
-  </section>
-
-  <section>
-    <h2>Aero Downforce</h2>
-    <CheckboxControl v-model="form.tune.aero.na" label="Not Applicable" />
-    <div class="row">
-      <NumberInput
-        v-model="form.tune.aero.front"
-        label="Front"
-        min="0"
-        step="1"
-      />
-      <NumberInput
-        v-model="form.tune.aero.rear"
-        label="Rear"
-        min="0"
-        step="1"
-      />
-      <UnitSelect
-        v-model="form.tune.aero.units"
-        label="Units"
-        type="force"
-      />
-    </div>
-  </section>
-
-  <section>
-    <h2>Brakes</h2>
-    <CheckboxControl v-model="form.tune.brake.na" label="Not Applicable" />
-    <div class="row">
-      <NumberInput
-        v-model="form.tune.brake.bias"
-        label="Balance"
-        min="0"
-        max="100"
-        step="1"
-      />
-      <NumberInput
-        v-model="form.tune.brake.pressure"
-        label="Pressure"
-        min="0"
-        max="200"
-        step="1"
-      />
-    </div>
-  </section>
-
-  <section>
-    <h2>Differential</h2>
-    <CheckboxControl v-model="form.tune.diff.na" label="Not Applicable" />
-    <template v-if="show.diff.front">
-      <h3>Front</h3>
-      <div class="row">
-        <NumberInput
-          v-model="form.tune.diff.front.accel"
-          label="Acceleration"
-          min="0"
-          max="100"
-          step="1"
-        />
-        <NumberInput
-          v-model="form.tune.diff.front.decel"
-          label="Deceleration"
-          min="0"
-          max="100"
-          step="1"
+    <div class="set">
+      <div class="flex gap-4 items-center">
+        <h3>Gearing</h3>
+        <CheckboxControl
+          v-model="form.tune.gears.na"
+          label="Not Applicable"
+          class="mb-0"
         />
       </div>
-    </template>
-    <template v-if="show.diff.rear">
-      <h3>Rear</h3>
-      <div class="row">
+      <div class="set-upgrades vertical">
         <NumberInput
-          v-model="form.tune.diff.rear.accel"
-          label="Acceleration"
-          min="0"
-          max="100"
-          step="1"
+          v-model="form.tune.gears.ratios[0]"
+          :disabled="form.tune.gears.na"
+          label="Final Drive"
+          min="0.0"
+          step="0.01"
+        />
+        <div class="gears-grid w-full">
+          <NumberInput
+            v-for="(_, index) in gears"
+            :key="index"
+            v-model="form.tune.gears.ratios[index + 1]"
+            :disabled="form.tune.gears.na"
+            :label="`${index + 1}${addSuffix(index + 1)}`"
+            min="0"
+            step="0.01"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="set">
+      <h3>Alignment</h3>
+      <div class="set-upgrades">
+        <FrontRearInputs
+          v-model="form.tune.camber"
+          label="Camber"
+          step="0.1"
+        />
+        <FrontRearInputs
+          v-model="form.tune.toe"
+          label="Toe"
+          step="0.1"
         />
         <NumberInput
-          v-model="form.tune.diff.rear.decel"
-          label="Deceleration"
-          min="0"
-          max="100"
-          step="1"
+          v-model="form.tune.caster"
+          label="Caster"
+          required
+          max="7"
+          step="0.1"
         />
       </div>
-    </template>
-    <template v-if="show.diff.center">
-      <h3>Center</h3>
-      <div class="row">
+    </div>
+
+    <div class="set">
+      <div class="flex gap-4 items-center">
+        <h3>Antiroll Bars</h3>
+        <CheckboxControl
+          v-model="form.tune.arb.na"
+          label="Not Applicable"
+          class="mb-0"
+        />
+      </div>
+      <div class="set-upgrades">
+        <FrontRearInputs
+          v-model="form.tune.arb"
+          placeholder=""
+          min="0.0"
+          step="0.1"
+          :disabled="form.tune.arb.na"
+        />
+      </div>
+    </div>
+
+    <div class="set">
+      <div class="flex gap-4 items-center">
+        <h3>Springs</h3>
+        <CheckboxControl
+          v-model="form.tune.springs.na"
+          label="Not Applicable"
+          class="mb-0"
+        />
+      </div>
+      <div class="set-upgrades">
+        <div class="flex items-end control">
+          <FrontRearInputs
+            v-model="form.tune.springs"
+            label="Tension"
+            min="0"
+            step="1"
+            attachRight
+            :disabled="form.tune.springs.na"
+          />
+          <UnitSelect
+            v-model="form.tune.springs.units"
+            label=""
+            type="springrate"
+            class="rounded-l-none"
+            :disabled="form.tune.springs.na"
+          />
+        </div>
+
+        <div class="flex items-end control">
+          <FrontRearInputs
+            v-model="form.tune.rideHeight"
+            label="Ride Height"
+            min="0"
+            step="0.1"
+            attachRight
+            :disabled="form.tune.springs.na"
+          />
+          <UnitSelect
+            v-model="form.tune.rideHeight.units"
+            label=""
+            type="height"
+            class="rounded-l-none"
+            :disabled="form.tune.springs.na"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="set">
+      <div class="flex gap-4 items-center">
+        <h3>Damping</h3>
+        <CheckboxControl
+          v-model="form.tune.damping.na"
+          label="Not Applicable"
+          class="mb-0"
+        />
+      </div>
+      <div class="set-upgrades">
+        <FrontRearInputs
+          v-model="form.tune.damping"
+          label="Rebound Stiffness"
+          min="0.0"
+          step="0.1"
+          :disabled="form.tune.damping.na"
+        />
+        <FrontRearInputs
+          v-model="form.tune.bump"
+          label="Bump Stiffness"
+          min="0.0"
+          step="0.1"
+          :disabled="form.tune.damping.na"
+        />
+      </div>
+    </div>
+
+    <div class="set">
+      <div class="flex gap-4 items-center">
+        <h3>Aero Downforce</h3>
+        <CheckboxControl
+          v-model="form.tune.aero.na"
+          label="Not Applicable"
+          class="mb-0"
+        />
+      </div>
+      <div class="set-upgrades">
+        <div class="flex items-end control">
+          <FrontRearInputs
+            v-model="form.tune.aero"
+            min="0"
+            step="1"
+            attachRight
+            :disabled="form.tune.aero.na"
+          />
+          <UnitSelect
+            v-model="form.tune.aero.units"
+            type="force"
+            class="rounded-l-none"
+            :disabled="form.tune.aero.na"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="set">
+      <div class="flex gap-4 items-center">
+        <h3>Brakes</h3>
+        <CheckboxControl
+          v-model="form.tune.brake.na"
+          label="Not Applicable"
+          class="mb-0"
+        />
+      </div>
+      <div class="set-upgrades">
         <NumberInput
-          v-model="form.tune.diff.center"
+          v-model="form.tune.brake.bias"
           label="Balance"
           min="0"
           max="100"
           step="1"
+          :disabled="form.tune.brake.na"
+        />
+        <NumberInput
+          v-model="form.tune.brake.pressure"
+          label="Pressure"
+          min="0"
+          max="200"
+          step="1"
+          :disabled="form.tune.brake.na"
         />
       </div>
-    </template>
+    </div>
+
+    <div class="set">
+      <div class="flex gap-4 items-center">
+        <h3>Differential</h3>
+        <CheckboxControl
+          v-model="form.tune.diff.na"
+          label="Not Applicable"
+          class="mb-0"
+        />
+      </div>
+      <div class="set-upgrades">
+        <AccelDecelInputs
+          v-if="show.diff.front"
+          v-model="form.tune.diff.front"
+          label="Front"
+          min="0"
+          max="100"
+          step="1"
+          :disabled="form.tune.diff.na"
+        />
+        <AccelDecelInputs
+          v-if="show.diff.rear"
+          v-model="form.tune.diff.rear"
+          label="Rear"
+          min="0"
+          max="100"
+          step="1"
+          :disabled="form.tune.diff.na"
+        />
+        <NumberInput
+          v-if="show.diff.center"
+          v-model="form.tune.diff.center"
+          label="Center Balance"
+          min="0"
+          max="100"
+          step="1"
+          :disabled="form.tune.diff.na"
+        />
+      </div>
+    </div>
   </section>
 </template>

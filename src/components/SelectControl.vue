@@ -11,10 +11,11 @@ export default {
 
 defineProps<{
   modelValue: string;
-  label: string;
+  label?: string;
   options?: SelectOption[];
   placeholder?: string;
   rootClass?: string;
+  disabled?: boolean;
 }>();
 
 const id = uuid();
@@ -30,12 +31,13 @@ function onInput(e: Event) {
 </script>
 
 <template>
-  <div class="control" :class="rootClass">
-    <label :for="id">{{ label }}</label>
+  <div class="control" :class="[rootClass, { disabled }]">
+    <label v-if="label" :for="id">{{ label }}</label>
     <select
       v-bind="$attrs"
       :id="id"
       :value="modelValue"
+      :disabled="disabled"
       @input="onInput"
     >
       <option

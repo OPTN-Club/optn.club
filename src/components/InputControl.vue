@@ -13,6 +13,7 @@ withDefaults(defineProps<{
   errorMsg?: string,
   error?: boolean,
   required?: boolean,
+  disabled?: boolean,
   type?: 'number' | 'text',
   step?: number | string,
   min?: number | string,
@@ -41,7 +42,7 @@ function onInput(e: Event) {
 </script>
 
 <template>
-  <div class="control">
+  <div class="control max-w-[300px]" :class="{ disabled }">
     <label :for="`#${id}`" :class="{ required }">{{ label }}</label>
     <input
       :id="id"
@@ -51,6 +52,7 @@ function onInput(e: Event) {
       :step="step"
       :min="min"
       :max="max"
+      :disabled="disabled"
       v-bind="$attrs"
       @input="onInput"
     >

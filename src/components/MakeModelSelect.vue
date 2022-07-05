@@ -79,7 +79,7 @@ watch([() => state.otherMake, () => state.otherModel], () => {
 </script>
 
 <template>
-  <div>
+  <div class="flex flex-wrap gap-4">
     <div class="row">
       <SelectControl
         v-model="state.make"
@@ -88,9 +88,9 @@ watch([() => state.otherMake, () => state.otherModel], () => {
         :options="makeOptions"
       />
       <InputControl
-        v-if="state.make === 'notlisted'"
         v-model="state.otherMake"
         label="Other"
+        :disabled="state.make !== 'notlisted'"
       />
     </div>
     <div class="row">
@@ -102,9 +102,9 @@ watch([() => state.otherMake, () => state.otherModel], () => {
         class="w-full sm:w-auto min-w-[275px]"
       />
       <InputControl
-        v-if="state.model === 'notlisted'"
         v-model="state.otherModel"
         label="Other"
+        :disabled="state.model !== 'notlisted'"
       />
     </div>
   </div>

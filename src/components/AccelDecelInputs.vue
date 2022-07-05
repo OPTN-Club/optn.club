@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { reactive, watch } from 'vue';
 import { v1 as uuid } from 'uuid';
-import { FrontAndRearSettings } from '../lib/types';
+import { AccelDecelSettings } from '../lib/types';
 
 const props = withDefaults(defineProps<{
-  modelValue: FrontAndRearSettings;
+  modelValue: AccelDecelSettings;
   label?: string;
   placeholder?: string;
   required?: boolean;
@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
 }>(), {
   label: '',
-  placeholder: 'Stock',
+  placeholder: '',
   required: false,
   step: 1,
   min: 0,
@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<{
 });
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', v: FrontAndRearSettings): void,
+  (e: 'update:modelValue', v: AccelDecelSettings): void,
 }>();
 
 const state = reactive({ form: { ...props.modelValue } });
@@ -48,17 +48,16 @@ watch(() => props.modelValue, (current) => {
         <label
           :for="`${id}front`"
           class="absolute left-2 top-0 bottom-0 flex items-center mb-0"
-        >F</label>
+        >Accel</label>
         <input
           :id="`${id}front`"
-          v-model="state.form.front"
+          v-model="state.form.accel"
           :placeholder="placeholder"
-          class="pl-6 rounded-r-none border-r-0"
+          class="pl-16 !w-32 rounded-r-none border-r-0"
           :class="{ 'rounded-l-none': attachLeft }"
           type="number"
-          :step="step"
-          :min="min"
-          :max="max"
+          step="1"
+          min="0"
           :disabled="disabled"
         >
       </div>
@@ -66,17 +65,16 @@ watch(() => props.modelValue, (current) => {
         <label
           :for="`${id}rear`"
           class="absolute left-2 top-0 bottom-0 flex items-center mb-0"
-        >R</label>
+        >Decel</label>
         <input
           :id="`${id}rear`"
-          v-model="state.form.rear"
+          v-model="state.form.decel"
           :placeholder="placeholder"
-          class="pl-6 rounded-l-none"
+          class="pl-16 !w-32 rounded-l-none"
           :class="{ 'rounded-r-none border-r-0': attachRight }"
           type="number"
-          :step="step"
-          :min="min"
-          :max="max"
+          step="1"
+          min="0"
           :disabled="disabled"
         >
       </div>

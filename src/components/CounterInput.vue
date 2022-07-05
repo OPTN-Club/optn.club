@@ -52,7 +52,7 @@ const modifiedStep = computed(() => {
   return props.step;
 });
 
-const containerClass = computed(() => (state.focused ? 'border-fot-yellow' : 'border-gray-400'));
+const containerClass = computed(() => (state.focused ? 'border-optn-yellow' : 'border-gray-400'));
 
 function emitModelValue() {
   if (!state.pressed) emit('update:modelValue', state.value);
@@ -135,13 +135,13 @@ onBeforeUnmount(() => {
     >{{ label }}</label>
     <div class="flex items-center">
       <div
-        class="inline-flex rounded border overflow-hidden items-center"
+        class="inline-flex rounded border overflow-hidden items-center bg-dark-accent"
         :class="containerClass"
         @focusin="onFocus"
         @focusout="onBlur"
       >
         <RepeatButton
-          class="counter-input-button rounded-l rounded-r-none"
+          class="counter-input-button rounded-l rounded-r-none plain"
           tabindex="-1"
           @click="onDecrementClick"
           @pressed="onPressed"
@@ -169,7 +169,7 @@ onBeforeUnmount(() => {
         </div>
 
         <RepeatButton
-          class="counter-input-button rounded-r rounded-l-none"
+          class="counter-input-button rounded-r rounded-l-none plain"
           tabindex="-1"
           @click="onIncrementClick"
           @pressed="onPressed"
@@ -191,7 +191,6 @@ onBeforeUnmount(() => {
 <style scoped>
 input {
   @apply
-    bg-gray-900
     border-none
     rounded-none
     text-center
@@ -210,14 +209,11 @@ input[type='number']::-webkit-outer-spin-button {
     text-2xl
     w-10
     p-0
-    text-offwhite
-    bg-gray-900
-    hover:text-offwhite
-    hover:bg-gray-800
+    bg-dark-accent
     cursor-pointer
     outline-none
     font-thin
     border-none
-    ;
+    hover:bg-optn-blue-800;
 }
 </style>

@@ -12,7 +12,7 @@ const spaMiddleware = (req, res) => {
 app.set('x-powered-by', false);
 app.use(compression());
 app.use('/', staticMiddleware);
-app.use('/ForzaOpenTuneFormatter', staticMiddleware);
+app.use('/optn.club', staticMiddleware);
 app.use(spaMiddleware);
 // app.get('*', (req, res) =>
 //   res.sendFile(path.join(__dirname, '/docs/index.html'))
