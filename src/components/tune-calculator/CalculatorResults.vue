@@ -27,9 +27,8 @@ const formatted = computed(() => ({
 </script>
 <template>
   <div class="calculator-results">
-    <div class="sticky top-[70px]">
+    <div class="sticky top-0">
       <h3 class="text-center">Results</h3>
-
       <table class="hidden sm:table sm:text-lg text-white mx-auto">
         <thead>
           <tr>

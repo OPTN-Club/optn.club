@@ -2,10 +2,6 @@
 import { ChartData } from './types';
 import ChartRow from './ChartRow.vue';
 
-const props = defineProps<{
-
-}>();
-
 const data: ChartData = {
   understeer: {
     entry: {
@@ -73,7 +69,10 @@ const data: ChartData = {
 
 </script>
 <template>
-  <div class="tune-chart">
+  <section>
+    <h1>Tuning Troubleshooting Chart</h1>
+  </section>
+  <section class="tune-chart">
     <ChartRow label="To Fix Understeer" :data="data.understeer" />
     <ChartRow
       class="mt-8"
@@ -84,7 +83,7 @@ const data: ChartData = {
       <div><span class="asterisk">*</span> Available only in Forza</div>
       <div><span class="asterisk">**</span> Available only in Gran Turismo</div>
     </div>
-  </div>
+  </section>
 </template>
 
 <style>
@@ -108,58 +107,75 @@ const data: ChartData = {
 .chart-row {
   @apply
     flex
-    items-stretch;
+    flex-col
+    items-stretch
+    gap-4;
+}
+
+@screen md {
+  .chart-row {
+    @apply
+      flex-row;
+  }
+
+  /* .ts-corner + .ts-corner,
+  .ts-speed + .ts-speed {
+    @apply
+      ml-4;
+  } */
 }
 
 .ts-corner {
   @apply
     flex
-    flex-col;
-}
-
-.ts-corner + .ts-corner,
-.ts-speed + .ts-speed {
-  @apply
-    ml-4;
+    flex-col
+    grow
+    min-w-[230px];
 }
 
 .ts-corner-content {
   @apply
     flex
+    flex-wrap
+    lg:flex-nowrap
+    items-stretch
     border
-    border-fot-blue
+    border-optn-blue-500
     rounded-xl
     p-4
-    h-full
-    ;
+    grow
+    gap-4;
 }
 
 .ts-speed {
   @apply
     flex
-    flex-col;
+    flex-col
+    grow
+    ;
 }
 
 .ts-speed .ts-border {
   @apply
-    bg-fot-blue-dark;
+    bg-optn-blue-800
+    text-white;
 }
 
 .ts-panel {
   @apply
     flex
     flex-col
-    justify-items-stretch
-    h-full;
+    grow
+    max-w-full;
 }
 
 .chart-list {
   @apply
-    bg-fot-blue-dark
+    bg-optn-blue-dark
     rounded-xl
-    p-6
+    p-4
     text-offwhite
-    w-[225px];
+    ;
 }
 
 .chart-list li + li {
@@ -172,8 +188,6 @@ const data: ChartData = {
     text-white;
 }
 
-.tune-chart h1,
-.tune-chart h2,
 .tune-chart h3,
 .tune-chart h4,
 .tune-chart h5 {

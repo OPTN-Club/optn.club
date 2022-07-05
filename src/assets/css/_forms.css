@@ -74,7 +74,7 @@
   select:focus,
   textarea:focus {
     @apply
-      border-fot-yellow
+      border-optn-yellow
       shadow-inner;
   }
 
@@ -161,7 +161,7 @@
   .set-upgrades {
     @apply
       border
-      border-fot-blue
+      border-optn-blue
       rounded-xl
       mt-1
       p-4
@@ -169,6 +169,16 @@
       flex
       flex-wrap
       items-end;
+  }
+
+  .set-content {
+    @apply
+      border
+      border-optn-blue
+      rounded-xl
+      mt-1
+      p-4
+      pb-2
   }
 
   .set-upgrades.vertical {

@@ -43,7 +43,7 @@ header p.view small {
     list-none
     h-11
     py-[1px]
-    bg-fot-blue
+    bg-optn-blue
     rounded
     w-auto
     flex;
@@ -55,7 +55,7 @@ header p.view small {
 
 .link-bar li + li {
   @apply border-l
-    border-l-fot-blue-accent;
+    border-l-optn-blue-accent;
 }
 
 .link-bar a {
@@ -69,7 +69,7 @@ header p.view small {
     flex
     flex-col
     justify-center
-    hover:bg-fot-blue-accent;
+    hover:bg-optn-blue-accent;
 }
 
 .link-bar a strong {
@@ -86,7 +86,7 @@ header p.view small {
 .nav-link {
   @apply
     p-2
-    text-fot-blue-light
+    text-optn-blue-light
     font-bold
     text-lg
     border-b-4
@@ -96,5 +96,5 @@ header p.view small {
 .nav-link.router-link-active,
 .nav-link:hover {
   @apply
-    border-b-fot-blue;
+    border-b-optn-blue;
 }

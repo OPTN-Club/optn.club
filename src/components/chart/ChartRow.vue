@@ -10,7 +10,7 @@ const props = defineProps<{
 </script>
 <template>
   <div class="">
-    <h2 class="text-offwhite">{{ label }}</h2>
+    <h2 class="text-center">{{ label }}</h2>
     <div class="chart-row">
       <ChartCorner title="Corner Entry" :data="data.entry" />
       <ChartCorner title="Mid Corner" :data="data.mid" />

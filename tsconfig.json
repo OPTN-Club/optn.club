@@ -13,7 +13,7 @@
       "esnext",
       "dom"
     ],
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
   },
   "include": [
     "src/**/*.ts",

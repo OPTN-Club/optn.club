@@ -9,21 +9,12 @@
       items-center
       justify-center
       rounded
-      text-fot-blue-900
+      text-optn-blue-900
       font-bold
-      bg-fot-yellow
+      bg-optn-yellow
       border
-      border-fot-yellow
+      border-optn-yellow
       h-8;
-
-    /* padding: 20px;
-    border-radius: 10px;
-    font-size: 2rem;
-    min-width: 250px;
-    width: 100%;
-    margin: 0 auto 20px;
-    display: block;
-    background-color: #FFBD33; */
   }
 
   button.large {
@@ -32,11 +23,6 @@
       rounded-lg
       text-2xl
       h-auto;
-  }
-
-  button.green {
-    @apply bg-fot-green
-      border-fot-green;
   }
 
   button.plain {

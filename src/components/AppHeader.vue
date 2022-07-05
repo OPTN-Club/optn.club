@@ -35,7 +35,7 @@
       <div class="-mb-2 text-center md:text-left">
         <router-link class="nav-link" :to="{ name: 'formatter' }">Formatter</router-link>
         <router-link class="nav-link" :to="{ name: 'calculator' }">Calculator</router-link>
-        <router-link class="nav-link" to="/chart">Tuning Chart</router-link>
+        <router-link class="nav-link" :to="{ name: 'tuningchart' }">Tuning Chart</router-link>
       </div>
     </div>
   </header>

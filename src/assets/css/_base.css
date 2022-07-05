@@ -9,7 +9,8 @@
   body {
     font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-    @apply text-offwhite;
+    @apply text-offwhite
+      overflow-y-scroll;
   }
 
   .wrapper {
@@ -26,7 +27,7 @@
 
   a {
     @apply
-      text-fot-blue-200
+      text-optn-blue-200
       no-underline;
   }
 
@@ -37,7 +38,7 @@
   h1, h2, h3, h4, h5, h6 {
     @apply p-0
       font-bold
-      text-fot-blue-300;
+      text-optn-blue-300;
   }
 
   h1 {
