@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     port: 3333,
   },
-  base: process.env.NODE_ENV === 'production' ? '/optn.club/' : './',
+  base: '/', // process.env.NODE_ENV === 'production' ? '/optn.club/' : './',
   build: {
     outDir: 'docs',
   },
