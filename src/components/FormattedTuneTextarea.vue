@@ -1,64 +1,52 @@
 <script setup lang="ts">
-import {
-  computed, onBeforeUnmount, ref, watch,
-} from 'vue';
-import { useRouter } from 'vue-router';
-import { generateRedditMarkdown } from '../lib/generator';
+import { onBeforeUnmount, ref } from 'vue';
 import { useFormattingForm } from '../lib/useFormattingForm';
-import { getBase64FromForm } from '../lib/base64Form';
 
-const router = useRouter();
-
-const { form } = useFormattingForm();
+const state = useFormattingForm();
 
 const copyButtonText = ref('Copy To Clipboard');
 const shareButtonText = ref('Share URL');
+const errorText = ref('');
+
 const copyTimeout = ref(0);
 const shareTimeout = ref(0);
+const errorTimeout = ref(0);
 
 const textareaRef = ref<HTMLTextAreaElement | null>(null);
-
-const text = computed(() => generateRedditMarkdown(form));
-const encodedForm = computed(() => getBase64FromForm(form));
-
-watch(encodedForm, (current) => {
-  router.replace({
-    name: 'formatter',
-    params: {
-      ...router.currentRoute.value.params,
-      base64Tune: encodedForm.value,
-    },
-  });
-});
 
 onBeforeUnmount(() => {
   clearTimeout(copyTimeout.value);
   clearTimeout(shareTimeout.value);
+  clearTimeout(errorTimeout.value);
 });
+
+function showError(message: string) {
+  errorText.value = message;
+  errorTimeout.value = window.setTimeout(() => {
+    errorText.value = '';
+  }, 6000);
+}
+
+function onResetClick() {
+  state.reset();
+}
 
 function onCopyClick() {
   try {
-    navigator.clipboard.writeText(text.value);
+    navigator.clipboard.writeText(state.markdown.value);
     copyButtonText.value = 'Copied!';
     copyTimeout.value = window.setTimeout(() => {
       copyButtonText.value = 'Copy To Clipboard';
     }, 2000);
   } catch (error) {
-    copyButtonText.value = 'Clipboard Error - Copy Manually';
+    showError('Clipboard Error - Copy Manually');
     textareaRef.value?.select();
     textareaRef.value?.focus();
   }
 }
 
 async function onShareURLClick() {
-  const location = window.location.href.replace(window.location.hash, '');
-
-  const base64 = getBase64FromForm(form);
-
-  const url = [
-    location,
-    base64,
-  ].join(location.endsWith('/') ? '' : '/');
+  const url = window.location.href;
 
   try {
     if (navigator.share && window.location.protocol.includes('https')) {
@@ -71,13 +59,20 @@ async function onShareURLClick() {
       }, 2000);
     }
   } catch (error) {
-    window.prompt('Copy this URL to share it with others:', url);
+    showError('Error - Copy URL from address Bar!');
   }
 }
 
 </script>
 <template>
   <section class="actions">
+    <button
+      type="button"
+      class="plain mx-auto mb-2"
+      @click="onResetClick"
+    >
+      Reset Form
+    </button>
     <button
       type="button"
       class="w-full mb-4"
@@ -92,10 +87,9 @@ async function onShareURLClick() {
     >
       {{ copyButtonText }}
     </button>
-    <!-- <button type="submit" class="large w-full mb-4">Generate</button> -->
     <textarea
       ref="textareaRef"
-      :value="text"
+      :value="state.markdown.value"
       readonly
       class="formatted-text mb-4"
       rows="10"

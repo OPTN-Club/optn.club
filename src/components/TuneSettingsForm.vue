@@ -11,9 +11,9 @@ import AccelDecelInputs from './AccelDecelInputs.vue';
 
 const { form, show } = useFormattingForm();
 
-const gears = computed(() => form.tune.gears.ratios.slice(1, show.value.gears.count + 1));
+const gears = computed(() => form.value.tune.gears.ratios.slice(1, show.value.gears.count + 1));
 
-const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.bar ? '0.01' : '0.1'));
+const tirePressureStep = computed(() => (form.value.tune.tires.units === PressureUnit.bar ? '0.01' : '0.1'));
 </script>
 
 <template>

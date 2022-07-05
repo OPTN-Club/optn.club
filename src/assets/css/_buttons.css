@@ -38,4 +38,11 @@
     @apply bg-fot-green
       border-fot-green;
   }
+
+  button.plain {
+    @apply
+      bg-transparent
+      text-white
+      border-none;
+  }
 }
