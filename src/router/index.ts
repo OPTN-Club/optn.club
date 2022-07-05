@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import CarSettingsForm from '../components/CarSettingsForm.vue';
 import MakesAndModels from '../components/MakesAndModels.vue';
 import TuneCalculator from '../components/tune-calculator/TuneCalculator.vue';

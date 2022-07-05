@@ -1,20 +1,20 @@
 import { compressToBase64, decompressFromBase64 } from 'lz-string';
-import { mangleKeyMap, mangleValueMap } from './mangle-lookup';
+import { mangleValueMap } from './mangle-lookup';
 import getDefaultForm from './defaultForm';
 import {
   SettingsForm,
 } from './types';
 
 // Reverse mangleLookup
-const unmangleKeyMap: Record<string, string> = Object
-  .keys(mangleKeyMap)
-  .reduce(
-    (prev, cur) => ({
-      ...prev,
-      [mangleKeyMap[cur]]: cur,
-    }),
-    {},
-  );
+// const unmangleKeyMap: Record<string, string> = Object
+//   .keys(mangleKeyMap)
+//   .reduce(
+//     (prev, cur) => ({
+//       ...prev,
+//       [mangleKeyMap[cur]]: cur,
+//     }),
+//     {},
+//   );
 
 const unmangleValueMap: Record<string, string> = Object
   .keys(mangleValueMap)
@@ -26,13 +26,13 @@ const unmangleValueMap: Record<string, string> = Object
     {},
   );
 
-function mangleKey(key: string) {
-  return mangleKeyMap[key] || key;
-}
+// function mangleKey(key: string) {
+//   return mangleKeyMap[key] || key;
+// }
 
-function unmangleKey(key: string) {
-  return unmangleKeyMap[key] || key;
-}
+// function unmangleKey(key: string) {
+//   return unmangleKeyMap[key] || key;
+// }
 
 function mangleValue(value: unknown) {
   if (typeof value === 'boolean') return value ? 't' : 'f';
@@ -50,45 +50,45 @@ function unmangleValue<T>(value: string | number) {
 }
 
 // Replace the objects keys with abbreviations to save characters, reducing the base64 strings length
-function mangleObject<T>(object: T) {
-  const mangled: Record<string, any> = {};
-  const keys = Object.keys(object) as (keyof T)[];
+// function mangleObject<T>(object: T) {
+//   const mangled: Record<string, any> = {};
+//   const keys = Object.keys(object) as (keyof T)[];
 
-  keys.forEach((key) => {
-    const value = object[key];
-    const isObject = typeof value === 'object' && !Array.isArray(value);
-    const mangledKey = mangleKey(key as string);
-    const mangledValue = mangleValue(value);
+//   keys.forEach((key) => {
+//     const value = object[key];
+//     const isObject = typeof value === 'object' && !Array.isArray(value);
+//     const mangledKey = mangleKey(key as string);
+//     const mangledValue = mangleValue(value);
 
-    if (isObject) {
-      mangled[mangledKey] = mangleObject(object[key]);
-    } else {
-      mangled[mangledKey] = mangledValue;
-    }
-  });
+//     if (isObject) {
+//       mangled[mangledKey] = mangleObject(object[key]);
+//     } else {
+//       mangled[mangledKey] = mangledValue;
+//     }
+//   });
 
-  return mangled;
-}
+//   return mangled;
+// }
 
 // Replace the objects keys with abbreviations to save characters, reducing the base64 strings length
-function unmangleObject<T>(mangled: Record<string, never>, target: T): T {
-  const keys = Object.keys(mangled);
+// function unmangleObject<T>(mangled: Record<string, never>, target: T): T {
+//   const keys = Object.keys(mangled);
 
-  keys.forEach((key) => {
-    const value = mangled[key];
-    const isObject = typeof value === 'object' && !Array.isArray(value);
-    const unmangledKey = unmangleKey(key) as keyof T;
-    const unmangledValue = unmangleValue(value);
+//   keys.forEach((key) => {
+//     const value = mangled[key];
+//     const isObject = typeof value === 'object' && !Array.isArray(value);
+//     const unmangledKey = unmangleKey(key) as keyof T;
+//     const unmangledValue = unmangleValue(value);
 
-    if (isObject) {
-      target[unmangledKey] = unmangleObject(mangled[key], target[unmangledKey]);
-    } else {
-      target[unmangledKey] = unmangledValue as never;
-    }
-  });
+//     if (isObject) {
+//       target[unmangledKey] = unmangleObject(mangled[key], target[unmangledKey]);
+//     } else {
+//       target[unmangledKey] = unmangledValue as never;
+//     }
+//   });
 
-  return target;
-}
+//   return target;
+// }
 
 export function flattenObject<T>(object: T, path: string[] = []): Record<string, never> {
   const keys = Object.keys(object);
@@ -139,31 +139,19 @@ export function unflattenObjectInto<T>(source: Record<string, never>, target: T,
 
 const serializedDefaultForm = serializeFlatObject(flattenObject(getDefaultForm()));
 
+/**
+ * The form is flattened to a single level object, then the keys are alphabetized,
+ * which is then used to create an array of values.  The values are mangled (shortened).
+ * This results in a much shorter encoded string.
+ */
 export function getBase64FromForm(form: SettingsForm): string {
-  // console.log(form);
   const flattened = flattenObject(form);
-  // console.log(flattened);
   const serialized = serializeFlatObject(flattened);
 
   if (serialized === serializedDefaultForm) return '';
 
-  // console.log(serialized);
   const compressed = compressToBase64(serialized);
-  // console.log('compressed length', compressed.length);
   return compressed;
-  // const formDiff: Partial<SettingsForm> = diff(getDefaultForm(), form);
-
-  // // diff will convert arrays to objects, we need to revert that by replacing it with the original values
-  // if (formDiff.tune?.gears?.ratios) {
-  //   formDiff.tune.gears.ratios = form.tune.gears.ratios;
-  // }
-  // if (!Object.keys(formDiff).length) {
-  //   return '';
-  // }
-
-  // console.log(flattened);
-  // const json = JSON.stringify(flattened);
-  // return compressToBase64(json);
 }
 
 export function getFormFromBase64(base64Tune: string): SettingsForm {

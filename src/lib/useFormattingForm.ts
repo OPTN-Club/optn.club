@@ -2,17 +2,15 @@ import {
   computed,
   inject,
   provide,
-  reactive,
   Ref,
   ComputedRef,
   ref,
   watch,
 } from 'vue';
-import { RouteParams, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { generateRedditMarkdown, getDrivetrain } from './generator';
 import { byFullname } from './models';
 import getDefaultForm from './defaultForm';
-import getTestForm from './testForm';
 import { getBase64FromForm, getFormFromBase64 } from './base64Form';
 import {
   PressureUnit,
@@ -21,34 +19,17 @@ import {
   DriveType,
   Car,
   SettingsForm,
-  FormData,
   ForceUnit,
 } from './types';
 import useUpgrades, { UseUpgrades } from './useUpgrades';
 
 const providerKey = 'formatting-form';
-const testing = false;
 
 function createFormattingForm(base64Tune: string | undefined): SettingsForm {
   if (base64Tune) {
     return getFormFromBase64(base64Tune);
-    // try {
-    //   return {
-    //     form: reactive(getFormFromBase64(base64Tune)),
-    //     isFromURLParam: true,
-    //   };
-    // } catch (error: any) {
-    //   console.error(`Could not parse base64 tune:\n${error.message}`);
-    //   // Do nothing
-    // }
   }
   return getDefaultForm();
-
-  // if (testing) {
-  //   return { form: reactive(getTestForm()) };
-  // }
-
-  // return { form: reactive(getDefaultForm()) };
 }
 
 interface UseFormattingForm {
