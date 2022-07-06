@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import {
   TransmissionUpgrade, DriveType, TireCompound, RimStyleType, TrackWidthType,
-} from '../lib/types';
-import { useFormattingForm } from '../lib/useFormattingForm';
-import FullUpgradeSelect from './FullUpgradeSelect.vue';
-import InputControl from './InputControl.vue';
-import EnumSelect from './EnumSelect.vue';
-import UpgradeSelect from './UpgradeSelect.vue';
-import LimitedUpgradeSelect from './LimitedUpgradeSelect.vue';
-import RestrictorUpgradeSelect from './RestrictorUpgradeSelect.vue';
-import FrontRearInputs from './FrontRearInputs.vue';
-import FrontRearSelects from './FrontRearSelects.vue';
-import { enumToOptions } from '../lib/utils';
+} from '../../lib/types';
+import { useFormattingForm } from '../../lib/useFormattingForm';
+import FullUpgradeSelect from '../FullUpgradeSelect.vue';
+import InputControl from '../InputControl.vue';
+import EnumSelect from '../EnumSelect.vue';
+import UpgradeSelect from '../UpgradeSelect.vue';
+import LimitedUpgradeSelect from '../LimitedUpgradeSelect.vue';
+import RestrictorUpgradeSelect from '../RestrictorUpgradeSelect.vue';
+import FrontRearInputs from '../FrontRearInputs.vue';
+import FrontRearSelects from '../FrontRearSelects.vue';
+import { enumToOptions } from '../../lib/utils';
 
 const { form } = useFormattingForm();
 const trackWidthOptions = enumToOptions(TrackWidthType);
