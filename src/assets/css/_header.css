@@ -1,100 +1,82 @@
-header {
-  @apply
-    relative
-    px-4
-    py-4
-    flex
-    flex-col
-    md:flex-row;
-}
+@layer base {
+  header {
+    @apply
+      relative
+      flex
+      flex-col
+      md:flex-row;
+  }
 
-/* header + div > section {
-  @apply border-t;
-} */
+  /* header + div > section {
+    @apply border-t;
+  } */
 
-header h1 {
-  @apply m-0;
-}
+  header h1 {
+    @apply m-0;
+  }
 
-header p {
-  /* margin: 0;
-  width: 300px;
-  font-size: 13px; */
-}
+  .link-bar {
+    @apply
+      p-0
+      h-9
+      bg-optn-blue-500
+      w-full
+      flex
+      justify-center
+      overflow-hidden;
+  }
 
-header p.view {
-  display: none;
-  font-weight: 700;
-  /* text-shadow:rgba(255,255,255,0.9) 0 1px 0; */
-  -webkit-font-smoothing: antialiased;
-}
+  @screen md {
+    .link-bar {
+      @apply
+        rounded-b
+        w-auto;
+    }
+  }
 
-header p.view a {
-  color: #3e6c9b;
-}
+  .link-bar li {
+    @apply min-w-[86px];
+  }
 
-header p.view small {
-  font-weight: 400;
-}
+  .link-bar li + li {
+    @apply border-l
+      border-l-optn-blue-400;
+  }
 
-.link-bar {
-  @apply
-    p-0
-    list-none
-    h-11
-    py-[1px]
-    bg-optn-blue
-    rounded
-    w-auto
-    flex;
-}
+  .link-bar a {
+    @apply
+      text-xs
+      leading-none
+      text-offwhite
+      text-center
+      font-semibold
+      h-full
+      flex
+      flex-col
+      justify-center
+      hover:bg-optn-blue-accent;
+  }
 
-.link-bar li {
-  @apply min-w-[86px];
-}
+  .link-bar a strong {
+    @apply
+      text-base
+      text-offwhite
+      leading-none;
+  }
 
-.link-bar li + li {
-  @apply border-l
-    border-l-optn-blue-accent;
-}
+  .nav-link {
+    @apply
+      p-2
+      text-optn-blue-50
+      font-bold
+      text-lg
+      border-b-4
+      border-b-transparent;
+  }
 
-.link-bar a {
-  @apply
-    text-xs
-    leading-none
-    text-offwhite
-    text-center
-    font-semibold
-    h-full
-    flex
-    flex-col
-    justify-center
-    hover:bg-optn-blue-accent;
-}
-
-.link-bar a strong {
-  @apply
-    text-base
-    text-offwhite
-    leading-none;
-  /* font-size: 14px;
-  display: block;
-  color: #fff;
-  -webkit-font-smoothing: antialiased; */
-}
-
-.nav-link {
-  @apply
-    p-2
-    text-optn-blue-light
-    font-bold
-    text-lg
-    border-b-4
-    border-b-transparent;
-}
-
-.nav-link.router-link-active,
-.nav-link:hover {
-  @apply
-    border-b-optn-blue;
+  .nav-link.router-link-active,
+  .nav-link:hover {
+    @apply
+      border-b-optn-blue;
+  }
 }

@@ -54,10 +54,11 @@ export function useFormattingFormProvider() {
 
   const globalUnit = ref<'Metric' | 'Imperial'>('Metric');
 
-  const show = useUpgrades(form.value, car, driveType);
+  const show = useUpgrades(form, car, driveType);
 
-  const markdown = computed(() => generateRedditMarkdown(form.value));
   const encoded = computed(() => getBase64FromForm(form.value));
+  const linkUrl = computed(() => `https://optn.club${router.currentRoute.value.fullPath}`);
+  const markdown = computed(() => generateRedditMarkdown(form.value, linkUrl.value));
 
   function reset() {
     const defaultForm = getDefaultForm();

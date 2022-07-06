@@ -10,13 +10,14 @@ const state = useTuneCalculator();
 </script>
 
 <template>
-  <section class="border-b z-10 bg-dark">
+  <section class="border-b">
     <h1>Tune Calculator</h1>
-    <p class="mb-0 mt-2">
-      Based on diqque's tune calculator spreadsheet.
+    <p>
+      Based on diquee's tune calculator spreadsheet.
       <br>
       <span class="text-optn-red font-bold">Note:</span>
-      This calculator is still very much a work in progress. It is intended to give a decent starting point.
+      This calculator is still very much a work in progress.
+      It is intended to give a decent starting point.
     </p>
   </section>
   <section class="flex sm:flex-row gap-4">

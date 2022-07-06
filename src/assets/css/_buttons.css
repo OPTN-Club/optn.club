@@ -1,4 +1,5 @@
 @layer base {
+  .button,
   button,
   button[type='button'],
   button[type='reset'],
@@ -17,14 +18,15 @@
       h-8;
   }
 
+  .button.large,
   button.large {
     @apply
       p-2
-      rounded-lg
       text-2xl
       h-auto;
   }
 
+  .button.plain,
   button.plain {
     @apply
       bg-transparent

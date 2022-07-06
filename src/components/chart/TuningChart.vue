@@ -71,7 +71,7 @@ const data: ChartData = {
 <template>
   <section>
     <h1>Tuning Troubleshooting Chart</h1>
-    <p class="mt-2 text-lg">
+    <p>
       This chart assumes that your base tune has no glaring issues:<br>
       Be sure your car doesn't bottom out and doesn't roll excessively during cornering.<br>
       Otherwise this chart will create more issues than it solves.

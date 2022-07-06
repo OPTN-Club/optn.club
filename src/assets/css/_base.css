@@ -27,12 +27,18 @@
 
   a {
     @apply
-      text-optn-blue-200
+      text-optn-blue-50
+      font-semibold
       no-underline;
   }
 
   p, ul, ol, table, pre, dl {
-    @apply m-0 mb-4;
+    @apply m-0;
+  }
+
+  h1 + p {
+    @apply
+      mt-2
   }
 
   h1, h2, h3, h4, h5, h6 {

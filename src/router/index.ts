@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import CarSettingsForm from '../components/CarSettingsForm.vue';
+import TuneFormatter from '../components/formatter/TuneFormatter.vue';
 import MakesAndModels from '../components/MakesAndModels.vue';
 import TuningChart from '../components/chart/TuningChart.vue';
 import TuneCalculator from '../components/tune-calculator/TuneCalculator.vue';
@@ -10,7 +10,7 @@ const router = createRouter({
     {
       name: 'formatter',
       path: '/formatter/:encodedForm?',
-      component: CarSettingsForm,
+      component: TuneFormatter,
       // props: true,
     },
     { name: 'calculator', path: '/calculator', component: TuneCalculator },
