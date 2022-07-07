@@ -38,11 +38,11 @@ function getGearCount(form: SettingsForm, car: ComputedRef<Car | null>): number 
   return gearCounts[form.build.drivetrain.transmission] || 10;
 }
 
-export default function useUpgrades(form: Ref<SettingsForm>, car: ComputedRef<Car | null>, driveType: ComputedRef<DriveType>) {
+export default function useUpgrades(form: SettingsForm, car: ComputedRef<Car | null>, driveType: ComputedRef<DriveType>) {
   const enabled = computed<UseUpgrades>(() => ({
     gears: {
-      final: finalRatio.includes(form.value.build.drivetrain.transmission),
-      count: getGearCount(form.value, car),
+      final: finalRatio.includes(form.build.drivetrain.transmission),
+      count: getGearCount(form, car),
     },
     diff: {
       front: [DriveType.awd, DriveType.fwd].includes(driveType.value),

@@ -6,6 +6,7 @@ import {
   ComputedRef,
   ref,
   watch,
+  reactive,
 } from 'vue';
 import { useRouter } from 'vue-router';
 import { generateRedditMarkdown, getDrivetrain } from './generator';
@@ -23,17 +24,8 @@ import {
 } from './types';
 import useUpgrades, { UseUpgrades } from './useUpgrades';
 
-const providerKey = 'formatting-form';
-
-function createFormattingForm(base64Tune: string | undefined): SettingsForm {
-  if (base64Tune) {
-    return getFormFromBase64(base64Tune);
-  }
-  return getDefaultForm();
-}
-
 interface UseFormattingForm {
-  form: Ref<SettingsForm>;
+  form: SettingsForm;
   car: ComputedRef<Car | null>;
   driveType: ComputedRef<DriveType>;
   globalUnit: Ref<'Metric' | 'Imperial'>;
@@ -43,36 +35,114 @@ interface UseFormattingForm {
   reset(): void;
 }
 
+interface StoredUnits {
+  global: 'Imperial' | 'Metric',
+  tires: PressureUnit;
+  springs: SpringRateUnit;
+  rideHeight: LengthUnit;
+  aero: ForceUnit;
+}
+
+function getStoredUnits(): StoredUnits {
+  const json = localStorage.getItem(UNITS_KEY);
+  if (json) {
+    return JSON.parse(json);
+  }
+  return {
+    global: 'Metric',
+    tires: PressureUnit.bar,
+    springs: SpringRateUnit.kgf,
+    rideHeight: LengthUnit.cm,
+    aero: ForceUnit.kgf,
+  };
+}
+
+function createFormattingForm(base64Tune: string | undefined): SettingsForm {
+  if (base64Tune) {
+    return getFormFromBase64(base64Tune);
+  }
+  return getDefaultForm();
+}
+
+const providerKey = 'formatting-form';
+const UNITS_KEY = 'UNITS';
+
 export function useFormattingFormProvider() {
   const router = useRouter();
   const encodedForm = router.currentRoute.value.params.encodedForm as string;
 
-  const form = ref(createFormattingForm(encodedForm));
+  const form = reactive(createFormattingForm(encodedForm));
 
-  const car = computed<Car | null>(() => byFullname.get(form.value.model) || null);
-  const driveType = computed(() => (car.value ? getDrivetrain(form.value.build, car.value.drive) : DriveType.awd));
+  const car = computed<Car | null>(() => byFullname.get(form.model) || null);
+  const driveType = computed(() => (car.value ? getDrivetrain(form.build, car.value.drive) : DriveType.awd));
 
-  const globalUnit = ref<'Metric' | 'Imperial'>('Metric');
+  const storedUnits = getStoredUnits();
+
+  const globalUnit = ref<'Metric' | 'Imperial'>(storedUnits.global);
+  if (!encodedForm) {
+    form.tune.tires.units = storedUnits.tires;
+    form.tune.springs.units = storedUnits.springs;
+    form.tune.rideHeight.units = storedUnits.rideHeight;
+    form.tune.aero.units = storedUnits.aero;
+  }
 
   const show = useUpgrades(form, car, driveType);
 
-  const encoded = computed(() => getBase64FromForm(form.value));
+  const encoded = computed(() => getBase64FromForm(form));
   const linkUrl = computed(() => `https://optn.club${router.currentRoute.value.fullPath}`);
-  const markdown = computed(() => generateRedditMarkdown(form.value, linkUrl.value));
+  const markdown = computed(() => generateRedditMarkdown(form, linkUrl.value));
+
+  function setUnits() {
+    if (globalUnit.value === 'Imperial') {
+      form.tune.tires.units = PressureUnit.psi;
+      form.tune.springs.units = SpringRateUnit.lbs;
+      form.tune.rideHeight.units = LengthUnit.in;
+      form.tune.aero.units = ForceUnit.lbf;
+    } else {
+      form.tune.tires.units = PressureUnit.bar;
+      form.tune.springs.units = SpringRateUnit.kgf;
+      form.tune.rideHeight.units = LengthUnit.cm;
+      form.tune.aero.units = ForceUnit.kgf;
+    }
+  }
 
   function reset() {
     const defaultForm = getDefaultForm();
-    form.value.build = defaultForm.build;
-    form.value.make = defaultForm.make;
-    form.value.model = defaultForm.model;
-    form.value.stats = defaultForm.stats;
-    form.value.tune = defaultForm.tune;
+    form.build = defaultForm.build;
+    form.make = defaultForm.make;
+    form.model = defaultForm.model;
+    form.stats = defaultForm.stats;
+    form.tune = defaultForm.tune;
+    setUnits();
   }
+
+  watch(globalUnit, () => {
+    setUnits();
+  });
+
+  watch(
+    [
+      () => form.tune.tires.units,
+      () => form.tune.springs.units,
+      () => form.tune.rideHeight.units,
+      () => form.tune.aero.units,
+    ],
+    ([tires, springs, rideHeight, aero]) => {
+      const units = {
+        global: globalUnit.value,
+        tires,
+        springs,
+        rideHeight,
+        aero,
+      };
+      localStorage.setItem(UNITS_KEY, JSON.stringify(units));
+    },
+  );
 
   watch(car, (current) => {
     if (current) {
       console.log(current);
-      form.value.build.conversions.drivetrain = current.drive as DriveType;
+      form.build.conversions.drivetrain = current.drive as DriveType;
     }
   });
 
@@ -85,24 +155,6 @@ export function useFormattingFormProvider() {
       });
     }
   });
-
-  watch(
-    globalUnit,
-    (current) => {
-      if (current === 'Imperial') {
-        form.value.tune.tires.units = PressureUnit.psi;
-        form.value.tune.springs.units = SpringRateUnit.lbs;
-        form.value.tune.rideHeight.units = LengthUnit.in;
-        form.value.tune.aero.units = ForceUnit.lbf;
-      } else {
-        form.value.tune.tires.units = PressureUnit.bar;
-        form.value.tune.springs.units = SpringRateUnit.kgf;
-        form.value.tune.rideHeight.units = LengthUnit.cm;
-        form.value.tune.aero.units = ForceUnit.kgf;
-      }
-    },
-    { immediate: true },
-  );
 
   const state: UseFormattingForm = {
     form,

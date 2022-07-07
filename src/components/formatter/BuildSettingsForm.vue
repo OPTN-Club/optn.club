@@ -15,9 +15,6 @@ import { enumToOptions } from '../../lib/utils';
 
 const { form } = useFormattingForm();
 const trackWidthOptions = enumToOptions(TrackWidthType);
-
-console.log('BuildSettingsForm');
-
 </script>
 <template>
   <section>

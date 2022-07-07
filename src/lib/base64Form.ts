@@ -126,7 +126,7 @@ export function unflattenObjectInto<T>(source: Record<string, never>, target: T,
     const isObject = typeof targetValue === 'object' && !Array.isArray(targetValue);
 
     if (isObject) {
-      unflattenObjectInto(source, targetValue, valuePath);
+      target[key as keyof T] = unflattenObjectInto(source, targetValue, valuePath);
     } else {
       const flattenedKey = valuePath.join('.');
       const sourceValue = source[flattenedKey];
@@ -161,7 +161,6 @@ export function getFormFromBase64(base64Tune: string): SettingsForm {
   }
   const flattened = deserializeFlatObject(json);
   const form = unflattenObjectInto(flattened, getDefaultForm());
-
   if (!form || !Object.keys(form).length) {
     throw new Error('Undefined or empty object.');
   }
