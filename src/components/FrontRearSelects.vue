@@ -42,7 +42,7 @@ watch(() => props.modelValue, (current) => {
         <select
           :id="`${id}front`"
           v-model="state.form.front"
-          class="pl-6 rounded-r-none border-r-0"
+          class="indent-4 rounded-r-none border-r-0"
         >
           <slot>
             <option
@@ -63,7 +63,7 @@ watch(() => props.modelValue, (current) => {
         <select
           :id="`${id}front`"
           v-model="state.form.rear"
-          class="pl-6 rounded-l-none"
+          class="indent-4 rounded-l-none"
         >
           <slot>
             <option

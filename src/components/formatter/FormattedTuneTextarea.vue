@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, ref, watch } from 'vue';
+import { onBeforeUnmount, ref } from 'vue';
 import { useFormattingForm } from '../../lib/useFormattingForm';
 
 const state = useFormattingForm();
@@ -13,15 +13,6 @@ const shareTimeout = ref(0);
 const errorTimeout = ref(0);
 
 const textareaRef = ref<HTMLTextAreaElement | null>(null);
-
-watch(state.encoded, (current) => {
-  if (!textareaRef.value) return;
-  if (current.length > 0) {
-    textareaRef.value.scrollTop = 260;
-  } else {
-    textareaRef.value.scrollTop = 0;
-  }
-});
 
 onBeforeUnmount(() => {
   clearTimeout(copyTimeout.value);

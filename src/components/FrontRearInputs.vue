@@ -53,7 +53,7 @@ watch(() => props.modelValue, (current) => {
           :id="`${id}front`"
           v-model="state.form.front"
           :placeholder="placeholder"
-          class="pl-6 rounded-r-none border-r-0"
+          class="indent-4 rounded-r-none border-r-0"
           :class="{ 'rounded-l-none': attachLeft }"
           type="number"
           :step="step"

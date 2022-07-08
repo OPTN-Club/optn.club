@@ -44,18 +44,21 @@ function onInput(e: Event) {
 <template>
   <div class="control max-w-[300px]" :class="{ disabled }">
     <label :for="`#${id}`" :class="{ required }">{{ label }}</label>
-    <input
-      :id="id"
-      :value="modelValue"
-      :type="type"
-      :required="required"
-      :step="step"
-      :min="min"
-      :max="max"
-      :disabled="disabled"
-      v-bind="$attrs"
-      @input="onInput"
-    >
+    <div class="flex items-center">
+      <input
+        :id="id"
+        :value="modelValue"
+        :type="type"
+        :required="required"
+        :step="step"
+        :min="min"
+        :max="max"
+        :disabled="disabled"
+        v-bind="$attrs"
+        @input="onInput"
+      >
+      <slot />
+    </div>
     <span v-if="errorMsg" class="validation-message">{{ errorMsg }}</span>
   </div>
 </template>

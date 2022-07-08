@@ -86,7 +86,7 @@ const trackWidthOptions = enumToOptions(TrackWidthType);
 
     <div class="set">
       <h3>Tires and Rims</h3>
-      <div class="set-upgrades flex-col !items-start">
+      <div class="set-upgrades flex-col items-start">
         <div class="row">
           <EnumSelect
             v-model="form.build.tiresAndRims.compound"

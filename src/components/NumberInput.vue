@@ -37,5 +37,7 @@ function onUpdate(value: string | number) {
     :disabled="disabled"
     type="number"
     @update:modelValue="onUpdate"
-  />
+  >
+    <slot />
+  </InputControl>
 </template>

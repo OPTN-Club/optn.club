@@ -9,6 +9,7 @@ import {
   FrontAndRearWithUnits,
   SettingsForm,
   TuneSettings,
+  TuneStatistics,
 } from './types';
 import { addSuffix as suffixize, formatFloat } from './utils';
 import { formatUnit, formatUnitHeaders } from './unitsOfMeasure';
@@ -304,6 +305,28 @@ function formatBuildSection<T extends BuildSectionUpgrades>(section: T) {
     .map((key) => [capitalCase(key), section[key as keyof T]]);
 }
 
+function formatStatistics(form: SettingsForm) {
+  const text: string[] = [];
+  if (form.model) text.push(`#${form.model}`);
+  text.push(`${form.stats.classification}${form.stats.pi} ${form.stats.weight}`);
+
+  const line2: string[] = [];
+  if (form.stats.hp) line2.push(`${form.stats.hp} hp`);
+  if (form.stats.torque) line2.push(`${form.stats.torque} torque`);
+  if (form.stats.balance) line2.push(`${form.stats.torque}% front balance`);
+  if (line2.length > 0) text.push(line2.join(' &nbsp; '));
+
+  if (form.stats.topSpeed) text.push(`Top Speed ${form.stats.topSpeed}`);
+  const line3: string[] = [];
+  if (form.stats.zeroToSixty) line3.push(`0-60 ${form.stats.zeroToSixty}s`);
+  if (form.stats.zeroToHundred) line3.push(`0-100 ${form.stats.zeroToHundred}s`);
+  if (line3.length > 0) text.push(line3.join(' &nbsp; '));
+  if (form.stats.shareCode) text.push(`Share Code: ${form.stats.shareCode}`);
+  text.push('');
+
+  return text;
+}
+
 export function formatBuild(build: BuildSettings, model: string): string[] {
   const text = [
     ...formatConversions(build, model),
@@ -318,10 +341,8 @@ export function formatBuild(build: BuildSettings, model: string): string[] {
 }
 
 export function generateRedditMarkdown(form: SettingsForm, tuneUrl: string) {
-  const md: string[] = [];
-  if (form.model) md.push(`#${form.model}\n`);
   return [
-    ...md,
+    ...formatStatistics(form),
     `[View this tune on optn.club](${tuneUrl})\n`,
     '## Build\n',
     ...formatBuild(form.build, form.model),
