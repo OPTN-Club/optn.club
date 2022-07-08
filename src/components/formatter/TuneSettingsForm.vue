@@ -44,7 +44,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
       </div>
     </div>
     <div class="set">
-      <div class="flex gap-4 items-center">
+      <div class="flex items-center">
         <h3>Gearing</h3>
         <CheckboxControl
           v-model="form.tune.gears.na"
@@ -98,7 +98,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
     </div>
 
     <div class="set">
-      <div class="flex gap-4 items-center">
+      <div class="flex items-center">
         <h3>Antiroll Bars</h3>
         <CheckboxControl
           v-model="form.tune.arb.na"
@@ -118,7 +118,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
     </div>
 
     <div class="set">
-      <div class="flex gap-4 items-center">
+      <div class="flex items-center">
         <h3>Springs</h3>
         <CheckboxControl
           v-model="form.tune.springs.na"
@@ -166,7 +166,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
     </div>
 
     <div class="set">
-      <div class="flex gap-4 items-center">
+      <div class="flex items-center">
         <h3>Damping</h3>
         <CheckboxControl
           v-model="form.tune.damping.na"
@@ -193,7 +193,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
     </div>
 
     <div class="set">
-      <div class="flex gap-4 items-center">
+      <div class="flex items-center">
         <h3>Aero Downforce</h3>
         <CheckboxControl
           v-model="form.tune.aero.na"
@@ -221,7 +221,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
     </div>
 
     <div class="set">
-      <div class="flex gap-4 items-center">
+      <div class="flex items-center">
         <h3>Brakes</h3>
         <CheckboxControl
           v-model="form.tune.brake.na"
@@ -250,7 +250,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
     </div>
 
     <div class="set">
-      <div class="flex gap-4 items-center">
+      <div class="flex items-center">
         <h3>Differential</h3>
         <CheckboxControl
           v-model="form.tune.diff.na"
