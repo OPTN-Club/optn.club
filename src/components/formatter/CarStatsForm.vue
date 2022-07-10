@@ -52,6 +52,12 @@ watch(() => form.stats.classification, (current) => {
             v-model="form.stats.torque"
             label="Torque"
           />
+        </div>
+        <div class="row">
+          <NumberInput
+            v-model="form.stats.weight"
+            label="Weight"
+          />
           <NumberInput
             v-model="form.stats.balance"
             label="Balance"
@@ -68,17 +74,9 @@ watch(() => form.stats.classification, (current) => {
             v-model="form.stats.zeroToHundred"
             label="0-100"
           />
-          <InputControl
+          <NumberInput
             v-model="form.stats.topSpeed"
             label="Top Speed"
-            class="w-36"
-            placeholder="Include mph/kph"
-          />
-          <InputControl
-            v-model="form.stats.weight"
-            label="Weight"
-            class="w-36"
-            placeholder="Include lbs/kg"
           />
           <InputControl
             v-model="form.stats.shareCode"

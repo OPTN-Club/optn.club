@@ -305,26 +305,74 @@ function formatBuildSection<T extends BuildSectionUpgrades>(section: T) {
     .map((key) => [capitalCase(key), section[key as keyof T]]);
 }
 
-function formatStatistics(form: SettingsForm) {
+// function formatStatistics(form: SettingsForm) {
+//   const text: string[] = [];
+//   const header = `${form.stats.classification} ${form.stats.pi} ${form.model}`.trim();
+//   if (header) text.push(`#${header}`);
+
+//   const line: string[] = [];
+//   if (form.stats.weight) line.push(form.stats.weight);
+//   if (form.stats.balance) line.push(`${form.stats.balance}% front balance`);
+//   if (line.length > 0) text.push(`${line.join(' &nbsp; ')}  `);
+
+//   const line2: string[] = [];
+//   if (form.stats.hp) line2.push(`${form.stats.hp} hp`);
+//   if (form.stats.torque) line2.push(`${form.stats.torque} torque`);
+//   if (line2.length > 0) text.push(`${line2.join(' &nbsp; ')}  `);
+
+//   if (form.stats.topSpeed) text.push(`Top Speed ${form.stats.topSpeed}`);
+//   const line3: string[] = [];
+//   if (form.stats.zeroToSixty) line3.push(`0-60 ${form.stats.zeroToSixty}s`);
+//   if (form.stats.zeroToHundred) line3.push(`0-100 ${form.stats.zeroToHundred}s`);
+//   if (line3.length > 0) text.push(line3.join(' &nbsp; '));
+//   if (form.stats.shareCode) text.push(`Share Code: ${form.stats.shareCode}`);
+//   text.push('');
+
+//   return text;
+// }
+
+interface StatUnits {
+  weight: string;
+  torque: string;
+  speed: string;
+}
+
+const statUnits: Record<'Metric' | 'Imperial', StatUnits> = {
+  Metric: {
+    weight: 'kg',
+    torque: 'nm',
+    speed: 'kph',
+  },
+  Imperial: {
+    weight: 'lbs',
+    torque: 'lb-ft',
+    speed: 'mph',
+  },
+};
+
+function formatStatisticsTable(form: SettingsForm, globalUnits: 'Metric' | 'Imperial') {
   const text: string[] = [];
-  if (form.model) text.push(`#${form.model}`);
-  text.push(`${form.stats.classification}${form.stats.pi} ${form.stats.weight}`);
+  const piClass = `${form.stats.classification} ${form.stats.pi}`.trim();
+  if (form.model) text.push(`${form.model}`);
+  text.push(`${form.stats.classification} ${form.stats.pi}`);
+  const header = `#${text.join(' - ')}\n`;
 
-  const line2: string[] = [];
-  if (form.stats.hp) line2.push(`${form.stats.hp} hp`);
-  if (form.stats.torque) line2.push(`${form.stats.torque} torque`);
-  if (form.stats.balance) line2.push(`${form.stats.torque}% front balance`);
-  if (line2.length > 0) text.push(line2.join(' &nbsp; '));
+  const units = statUnits[globalUnits];
+  const stats: string[][] = [];
 
-  if (form.stats.topSpeed) text.push(`Top Speed ${form.stats.topSpeed}`);
-  const line3: string[] = [];
-  if (form.stats.zeroToSixty) line3.push(`0-60 ${form.stats.zeroToSixty}s`);
-  if (form.stats.zeroToHundred) line3.push(`0-100 ${form.stats.zeroToHundred}s`);
-  if (line3.length > 0) text.push(line3.join(' &nbsp; '));
-  if (form.stats.shareCode) text.push(`Share Code: ${form.stats.shareCode}`);
-  text.push('');
+  if (form.stats.weight) stats.push(['Weight', `${form.stats.weight} ${units.weight}`]);
+  if (form.stats.balance) stats.push(['Balance', `${form.stats.balance}%`]);
+  if (form.stats.hp) stats.push(['HP', `${form.stats.hp}`]);
+  if (form.stats.torque) stats.push(['Torque', `${form.stats.torque} ${units.torque}`]);
+  if (form.stats.topSpeed) stats.push(['Top Speed', `${form.stats.topSpeed} ${units.speed}`]);
+  if (form.stats.zeroToSixty) stats.push(['0-60', `${form.stats.zeroToSixty}s`]);
+  if (form.stats.zeroToHundred) stats.push(['0-100', `${form.stats.zeroToHundred}s`]);
+  if (form.stats.shareCode) stats.push(['Share Code', `${form.stats.shareCode}`]);
 
-  return text;
+  return [
+    header,
+    ...formatTable(['Stats', ''], stats, true, TextAlign.left),
+  ];
 }
 
 export function formatBuild(build: BuildSettings, model: string): string[] {
@@ -340,10 +388,11 @@ export function formatBuild(build: BuildSettings, model: string): string[] {
   return text;
 }
 
-export function generateRedditMarkdown(form: SettingsForm, tuneUrl: string) {
+export function generateRedditMarkdown(form: SettingsForm, tuneUrl: string, globalUnits: 'Metric' | 'Imperial') {
   return [
-    ...formatStatistics(form),
+    ...formatStatisticsTable(form, globalUnits),
     `[View this tune on optn.club](${tuneUrl})\n`,
+    '---\n',
     '## Build\n',
     ...formatBuild(form.build, form.model),
     '---\n',

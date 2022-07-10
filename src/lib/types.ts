@@ -294,9 +294,9 @@ export interface TuneStatistics {
   classification: PIClass;
   hp: number;
   torque: number;
-  weight: string;
+  weight: number;
   balance: number;
-  topSpeed: string;
+  topSpeed: number;
   zeroToSixty: number;
   zeroToHundred: number;
   shareCode: string;

@@ -90,7 +90,7 @@ export function useFormattingFormProvider() {
 
   const encoded = computed(() => getBase64FromForm(form));
   const linkUrl = computed(() => `https://optn.club${router.currentRoute.value.fullPath}`);
-  const markdown = computed(() => generateRedditMarkdown(form, linkUrl.value));
+  const markdown = computed(() => generateRedditMarkdown(form, linkUrl.value, globalUnit.value));
 
   function setUnits() {
     if (globalUnit.value === 'Imperial') {
