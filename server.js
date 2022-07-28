@@ -19,9 +19,9 @@ app.get('/api/v1/telemetry', (req, res) => {
   res.sendFile(path.join(__dirname, '/telemetry_docs.json'))
 }
 // Tune viewer/editor temp redirect link. Not associated with OPTN
-app.get('/tune/editor', (req, res) => {
-  res.redirect('https://tune-view-react-app.herokuapp.com/')
-}
+//app.get('/tune/editor', (req, res) => {
+//  res.redirect('https://tune-view-react-app.herokuapp.com/')
+//}
 app.use(spaMiddleware);
 // app.get('*', (req, res) =>
 //   res.sendFile(path.join(__dirname, '/docs/index.html'))
