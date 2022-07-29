@@ -1,5 +1,6 @@
 const express = require('express');
 const compression = require('compression');
+const enforce = require('express-sslify');
 const path = require('path');
 
 const app = express();
@@ -10,6 +11,11 @@ const spaMiddleware = (req, res) => {
 }
 
 app.set('x-powered-by', false);
+if (process.env.NODE_ENV !== 'development') {
+  app.use(enforce.HTTPS({
+    trustProtoHeader: true,
+  }));
+}
 app.use(compression());
 app.use('/', staticMiddleware);
 app.use('/optn.club', staticMiddleware);
