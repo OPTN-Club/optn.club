@@ -73,12 +73,10 @@ module.exports = {
       {
         exceptions: [
           "*",
-          // comments in *.vtpw.ts temp files:
-          "<template>",
-          '<script lang="ts">',
-          "</script>",
-          "<style>",
         ],
+        markers: [
+          "/",
+        ]
       },
     ],
     "prefer-destructuring": "off",
