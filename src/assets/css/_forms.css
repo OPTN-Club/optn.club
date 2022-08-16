@@ -30,9 +30,12 @@
   input,
   select,
   textarea {
+    background: rgba(193, 216, 220, 0.15);
+    background: #C1D8DC26;
+
     @apply
-      px-2
-      py-1
+      px-4
+      py-2.5
       border
       border-neutral-400
       rounded
