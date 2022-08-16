@@ -32,7 +32,7 @@ const trackWidthOptions = enumToOptions(TrackWidthType);
         <UpgradeSelect v-model="form.build.engine.intakeManifold" label="Intake Manifold" />
         <UpgradeSelect v-model="form.build.engine.carburator" label="Carburator" />
         <UpgradeSelect v-model="form.build.engine.fuelSystem" label="Fuel System" />
-        <LimitedUpgradeSelect v-model="form.build.engine.ignition" label="Ignition" />
+        <UpgradeSelect v-model="form.build.engine.ignition" label="Ignition" />
         <UpgradeSelect v-model="form.build.engine.exhaust" label="Exhaust" />
         <UpgradeSelect v-model="form.build.engine.camshaft" label="Camshaft" />
         <UpgradeSelect v-model="form.build.engine.valves" label="Valves" />

@@ -102,7 +102,7 @@ export default function getDefaultForm(): SettingsForm {
         intakeManifold: Upgrade.na,
         carburator: Upgrade.na,
         fuelSystem: Upgrade.stock,
-        ignition: LimitedUpgrade.stock,
+        ignition: Upgrade.stock,
         exhaust: Upgrade.stock,
         camshaft: Upgrade.stock,
         valves: Upgrade.stock,

@@ -212,7 +212,7 @@ export interface EngineUpgrades extends BuildSectionUpgrades {
   intakeManifold: Upgrade;
   carburator: Upgrade;
   fuelSystem: Upgrade;
-  ignition: LimitedUpgrade; // sport and race only
+  ignition: Upgrade; // sport and race only
   exhaust: Upgrade;
   camshaft: Upgrade;
   valves: Upgrade;
