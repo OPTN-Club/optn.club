@@ -47,7 +47,7 @@ module.exports = {
       },
     ],
     "operator-linebreak": [
-      "error",
+      "warning",
       "after",
       {
         overrides: {
