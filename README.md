@@ -2,10 +2,20 @@
 
 Website for formatting Forza Horizon tuning builds for open source sharing on reddit (r/ForzaOpenTunes)
 
+## Problems
+
+If you have any issues with the formatter, please report the issue on Github or ask on the OPTN Discord, specifically #web-support.
+
+Please report missing data/cars/upgrades.
+Suggestions welcome.
+
 ## Usage
 
 Run `npm install` if you havent.
-To run locally `npm dev` and open the site in you browser `http://localhost:3333` .
+To run locally `npm dev` and open the site in you browser `http://localhost:3333`.
+Use browser dev tools for debugging.
+
+If you know an easy way to setup VSCode for debugging, please submit a PR to improve the documentation.
 
 ## Links used in creating Tune Calculator
 
