@@ -2,6 +2,11 @@
 
 Website for formatting Forza Horizon tuning builds for open source sharing on reddit (r/ForzaOpenTunes)
 
+## Usage
+
+Run `npm install` if you havent.
+To run locally `npm dev` and open the site in you browser `http://localhost:3333` .
+
 ## Links used in creating Tune Calculator
 
 - [Diqque's Tuning Spreadsheet](https://onedrive.live.com/edit.aspx?cid=e7950f567151b185&page=view&resid=E7950F567151B185!358927&parId=E7950F567151B185!121&app=Excel&wacqt=search)
