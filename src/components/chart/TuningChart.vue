@@ -10,10 +10,9 @@ const data: ChartData = {
         'Increase front aero',
         'Move brake bias back',
         'Decrease rear differential deceleration',
-        'Decrease rear differenttial preload**',
       ],
       medToLow: [
-        'Increase caster*',
+        'Increase caster',
         'Increase toe-out (positive toe)',
         'Reduce front ride height',
       ],
@@ -38,7 +37,6 @@ const data: ChartData = {
     entry: {
       all: [
         'Increase rear differential deceleration',
-        'Increase rear differential preload**',
         'Move brake bias forward',
       ],
     },
@@ -84,10 +82,6 @@ const data: ChartData = {
       label="To Fix Oversteer"
       :data="data.oversteer"
     />
-    <div class="mt-2">
-      <div><span class="asterisk">*</span> Available only in Forza</div>
-      <div><span class="asterisk">**</span> Available only in Gran Turismo</div>
-    </div>
   </section>
   <section>
     <h4>General Tips</h4>
