@@ -26,15 +26,6 @@
               <strong>r/Forza&#8203;Open&#8203;Tunes</strong>
             </a>
           </li>
-          <li>
-            <a
-              href="https://reddit.com/r/GranTurismoOpenTunes"
-              target="_blank"
-              class="px-2"
-            >
-              <strong>r/Gran&#8203;Turismo&#8203;Open&#8203;Tunes</strong>
-            </a>
-          </li>
           <!-- <li>
             <a href="https://github.com/" target="_blank">
               View On
