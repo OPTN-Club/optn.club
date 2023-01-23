@@ -15,7 +15,7 @@ const state = useTuneCalculator();
     <p>
       Based on diquee's tune calculator spreadsheet.
       <br>
-      <span class="text-optn-red font-bold">Note:</span>
+      <span class="text-red font-bold">Note:</span>
       This calculator is still very much a work in progress.
       It is intended to give a decent starting point.
     </p>

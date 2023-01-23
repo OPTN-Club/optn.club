@@ -12,6 +12,7 @@ export default {
 defineProps<{
   modelValue: string;
   label?: string;
+  note?: string;
   options?: SelectOption[];
   placeholder?: string;
   rootClass?: string;
@@ -32,7 +33,10 @@ function onInput(e: Event) {
 
 <template>
   <div class="control" :class="[rootClass, { disabled }]">
-    <label v-if="label" :for="id">{{ label }}</label>
+    <label v-if="label" :for="id">
+      <span>{{ label }}</span>
+      <span class="label-note">{{ note }}</span>
+    </label>
     <select
       v-bind="$attrs"
       :id="id"

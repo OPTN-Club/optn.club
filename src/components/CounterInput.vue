@@ -52,7 +52,7 @@ const modifiedStep = computed(() => {
   return props.step;
 });
 
-const containerClass = computed(() => (state.focused ? 'border-optn-yellow' : 'border-gray-400'));
+const containerClass = computed(() => (state.focused ? 'border-yellow' : 'border-gray-400'));
 
 function emitModelValue() {
   if (!state.pressed) emit('update:modelValue', state.value);
@@ -209,11 +209,11 @@ input[type='number']::-webkit-outer-spin-button {
     text-2xl
     w-10
     p-0
-    bg-dark-accent
+    bg-optn-1100
     cursor-pointer
     outline-none
     font-thin
     border-none
-    hover:bg-optn-blue-800;
+    hover:bg-optn-800;
 }
 </style>

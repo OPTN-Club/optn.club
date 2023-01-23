@@ -4,7 +4,7 @@
   },
   "css.lint.unknownAtRules": "ignore",
   "[javascript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "eslint.format.enable": true,
   "eslint.options": {

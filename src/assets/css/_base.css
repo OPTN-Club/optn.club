@@ -7,14 +7,16 @@
   }
 
   body {
-    font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
-
-    @apply text-offwhite
+    @apply
+      font-body
+      text-base
+      text-ghost-white
       overflow-y-scroll;
   }
 
   .wrapper {
     @apply
+      relative
       flex
       flex-col
       min-h-screen
@@ -25,9 +27,18 @@
       overflow-visible;
   }
 
+  .header-image {
+    position: absolute;
+    width: 1140px;
+    height: auto;
+    left: 2px;
+    top: 58px;
+    background: radial-gradient(50% 53% at 50% 50%, rgba(0, 26, 44, 0) 0%, #001A2C 100%), url(/images/OPTN_header_car.png);
+  }
+
   a {
     @apply
-      text-optn-blue-50
+      text-optn-50
       font-semibold
       no-underline;
   }
@@ -43,16 +54,24 @@
 
   h1, h2, h3, h4, h5, h6 {
     @apply p-0
+      font-title
       font-bold
-      text-optn-blue-300;
+      text-ghost-white;
   }
 
   h1 {
-    @apply text-3xl;
+    @apply
+      font-black
+      italic
+      text-6xl
+      text-center
+      mb-3;
   }
 
   h2 {
-    @apply text-2xl;
+    @apply
+      text-2xl
+      mb-3;
   }
 
   h3 {
@@ -63,16 +82,19 @@
     @apply text-lg;
   }
 
-  strong {
-    @apply font-bold;
+  .sub-title {
+    @apply
+      font-title
+      text-2xl
+      text-center
+      mx-auto
+      max-w-3xl
+      text-light-mist
+      mb-20;
   }
 
-  section {
-    @apply
-      py-4
-      px-5
-      border-t
-      border-gray-500;
+  strong {
+    @apply font-bold;
   }
 
   footer {

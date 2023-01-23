@@ -9,7 +9,8 @@ export default {
 <script setup lang="ts">
 withDefaults(defineProps<{
   modelValue: string | number,
-  label: string,
+  label?: string,
+  note?: string,
   errorMsg?: string,
   error?: boolean,
   required?: boolean,
@@ -18,7 +19,10 @@ withDefaults(defineProps<{
   step?: number | string,
   min?: number | string,
   max?: number | string,
+  rootClass?: string,
 }>(), {
+  label: undefined,
+  note: undefined,
   error: false,
   errorMsg: '',
   required: false,
@@ -26,6 +30,7 @@ withDefaults(defineProps<{
   step: 1,
   min: 0,
   max: 9999,
+  rootClass: undefined,
 });
 
 const emit = defineEmits<{
@@ -42,8 +47,13 @@ function onInput(e: Event) {
 </script>
 
 <template>
-  <div class="control max-w-[300px]" :class="{ disabled }">
-    <label :for="`#${id}`" :class="{ required }">{{ label }}</label>
+  <div class="control" :class="[rootClass, { disabled }]">
+    <label :for="`#${id}`" :class="{ required }">
+      <slot name="label">
+        {{ label }}
+      </slot>
+      <span class="label-note">{{ note }}</span>
+    </label>
     <div class="flex items-center">
       <input
         :id="id"

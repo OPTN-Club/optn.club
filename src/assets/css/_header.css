@@ -4,7 +4,10 @@
       relative
       flex
       flex-col
-      md:flex-row;
+      md:flex-row
+      items-center
+      px-16
+      py-12;
   }
 
   /* header + div > section {
@@ -18,65 +21,36 @@
   .link-bar {
     @apply
       p-0
-      h-9
-      bg-optn-blue-500
-      w-full
+      m-0
       flex
       justify-center
       overflow-hidden;
   }
 
-  @screen md {
-    .link-bar {
-      @apply
-        rounded-b
-        w-auto;
-    }
-  }
-
-  .link-bar li {
-    @apply min-w-[86px];
-  }
-
   .link-bar li + li {
-    @apply border-l
-      border-l-optn-blue-400;
+    @apply ml-4;
   }
 
-  .link-bar a {
+  .link-bar img {
     @apply
-      text-xs
-      leading-none
-      text-offwhite
-      text-center
-      font-semibold
-      h-full
-      flex
-      flex-col
-      justify-center
-      hover:bg-optn-blue-accent;
-  }
-
-  .link-bar a strong {
-    @apply
-      text-base
-      text-offwhite
-      leading-none;
+      w-8
+      h-auto;
   }
 
   .nav-link {
     @apply
       p-2
-      text-optn-blue-50
-      font-bold
-      text-lg
-      border-b-4
-      border-b-transparent;
+      text-ghost-white
+      text-xl
+      font-normal
+      border-y-4
+      border-y-transparent;
   }
 
   .nav-link.router-link-active,
   .nav-link:hover {
     @apply
-      border-b-optn-blue;
+      border-b-optn-50
+      text-ghost-white;
   }
 }

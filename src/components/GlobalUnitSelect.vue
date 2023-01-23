@@ -14,27 +14,34 @@ function onInput(e: Event) {
 </script>
 
 <template>
-  <div>
-    <h3>Measurement Units:</h3>
-    <label class="inline radio">
-      <input
-        :checked="modelValue === 'Metric'"
-        type="radio"
-        name="globalUnit"
-        value="Metric"
-        @input="onInput"
-      >
-      Metric
-    </label>
-    <label class="inline radio">
-      <input
-        :checked="modelValue === 'Imperial'"
-        type="radio"
-        name="globalUnit"
-        value="Imperial"
-        @input="onInput"
-      >
-      Imperial
-    </label>
-  </div>
+  <section>
+    <div class="heading">
+      <h2>Measurement</h2>
+      <p>Choose the superior format</p>
+    </div>
+    <div class="content">
+      <div class="flex items-center h-full">
+        <label class="inline radio">
+          <input
+            :checked="modelValue === 'Metric'"
+            type="radio"
+            name="globalUnit"
+            value="Metric"
+            @input="onInput"
+          >
+          Metric
+        </label>
+        <label class="inline radio">
+          <input
+            :checked="modelValue === 'Imperial'"
+            type="radio"
+            name="globalUnit"
+            value="Imperial"
+            @input="onInput"
+          >
+          Imperial
+        </label>
+      </div>
+    </div>
+  </section>
 </template>

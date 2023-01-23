@@ -101,7 +101,7 @@ const data: ChartData = {
 <style>
 .asterisk {
   @apply
-    text-optn-red
+    text-red
     font-bold
     text-lg
     leading-4;
@@ -112,7 +112,7 @@ const data: ChartData = {
     flex
     flex-col
     items-stretch
-    text-white
+    text-ghost-white
     p-6;
 }
 
@@ -152,7 +152,7 @@ const data: ChartData = {
     lg:flex-nowrap
     items-stretch
     border
-    border-optn-blue-500
+    border-optn-500
     rounded-xl
     p-4
     grow
@@ -169,7 +169,7 @@ const data: ChartData = {
 
 .ts-speed .ts-border {
   @apply
-    bg-optn-blue-800
+    bg-optn-800
     text-white;
 }
 
@@ -183,10 +183,10 @@ const data: ChartData = {
 
 .chart-list {
   @apply
-    bg-optn-blue-dark
+    bg-dark
     rounded-xl
     p-4
-    text-offwhite
+    text-ghost-white
     ;
 }
 
@@ -204,7 +204,7 @@ const data: ChartData = {
 .tune-chart h4,
 .tune-chart h5 {
   @apply
-    text-offwhite
+    text-ghost-white
     font-bold
     text-center
     my-2

@@ -1,10 +1,19 @@
 <template>
   <div class="wrapper">
-    <AppHeader />
-    <div class="grow">
-      <router-view />
+    <div class="header-image z-0">
+      <img
+        class="invisible"
+        src="/images/OPTN_header_car.png"
+        alt="OPTN Car"
+      >
     </div>
-    <AppFooter />
+    <div class="z-10">
+      <AppHeader />
+      <div class="grow mt-56 mx-14">
+        <router-view />
+      </div>
+      <AppFooter />
+    </div>
   </div>
 </template>
 

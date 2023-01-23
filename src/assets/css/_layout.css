@@ -1,0 +1,60 @@
+section {
+  @apply
+    flex
+    grow
+    pb-12;
+}
+
+section .heading {
+  @apply text-light-mist
+    w-56
+    shrink-0
+    mr-6;
+}
+
+.section-desc {
+  @apply
+    text-light-mist;
+}
+
+section .content {
+  @apply
+    bg-light-mist
+    bg-opacity-5
+    p-6
+    grow;
+}
+
+section .content > h3,
+section .content > .content-header {
+  @apply
+    mb-3;
+}
+
+section + section {
+  @apply
+    border-t-2
+    border-t-light-mist
+    border-opacity-10
+    pt-12;
+}
+
+.content + .content {
+  @apply mt-6;
+}
+
+.note {
+  @apply text-light-mist;
+}
+
+.set-upgrades {
+  @apply
+    flex
+    flex-wrap
+    gap-6
+    items-end;
+}
+
+.set-upgrades + .set-upgrades {
+  @apply pt-6;
+}

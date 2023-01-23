@@ -26,49 +26,60 @@ watch(() => form.stats.classification, (current) => {
 </script>
 <template>
   <section>
-    <h2>Car</h2>
-    <MakeModelSelect v-model:make="form.make" v-model:model="form.model" />
-    <div class="set">
-      <div class="flex items-center">
+    <div class="heading">
+      <h2>Car</h2>
+      <p>Which beast have you tamed?</p>
+    </div>
+    <div class="grow">
+      <MakeModelSelect
+        v-model:make="form.make"
+        v-model:model="form.model"
+      />
+      <div class="content">
         <h3>Statistics</h3>
-        <p class="text-sm">Optional</p>
-      </div>
-      <div class="set-upgrades flex-col items-start">
-        <div class="row">
+        <p class="text-sm mb-6">Optional, though helpful for others.</p>
+        <div class="set-upgrades">
           <EnumSelect
             v-model="form.stats.classification"
             label="Class"
             :type="PIClass"
+            rootClass="upgrade-select"
           />
           <NumberInput
             v-model="form.stats.pi"
             label="PI"
+            rootClass="upgrade-select"
           />
           <NumberInput
             v-model="form.stats.hp"
             label="HP"
+            rootClass="upgrade-select"
           />
           <NumberInput
             v-model="form.stats.torque"
-            label="Torque"
-          />
-        </div>
-        <div class="row">
+            rootClass="upgrade-select"
+          >
+            <template #label>
+              Torque <span class="label-unit">(ft-lbs)</span>
+            </template>
+          </NumberInput>
           <NumberInput
             v-model="form.stats.weight"
             label="Weight"
+            rootClass="upgrade-select"
           />
           <NumberInput
             v-model="form.stats.balance"
-            label="Balance"
+            rootClass="upgrade-select"
           >
-            <span class="ml-1">%</span>
+            <template #label>
+              Balance <span class="label-unit">%</span>
+            </template>
           </NumberInput>
-        </div>
-        <div class="row">
           <NumberInput
             v-model="form.stats.zeroToSixty"
             label="0-60"
+            rootClass="upgrade-select"
           />
           <NumberInput
             v-model="form.stats.zeroToHundred"
@@ -77,10 +88,7 @@ watch(() => form.stats.classification, (current) => {
           <NumberInput
             v-model="form.stats.topSpeed"
             label="Top Speed"
-          />
-          <InputControl
-            v-model="form.stats.shareCode"
-            label="Share Code"
+            rootClass="upgrade-select"
           />
         </div>
       </div>

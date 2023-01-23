@@ -1,0 +1,168 @@
+@layer base {
+  label,
+  .label {
+    @apply
+      font-semibold
+      mb-1
+      block
+      text-ghost-white;
+  }
+
+  label.checkbox,
+  label.radio {
+    @apply font-normal;
+  }
+
+  label input[type=checkbox] {
+    @apply mr-1;
+  }
+
+  label.inline.checkbox + label.inline.checkbox,
+  label.inline.radio + label.inline.radio {
+    @apply ml-8;
+  }
+
+  .label-note {
+    @apply
+      font-normal
+      ml-2
+      text-light-mist;
+  }
+
+  .label-unit {
+    @apply
+      ml-2
+      text-green
+      whitespace-nowrap;
+  }
+
+  .disabled label,
+  .disabled .label {
+    @apply
+      text-opacity-40;
+  }
+
+  input,
+  select,
+  textarea {
+    @apply
+      h-10
+      px-4
+      py-2
+      rounded
+      text-ghost-white
+      bg-light-mist
+      bg-opacity-20
+      outline-none
+      min-w-[116px];
+  }
+
+  /* Select taken from https://codepen.io/vkjgr/pen/VYMeXp?editors=1100 */
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    display: inline-block;
+
+    background-image:
+      linear-gradient(45deg, transparent 50%, rgb(244, 244, 249) 50%),
+      linear-gradient(135deg, rgb(244, 244, 249) 50%, transparent 50%);
+      /* linear-gradient(to right, #ccc, #ccc); */
+    background-position:
+      calc(100% - 22px) calc(1em + 2px),
+      calc(100% - 16px) calc(1em + 2px);
+    background-size:
+      6px 6px,
+      6px 6px;
+      /* 1px 1.5em; */
+    background-repeat: no-repeat;
+  }
+
+  option {
+    @apply bg-slate-600;
+  }
+
+  textarea {
+    @apply resize-y;
+  }
+
+  textarea.markdown-text {
+    @apply
+      w-full
+      h-80
+      formatted-text
+      mb-4
+      bg-optn-1100
+      font-mono
+      text-light-mist
+      leading-[17px]
+      p-2
+      overflow-auto
+      overflow-x-auto
+      whitespace-pre;
+  }
+
+  /* input[type=number] {
+    @apply w-24;
+  } */
+
+  input[type=checkbox],
+  input[type=radio] {
+    @apply
+      w-auto
+      min-w-0
+      h-auto;
+  }
+
+  select {
+    @apply min-w-[116px];
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    @apply
+      border-yellow
+      shadow-inner;
+  }
+
+  input:disabled,
+  select:disabled,
+  textarea:disabled {
+    @apply
+      opacity-70
+      cursor-not-allowed
+      bg-light-mist
+      bg-opacity-20;
+  }
+
+  input.touched:invalid,
+  select.touched:invalid,
+  textarea.touched:invalid {
+    border: 1px solid #dc3545;
+    box-shadow: inset 0 1px 1px rgb(0, 0, 0, .08), 0 0 8px #dc3545;
+  }
+
+  input.touched:invalid~label,
+  select.touched:invalid~label,
+  textarea.touched:invalid~label,
+  .validation-message {
+    color: #dc3545;
+  }
+
+  input.touched:invalid~.validation-message,
+  select.touched:invalid~.validation-message,
+  textarea.touched:invalid~.validation-message {
+    opacity: 1;
+  }
+
+  .validation-message {
+    @apply
+      text-sm;
+    opacity: 0;
+    font-size: 0.8rem;
+    margin-top: 3px;
+    min-width: 230px;
+  }
+}

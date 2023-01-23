@@ -37,7 +37,7 @@ watch(() => props.modelValue, (current) => {
       <div class="relative">
         <label
           :for="`${id}front`"
-          class="absolute left-2 top-0 bottom-0 flex items-center mb-0"
+          class="text-yellow absolute left-2 top-0 bottom-0 flex items-center mb-0"
         >F</label>
         <select
           :id="`${id}front`"
@@ -58,7 +58,7 @@ watch(() => props.modelValue, (current) => {
       <div class="relative">
         <label
           :for="`${id}rear`"
-          class="absolute left-2 top-0 bottom-0 flex items-center mb-0"
+          class="text-yellow absolute left-2 top-0 bottom-0 flex items-center mb-0"
         >R</label>
         <select
           :id="`${id}front`"

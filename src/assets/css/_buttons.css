@@ -5,17 +5,18 @@
   button[type='reset'],
   button[type='submit'] {
     @apply
-      px-2
+      px-4
+      py-2.5
       flex
       items-center
       justify-center
       rounded
-      text-optn-blue-900
-      font-bold
-      bg-optn-yellow
+      text-ghost-white
+      bg-optn-100
+      border-optn-100
       border
-      border-optn-yellow
-      h-8;
+      font-bold
+      h-10;
   }
 
   .button.large,
@@ -32,5 +33,30 @@
       bg-transparent
       text-white
       border-none;
+  }
+
+  button.attention {
+    @apply
+      bg-green
+      border-green;
+  }
+
+  button.danger {
+    @apply
+      bg-red
+      border-red;
+  }
+
+  button.secondary {
+    @apply
+      bg-secondary
+      border-secondary;
+  }
+
+  button.outline {
+    @apply
+      bg-transparent
+      border
+      border-secondary;
   }
 }

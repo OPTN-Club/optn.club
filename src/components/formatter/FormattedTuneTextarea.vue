@@ -4,8 +4,8 @@ import { useFormattingForm } from '../../lib/useFormattingForm';
 
 const state = useFormattingForm();
 
-const copyButtonText = ref('Copy To Clipboard');
-const shareButtonText = ref('Share URL');
+const copyButtonText = ref('Copy text');
+const copyUrlButtonText = ref('Copy URL');
 const errorText = ref('');
 
 const copyTimeout = ref(0);
@@ -53,9 +53,9 @@ async function onShareURLClick() {
       await navigator.share({ url });
     } else {
       navigator.clipboard.writeText(url);
-      shareButtonText.value = 'Copied!';
+      copyUrlButtonText.value = 'Copied!';
       shareTimeout.value = window.setTimeout(() => {
-        shareButtonText.value = 'Share URL';
+        copyUrlButtonText.value = 'Share URL';
       }, 2000);
     }
   } catch (error) {
@@ -65,24 +65,17 @@ async function onShareURLClick() {
 
 </script>
 <template>
-  <section class="actions">
-    <button
-      type="button"
-      class="plain mx-auto mb-2"
-      @click="onResetClick"
-    >
-      Reset Form
-    </button>
+  <div class="actions">
     <button
       type="button"
       class="w-full mb-4"
       @click="onShareURLClick"
     >
-      {{ shareButtonText }}
+      {{ copyUrlButtonText }}
     </button>
     <button
       type="button"
-      class="large w-full my-4"
+      class="w-full secondary"
       @click="onCopyClick"
     >
       {{ copyButtonText }}
@@ -91,27 +84,32 @@ async function onShareURLClick() {
       ref="textareaRef"
       :value="state.markdown.value"
       readonly
-      class="formatted-text mb-4"
+      class="markdown-text"
       rows="10"
       cols="25"
     />
-    <p class="font-bold text-center mb-10">
-      NOTE:<br>
+    <p class="text-sm text-light-mist px-1 text-center mb-10">
+      <strong>NOTE:</strong>
       Be sure the editor is in &quot;Markdown&quot; mode<br>
       when creating your post on Reddit!
     </p>
-  </section>
+    <button
+      type="button"
+      class="w-full outline"
+      @click="onResetClick"
+    >
+      Reset Form
+    </button>
+  </div>
 </template>
 
 <style>
 .actions {
   @apply
-    w-full
-    sm:w-2/3
-    md:w-[800px]
+    w-48
+    shrink-0
     sticky
-    -top-1
-    mx-auto
-    my-0;
+    my-0
+    ml-6;
 }
 </style>

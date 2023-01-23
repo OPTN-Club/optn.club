@@ -1,0 +1,29 @@
+@media (hover: hover) {
+  ::-webkit-scrollbar {
+    @apply
+      w-[6px]
+      h-[6px];
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply
+      bg-inherit;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply
+      rounded-md
+      bg-gray-500
+      bg-opacity-50
+      ;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background-color: rgba(0,0,0,0.5);
+  }
+
+  ::-webkit-resizer {
+    -webkit-appearance: none;
+    @apply hidden;
+  }
+}
