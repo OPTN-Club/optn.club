@@ -95,7 +95,7 @@ async function onShareURLClick() {
     </p>
     <button
       type="button"
-      class="w-full outline"
+      class="w-full outlined"
       @click="onResetClick"
     >
       Reset Form

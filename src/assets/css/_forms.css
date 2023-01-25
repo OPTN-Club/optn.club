@@ -101,4 +101,29 @@
   .engine .control {
     min-width: 100px;
   }
+
+  .control .prefix,
+  .control .suffix {
+    @apply
+      text-green
+      absolute
+      top-0
+      bottom-0
+      flex
+      items-center
+      mb-0;
+  }
+
+  .control .prefix + input,
+  .control .prefix + select {
+    @apply indent-4;
+  }
+
+  .control .prefix {
+    @apply left-3;
+  }
+
+  .control .suffix {
+    @apply right-3;
+  }
 }

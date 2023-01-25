@@ -53,7 +53,7 @@
       border-secondary;
   }
 
-  button.outline {
+  button.outlined {
     @apply
       bg-transparent
       border

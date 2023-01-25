@@ -61,6 +61,7 @@
 
   h1 {
     @apply
+      uppercase
       font-black
       italic
       text-6xl

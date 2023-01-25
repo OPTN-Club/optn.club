@@ -31,17 +31,19 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
       <div class="content">
         <h3>Tires</h3>
         <div class="set-upgrades">
-          <FrontRearInputs
-            v-model="form.tune.tires"
-            label="Pressure"
-            attachRight
-            :step="tirePressureStep"
-          />
-          <UnitSelect
-            v-model="form.tune.tires.units"
-            type="pressure"
-            class="rounded-l-none"
-          />
+          <div class="flex items-end">
+            <FrontRearInputs
+              v-model="form.tune.tires"
+              label="Pressure"
+              attachRight
+              :step="tirePressureStep"
+            />
+            <UnitSelect
+              v-model="form.tune.tires.units"
+              type="pressure"
+              class="rounded-l-none"
+            />
+          </div>
         </div>
       </div>
       <div class="content">

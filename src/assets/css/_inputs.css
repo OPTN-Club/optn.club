@@ -47,8 +47,8 @@
   textarea {
     @apply
       h-10
+      leading-10
       px-4
-      py-2
       rounded
       text-ghost-white
       bg-light-mist
@@ -84,7 +84,9 @@
   }
 
   textarea {
-    @apply resize-y;
+    @apply
+      resize-y
+      leading-normal;
   }
 
   textarea.markdown-text {
@@ -103,16 +105,17 @@
       whitespace-pre;
   }
 
-  /* input[type=number] {
-    @apply w-24;
-  } */
+  input[type=number] {
+    @apply pr-0;
+  }
 
   input[type=checkbox],
   input[type=radio] {
     @apply
       w-auto
       min-w-0
-      h-auto;
+      h-auto
+      leading-normal;
   }
 
   select {

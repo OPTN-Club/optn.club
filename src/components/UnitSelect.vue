@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import {
-  SpringRateUnit, LengthUnit, PressureUnit, ForceUnit,
+  SpringRateUnit, LengthUnit, PressureUnit, ForceUnit, WeightUnit,
 } from '../lib/types';
 import SelectControl from './SelectControl.vue';
 
 const props = defineProps<{
   modelValue: string,
-  type: 'pressure' | 'height' | 'force' | 'springrate',
+  type: 'pressure' | 'height' | 'force' | 'springrate' | 'weight',
 }>();
 
 const emit = defineEmits<{
@@ -35,6 +35,10 @@ const units = {
   force: [
     { label: 'kgf', value: ForceUnit.kgf },
     { label: 'lbs', value: ForceUnit.lbf },
+  ],
+  weight: [
+    { label: 'kg', value: WeightUnit.kg },
+    { label: 'lbs', value: WeightUnit.lbs },
   ],
 };
 

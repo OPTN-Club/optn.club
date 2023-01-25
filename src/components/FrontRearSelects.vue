@@ -37,12 +37,12 @@ watch(() => props.modelValue, (current) => {
       <div class="relative">
         <label
           :for="`${id}front`"
-          class="text-yellow absolute left-2 top-0 bottom-0 flex items-center mb-0"
+          class="prefix"
         >F</label>
         <select
           :id="`${id}front`"
           v-model="state.form.front"
-          class="indent-4 rounded-r-none border-r-0"
+          class="rounded-r-none border-r-0 w-32"
         >
           <slot>
             <option
@@ -58,12 +58,12 @@ watch(() => props.modelValue, (current) => {
       <div class="relative">
         <label
           :for="`${id}rear`"
-          class="text-yellow absolute left-2 top-0 bottom-0 flex items-center mb-0"
+          class="prefix"
         >R</label>
         <select
           :id="`${id}front`"
           v-model="state.form.rear"
-          class="indent-4 rounded-l-none"
+          class="rounded-l-none"
         >
           <slot>
             <option

@@ -47,13 +47,13 @@ watch(() => props.modelValue, (current) => {
       <div class="relative">
         <label
           :for="`${id}front`"
-          class="text-yellow absolute left-2 top-0 bottom-0 flex items-center mb-0"
+          class="prefix"
         >F</label>
         <input
           :id="`${id}front`"
           v-model="state.form.front"
           :placeholder="placeholder"
-          class="indent-4 rounded-r-none border-r-0"
+          class="rounded-r-none border-r-0"
           :class="{ 'rounded-l-none': attachLeft }"
           type="number"
           :step="step"
@@ -65,13 +65,13 @@ watch(() => props.modelValue, (current) => {
       <div class="relative">
         <label
           :for="`${id}rear`"
-          class="text-yellow absolute left-2 top-0 bottom-0 flex items-center mb-0"
+          class="prefix"
         >R</label>
         <input
           :id="`${id}rear`"
           v-model="state.form.rear"
           :placeholder="placeholder"
-          class="pl-6 rounded-l-none"
+          class="rounded-l-none"
           :class="{ 'rounded-r-none border-r-0': attachRight }"
           type="number"
           :step="step"

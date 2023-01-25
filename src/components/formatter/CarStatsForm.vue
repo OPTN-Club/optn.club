@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { watch } from 'vue';
+import { computed, watch } from 'vue';
 import { useFormattingForm } from '../../lib/useFormattingForm';
 import { PIClass } from '../../lib/types';
 import EnumSelect from '../EnumSelect.vue';
 import MakeModelSelect from '../MakeModelSelect.vue';
 import NumberInput from '../NumberInput.vue';
 import InputControl from '../InputControl.vue';
+import UnitSelect from '../UnitSelect.vue';
 
-const { form } = useFormattingForm();
+const { form, globalUnit } = useFormattingForm();
 
 const piClassMap: Record<PIClass, number> = {
   [PIClass.D]: 500,
@@ -18,6 +19,9 @@ const piClassMap: Record<PIClass, number> = {
   [PIClass.S2]: 998,
   [PIClass.X]: 999,
 };
+
+const weightUnit = computed(() => (globalUnit.value === 'Imperial' ? 'lbs' : 'kg'));
+const speedUnit = computed(() => (globalUnit.value === 'Imperial' ? 'mph' : 'kph'));
 
 watch(() => form.stats.classification, (current) => {
   form.stats.pi = piClassMap[current];
@@ -55,19 +59,30 @@ watch(() => form.stats.classification, (current) => {
             label="HP"
             rootClass="upgrade-select"
           />
+          <div class="flex items-end control">
+            <NumberInput
+              v-model="form.stats.torque"
+              rootClass="upgrade-select"
+            >
+              <template #label>
+                Torque <span class="label-unit">(ft-lbs)</span>
+              </template>
+            </NumberInput>
+            <!-- <UnitSelect
+              v-model="form.stats.weight."
+              type="weight"
+              class="rounded-l-none"
+              :disabled="form.tune.aero.na"
+            /> -->
+          </div>
           <NumberInput
-            v-model="form.stats.torque"
+            v-model="form.stats.weight"
             rootClass="upgrade-select"
           >
             <template #label>
-              Torque <span class="label-unit">(ft-lbs)</span>
+              Weight <span class="label-unit">({{ weightUnit }})</span>
             </template>
           </NumberInput>
-          <NumberInput
-            v-model="form.stats.weight"
-            label="Weight"
-            rootClass="upgrade-select"
-          />
           <NumberInput
             v-model="form.stats.balance"
             rootClass="upgrade-select"
@@ -87,9 +102,12 @@ watch(() => form.stats.classification, (current) => {
           />
           <NumberInput
             v-model="form.stats.topSpeed"
-            label="Top Speed"
             rootClass="upgrade-select"
-          />
+          >
+            <template #label>
+              <span class="whitespace-nowrap">Top Speed <span class="label-unit">({{ speedUnit }})</span></span>
+            </template>
+          </numberinput>
         </div>
       </div>
     </div>
