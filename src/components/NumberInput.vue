@@ -45,6 +45,12 @@ function onUpdate(value: string | number) {
     <template #label>
       <slot name="label" />
     </template>
+    <template #prefix>
+      <slot name="prefix" />
+    </template>
+    <template #suffix>
+      <slot name="suffix" />
+    </template>
     <slot />
   </InputControl>
 </template>

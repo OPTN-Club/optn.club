@@ -15,25 +15,22 @@ const {
 </script>
 
 <template>
-  <div>
-    <h1>TUNE FORMATTER</h1>
-    <p class="sub-title">
-      Create and share your tune.
-      This tool will automatically create an easy-to-read
-      format you can share on our subreddit.
-    </p>
-
-    <div class="flex">
-      <div class="grow">
-        <form class="">
-          <GlobalUnitSelect v-model="globalUnit" />
-          <CarStatsForm />
-          <ShareCodesForm />
-          <BuildSettingsForm />
-          <TuneSettingsForm />
-        </form>
-      </div>
-      <FormattedTuneTextarea />
+  <h1>TUNE FORMATTER</h1>
+  <p class="sub-title">
+    Create and share your tune.
+    This tool will automatically create an easy-to-read
+    format you can share on our subreddit.
+  </p>
+  <div class="flex items-start">
+    <div class="grow">
+      <form class="">
+        <GlobalUnitSelect v-model="globalUnit" />
+        <CarStatsForm />
+        <ShareCodesForm />
+        <BuildSettingsForm />
+        <TuneSettingsForm />
+      </form>
     </div>
+    <FormattedTuneTextarea />
   </div>
 </template>

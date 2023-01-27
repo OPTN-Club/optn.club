@@ -77,19 +77,20 @@ watch(() => form.stats.classification, (current) => {
           </div>
           <NumberInput
             v-model="form.stats.weight"
+            label="Weight"
             rootClass="upgrade-select"
           >
-            <template #label>
+            <template #suffix>{{ weightUnit }}</template>
+            <!-- <template #label>
               Weight <span class="label-unit">({{ weightUnit }})</span>
-            </template>
+            </template> -->
           </NumberInput>
           <NumberInput
             v-model="form.stats.balance"
+            label="Balance"
             rootClass="upgrade-select"
           >
-            <template #label>
-              Balance <span class="label-unit">%</span>
-            </template>
+            <template #suffix>%</template>
           </NumberInput>
           <NumberInput
             v-model="form.stats.zeroToSixty"

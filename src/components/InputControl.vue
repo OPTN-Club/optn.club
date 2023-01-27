@@ -54,7 +54,10 @@ function onInput(e: Event) {
       </slot>
       <span class="label-note">{{ note }}</span>
     </label>
-    <div class="flex items-center">
+    <div class="flex items-center relative">
+      <div v-if="$slots.prefix" class="absolute suffix">
+        <slot name="prefix" />
+      </div>
       <input
         :id="id"
         :value="modelValue"
@@ -67,6 +70,9 @@ function onInput(e: Event) {
         v-bind="$attrs"
         @input="onInput"
       >
+      <div v-if="$slots.suffix" class="absolute suffix">
+        <slot name="suffix" />
+      </div>
       <slot />
     </div>
     <span v-if="errorMsg" class="validation-message">{{ errorMsg }}</span>

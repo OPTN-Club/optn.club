@@ -83,17 +83,21 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
             v-model="form.tune.camber"
             label="Camber"
             step="0.1"
+            min="-10"
+            max="10"
           />
           <FrontRearInputs
             v-model="form.tune.toe"
             label="Toe"
             step="0.1"
+            min="-10"
+            max="10"
           />
           <NumberInput
             v-model="form.tune.caster"
             label="Caster"
             required
-            max="7"
+            max="7.5"
             step="0.1"
           />
         </div>

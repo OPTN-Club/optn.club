@@ -109,6 +109,7 @@ async function onShareURLClick() {
     w-48
     shrink-0
     sticky
+    top-6
     my-0
     ml-6;
 }

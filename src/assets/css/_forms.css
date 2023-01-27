@@ -105,7 +105,7 @@
   .control .prefix,
   .control .suffix {
     @apply
-      text-green
+      text-yellow
       absolute
       top-0
       bottom-0
@@ -124,6 +124,6 @@
   }
 
   .control .suffix {
-    @apply right-3;
+    @apply right-4;
   }
 }
