@@ -18,85 +18,92 @@ const state = useTuneCalculator();
       <span class="sub-title text-base">
         <span class="text-red font-bold">Note:</span>
         This calculator is still very much a work in progress.
-        It is intended to give a decent starting point.
+        It is intended to give a decent starting point.<br>
+        If you have any suggestions please let SharpSeeEr know on discord!
       </span>
     </p>
     <div class="flex">
-      <div class="grow">
-        <form>
-          <section>
-            <div class="heading">
-              <h3>Car Information</h3>
-            </div>
-            <div class="grow">
-              <div class="content">
+      <form>
+        <section>
+          <div class="heading">
+            <h2>Car Information</h2>
+            <p>
+              Hold "Ctrl" when clicking +/- buttons to change by 10
+            </p>
+            <p class="mt-3">
+              Hold "Alt" when clicking +/- buttons to change by 100
+            </p>
+          </div>
+          <div class="grow">
+            <div class="content">
+              <div class="set-upgrades">
+                <EnumSelect
+                  v-model="state.inputs.springs"
+                  label="Type of Springs"
+                  :type="SpringsType"
+                />
+                <EnumSelect
+                  v-model="state.inputs.drivetrain"
+                  label="Drive Type"
+                  :type="DriveType"
+                />
+                <EnumSelect
+                  v-model="state.inputs.piClass"
+                  label="Class"
+                  :type="PIClass"
+                />
+              </div>
+              <div class="set-upgrades">
+                <CounterInput
+                  v-model="state.inputs.weight"
+                  label="Weight"
+                  min="0"
+                >
+                  kg
+                </CounterInput>
+                <CounterInput
+                  v-model="state.inputs.weightBalance"
+                  label="Front Weight"
+                  min="1"
+                  max="99"
+                >
+                  %
+                </CounterInput>
+              </div>
+              <!-- <div class="content">
+                <CounterInput
+                  v-model="state.inputs.frontAero"
+                  label="Front Aero"
+                  min="0"
+                />
+              </div> -->
+              <div class="font-bold mt-6">Tire Width</div>
+              <div>
                 <div class="set-upgrades">
-                  <EnumSelect
-                    v-model="state.inputs.springs"
-                    label="Type of Springs"
-                    :type="SpringsType"
-                  />
-                  <EnumSelect
-                    v-model="state.inputs.drivetrain"
-                    label="Drive Type"
-                    :type="DriveType"
-                  />
-                  <EnumSelect
-                    v-model="state.inputs.piClass"
-                    label="Class"
-                    :type="PIClass"
-                  />
-                </div>
-                <div class="set-upgrades">
                   <CounterInput
-                    v-model="state.inputs.weight"
-                    label="Weight"
-                    min="0"
-                  >
-                    kg
-                  </CounterInput>
-                  <CounterInput
-                    v-model="state.inputs.weightBalance"
-                    label="Front Weight"
-                    min="1"
-                    max="99"
-                  >
-                    %
-                  </CounterInput>
-                </div>
-                <!-- <div class="content">
-                  <CounterInput
-                    v-model="state.inputs.frontAero"
-                    label="Front Aero"
-                    min="0"
+                    v-model="state.inputs.tireWidth.front"
+                    label="Front"
+                    required
+                    min="100"
+                    :step="10"
                   />
-                </div> -->
-                <div>
-                  <div class="font-bold">Tire Width</div>
-                  <div class="set-upgrades">
-                    <CounterInput
-                      v-model="state.inputs.tireWidth.front"
-                      label="Front"
-                      required
-                      min="100"
-                      :step="10"
-                    />
-                    <CounterInput
-                      v-model="state.inputs.tireWidth.rear"
-                      label="Rear"
-                      required
-                      min="100"
-                      :step="10"
-                    />
-                  </div>
+                  <CounterInput
+                    v-model="state.inputs.tireWidth.rear"
+                    label="Rear"
+                    required
+                    min="100"
+                    :step="10"
+                  />
                 </div>
               </div>
             </div>
-          </section>
-          <section>
-            <div class="header">
-              <h3>Modifiers</h3>
-            </div>
+          </div>
+        </section>
+        <section>
+          <div class="heading">
+            <h2>Modifiers</h2>
+          </div>
+          <div class="grow">
             <div class="content">
               <!-- <div class="font-bold">Motion Ratio</div>
               <div class="content">
@@ -119,7 +126,7 @@ const state = useTuneCalculator();
                   %
                 </CounterInput>
               </div> -->
-              <h3>Target Frequency</h3>
+              <div class="font-bold">Target Frequency</div>
               <div class="set-upgrades">
                 <CounterInput
                   v-model="state.modifiers.freq.front"
@@ -147,7 +154,7 @@ const state = useTuneCalculator();
                   kg
                 </CounterInput>
               </div> -->
-              <div class="content">
+              <div class="set-upgrades">
                 <CounterInput
                   v-model="state.modifiers.general"
                   label="Springs"
@@ -158,7 +165,7 @@ const state = useTuneCalculator();
                   %
                 </CounterInput>
               </div>
-              <div class="content">
+              <div class="set-upgrades">
                 <CounterInput
                   v-model="state.modifiers.rebound"
                   label="Rebound"
@@ -176,17 +183,16 @@ const state = useTuneCalculator();
                   %
                 </CounterInput>
               </div>
-              <div class="content">
+              <div class="set-upgrades">
                 <CounterInput
                   v-model="state.modifiers.arb"
                   label="ARB"
+                  suffix="%"
                   min="1"
                   max="200"
-                >
-                  %
-                </CounterInput>
+                />
               </div>
-              <div class="content">
+              <div class="set-upgrades">
                 <CounterInput
                   v-model="state.modifiers.brakeOffset"
                   label="Brake Offset"
@@ -205,10 +211,10 @@ const state = useTuneCalculator();
                 </CounterInput>
               </div>
             </div>
-            <CalculatorResults :tune="state.tune.value" :inputs="state.inputs" />
-          </section>
-        </form>
-      </div>
+          </div>
+        </section>
+      </form>
+      <CalculatorResults :tune="state.tune.value" :inputs="state.inputs" />
     </div>
   </div>
 </template>

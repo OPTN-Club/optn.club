@@ -8,6 +8,7 @@ import RepeatButton, { Modifiers } from './RepeatButton.vue';
 const props = withDefaults(defineProps<{
   modelValue: number,
   label: string,
+  suffix?: string,
   errorMsg?: string,
   error?: boolean,
   required?: boolean,
@@ -15,6 +16,7 @@ const props = withDefaults(defineProps<{
   min?: number | string,
   max?: number | string,
 }>(), {
+  suffix: undefined,
   step: 1,
   min: 0,
   max: Number.MAX_SAFE_INTEGER,
@@ -135,41 +137,43 @@ onBeforeUnmount(() => {
     >{{ label }}</label>
     <div class="flex items-center">
       <div
-        class="inline-flex rounded border overflow-hidden items-center bg-dark-accent"
+        class="counter-container"
         :class="containerClass"
         @focusin="onFocus"
         @focusout="onBlur"
       >
         <RepeatButton
-          class="counter-input-button rounded-l rounded-r-none plain"
+          class="counter-input-button rounded-l"
           tabindex="-1"
           @click="onDecrementClick"
           @pressed="onPressed"
         >
           -
         </RepeatButton>
-        <input
-          :id="id"
-          v-model="state.value"
-          type="number"
-          :required="required"
-          :step="step"
-          :min="min"
-          :max="max"
-          class=""
-          v-bind="$attrs"
-          @focus="onFocus"
-          @blur="onBlur"
-          @keyup.down.up="onKeyUp"
-          @keydown.down.up="onKeyDown"
-          @touchend="onTouchEnd"
-        >
-        <div>
-          <slot />
+        <div class="relative">
+          <input
+            :id="id"
+            v-model="state.value"
+            type="number"
+            :required="required"
+            :step="step"
+            :min="min"
+            :max="max"
+            class=""
+            v-bind="$attrs"
+            @focus="onFocus"
+            @blur="onBlur"
+            @keyup.down.up="onKeyUp"
+            @keydown.down.up="onKeyDown"
+            @touchend="onTouchEnd"
+          >
+          <div class="suffix">
+            <slot>{{ suffix }}</slot>
+          </div>
         </div>
 
         <RepeatButton
-          class="counter-input-button rounded-r rounded-l-none plain"
+          class="counter-input-button rounded-r"
           tabindex="-1"
           @click="onIncrementClick"
           @pressed="onPressed"
@@ -189,13 +193,24 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-input {
+.counter-container {
   @apply
-    border-none
+    inline-flex
+    rounded
+    overflow-hidden
+    items-center
+    bg-light-mist
+    bg-opacity-20;
+}
+
+.counter-container input {
+  @apply
     rounded-none
     text-center
-    w-12
-    p-0;
+    p-0
+    bg-transparent
+    min-w-[12px]
+    w-24;
 }
 
 input[type='number']::-webkit-inner-spin-button,
@@ -204,16 +219,21 @@ input[type='number']::-webkit-outer-spin-button {
   margin: 0;
 }
 
+.counter-container .suffix {
+  @apply right-0;
+}
+
 .counter-input-button {
   @apply
     text-2xl
     w-10
     p-0
-    bg-optn-1100
     cursor-pointer
     outline-none
     font-thin
     border-none
-    hover:bg-optn-800;
+    rounded-none
+    text-ghost-white
+    bg-transparent;
 }
 </style>
