@@ -9,7 +9,7 @@
     </div>
     <div class="z-10">
       <AppHeader />
-      <div class="grow mt-56 mx-14">
+      <div class="grow mt-56 mx-4 md:mx-9 lg:mx-14">
         <router-view />
       </div>
       <AppFooter />

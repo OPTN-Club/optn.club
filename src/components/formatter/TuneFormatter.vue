@@ -21,7 +21,7 @@ const {
     This tool will automatically create an easy-to-read
     format you can share on our subreddit.
   </p>
-  <div class="flex items-start">
+  <div class="flex flex-col md:flex-row items-start">
     <div class="grow">
       <form class="">
         <GlobalUnitSelect v-model="globalUnit" />

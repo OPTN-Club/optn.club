@@ -1,18 +1,16 @@
 section {
   @apply
     flex
+    flex-col
     grow
     pb-12
     items-start;
 }
 
 section .heading {
-  @apply text-light-mist
-    w-56
-    shrink-0
-    mr-6
-    sticky
-    top-6;
+  @apply
+    text-light-mist
+    mb-6;
 }
 
 .section-desc {
@@ -24,7 +22,7 @@ section .content {
   @apply
     bg-light-mist
     bg-opacity-5
-    p-6
+    p-4
     grow;
 }
 
@@ -39,7 +37,7 @@ section + section {
     border-t-2
     border-t-light-mist
     border-opacity-10
-    pt-12;
+    pt-8;
 }
 
 .content + .content {
@@ -54,10 +52,31 @@ section + section {
   @apply
     flex
     flex-wrap
-    gap-6
+    gap-4
     items-end;
 }
 
 .set-upgrades + .set-upgrades {
   @apply mt-6;
+}
+
+@screen lg {
+  section {
+    @apply
+      flex-row;
+  }
+
+  section .heading {
+    @apply
+      w-56
+      shrink-0
+      mr-6
+      sticky
+      top-6;
+  }
+
+  section .content {
+    @apply
+      p-6
+  }
 }
