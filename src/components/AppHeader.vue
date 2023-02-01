@@ -43,6 +43,7 @@ import iconDiscord from '../assets/icon-discord.png';
       </ul>
     </div>
   </header>
+
   <div class="header-image z-0">
     <img
       class="invisible"
