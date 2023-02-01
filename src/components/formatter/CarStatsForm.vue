@@ -62,10 +62,11 @@ watch(() => form.stats.classification, (current) => {
           <div class="flex items-end control">
             <NumberInput
               v-model="form.stats.torque"
+              label="Torque"
               rootClass="upgrade-select"
             >
-              <template #label>
-                Torque <span class="label-unit">(ft-lbs)</span>
+              <template #suffix>
+                ft-lbs
               </template>
             </NumberInput>
             <!-- <UnitSelect
@@ -75,15 +76,14 @@ watch(() => form.stats.classification, (current) => {
               :disabled="form.tune.aero.na"
             /> -->
           </div>
+        </div>
+        <div class="set-upgrades">
           <NumberInput
             v-model="form.stats.weight"
             label="Weight"
             rootClass="upgrade-select"
           >
             <template #suffix>{{ weightUnit }}</template>
-            <!-- <template #label>
-              Weight <span class="label-unit">({{ weightUnit }})</span>
-            </template> -->
           </NumberInput>
           <NumberInput
             v-model="form.stats.balance"
@@ -92,6 +92,8 @@ watch(() => form.stats.classification, (current) => {
           >
             <template #suffix>%</template>
           </NumberInput>
+        </div>
+        <div class="set-upgrades">
           <NumberInput
             v-model="form.stats.zeroToSixty"
             label="0-60"
@@ -103,12 +105,13 @@ watch(() => form.stats.classification, (current) => {
           />
           <NumberInput
             v-model="form.stats.topSpeed"
+            label="Top Speed"
             rootClass="upgrade-select"
           >
-            <template #label>
-              <span class="whitespace-nowrap">Top Speed <span class="label-unit">({{ speedUnit }})</span></span>
+            <template #suffix>
+              {{ speedUnit }}
             </template>
-          </numberinput>
+          </NumberInput>
         </div>
       </div>
     </div>

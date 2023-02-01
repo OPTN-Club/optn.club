@@ -27,15 +27,6 @@
       overflow-visible;
   }
 
-  .header-image {
-    position: absolute;
-    width: 1140px;
-    height: auto;
-    left: 2px;
-    top: 58px;
-    background: radial-gradient(50% 53% at 50% 50%, rgba(0, 26, 44, 0) 0%, #001A2C 100%), url(/images/OPTN_header_car.png);
-  }
-
   a {
     @apply
       text-optn-50
@@ -64,7 +55,7 @@
       uppercase
       font-black
       italic
-      text-6xl
+      text-4xl
       text-center
       mb-3;
   }
@@ -86,12 +77,12 @@
   .sub-title {
     @apply
       font-title
-      text-2xl
+      text-lg
       text-center
       mx-auto
       max-w-3xl
       text-light-mist
-      mb-16;
+      mb-10;
   }
 
   strong {
@@ -115,5 +106,13 @@
       block
       mx-auto
       mb-10;
+  }
+
+  @screen md {
+    h1 { @apply text-6xl; }
+    h2 { @apply text-2xl; }
+    h3 { @apply text-xl; }
+    h4 { @apply text-lg; }
+    .sub-title { @apply text-2xl; }
   }
 }

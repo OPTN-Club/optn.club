@@ -22,17 +22,17 @@ const state = useTuneCalculator();
         If you have any suggestions please let SharpSeeEr know on discord!
       </span>
     </p>
+
+    <p class="text-center mb-6">
+      Hold "Ctrl" when clicking +/- buttons to change by 10
+      <br class="md:hidden">
+      <span class="md:ml-4">Hold "Alt" when clicking +/- buttons to change by 100</span>
+    </p>
     <div class="flex">
       <form>
         <section>
           <div class="heading">
             <h2>Car Information</h2>
-            <p>
-              Hold "Ctrl" when clicking +/- buttons to change by 10
-            </p>
-            <p class="mt-3">
-              Hold "Alt" when clicking +/- buttons to change by 100
-            </p>
           </div>
           <div class="grow">
             <div class="content">

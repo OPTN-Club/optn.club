@@ -156,7 +156,8 @@ const data: ChartData = {
     rounded
     bg-light-mist
     bg-opacity-5
-    p-6
+    p-4
+    md:p-6
     min-w-[230px];
 }
 
@@ -167,7 +168,8 @@ const data: ChartData = {
     lg:flex-nowrap
     rounded
     grow
-    gap-6
+    gap-4
+    md:gap-6
     ;
 }
 
@@ -194,7 +196,8 @@ const data: ChartData = {
 .chart-list {
   @apply
     rounded
-    p-6
+    p-4
+    md:p-6
     text-ghost-white
     bg-light-mist
     bg-opacity-5
@@ -216,7 +219,8 @@ const data: ChartData = {
 .tune-chart h5 {
   @apply
     text-center
-    mb-6
+    mb-4
+    md:mb-6
     whitespace-nowrap;
 }
 

@@ -57,7 +57,7 @@ section + section {
 }
 
 .set-upgrades + .set-upgrades {
-  @apply mt-6;
+  @apply mt-4;
 }
 
 @screen lg {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, watch } from 'vue';
 import makes from '../lib/makes';
-import { byMake } from '../lib/models';
+import { byMake, byFullname } from '../lib/models';
 import { sortUsingProp } from '../lib/utils';
 import SelectControl from './SelectControl.vue';
 import InputControl from './InputControl.vue';
@@ -12,13 +12,21 @@ const props = defineProps<{
 }>();
 
 const state = reactive({
-  makeNotListed: false,
-  modelNotListed: false,
+  // makeNotListed: false,
+  // modelNotListed: false,
   make: props.make,
   model: props.model,
   otherMake: '',
   otherModel: '',
 });
+
+if (!byFullname.get(props.model)) {
+  // state.makeNotListed = true;
+  // state.modelNotListed = true;
+  state.make = 'notlisted';
+  state.model = 'notlisted';
+  state.otherModel = props.model.toString();
+}
 
 const emit = defineEmits<{
   (e: 'update:make', v: string): void,
@@ -35,7 +43,7 @@ const makeOptions = computed(() => {
 });
 
 const modelOptions = computed(() => {
-  if (!state.make || state.makeNotListed) return [];
+  if (!state.make) return [];
   const models = byMake.get(props.make) || [];
   const sorted = sortUsingProp(models.map((m) => ({
     value: m.fullname,

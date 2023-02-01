@@ -2,12 +2,14 @@
   header {
     @apply
       relative
+      items-center
       flex
       flex-col
       md:flex-row
-      items-center
-      px-16
-      py-12;
+      md:px-9
+      lg:px-14
+      py-6
+      md:py-12;
   }
 
   /* header + div > section {
@@ -18,11 +20,40 @@
     @apply m-0;
   }
 
+  .nav-bar {
+    @apply
+      w-full
+      mt-1
+      md:mt-0
+      text-center
+      md:text-left
+      flex
+      items-center;
+  }
+  .nav-link {
+    @apply
+      grow
+      md:grow-0
+      p-2
+      text-ghost-white
+      whitespace-nowrap
+      sm:text-xl
+      font-normal
+      border-y-4
+      border-y-transparent;
+  }
+
+  .nav-link.router-link-active,
+  .nav-link:hover {
+    @apply
+      border-b-optn-50
+      text-ghost-white;
+  }
+
   .link-bar {
     @apply
-      p-0
-      m-0
-      flex
+      hidden
+      md:flex
       justify-center
       overflow-hidden;
   }
@@ -37,20 +68,20 @@
       h-auto;
   }
 
-  .nav-link {
+  .header-image {
+    background: radial-gradient(50% 53% at 50% 50%, rgba(0, 26, 44, 0) 0%, #001A2C 100%), url(/images/OPTN_header_car.png);
+    background-size: auto, contain;
+
     @apply
-      p-2
-      text-ghost-white
-      text-xl
-      font-normal
-      border-y-4
-      border-y-transparent;
+      w-full
+      h-auto
+      -mt-10
+      md:-mt-16
+      -mb-6
+      sm:-mb-10;
   }
 
-  .nav-link.router-link-active,
-  .nav-link:hover {
-    @apply
-      border-b-optn-50
-      text-ghost-white;
+  @screen lg {
+
   }
 }
