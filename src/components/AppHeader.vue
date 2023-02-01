@@ -36,7 +36,7 @@ import iconDiscord from '../assets/icon-discord.png';
           </a>
         </li>
         <li>
-          <a href="https://github.com/" target="_blank">
+          <a href="https://github.com/OPTN-Club" target="_blank">
             <img :src="iconGithub" alt="Github">
           </a>
         </li>
