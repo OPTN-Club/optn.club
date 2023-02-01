@@ -74,6 +74,7 @@ export function useFormattingFormProvider() {
   const form = reactive(createFormattingForm(encodedForm));
 
   const car = computed<Car | null>(() => byFullname.get(form.model) || null);
+
   const driveType = computed(() => (car.value ? getDrivetrain(form.build, car.value.drive) : DriveType.awd));
 
   const storedUnits = getStoredUnits();
