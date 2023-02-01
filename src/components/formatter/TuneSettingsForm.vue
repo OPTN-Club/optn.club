@@ -41,7 +41,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
               <UnitSelect
                 v-model="form.tune.tires.units"
                 type="pressure"
-                class="rounded-l-none"
+                class="rounded-l-none flex-1"
               />
             </template>
           </FrontRearInputs>
@@ -132,46 +132,42 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
           />
         </div>
         <div class="set-upgrades">
-          <div class="flex items-end control">
-            <FrontRearInputs
-              v-model="form.tune.springs"
-              label="Tension"
-              min="0"
-              step="1"
-              attachRight
-              :disabled="form.tune.springs.na"
-            >
-              <template #attach-right>
-                <UnitSelect
-                  v-model="form.tune.springs.units"
-                  label=""
-                  type="springrate"
-                  class="rounded-l-none"
-                  :disabled="form.tune.springs.na"
-                />
-              </template>
-            </FrontRearInputs>
-          </div>
-          <div class="flex items-end control">
-            <FrontRearInputs
-              v-model="form.tune.rideHeight"
-              label="Ride Height"
-              min="0"
-              step="0.1"
-              attachRight
-              :disabled="form.tune.springs.na"
-            >
-              <template #attach-right>
-                <UnitSelect
-                  v-model="form.tune.rideHeight.units"
-                  label=""
-                  type="height"
-                  class="rounded-l-none"
-                  :disabled="form.tune.springs.na"
-                />
-              </template>
-            </FrontRearInputs>
-          </div>
+          <FrontRearInputs
+            v-model="form.tune.springs"
+            label="Tension"
+            min="0"
+            step="1"
+            attachRight
+            :disabled="form.tune.springs.na"
+          >
+            <template #attach-right>
+              <UnitSelect
+                v-model="form.tune.springs.units"
+                label=""
+                type="springrate"
+                class="rounded-l-none flex-1"
+                :disabled="form.tune.springs.na"
+              />
+            </template>
+          </FrontRearInputs>
+          <FrontRearInputs
+            v-model="form.tune.rideHeight"
+            label="Ride Height"
+            min="0"
+            step="0.1"
+            attachRight
+            :disabled="form.tune.springs.na"
+          >
+            <template #attach-right>
+              <UnitSelect
+                v-model="form.tune.rideHeight.units"
+                label=""
+                type="height"
+                class="rounded-l-none flex-1"
+                :disabled="form.tune.springs.na"
+              />
+            </template>
+          </FrontRearInputs>
         </div>
       </div>
       <div class="content">
@@ -210,24 +206,22 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
           />
         </div>
         <div class="set-upgrades">
-          <div class="flex items-end control">
-            <FrontRearInputs
-              v-model="form.tune.aero"
-              min="0"
-              step="1"
-              attachRight
-              :disabled="form.tune.aero.na"
-            >
-              <template #attach-right>
-                <UnitSelect
-                  v-model="form.tune.aero.units"
-                  type="force"
-                  class="rounded-l-none"
-                  :disabled="form.tune.aero.na"
-                />
-              </template>
-            </FrontRearInputs>
-          </div>
+          <FrontRearInputs
+            v-model="form.tune.aero"
+            min="0"
+            step="1"
+            attachRight
+            :disabled="form.tune.aero.na"
+          >
+            <template #attach-right>
+              <UnitSelect
+                v-model="form.tune.aero.units"
+                type="force"
+                class="rounded-l-none flex-1"
+                :disabled="form.tune.aero.na"
+              />
+            </template>
+          </FrontRearInputs>
         </div>
       </div>
       <div class="content">
@@ -247,7 +241,9 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
             max="100"
             step="1"
             :disabled="form.tune.brake.na"
-          />
+          >
+            <template #suffix>%</template>
+          </NumberInput>
           <NumberInput
             v-model="form.tune.brake.pressure"
             label="Pressure"
@@ -255,7 +251,9 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
             max="200"
             step="1"
             :disabled="form.tune.brake.na"
-          />
+          >
+            <template #suffix>%</template>
+          </NumberInput>
         </div>
       </div>
       <div class="content">
@@ -286,6 +284,8 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
             step="1"
             :disabled="form.tune.diff.na"
           />
+        </div>
+        <div class="set-upgrades">
           <NumberInput
             v-if="show.diff.center"
             v-model="form.tune.diff.center"

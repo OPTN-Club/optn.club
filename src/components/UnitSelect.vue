@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import {
   SpringRateUnit, LengthUnit, PressureUnit, ForceUnit, WeightUnit,
 } from '../lib/types';
-import SelectControl from './SelectControl.vue';
+import SelectInput from './SelectInput.vue';
 
 const props = defineProps<{
   modelValue: string,
@@ -47,9 +47,10 @@ const options = computed(() => units[props.type]);
 </script>
 
 <template>
-  <SelectControl
+  <SelectInput
     :modelValue="modelValue"
     :options="options"
+    class="text-yellow"
     @update:modelValue="onUpdate"
   />
 </template>

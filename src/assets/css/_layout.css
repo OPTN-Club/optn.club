@@ -81,7 +81,9 @@ section + section {
 .control {
   @apply
     min-w-[155px]
+    max-w-full
     flex-1
+    sm:flex-auto
     sm:grow-0;
 }
 
@@ -92,8 +94,7 @@ section + section {
 .control input,
 .control select {
   @apply
-    w-full
-    sm:w-auto;
+    w-full;
 }
 
 .control .prefix,

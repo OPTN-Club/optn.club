@@ -20,8 +20,20 @@ const piClassMap: Record<PIClass, number> = {
   [PIClass.X]: 999,
 };
 
-const weightUnit = computed(() => (globalUnit.value === 'Imperial' ? 'lbs' : 'kg'));
-const speedUnit = computed(() => (globalUnit.value === 'Imperial' ? 'mph' : 'kph'));
+const units = computed(() => {
+  if (globalUnit.value === 'Imperial') {
+    return {
+      torque: 'ft-lbs',
+      weight: 'lbs',
+      speed: 'mph',
+    };
+  }
+  return {
+    torque: 'Nm',
+    weight: 'kg',
+    speed: 'kph',
+  };
+});
 
 watch(() => form.stats.classification, (current) => {
   form.stats.pi = piClassMap[current];
@@ -59,36 +71,32 @@ watch(() => form.stats.classification, (current) => {
             label="HP"
             rootClass="upgrade-select"
           />
-          <div class="flex items-end control">
-            <NumberInput
-              v-model="form.stats.torque"
-              label="Torque"
-              rootClass="upgrade-select"
-            >
-              <template #suffix>
-                ft-lbs
-              </template>
-            </NumberInput>
-            <!-- <UnitSelect
-              v-model="form.stats.weight."
-              type="weight"
-              class="rounded-l-none"
-              :disabled="form.tune.aero.na"
-            /> -->
-          </div>
+          <NumberInput
+            v-model="form.stats.torque"
+            label="Torque"
+            rootClass="upgrade-select"
+          >
+            <template #suffix>
+              {{ units.torque }}
+            </template>
+          </NumberInput>
+          <!-- <UnitSelect
+            v-model="form.stats.weight."
+            type="weight"
+            class="rounded-l-none"
+            :disabled="form.tune.aero.na"
+          /> -->
         </div>
         <div class="set-upgrades">
           <NumberInput
             v-model="form.stats.weight"
             label="Weight"
-            rootClass="upgrade-select"
           >
-            <template #suffix>{{ weightUnit }}</template>
+            <template #suffix>{{ units.weight }}</template>
           </NumberInput>
           <NumberInput
             v-model="form.stats.balance"
             label="Balance"
-            rootClass="upgrade-select"
           >
             <template #suffix>%</template>
           </NumberInput>
@@ -97,19 +105,21 @@ watch(() => form.stats.classification, (current) => {
           <NumberInput
             v-model="form.stats.zeroToSixty"
             label="0-60"
-            rootClass="upgrade-select"
-          />
+          >
+            <template #suffix>sec</template>
+          </NumberInput>
           <NumberInput
             v-model="form.stats.zeroToHundred"
             label="0-100"
-          />
+          >
+            <template #suffix>sec</template>
+          </NumberInput>
           <NumberInput
             v-model="form.stats.topSpeed"
             label="Top Speed"
-            rootClass="upgrade-select"
           >
             <template #suffix>
-              {{ speedUnit }}
+              {{ units.speed }}
             </template>
           </NumberInput>
         </div>

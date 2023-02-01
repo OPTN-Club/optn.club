@@ -39,7 +39,7 @@ watch(shareCodes, (current) => {
           />
           <InputControl
             v-model="shareCodes.vinyl"
-            label="Vinyl Share Code"
+            label="Livery Share Code"
             note="(optional)"
           />
         </div>

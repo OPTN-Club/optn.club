@@ -89,7 +89,7 @@ async function onShareURLClick() {
       cols="25"
     />
     <p class="text-sm text-light-mist px-1 text-center mb-10">
-      <strong>NOTE:</strong>
+      <strong class="text-yellow">NOTE:</strong>
       Be sure the editor is in &quot;Markdown&quot; mode<br>
       when creating your post on Reddit!
     </p>

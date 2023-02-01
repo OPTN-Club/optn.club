@@ -1,6 +1,7 @@
 <script lang="ts">
 import { v1 as uuid } from 'uuid';
 import { SelectOption } from '../lib/types';
+import SelectInput from './SelectInput.vue';
 
 export default {
   inheritAttrs: false,
@@ -25,8 +26,7 @@ const emit = defineEmits<{
   (e: 'update:modelValue', v: string): void,
 }>();
 
-function onInput(e: Event) {
-  const value = (e.target as HTMLInputElement).value;
+function onUpdate(value: string) {
   emit('update:modelValue', value);
 }
 </script>
@@ -37,31 +37,16 @@ function onInput(e: Event) {
       <span>{{ label }}</span>
       <span class="label-note">{{ note }}</span>
     </label>
-    <select
+
+    <SelectInput
       v-bind="$attrs"
       :id="id"
-      :value="modelValue"
+      :modelValue="modelValue"
       :disabled="disabled"
-      @input="onInput"
+      :options="options"
+      @update:modelValue="onUpdate"
     >
-      <option
-        v-if="placeholder"
-        value
-        disabled
-        selected
-        hidden
-      >
-        {{ placeholder }}
-      </option>
-      <slot>
-        <option
-          v-for="option in options"
-          :key="option.value"
-          :value="option.value"
-        >
-          {{ option.label || option.value }}
-        </option>
-      </slot>
-    </select>
+      <slot />
+    </SelectInput>
   </div>
 </template>

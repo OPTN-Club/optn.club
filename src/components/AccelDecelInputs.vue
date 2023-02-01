@@ -41,7 +41,7 @@ watch(() => props.modelValue, (current) => {
 </script>
 
 <template>
-  <div class="control" :class="{ disabled }">
+  <div class="control !min-w-[250px] shrink-0" :class="{ disabled }">
     <div class="label">{{ label }}</div>
     <div class="flex">
       <div class="relative grow sm:grow-0">
