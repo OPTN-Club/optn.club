@@ -22,15 +22,13 @@ const {
     format you can share on our subreddit.
   </p>
   <div class="flex flex-col md:flex-row items-start">
-    <div class="grow">
-      <form class="">
-        <GlobalUnitSelect v-model="globalUnit" />
-        <CarStatsForm />
-        <ShareCodesForm />
-        <BuildSettingsForm />
-        <TuneSettingsForm />
-      </form>
-    </div>
+    <form class="grow">
+      <GlobalUnitSelect v-model="globalUnit" />
+      <CarStatsForm />
+      <ShareCodesForm />
+      <BuildSettingsForm />
+      <TuneSettingsForm />
+    </form>
     <FormattedTuneTextarea />
   </div>
 </template>

@@ -31,10 +31,10 @@ watch(() => props.modelValue, (current) => {
 </script>
 
 <template>
-  <div class="control" :class="{ disabled }">
+  <div class="control !min-w-[250px]" :class="{ disabled }">
     <div class="label">{{ label }}</div>
     <div class="flex">
-      <div class="relative">
+      <div class="relative grow sm:grow-0">
         <label
           :for="`${id}front`"
           class="prefix"
@@ -55,7 +55,7 @@ watch(() => props.modelValue, (current) => {
           </slot>
         </select>
       </div>
-      <div class="relative">
+      <div class="relative grow sm:grow-0">
         <label
           :for="`${id}rear`"
           class="prefix"

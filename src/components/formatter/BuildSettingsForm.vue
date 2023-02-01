@@ -90,6 +90,7 @@ const trackWidthOptions = enumToOptions(TrackWidthType);
             v-model="form.build.drivetrain.transmission"
             label="Transmission"
             :type="TransmissionUpgrade"
+            rootClass="!min-w-[205px]"
           />
           <UpgradeSelect v-model="form.build.drivetrain.driveline" label="Driveline" />
           <FullUpgradeSelect v-model="form.build.drivetrain.differential" label="Differential" />

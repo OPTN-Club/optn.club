@@ -41,10 +41,11 @@ watch(() => props.modelValue, (current) => {
 </script>
 
 <template>
-  <div class="control" :class="{ disabled }">
+  <div class="control !min-w-[250px]" :class="{ disabled }">
     <div class="label">{{ label }}</div>
-    <div class="flex">
-      <div class="relative">
+    <div class="flex w-full">
+      <slot name="attach-left" />
+      <div class="relative grow sm:grow-0">
         <label
           :for="`${id}front`"
           class="prefix"
@@ -53,7 +54,7 @@ watch(() => props.modelValue, (current) => {
           :id="`${id}front`"
           v-model="state.form.front"
           :placeholder="placeholder"
-          class="rounded-r-none border-r-0 w-24 min-w-0"
+          class="rounded-r-none"
           :class="{ 'rounded-l-none': attachLeft }"
           type="number"
           :step="step"
@@ -62,7 +63,7 @@ watch(() => props.modelValue, (current) => {
           :disabled="disabled"
         >
       </div>
-      <div class="relative">
+      <div class="relative grow sm:grow-0">
         <label
           :for="`${id}rear`"
           class="prefix"
@@ -72,7 +73,7 @@ watch(() => props.modelValue, (current) => {
           v-model="state.form.rear"
           :placeholder="placeholder"
           class="rounded-l-none"
-          :class="{ 'rounded-r-none border-r-0': attachRight }"
+          :class="{ 'rounded-r-none': attachRight }"
           type="number"
           :step="step"
           :min="min"
@@ -80,6 +81,7 @@ watch(() => props.modelValue, (current) => {
           :disabled="disabled"
         >
       </div>
+      <slot name="attach-right" />
     </div>
   </div>
 </template>

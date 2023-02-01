@@ -23,7 +23,7 @@ section .content {
     bg-light-mist
     bg-opacity-5
     p-4
-    grow;
+    w-full;
 }
 
 section .content > h3,
@@ -53,11 +53,72 @@ section + section {
     flex
     flex-wrap
     gap-4
-    items-end;
+    items-end
+    justify-between
+    sm:justify-start;
 }
 
 .set-upgrades + .set-upgrades {
   @apply mt-4;
+}
+
+.set-upgrades.vertical {
+  @apply
+    flex-col
+    items-start;
+}
+
+.upgrade-select {
+  @apply sm:w-28;
+}
+
+/* .upgrade-select label {
+  @apply
+    flex
+    items-end;
+} */
+
+.control {
+  @apply
+    min-w-[155px]
+    flex-1
+    sm:grow-0;
+}
+
+.control label {
+  @apply max-w-full
+}
+
+.control input,
+.control select {
+  @apply
+    w-full
+    sm:w-auto;
+}
+
+.control .prefix,
+.control .suffix {
+  @apply
+    text-yellow
+    absolute
+    top-0
+    bottom-0
+    flex
+    items-center
+    mb-0;
+}
+
+.control .prefix + input,
+.control .prefix + select {
+  @apply indent-4;
+}
+
+.control .prefix {
+  @apply left-3;
+}
+
+.control .suffix {
+  @apply right-4;
 }
 
 @screen lg {

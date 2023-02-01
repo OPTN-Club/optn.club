@@ -54,7 +54,7 @@
       bg-light-mist
       bg-opacity-20
       outline-none
-      min-w-[116px];
+      sm:min-w-[116px];
   }
 
   /* Select taken from https://codepen.io/vkjgr/pen/VYMeXp?editors=1100 */
@@ -116,10 +116,6 @@
       min-w-0
       h-auto
       leading-normal;
-  }
-
-  select {
-    @apply min-w-[116px];
   }
 
   input:focus,

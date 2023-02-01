@@ -92,7 +92,7 @@ watch([() => state.otherMake, () => state.otherModel], () => {
       <SelectControl
         v-model="state.make"
         label="Manufacturer"
-        class="w-full sm:w-auto min-w-[275px]"
+        class="w-full sm:w-auto sm:min-w-[275px]"
         :options="makeOptions"
       />
       <InputControl
@@ -109,7 +109,7 @@ watch([() => state.otherMake, () => state.otherModel], () => {
         label="Model"
         :disabled="!make || modelOptions.length === 1"
         :options="modelOptions"
-        class="w-full sm:w-auto min-w-[275px]"
+        class="w-full sm:w-auto sm:min-w-[275px]"
       />
       <InputControl
         v-model="state.otherModel"
