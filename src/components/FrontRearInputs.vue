@@ -31,13 +31,6 @@ const state = reactive({ form: { ...props.modelValue } });
 
 const id = uuid();
 
-const rootClass = computed(() => {
-  if (props.attachRight || props.attachLeft) {
-    return '!min-w-[350px]';
-  }
-  return '!min-w-[250px]';
-});
-
 watch(state, () => {
   emit('update:modelValue', state.form);
 });
@@ -48,7 +41,7 @@ watch(() => props.modelValue, (current) => {
 </script>
 
 <template>
-  <div class="control" :class="[rootClass, { disabled }]">
+  <div class="control !min-w-[250px]" :class="{ disabled }">
     <div class="label">{{ label }}</div>
     <div class="flex w-full">
       <slot name="attach-left" />
