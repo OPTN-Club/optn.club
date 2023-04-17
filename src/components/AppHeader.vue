@@ -7,17 +7,19 @@ import iconDiscord from '../assets/icon-discord.png';
 <template>
   <header>
     <div class="md:mr-8 z-10">
-      <img
-        :src="logoUrl"
-        alt="OPTN Logo"
-        class="w-auto h-10 mx-auto md:mx-0 min-w-[216px]"
-      >
+      <router-link :to="{ name: 'home' }">
+        <img
+          :src="logoUrl"
+          alt="OPTN Logo"
+          class="w-auto h-10 mx-auto md:mx-0 min-w-[216px]"
+        >
+      </router-link>
     </div>
 
     <div class="flex grow w-full items-center justify-between z-10">
       <div class="nav-bar">
         <router-link class="nav-link" :to="{ name: 'formatter' }">Formatter</router-link>
-        <router-link class="nav-link" :to="{ name: 'calculator' }">Calculator</router-link>
+        <!-- <router-link class="nav-link" :to="{ name: 'calculator' }">Calculator</router-link> -->
         <router-link class="nav-link" :to="{ name: 'tuningchart' }">Tuning Chart</router-link>
       </div>
 

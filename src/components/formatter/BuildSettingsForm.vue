@@ -12,6 +12,7 @@ import RestrictorUpgradeSelect from '../RestrictorUpgradeSelect.vue';
 import FrontRearInputs from '../FrontRearInputs.vue';
 import FrontRearSelects from '../FrontRearSelects.vue';
 import { enumToOptions } from '../../lib/utils';
+import UpgradeTurboSelect from '../UpgradeTurboSelect.vue';
 
 const { form } = useFormattingForm();
 const trackWidthOptions = enumToOptions(TrackWidthType);
@@ -52,8 +53,8 @@ const trackWidthOptions = enumToOptions(TrackWidthType);
           <UpgradeSelect v-model="form.build.engine.valves" label="Valves" />
           <UpgradeSelect v-model="form.build.engine.displacement" label="Displacement" />
           <UpgradeSelect v-model="form.build.engine.pistons" label="Pistons" />
-          <LimitedUpgradeSelect v-model="form.build.engine.turbo" label="Turbo" />
-          <LimitedUpgradeSelect v-model="form.build.engine.twinTurbo" label="Twin Turbo" />
+          <UpgradeTurboSelect v-model="form.build.engine.turbo" label="Turbo" />
+          <UpgradeTurboSelect v-model="form.build.engine.twinTurbo" label="Twin Turbo" />
           <LimitedUpgradeSelect v-model="form.build.engine.supercharger" label="Supercharger" />
           <LimitedUpgradeSelect v-model="form.build.engine.centrifugalSupercharger" label="Centrifugal Supercharger" />
           <LimitedUpgradeSelect v-model="form.build.engine.intercooler" label="Intercooler" />
