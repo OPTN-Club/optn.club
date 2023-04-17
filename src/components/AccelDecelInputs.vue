@@ -41,19 +41,19 @@ watch(() => props.modelValue, (current) => {
 </script>
 
 <template>
-  <div class="control" :class="{ disabled }">
+  <div class="control !min-w-[250px] shrink-0" :class="{ disabled }">
     <div class="label">{{ label }}</div>
     <div class="flex">
-      <div class="relative">
+      <div class="relative grow sm:grow-0">
         <label
           :for="`${id}front`"
-          class="absolute left-2 top-0 bottom-0 flex items-center mb-0"
+          class="prefix"
         >Accel</label>
         <input
           :id="`${id}front`"
           v-model="state.form.accel"
           :placeholder="placeholder"
-          class="pl-16 !w-32 rounded-r-none border-r-0"
+          class="pl-16 sm:!w-32 rounded-r-none border-r-0 !indent-0"
           :class="{ 'rounded-l-none': attachLeft }"
           type="number"
           step="1"
@@ -61,16 +61,16 @@ watch(() => props.modelValue, (current) => {
           :disabled="disabled"
         >
       </div>
-      <div class="relative">
+      <div class="relative grow sm:grow-0">
         <label
           :for="`${id}rear`"
-          class="absolute left-2 top-0 bottom-0 flex items-center mb-0"
+          class="prefix"
         >Decel</label>
         <input
           :id="`${id}rear`"
           v-model="state.form.decel"
           :placeholder="placeholder"
-          class="pl-16 !w-32 rounded-l-none"
+          class="pl-16 sm:!w-32 rounded-l-none !indent-0"
           :class="{ 'rounded-r-none border-r-0': attachRight }"
           type="number"
           step="1"

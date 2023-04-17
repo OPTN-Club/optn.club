@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import {
-  SpringRateUnit, LengthUnit, PressureUnit, ForceUnit,
+  SpringRateUnit, LengthUnit, PressureUnit, ForceUnit, WeightUnit,
 } from '../lib/types';
-import SelectControl from './SelectControl.vue';
+import SelectInput from './SelectInput.vue';
 
 const props = defineProps<{
   modelValue: string,
-  type: 'pressure' | 'height' | 'force' | 'springrate',
+  type: 'pressure' | 'height' | 'force' | 'springrate' | 'weight',
 }>();
 
 const emit = defineEmits<{
@@ -36,6 +36,10 @@ const units = {
     { label: 'kgf', value: ForceUnit.kgf },
     { label: 'lbs', value: ForceUnit.lbf },
   ],
+  weight: [
+    { label: 'kg', value: WeightUnit.kg },
+    { label: 'lbs', value: WeightUnit.lbs },
+  ],
 };
 
 const options = computed(() => units[props.type]);
@@ -43,9 +47,10 @@ const options = computed(() => units[props.type]);
 </script>
 
 <template>
-  <SelectControl
+  <SelectInput
     :modelValue="modelValue"
     :options="options"
+    class="text-yellow"
     @update:modelValue="onUpdate"
   />
 </template>

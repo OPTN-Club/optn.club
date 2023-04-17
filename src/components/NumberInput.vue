@@ -3,7 +3,7 @@ import InputControl from './InputControl.vue';
 
 withDefaults(defineProps<{
   modelValue: string | number;
-  label: string;
+  label?: string;
   errorMsg?: string;
   error?: boolean;
   required?: boolean;
@@ -11,11 +11,14 @@ withDefaults(defineProps<{
   min?: number | string;
   max?: number | string;
   disabled?: boolean;
+  rootClass?: string,
 }>(), {
+  label: undefined,
   step: 1,
   min: 0,
   max: 9999,
   errorMsg: '',
+  rootClass: undefined,
 });
 
 const emit = defineEmits<{
@@ -36,8 +39,18 @@ function onUpdate(value: string | number) {
     :max="max"
     :disabled="disabled"
     type="number"
+    :rootClass="rootClass"
     @update:modelValue="onUpdate"
   >
+    <template #label>
+      <slot name="label" />
+    </template>
+    <template #prefix>
+      <slot name="prefix" />
+    </template>
+    <template #suffix>
+      <slot name="suffix" />
+    </template>
     <slot />
   </InputControl>
 </template>

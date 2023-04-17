@@ -64,17 +64,17 @@ const data: ChartData = {
     },
   },
 };
-
 </script>
 <template>
-  <section>
-    <h1>Tuning Troubleshooting Chart</h1>
-    <p>
-      This chart assumes that your base tune has no glaring issues:<br>
-      Be sure your car doesn't bottom out and doesn't roll excessively during cornering.<br>
-      Otherwise this chart will create more issues than it solves.
-    </p>
-  </section>
+  <h1>Tuning Chart</h1>
+  <p class="sub-title" />
+  <div class="mb-6">
+    <p>This chart assumes that your base tune has no glaring issues:</p>
+    <ul class="list-disc list-outside ml-7 text-yellow">
+      <li><span class="text-ghost-white">Be sure your car doesn't bottom out and doesn't roll excessively during cornering.<br></span></li>
+      <li><span class="text-ghost-white">Otherwise this chart will create more issues than it solves.</span></li>
+    </ul>
+  </div>
   <section class="tune-chart">
     <ChartRow label="To Fix Understeer" :data="data.understeer" />
     <ChartRow
@@ -84,24 +84,33 @@ const data: ChartData = {
     />
   </section>
   <section>
-    <h4>General Tips</h4>
-    <ul class="list-disc list-inside">
-      <li>Don't lower the car too much.  A car touching the ground will never handle properly.</li>
-      <li>Increasing damping is an easy way to make the car react quicker to inputs.</li>
-      <li>Generally speaking if you need more than 0.2&deg; of toe there are issues elsewhere in the tune.</li>
-      <li>If you lower the car you will need stiffer springs to avoid bottoming out</li>
-      <li>
-        If you increase downforce you will need stiffer springs to compensate,
-        as well as stiffer damping so the car doesn't feel too heavy in corners.
-      </li>
-    </ul>
+    <div class="heading">
+      <h3>General Tips</h3>
+    </div>
+    <div class="grow">
+      <ul class="list-disc list-outside  ml-7 text-yellow">
+        <li><span class="text-ghost-white">Don't lower the car too much.  A car touching the ground will never handle properly.</span></li>
+        <li><span class="text-ghost-white">Increasing damping is an easy way to make the car react quicker to inputs.</span></li>
+        <li>
+          <span class="text-ghost-white">
+            Generally speaking if you need more than 0.2&deg; of toe there are issues elsewhere in the tune.</span>
+        </li>
+        <li><span class="text-ghost-white">If you lower the car you will need stiffer springs to avoid bottoming out</span></li>
+        <li>
+          <span class="text-ghost-white">
+            If you increase downforce you will need stiffer springs to compensate,
+            as well as stiffer damping so the car doesn't feel too heavy in corners.
+          </span>
+        </li>
+      </ul>
+    </div>
   </section>
 </template>
 
 <style>
 .asterisk {
   @apply
-    text-optn-red
+    text-red
     font-bold
     text-lg
     leading-4;
@@ -112,8 +121,7 @@ const data: ChartData = {
     flex
     flex-col
     items-stretch
-    text-white
-    p-6;
+    text-ghost-white;
 }
 
 .chart-row {
@@ -121,7 +129,10 @@ const data: ChartData = {
     flex
     flex-col
     items-stretch
-    gap-4;
+    gap-6
+    /* bg-light-mist
+    bg-opacity-5 */
+    ;
 }
 
 @screen md {
@@ -142,6 +153,11 @@ const data: ChartData = {
     flex
     flex-col
     grow
+    rounded
+    bg-light-mist
+    bg-opacity-5
+    p-4
+    md:p-6
     min-w-[230px];
 }
 
@@ -150,44 +166,42 @@ const data: ChartData = {
     flex
     flex-wrap
     lg:flex-nowrap
-    items-stretch
-    border
-    border-optn-blue-500
-    rounded-xl
-    p-4
+    rounded
     grow
-    gap-4;
+    gap-4
+    md:gap-6
+    ;
 }
 
 .ts-speed {
   @apply
     flex
     flex-col
-    grow
-    ;
+    grow;
 }
 
-.ts-speed .ts-border {
+/* .ts-speed .ts-border {
   @apply
-    bg-optn-blue-800
-    text-white;
-}
+    ;
+} */
 
-.ts-panel {
+/* .ts-panel {
   @apply
     flex
     flex-col
     grow
     max-w-full;
-}
+} */
 
 .chart-list {
   @apply
-    bg-optn-blue-dark
-    rounded-xl
+    rounded
     p-4
-    text-offwhite
-    ;
+    md:p-6
+    text-ghost-white
+    bg-light-mist
+    bg-opacity-5
+    h-full;
 }
 
 .chart-list li + li {
@@ -204,10 +218,14 @@ const data: ChartData = {
 .tune-chart h4,
 .tune-chart h5 {
   @apply
-    text-offwhite
-    font-bold
     text-center
-    my-2
+    mb-4
+    md:mb-6
     whitespace-nowrap;
 }
+
+.tune-chart h4 {
+  @apply text-yellow;
+}
+
 </style>

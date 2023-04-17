@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { watch } from 'vue';
+import { computed, watch } from 'vue';
 import { useFormattingForm } from '../../lib/useFormattingForm';
 import { PIClass } from '../../lib/types';
 import EnumSelect from '../EnumSelect.vue';
 import MakeModelSelect from '../MakeModelSelect.vue';
 import NumberInput from '../NumberInput.vue';
 import InputControl from '../InputControl.vue';
+import UnitSelect from '../UnitSelect.vue';
 
-const { form } = useFormattingForm();
+const { form, globalUnit } = useFormattingForm();
 
 const piClassMap: Record<PIClass, number> = {
   [PIClass.D]: 500,
@@ -19,6 +20,21 @@ const piClassMap: Record<PIClass, number> = {
   [PIClass.X]: 999,
 };
 
+const units = computed(() => {
+  if (globalUnit.value === 'Imperial') {
+    return {
+      torque: 'ft-lbs',
+      weight: 'lbs',
+      speed: 'mph',
+    };
+  }
+  return {
+    torque: 'Nm',
+    weight: 'kg',
+    speed: 'kph',
+  };
+});
+
 watch(() => form.stats.classification, (current) => {
   form.stats.pi = piClassMap[current];
 });
@@ -26,62 +42,86 @@ watch(() => form.stats.classification, (current) => {
 </script>
 <template>
   <section>
-    <h2>Car</h2>
-    <MakeModelSelect v-model:make="form.make" v-model:model="form.model" />
-    <div class="set">
-      <div class="flex items-center">
+    <div class="heading">
+      <h2>Car</h2>
+      <p>Which beast have you tamed?</p>
+    </div>
+    <div class="grow">
+      <MakeModelSelect
+        v-model:make="form.make"
+        v-model:model="form.model"
+      />
+      <div class="content">
         <h3>Statistics</h3>
-        <p class="text-sm">Optional</p>
-      </div>
-      <div class="set-upgrades flex-col items-start">
-        <div class="row">
+        <p class="text-sm mb-6">Optional, though helpful for others.</p>
+        <div class="set-upgrades">
           <EnumSelect
             v-model="form.stats.classification"
             label="Class"
             :type="PIClass"
+            rootClass="upgrade-select"
           />
           <NumberInput
             v-model="form.stats.pi"
             label="PI"
+            rootClass="upgrade-select"
           />
           <NumberInput
             v-model="form.stats.hp"
             label="HP"
+            rootClass="upgrade-select"
           />
           <NumberInput
             v-model="form.stats.torque"
             label="Torque"
-          />
+            rootClass="upgrade-select"
+          >
+            <template #suffix>
+              {{ units.torque }}
+            </template>
+          </NumberInput>
+          <!-- <UnitSelect
+            v-model="form.stats.weight."
+            type="weight"
+            class="rounded-l-none"
+            :disabled="form.tune.aero.na"
+          /> -->
         </div>
-        <div class="row">
+        <div class="set-upgrades">
           <NumberInput
             v-model="form.stats.weight"
             label="Weight"
-          />
+          >
+            <template #suffix>{{ units.weight }}</template>
+          </NumberInput>
           <NumberInput
             v-model="form.stats.balance"
             label="Balance"
           >
-            <span class="ml-1">%</span>
+            <template #suffix>%</template>
           </NumberInput>
         </div>
-        <div class="row">
+        <div class="set-upgrades">
           <NumberInput
             v-model="form.stats.zeroToSixty"
             label="0-60"
-          />
+          >
+            <template #suffix>sec</template>
+          </NumberInput>
           <NumberInput
             v-model="form.stats.zeroToHundred"
             label="0-100"
-          />
+          >
+            <template #suffix>sec</template>
+          </NumberInput>
           <NumberInput
             v-model="form.stats.topSpeed"
             label="Top Speed"
-          />
-          <InputControl
-            v-model="form.stats.shareCode"
-            label="Share Code"
-          />
+          >
+            <template #suffix>
+              {{ units.speed }}
+            </template>
+          </NumberInput>
         </div>
       </div>
     </div>

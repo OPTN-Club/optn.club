@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, watch } from 'vue';
 import makes from '../lib/makes';
-import { byMake } from '../lib/models';
+import { byMake, byFullname } from '../lib/models';
 import { sortUsingProp } from '../lib/utils';
 import SelectControl from './SelectControl.vue';
 import InputControl from './InputControl.vue';
@@ -12,13 +12,21 @@ const props = defineProps<{
 }>();
 
 const state = reactive({
-  makeNotListed: false,
-  modelNotListed: false,
+  // makeNotListed: false,
+  // modelNotListed: false,
   make: props.make,
   model: props.model,
   otherMake: '',
   otherModel: '',
 });
+
+if (!byFullname.get(props.model)) {
+  // state.makeNotListed = true;
+  // state.modelNotListed = true;
+  state.make = 'notlisted';
+  state.model = 'notlisted';
+  state.otherModel = props.model.toString();
+}
 
 const emit = defineEmits<{
   (e: 'update:make', v: string): void,
@@ -35,7 +43,7 @@ const makeOptions = computed(() => {
 });
 
 const modelOptions = computed(() => {
-  if (!state.make || state.makeNotListed) return [];
+  if (!state.make) return [];
   const models = byMake.get(props.make) || [];
   const sorted = sortUsingProp(models.map((m) => ({
     value: m.fullname,
@@ -79,31 +87,35 @@ watch([() => state.otherMake, () => state.otherModel], () => {
 </script>
 
 <template>
-  <div class="flex flex-wrap gap-4">
-    <div class="row">
+  <div class="content">
+    <div class="set-upgrades">
       <SelectControl
         v-model="state.make"
         label="Manufacturer"
-        class="w-full sm:w-auto min-w-[275px]"
+        class="w-full sm:w-auto sm:min-w-[275px]"
         :options="makeOptions"
       />
       <InputControl
         v-model="state.otherMake"
         label="Other"
+        class="w-56"
+        placeholder="If not listed"
         :disabled="state.make !== 'notlisted'"
       />
     </div>
-    <div class="row">
+    <div class="set-upgrades">
       <SelectControl
         v-model="state.model"
         label="Model"
         :disabled="!make || modelOptions.length === 1"
         :options="modelOptions"
-        class="w-full sm:w-auto min-w-[275px]"
+        class="w-full sm:w-auto sm:min-w-[275px]"
       />
       <InputControl
         v-model="state.otherModel"
         label="Other"
+        class="w-56"
+        placeholder="If not listed"
         :disabled="state.model !== 'notlisted'"
       />
     </div>

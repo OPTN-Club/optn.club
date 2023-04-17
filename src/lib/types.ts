@@ -71,6 +71,14 @@ export enum LimitedUpgrade {
   race = 'Race',
 }
 
+export enum TurboUpgrade {
+  na = 'N/A',
+  stock = 'Stock',
+  sport = 'Sport',
+  race = 'Race',
+  antilag = 'Race Anti-lag',
+}
+
 export enum RestrictorUpgrade {
   na = 'N/A',
   stock = 'Stock Restrictor Plate',
@@ -201,6 +209,7 @@ type BuildUpgrade =
   | FullUpgrade
   | TransmissionUpgrade
   | LimitedUpgrade
+  | TurboUpgrade
   | RestrictorUpgrade;
 
 export interface BuildSectionUpgrades {
@@ -218,8 +227,8 @@ export interface EngineUpgrades extends BuildSectionUpgrades {
   valves: Upgrade;
   displacement: Upgrade;
   pistons: Upgrade;
-  turbo: LimitedUpgrade; // sport and race only
-  twinTurbo: LimitedUpgrade; // sport and race only
+  turbo: TurboUpgrade; // sport and race only
+  twinTurbo: TurboUpgrade; // sport and race only
   supercharger: LimitedUpgrade; // sport and race only
   centrifugalSupercharger: LimitedUpgrade; // sport and race only
   intercooler: LimitedUpgrade; // sport and race only

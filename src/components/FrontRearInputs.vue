@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, watch } from 'vue';
+import { computed, reactive, watch } from 'vue';
 import { v1 as uuid } from 'uuid';
 import { FrontAndRearSettings } from '../lib/types';
 
@@ -41,19 +41,20 @@ watch(() => props.modelValue, (current) => {
 </script>
 
 <template>
-  <div class="control" :class="{ disabled }">
+  <div class="control !min-w-[250px]" :class="{ disabled }">
     <div class="label">{{ label }}</div>
-    <div class="flex">
-      <div class="relative">
+    <div class="flex w-full">
+      <slot name="attach-left" />
+      <div class="relative flex-1 sm:flex-auto">
         <label
           :for="`${id}front`"
-          class="absolute left-2 top-0 bottom-0 flex items-center mb-0"
+          class="prefix"
         >F</label>
         <input
           :id="`${id}front`"
           v-model="state.form.front"
           :placeholder="placeholder"
-          class="indent-4 rounded-r-none border-r-0"
+          class="rounded-r-none"
           :class="{ 'rounded-l-none': attachLeft }"
           type="number"
           :step="step"
@@ -62,17 +63,17 @@ watch(() => props.modelValue, (current) => {
           :disabled="disabled"
         >
       </div>
-      <div class="relative">
+      <div class="relative flex-1 sm:flex-auto">
         <label
           :for="`${id}rear`"
-          class="absolute left-2 top-0 bottom-0 flex items-center mb-0"
+          class="prefix"
         >R</label>
         <input
           :id="`${id}rear`"
           v-model="state.form.rear"
           :placeholder="placeholder"
-          class="pl-6 rounded-l-none"
-          :class="{ 'rounded-r-none border-r-0': attachRight }"
+          class="rounded-l-none"
+          :class="{ 'rounded-r-none': attachRight }"
           type="number"
           :step="step"
           :min="min"
@@ -80,6 +81,7 @@ watch(() => props.modelValue, (current) => {
           :disabled="disabled"
         >
       </div>
+      <slot name="attach-right" />
     </div>
   </div>
 </template>

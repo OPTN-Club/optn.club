@@ -1,0 +1,144 @@
+section {
+  @apply
+    flex
+    flex-col
+    grow
+    pb-12
+    items-start;
+}
+
+section .heading {
+  @apply
+    text-light-mist
+    mb-6;
+}
+
+.section-desc {
+  @apply
+    text-light-mist;
+}
+
+section .content {
+  @apply
+    bg-light-mist
+    bg-opacity-5
+    p-4
+    w-full;
+}
+
+section .content > h3,
+section .content > .content-header {
+  @apply
+    mb-3;
+}
+
+section + section {
+  @apply
+    border-t-2
+    border-t-light-mist
+    border-opacity-10
+    pt-8;
+}
+
+.content + .content {
+  @apply mt-6;
+}
+
+.note {
+  @apply text-light-mist;
+}
+
+.set-upgrades {
+  @apply
+    flex
+    flex-wrap
+    gap-4
+    items-end
+    justify-between
+    sm:justify-start;
+}
+
+.set-upgrades + .set-upgrades {
+  @apply mt-4;
+}
+
+.set-upgrades.vertical {
+  @apply
+    flex-col
+    items-start;
+}
+
+.upgrade-select {
+  @apply sm:w-28;
+}
+
+/* .upgrade-select label {
+  @apply
+    flex
+    items-end;
+} */
+
+.control {
+  @apply
+    min-w-[155px]
+    max-w-full
+    flex-1
+    sm:flex-auto
+    sm:grow-0;
+}
+
+.control label {
+  @apply max-w-full
+}
+
+.control input,
+.control select {
+  @apply
+    w-full;
+}
+
+.control .prefix,
+.control .suffix {
+  @apply
+    text-yellow
+    absolute
+    top-0
+    bottom-0
+    flex
+    items-center
+    mb-0;
+}
+
+.control .prefix + input,
+.control .prefix + select {
+  @apply indent-4;
+}
+
+.control .prefix {
+  @apply left-3;
+}
+
+.control .suffix {
+  @apply right-4;
+}
+
+@screen lg {
+  section {
+    @apply
+      flex-row;
+  }
+
+  section .heading {
+    @apply
+      w-56
+      shrink-0
+      mr-6
+      sticky
+      top-6;
+  }
+
+  section .content {
+    @apply
+      p-6
+  }
+}

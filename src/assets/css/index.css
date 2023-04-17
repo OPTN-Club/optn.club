@@ -1,6 +1,8 @@
-@import url("https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700");
 @import "./_tailwind.css";
+@import "./_scrollbars.css";
 @import "./_base.css";
+@import "./_layout.css";
+@import "./_inputs.css";
 @import "./_forms.css";
 @import "./_buttons.css";
 @import "./_header.css";

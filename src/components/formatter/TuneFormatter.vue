@@ -5,6 +5,7 @@ import TuneSettingsForm from './TuneSettingsForm.vue';
 import GlobalUnitSelect from '../GlobalUnitSelect.vue';
 import FormattedTuneTextarea from './FormattedTuneTextarea.vue';
 import CarStatsForm from './CarStatsForm.vue';
+import ShareCodesForm from './ShareCodesForm.vue';
 
 const {
   form,
@@ -14,21 +15,20 @@ const {
 </script>
 
 <template>
-  <div>
-    <section>
-      <h1>Tune Formatter</h1>
-      <p>
-        Format your tunes in a compact and readable text for sharing
-      </p>
-      <GlobalUnitSelect v-model="globalUnit" class="mt-4" />
-    </section>
-    <form class="md:flex md:items-start">
-      <div>
-        <CarStatsForm />
-        <BuildSettingsForm />
-        <TuneSettingsForm />
-      </div>
-      <FormattedTuneTextarea />
+  <h1>TUNE FORMATTER</h1>
+  <p class="sub-title">
+    Create and share your tune.
+    This tool will automatically create an easy-to-read
+    format you can share on our subreddit.
+  </p>
+  <div class="flex flex-col md:flex-row items-start">
+    <form class="grow">
+      <GlobalUnitSelect v-model="globalUnit" />
+      <CarStatsForm />
+      <ShareCodesForm />
+      <BuildSettingsForm />
+      <TuneSettingsForm />
     </form>
+    <FormattedTuneTextarea />
   </div>
 </template>
