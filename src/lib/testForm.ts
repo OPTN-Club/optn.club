@@ -14,6 +14,7 @@ import {
   ForceUnit,
   PIClass,
   RestrictorUpgrade,
+  TurboUpgrade,
 } from './types';
 
 export default function getTestForm(): SettingsForm {
@@ -113,8 +114,8 @@ export default function getTestForm(): SettingsForm {
         valves: Upgrade.stock,
         displacement: Upgrade.stock,
         pistons: Upgrade.stock,
-        turbo: LimitedUpgrade.na,
-        twinTurbo: LimitedUpgrade.na,
+        turbo: TurboUpgrade.na,
+        twinTurbo: TurboUpgrade.na,
         supercharger: LimitedUpgrade.na,
         centrifugalSupercharger: LimitedUpgrade.na,
         intercooler: LimitedUpgrade.stock,
