@@ -48,6 +48,8 @@
     @apply
       h-10
       leading-10
+      border
+      border-transparent
       px-4
       rounded
       text-ghost-white
