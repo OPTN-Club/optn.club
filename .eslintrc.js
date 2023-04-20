@@ -115,6 +115,16 @@ module.exports = {
     "vue/attribute-hyphenation": ["error", "never"],
     "vue/order-in-components": "error",
     "vue/this-in-template": "error",
+    "vue/max-len": [
+      "error",
+      {
+        code: 140,
+        tabWidth: 2,
+        ignoreComments: true,
+        ignoreRegExpLiterals: true,
+        ignoreStrings: true,
+      },
+    ],
     "vue/v-on-event-hyphenation": ["error", "never"],
     "vuejs-accessibility/form-control-has-label": "off",
     "vuejs-accessibility/label-has-for": [

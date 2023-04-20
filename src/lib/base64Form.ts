@@ -90,7 +90,7 @@ function unmangleValue<T>(value: string | number) {
 //   return target;
 // }
 
-export function flattenObject<T>(object: T, path: string[] = []): Record<string, never> {
+export function flattenObject<T extends object>(object: T, path: string[] = []): Record<string, never> {
   const keys = Object.keys(object);
   // console.log('keys', keys);
   const flattened: Record<string, never> = {};
@@ -101,7 +101,7 @@ export function flattenObject<T>(object: T, path: string[] = []): Record<string,
     const valuePath = [...path, key];
     const flattenedKey = valuePath.join('.');
 
-    if (isObject) {
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
       const flattenedValue = flattenObject(value, valuePath);
       Object.keys(flattenedValue).forEach((valueKey) => {
         flattened[valueKey] = flattenedValue[valueKey];
@@ -117,7 +117,7 @@ export function flattenObject<T>(object: T, path: string[] = []): Record<string,
 const flattenedKeys = Object.keys(flattenObject(getDefaultForm()));
 flattenedKeys.sort();
 
-export function unflattenObjectInto<T>(source: Record<string, never>, target: T, path: string[] = []) {
+export function unflattenObjectInto<T extends object>(source: Record<string, never>, target: T, path: string[] = []) {
   const keys = Object.keys(target);
   keys.forEach((key) => {
     const valuePath = [...path, key];
@@ -125,7 +125,7 @@ export function unflattenObjectInto<T>(source: Record<string, never>, target: T,
 
     const isObject = typeof targetValue === 'object' && !Array.isArray(targetValue);
 
-    if (isObject) {
+    if (targetValue && isObject) {
       target[key as keyof T] = unflattenObjectInto(source, targetValue, valuePath);
     } else {
       const flattenedKey = valuePath.join('.');
