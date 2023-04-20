@@ -34,7 +34,8 @@
     @apply
       grow
       md:grow-0
-      p-2
+      px-4
+      py-2
       text-ghost-white
       whitespace-nowrap
       sm:text-xl

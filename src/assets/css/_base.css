@@ -1,7 +1,7 @@
 @layer base {
   html {
     @apply
-      bg-neutral-800
+      bg-rich-black
       h-full;
 
   }
