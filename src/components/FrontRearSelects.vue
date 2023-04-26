@@ -33,7 +33,7 @@ watch(() => props.modelValue, (current) => {
 <template>
   <div class="control !min-w-[250px]" :class="{ disabled }">
     <div class="label">{{ label }}</div>
-    <div class="flex">
+    <div class="front-rear-selects">
       <div class="relative grow sm:grow-0">
         <label
           :for="`${id}front`"
@@ -42,7 +42,6 @@ watch(() => props.modelValue, (current) => {
         <select
           :id="`${id}front`"
           v-model="state.form.front"
-          class="rounded-r-none border-r-0 w-32"
         >
           <slot>
             <option
@@ -63,7 +62,6 @@ watch(() => props.modelValue, (current) => {
         <select
           :id="`${id}front`"
           v-model="state.form.rear"
-          class="rounded-l-none"
         >
           <slot>
             <option
@@ -79,3 +77,19 @@ watch(() => props.modelValue, (current) => {
     </div>
   </div>
 </template>
+
+<style>
+.front-rear-selects {
+  @apply
+    flex
+    bg-light-mist
+    bg-opacity-20
+    rounded;
+}
+
+.front-rear-selects select {
+  @apply
+    w-32
+    bg-transparent;
+}
+</style>
