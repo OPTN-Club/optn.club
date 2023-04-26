@@ -111,11 +111,6 @@ const trackWidthOptions = enumToOptions(TrackWidthType);
             v-model="form.build.tiresAndRims.width"
             label="Tire Width"
           />
-          <FrontRearSelects
-            v-model="form.build.tiresAndRims.trackWidth"
-            label="Track Width"
-            :options="trackWidthOptions"
-          />
         </div>
         <div class="set-upgrades">
           <EnumSelect
@@ -130,7 +125,19 @@ const trackWidthOptions = enumToOptions(TrackWidthType);
           />
         </div>
         <div class="set-upgrades">
-          <FrontRearInputs v-model="form.build.tiresAndRims.rimSize" label="Size" />
+          <FrontRearInputs v-model="form.build.tiresAndRims.rimSize" label="Rim Size" />
+        </div>
+        <div class="set-upgrades">
+          <FrontRearSelects
+            v-model="form.build.tiresAndRims.trackWidth"
+            label="Track Width"
+            :options="trackWidthOptions"
+          />
+          <FrontRearSelects
+            v-model="form.build.tiresAndRims.profileSize"
+            label="Profile Size"
+            :options="trackWidthOptions"
+          />
         </div>
       </div>
       <div class="content">

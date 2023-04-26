@@ -145,16 +145,16 @@ export enum DriveType {
   awd = 'AWD',
 }
 
-export interface FrontAndRearSettings {
-  front: string;
-  rear: string;
+export interface FrontAndRearSettings<T = string> {
+  front: T;
+  rear: T;
   na?: boolean;
 }
 
 export type UnitOfMeasure = PressureUnit | SpringRateUnit | LengthUnit | ForceUnit;
 
-export interface FrontAndRearWithUnits<U extends UnitOfMeasure = UnitOfMeasure>
-  extends FrontAndRearSettings {
+export interface FrontAndRearWithUnits<U extends UnitOfMeasure = UnitOfMeasure, T = string>
+  extends FrontAndRearSettings<T> {
   units: U;
 }
 
@@ -269,6 +269,7 @@ export interface TiresAndRimsUpgrades {
   rimStyle: RimStyle;
   rimSize: FrontAndRearSettings;
   trackWidth: TrackWidth;
+  profileSize: FrontAndRearSettings<TrackWidthType>;
 }
 
 export interface AeroAndAppearanceUpgrades {

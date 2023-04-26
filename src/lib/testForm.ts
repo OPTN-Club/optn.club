@@ -155,6 +155,10 @@ export default function getTestForm(): SettingsForm {
           front: TrackWidthType.stock,
           rear: TrackWidthType.stock,
         },
+        profileSize: {
+          front: TrackWidthType.stock,
+          rear: TrackWidthType.stock,
+        },
       },
       aeroAndAppearance: {
         frontBumper: 'Stock',

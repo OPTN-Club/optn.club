@@ -84,6 +84,7 @@ export const mangleKeyMap: Record<string, string> = {
   width: 'ce',
   zeroToHundred: 'cf',
   zeroToSixty: 'cg',
+  profileSize: 'ch',
 };
 
 export const mangleValueMap: Record<string, string> = {
@@ -92,6 +93,7 @@ export const mangleValueMap: Record<string, string> = {
   Sport: 'sp',
   'Semi-Slick': 'ss',
   Race: 'r',
+  'Race Anti-lag': 'ral',
   Slick: 'sl',
   Drift: 'dr',
   Rally: 'ra',

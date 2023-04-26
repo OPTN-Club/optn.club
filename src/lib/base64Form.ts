@@ -182,8 +182,19 @@ function serializeFlatObject(form: Record<string, never>): string {
 
 function deserializeFlatObject(value: string): Record<string, never> {
   const values = JSON.parse(value) as never[];
+
+  /**
+   * Added Tire Profile Size
+   * If a link is before this was added, we need to
+   * insert the values into the parsed array
+   */
+  if (values.length === 98) {
+    values.splice(38, 0, 's' as never, 's' as never);
+  }
+
   const flattenedForm: Record<string, never> = {};
   flattenedKeys.forEach((key, index) => {
+    console.log(key, index);
     flattenedForm[key] = unmangleValue(values[index]) as never;
   });
   return flattenedForm;
