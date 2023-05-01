@@ -266,6 +266,7 @@ function formatTiresAndRims(build: BuildSettings): string[] {
       ['Rim Style', `${build.tiresAndRims.rimStyle.type} ${build.tiresAndRims.rimStyle.name}`],
       ['Rim Size', `Front ${build.tiresAndRims.rimSize.front} in, Rear ${build.tiresAndRims.rimSize.rear} in`],
       ['Track Width', `Front ${build.tiresAndRims.trackWidth.front}, Rear ${build.tiresAndRims.trackWidth.rear}`],
+      ['Profile Size', `Front ${build.tiresAndRims.profileSize.front}, Rear ${build.tiresAndRims.profileSize.rear}`],
     ],
     false,
     TextAlign.left,
