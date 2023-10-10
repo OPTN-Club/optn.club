@@ -60,6 +60,7 @@ const trackWidthOptions = enumToOptions(TrackWidthType);
           <LimitedUpgradeSelect v-model="form.build.engine.intercooler" label="Intercooler" />
           <UpgradeSelect v-model="form.build.engine.oilCooling" label="Oil Cooling" />
           <UpgradeSelect v-model="form.build.engine.flywheel" label="Flywheel" />
+          <UpgradeSelect v-model="form.build.engine.motorAndBattery" label="Motor and Battery" />
           <RestrictorUpgradeSelect v-model="form.build.engine.restrictorPlate" label="Restrictor Plate" />
         </div>
       </div>

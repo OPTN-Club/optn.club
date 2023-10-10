@@ -121,6 +121,7 @@ export default function getTestForm(): SettingsForm {
         intercooler: LimitedUpgrade.stock,
         oilCooling: Upgrade.stock,
         flywheel: Upgrade.stock,
+        motorAndBattery: Upgrade.na,
         restrictorPlate: RestrictorUpgrade.na,
       },
       platformAndHandling: {

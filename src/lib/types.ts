@@ -234,6 +234,7 @@ export interface EngineUpgrades extends BuildSectionUpgrades {
   intercooler: LimitedUpgrade; // sport and race only
   oilCooling: Upgrade;
   flywheel: Upgrade;
+  motorAndBattery: Upgrade;
   restrictorPlate: RestrictorUpgrade;
 }
 
