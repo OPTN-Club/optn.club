@@ -31,6 +31,7 @@ export const mangleKeyMap: Record<string, string> = {
   engine: 'ad',
   exhaust: 'ae',
   flywheel: 'af',
+  motorAndBattery: 'ci',
   front: 'ag',
   frontArb: 'ah',
   frontBumper: 'ai',
