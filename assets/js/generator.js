@@ -39,7 +39,7 @@
     lines.push(':--|--:');
     lines.push(`Final drive | ${gears[0].value}`);
     for (let index = 1; index < gears.length; index++) {
-      if (gears[index].value !== "") {
+      if (gears[index].value !== '') {
         lines.push(`Gear ${index} | ${gears[index].value}`);
       }
     }
@@ -56,7 +56,6 @@
     lines.push(`Front | ${toe[0].value}°`);
     lines.push(`Rear | ${toe[1].value}°`);
     lines.push('\n');
-
 
     lines.push('Alignment | Caster');
     lines.push(':--|--:');
@@ -93,18 +92,18 @@
     lines.push(`Rear | ${bumpStiffness[1].value}`);
     lines.push('\n');
 
-    if (aero[0].value !== "" && aero[1].value !== "") {
+    if (aero[0].value !== '' && aero[1].value !== '') {
       lines.push('Aero | Downforce');
       lines.push(':--|--:');
-      if (aero[0].value !== "") {
+      if (aero[0].value !== '') {
         lines.push(`Front | ${aero[0].value} ${downforceUnit}`);
       }
-      if (aero[1].value !== "") {
+      if (aero[1].value !== '') {
         lines.push(`Rear | ${aero[1].value} ${downforceUnit}`);
       }
       lines.push('\n');
     }
-    if (brake[0].value !== "" && brake[1].value !== "") {
+    if (brake[0].value !== '' && brake[1].value !== '') {
       lines.push('Brake | %');
       lines.push(':--|--:');
       lines.push(`Balance | ${brake[0].value}%`);
@@ -113,18 +112,18 @@
     } else {
       lines.push('Brake | %');
       lines.push(':--|--:');
-      lines.push(`Balance | N/A`);
-      lines.push(`Pressure | N/A`);
+      lines.push('Balance | N/A');
+      lines.push('Pressure | N/A');
       lines.push('\n');
     }
-    if (differential[0].value !== "" || differential[1].value !== "") {
+    if (differential[0].value !== '' || differential[1].value !== '') {
       lines.push('Differential | Front');
       lines.push(':--|--:');
       lines.push(`Acceleration | ${differential[0].value}%`);
       lines.push(`Deceleration | ${differential[1].value}%`);
       lines.push('\n');
     }
-    if (differential[2].value !== "" || differential[3].value !== "") {
+    if (differential[2].value !== '' || differential[3].value !== '') {
       lines.push('Differential | Rear');
       lines.push(':--|--:');
       lines.push(`Acceleration | ${differential[2].value}%`);
@@ -132,8 +131,8 @@
       lines.push('\n');
     }
 
-    if (differential[0].value !== "" && differential[1].value !== "" &&
-      differential[2].value !== "" && differential[3].value !== "") {
+    if (differential[0].value !== '' && differential[1].value !== '' &&
+      differential[2].value !== '' && differential[3].value !== '') {
       lines.push('Differential | Center');
       lines.push(':--|--:');
       lines.push(`Balance | ${differential[4].value}%`);

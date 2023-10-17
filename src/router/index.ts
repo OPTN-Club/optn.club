@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import AppHome from '../components/AppHome.vue';
-import TuneFormatter from '../components/formatter/TuneFormatter.vue';
 import MakesAndModels from '../components/MakesAndModels.vue';
 import TuningChart from '../components/chart/TuningChart.vue';
-import TuneCalculator from '../components/tune-calculator/TuneCalculator.vue';
+import FMFormatter from '../components/formatter/motorsport/FMFormatter.vue';
+import FormatterHorizon from '../components/formatter/FormatterHorizon.vue';
+import TuneFormatter from '../components/formatter/TuneFormatter.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,14 +12,42 @@ const router = createRouter({
     { name: 'home', path: '/', component: AppHome },
     {
       name: 'formatter',
-      path: '/formatter/:encodedForm?',
-      component: TuneFormatter,
-      // props: true,
+      path: '/formatter',
+      children: [
+        {
+          name: 'formatter-fh5',
+          path: 'forza/horizon5/:version/:encodedForm?',
+          component: FormatterHorizon,
+          props: (route) => ({
+            game: 'horizon',
+            version: route.params.version,
+            encodedForm: route.params.encodedForm,
+          }),
+        },
+        {
+          name: 'formatter-fm8',
+          path: 'forza/motorsport/:version/:encodedForm?',
+          component: FMFormatter,
+          props: (route) => ({
+            game: 'motorsport',
+            version: route.params.version,
+            encodedForm: route.params.encodedForm,
+          }),
+        },
+        {
+          name: 'formatter-v1',
+          path: ':encodedForm?',
+          component: TuneFormatter,
+          props: (route) => ({
+            game: 'horizon',
+            version: 'v1',
+            encodedForm: route.params.encodedForm,
+          }),
+        },
+      ],
     },
-    { name: 'calculator', path: '/calculator', component: TuneCalculator },
     { name: 'tuningchart', path: '/chart', component: TuningChart },
     { name: 'cars', path: '/cars', component: MakesAndModels },
-    { name: 'redirection', path: '/:pathMatch(.*)*', redirect: '/formatter' },
   ],
 });
 

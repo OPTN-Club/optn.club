@@ -9,19 +9,20 @@ import {
   reactive,
 } from 'vue';
 import { useRouter } from 'vue-router';
-import useRedditMarkdownGenerator, { getDrivetrain } from './generator';
-import getDefaultForm from './defaultForm';
+import useRedditMarkdownGenerator, { getDrivetrain } from '../../../lib/generator';
+import getDefaultForm from '../../../lib/defaultForm';
 import {
   DriveType,
   FormattingFormProps,
-} from './types';
-import useUpgrades, { UseUpgrades } from './useUpgrades';
-import useUnitsConverter from './useUnitsConverter';
-import { SettingsFormV1 } from './SettingsFormV1';
-import useFormEncoder from './useFormEncoder';
+} from '../../../lib/types';
+import useUpgrades, { UseUpgrades } from '../../../lib/useUpgrades';
+import useUnitsConverter from '../../../lib/useUnitsConverter';
+import { FMSetup, getEncoderOptions } from './FMSetup';
+import useFormEncoder from '../../../lib/useFormEncoder';
+import useFMRedditMarkdownGenerator from './FMRedditGenerator';
 
 interface UseFormattingForm {
-  form: SettingsFormV1;
+  form: FMSetup;
   driveType: ComputedRef<DriveType>;
   globalUnit: Ref<'Metric' | 'Imperial'>;
   convertOnUnitChange: Ref<boolean>;
@@ -33,17 +34,21 @@ interface UseFormattingForm {
 
 const providerKey = 'formatting-form';
 
-export function useFormattingFormProvider(props: FormattingFormProps) {
+export function useFMFormattingFormProvider(props: FormattingFormProps) {
   const router = useRouter();
-  const encoder = useFormEncoder(props);
 
-  const form = reactive(encoder.decode(props.encodedForm));
+  const options = ref(getEncoderOptions(props.version));
+  watch(() => props.version, () => {
+    options.value = getEncoderOptions(props.version);
+  });
 
-  // watch(() => props.game, (current, previous) => { });
+  const encoder = useFormEncoder(options);
 
-  const driveType = computed(() => getDrivetrain(form.build));
+  const form = reactive(encoder.decode(props.encodedForm) as unknown as FMSetup);
 
-  const show = useUpgrades(form, driveType);
+  const driveType = computed(() => form.upgrades.conversions.drivetrain);
+
+  const show = useUpgrades(form.upgrades.drivetrain.transmission, driveType);
 
   const {
     globalUnit,
@@ -64,11 +69,11 @@ export function useFormattingFormProvider(props: FormattingFormProps) {
   });
 
   const linkUrl = computed(() => `https://optn.club${router.currentRoute.value.fullPath}`);
-  const { markdown } = useRedditMarkdownGenerator(props, form, linkUrl, globalUnit);
+  const { markdown } = useFMRedditMarkdownGenerator(props, form, linkUrl, globalUnit);
 
   function reset() {
-    const defaultForm = getDefaultForm(props.version);
-    form.build = defaultForm.build;
+    const defaultForm = options.value.getDefaultForm();
+    form.upgrades = defaultForm.upgrades;
     form.make = defaultForm.make;
     form.model = defaultForm.model;
     form.stats = defaultForm.stats;
@@ -92,7 +97,7 @@ export function useFormattingFormProvider(props: FormattingFormProps) {
   return state;
 }
 
-export function useFormattingForm() {
+export function useFMFormattingForm() {
   const state = inject<UseFormattingForm>(providerKey);
   if (!state) throw new Error('Injected state not available');
   return state;

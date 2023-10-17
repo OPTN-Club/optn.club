@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import { v1 as uuid } from 'uuid';
 import enginesByModel from '../lib/engines';
 
 const props = defineProps<{
@@ -10,6 +11,8 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'update:modelValue', v: string): void,
 }>();
+
+const id = uuid();
 
 const options = computed(() => {
   if (!props.car) return [];
@@ -23,10 +26,20 @@ function onInput(e: Event) {
 </script>
 <template>
   <div class="control">
-    <label>Engine</label>
-    <select :value="modelValue" @input="onInput">
+    <label :for="id">Engine</label>
+    <select
+      :id="id"
+      :value="modelValue"
+      @input="onInput"
+    >
       <option value>Stock</option>
-      <option v-for="option in options" :key="option" :value="option">{{ option }}</option>
+      <option
+        v-for="option in options"
+        :key="option"
+        :value="option"
+      >
+        {{ option }}
+      </option>
     </select>
   </div>
 </template>

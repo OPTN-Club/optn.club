@@ -1,3 +1,9 @@
+export interface FormattingFormProps {
+  game: 'horizon' | 'motorsport';
+  version: string;
+  encodedForm?: string;
+}
+
 export interface SelectOption<T = string> {
   value: T;
   label?: string;
@@ -30,6 +36,11 @@ export enum LengthUnit {
   in = 'in',
 }
 
+export enum SpeedUnit {
+  kph = 'kph',
+  mph = 'mph',
+}
+
 export interface ForceValues<T extends string | number> {
   kgf: T;
   lbf: T;
@@ -49,6 +60,11 @@ export interface PressureValues<T extends string | number> {
 export interface LengthValues<T extends string | number> {
   cm: T;
   in: T;
+}
+
+export interface SpeedValues<T extends string | number> {
+  kph: T;
+  mph: T;
 }
 
 export type UnitValues<T extends string | number> =
@@ -86,6 +102,15 @@ export enum RestrictorUpgrade {
   removed = 'Remove Restrictor',
 }
 
+export enum FMFullUpgrade {
+  na = 'N/A',
+  stock = 'Stock',
+  street = 'Street',
+  sport = 'Sport',
+  race = 'Race',
+  drift = 'Drift',
+}
+
 export enum FullUpgrade {
   na = 'N/A',
   stock = 'Stock',
@@ -108,6 +133,16 @@ export enum TransmissionUpgrade {
   raceNine = 'Race Nine Speed',
   raceTen = 'Race Ten Speed',
   drift = 'Drift Four Speed',
+}
+
+export enum FMTireCompound {
+  stock = 'Stock',
+  street = 'Street',
+  sport = 'Sport',
+  semiSlick = 'Semi-Slick',
+  slick = 'Slick',
+  drift = 'Drift',
+  drag = 'Drag',
 }
 
 export enum TireCompound {
@@ -145,6 +180,15 @@ export enum DriveType {
   awd = 'AWD',
 }
 
+export enum BallastType {
+  none = 'None',
+  extraLight = 'Extra Light',
+  light = 'Light',
+  medium = 'Medium',
+  heavy = 'Heavy',
+  extraHeavy = 'Extra Heavy',
+}
+
 export interface FrontAndRearSettings<T = string> {
   front: T;
   rear: T;
@@ -177,7 +221,7 @@ export interface GearTuneSettings {
 
 export interface BrakeTuneSettings {
   na: boolean;
-  bias: string;
+  bias: string; // balance in FM
   pressure: string;
 }
 
@@ -410,9 +454,4 @@ export interface Car {
   fm1?: string;
   titlesCount?: number | null;
   xboxgen?: string | number;
-}
-
-export interface FormData {
-  form: SettingsForm;
-  isFromURLParam?: boolean;
 }

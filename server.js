@@ -8,7 +8,7 @@ const app = express();
 const staticMiddleware = express.static(path.join(__dirname, '/docs'));
 const spaMiddleware = (req, res) => {
   res.sendFile(path.join(__dirname, '/docs/index.html'));
-}
+};
 
 app.set('x-powered-by', false);
 if (process.env.NODE_ENV !== 'development') {

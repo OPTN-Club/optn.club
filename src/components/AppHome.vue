@@ -19,6 +19,7 @@ const xboxClubLink = 'https://account.xbox.com/en-ca/clubs/profile?clubid=337987
       <a
         href="https://discord.gg/K2Kk5Kj6PP"
         target="_blank"
+        rel="noopener noreferrer"
         class="inline-flex items-center align-middle"
       >
         <img
@@ -43,6 +44,7 @@ const xboxClubLink = 'https://account.xbox.com/en-ca/clubs/profile?clubid=337987
       <a
         href="https://reddit.com/r/ForzaOpenTunes"
         target="_blank"
+        rel="noopener noreferrer"
         class="inline-flex items-center align-middle"
       >
         <img
@@ -70,6 +72,7 @@ const xboxClubLink = 'https://account.xbox.com/en-ca/clubs/profile?clubid=337987
       <a
         :href="xboxClubLink"
         target="_blank"
+        rel="noopener noreferrer"
       >
         OPTN Club on Xbox
       </a>
@@ -82,6 +85,7 @@ const xboxClubLink = 'https://account.xbox.com/en-ca/clubs/profile?clubid=337987
       <a
         href="https://docs.google.com/document/d/1r5auWYA46yrxjB6hsg8bYs02qmJt6R2LyAK8TOG1I0M/edit?usp=sharing"
         target="_blank"
+        rel="noopener noreferrer"
       >
         Tuning Guide
       </a>

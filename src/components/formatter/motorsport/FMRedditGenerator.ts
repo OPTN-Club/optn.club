@@ -2,19 +2,16 @@ import { capitalCase } from 'change-case';
 import {
   Ref, computed, reactive, watch,
 } from 'vue';
-import { byFullname } from './models';
 import {
-  BuildSectionUpgrades,
-  BuildSettings,
+  DifferentialTuneSettings,
   DriveType,
   FormattingFormProps,
   FrontAndRearSettings,
   FrontAndRearWithUnits,
-  TuneSettings,
-} from './types';
-import { addSuffix as suffixize, formatFloat } from './utils';
-import { formatUnit, formatUnitHeaders } from './unitsOfMeasure';
-import { SettingsFormV1 } from './SettingsFormV1';
+} from '../../../lib/types';
+import { addSuffix as suffixize, formatFloat } from '../../../lib/utils';
+import { formatUnit, formatUnitHeaders } from '../../../lib/unitsOfMeasure';
+import { FMSetup, PerformanceUpgrades, TuneSettings } from './FMSetup';
 
 const tableSeparator = '\n######\n';
 
@@ -129,7 +126,7 @@ function formatSprings(tune: TuneSettings): string[] {
 }
 
 function formatDamping(tune: TuneSettings): string[] {
-  return formatFrontRear(['Damping', 'Rebound', 'Bump'], [tune.damping, tune.bump]);
+  return formatFrontRear(['Damping', 'Rebound', 'Bump'], [tune.rebound, tune.bump]);
 }
 
 function formatAero(tune: TuneSettings): string[] {
@@ -167,22 +164,10 @@ function formatBrakes(tune: TuneSettings): string[] {
   ]);
 }
 
-function isDrivetrain(value: string): value is DriveType {
-  return Object.values(DriveType).includes(value as DriveType);
-}
-
-export function getDrivetrain(build: BuildSettings): DriveType {
-  if (build.conversions.drivetrain) {
-    return build.conversions.drivetrain;
-  }
-  return DriveType.awd;
-}
-
-function formatDifferential(form: SettingsFormV1): string[] {
-  const drivetrain = getDrivetrain(form.build);
+function formatDifferential(diff: DifferentialTuneSettings, driveType: DriveType): string[] {
   const header = ['Differential', 'Accel', 'Decel'];
 
-  if (form.tune.diff.na) {
+  if (diff.na) {
     return formatTable(header, [['Not Applicable', '', '']]);
   }
 
@@ -191,36 +176,27 @@ function formatDifferential(form: SettingsFormV1): string[] {
   const center = ['Center', '', ''];
   const body: string[][] = [];
 
-  if ([DriveType.fwd, DriveType.awd].includes(drivetrain)) {
+  if ([DriveType.fwd, DriveType.awd].includes(driveType)) {
     body.push(front);
-    front[1] = formatFloat(form.tune.diff.front.accel, 0, '%');
-    front[2] = formatFloat(form.tune.diff.front.decel, 0, '%');
+    front[1] = formatFloat(diff.front.accel, 0, '%');
+    front[2] = formatFloat(diff.front.decel, 0, '%');
   }
 
-  if ([DriveType.rwd, DriveType.awd].includes(drivetrain)) {
+  if ([DriveType.rwd, DriveType.awd].includes(driveType)) {
     body.push(rear);
-    rear[1] = formatFloat(form.tune.diff.rear.accel, 0, '%');
-    rear[2] = formatFloat(form.tune.diff.rear.decel, 0, '%');
+    rear[1] = formatFloat(diff.rear.accel, 0, '%');
+    rear[2] = formatFloat(diff.rear.decel, 0, '%');
   }
 
-  if (drivetrain === DriveType.awd) {
+  if (driveType === DriveType.awd) {
     body.push(center);
-    center[1] = formatFloat(form.tune.diff.center, 0, '%');
-    // ...formatTable(
-    //   ['Center', ''],
-    //   [['Balance', formatFloat(form.tune.diff.center, 0, '%')]],
-    // ));
+    center[1] = formatFloat(diff.center, 0, '%');
   }
-  // const table = [
-  //   '### Differential\n',
-  //   ...formatTable(header, body),
-  // ];
 
   return formatTable(header, body);
 }
 
-export function formatTune(form: SettingsFormV1, model: string): string[] {
-  const car = byFullname.get(model);
+export function formatTune(form: FMSetup, model: string): string[] {
   const text = [
     ...formatTires(form.tune),
     ...formatGears(form.tune),
@@ -230,63 +206,60 @@ export function formatTune(form: SettingsFormV1, model: string): string[] {
     ...formatDamping(form.tune),
     ...formatAero(form.tune),
     ...formatBrakes(form.tune),
-    ...formatDifferential(form),
+    ...formatDifferential(form.tune.diff, form.upgrades.conversions.drivetrain),
   ];
 
   return text;
 }
 
-function formatConversions(build: BuildSettings, model: string): string[] {
+function formatConversions(upgrades: PerformanceUpgrades, driveType: DriveType): string[] {
   const headers = ['Conversions', ''];
 
-  const car = byFullname.get(model);
-  const drivetrain = build.conversions.drivetrain === car?.drive ? 'Stock' : build.conversions.drivetrain;
-
   const body = [
-    ['Engine', build.conversions.engine || 'Stock'],
-    ['Drivetrain', drivetrain || 'Stock'],
+    ['Engine', upgrades.conversions.engine || 'Stock'],
+    ['Drivetrain', driveType || 'Stock'],
   ];
-  if (build.conversions.aspiration) {
-    body.push(['Aspiration', build.conversions.aspiration || 'Stock']);
+  if (upgrades.conversions.aspiration) {
+    body.push(['Aspiration', upgrades.conversions.aspiration || 'Stock']);
   }
-  if (build.conversions.aspiration) {
-    body.push(['Body Kit', build.conversions.bodyKit || 'Stock']);
+  if (upgrades.conversions.aspiration) {
+    body.push(['Body Kit', upgrades.conversions.bodyKit || 'Stock']);
   }
   return formatTable(headers, body);
 }
 
-function formatTiresAndRims(build: BuildSettings): string[] {
+function formatTiresAndRims(upgrades: PerformanceUpgrades): string[] {
   return formatTable(
     ['Tires And Rims', ''],
     [
-      ['Compound', build.tiresAndRims.compound],
-      ['Tire Width', `Front ${build.tiresAndRims.width.front} mm, Rear ${build.tiresAndRims.width.rear} mm`],
-      ['Rim Style', `${build.tiresAndRims.rimStyle.type} ${build.tiresAndRims.rimStyle.name}`],
-      ['Rim Size', `Front ${build.tiresAndRims.rimSize.front} in, Rear ${build.tiresAndRims.rimSize.rear} in`],
-      ['Track Width', `Front ${build.tiresAndRims.trackWidth.front}, Rear ${build.tiresAndRims.trackWidth.rear}`],
-      ['Profile Size', `Front ${build.tiresAndRims.profileSize.front}, Rear ${build.tiresAndRims.profileSize.rear}`],
+      ['Compound', upgrades.tires.compound],
+      ['Tire Width', `Front ${upgrades.tires.width.front} mm, Rear ${upgrades.tires.width.rear} mm`],
+      ['Rim Style', `${upgrades.wheels.style} ${upgrades.wheels.style}`],
+      ['Rim Size', `Front ${upgrades.wheels.size.front} in, Rear ${upgrades.wheels.size.rear} in`],
+      // ['Track Width', `Front ${upgrades.tires.trackWidth.front}, Rear ${upgrades.tires.trackWidth.rear}`],
+      // ['Profile Size', `Front ${upgrades.tires.profileSize.front}, Rear ${upgrades.tires.profileSize.rear}`],
     ],
     false,
     TextAlign.left,
   );
 }
 
-function formatAeroBuild(build: BuildSettings): string[] {
+function formatAeroBuild(upgrades: PerformanceUpgrades): string[] {
   const aero: string[][] = [];
-  if (build.aeroAndAppearance.frontBumper) {
-    aero.push(['Front Bumper', build.aeroAndAppearance.frontBumper]);
+  if (upgrades.aeroAndAppearance.frontBumper) {
+    aero.push(['Front Bumper', upgrades.aeroAndAppearance.frontBumper]);
   }
-  if (build.aeroAndAppearance.rearBumper) {
-    aero.push(['Rear Bumper', build.aeroAndAppearance.rearBumper]);
+  if (upgrades.aeroAndAppearance.rearBumper) {
+    aero.push(['Rear Bumper', upgrades.aeroAndAppearance.rearBumper]);
   }
-  if (build.aeroAndAppearance.rearWing) {
-    aero.push(['Rear Wing', build.aeroAndAppearance.rearWing]);
+  if (upgrades.aeroAndAppearance.rearWing) {
+    aero.push(['Rear Wing', upgrades.aeroAndAppearance.rearWing]);
   }
-  if (build.aeroAndAppearance.sideSkirts) {
-    aero.push(['Side Skirts', build.aeroAndAppearance.sideSkirts]);
+  if (upgrades.aeroAndAppearance.sideSkirts) {
+    aero.push(['Side Skirts', upgrades.aeroAndAppearance.sideSkirts]);
   }
-  if (build.aeroAndAppearance.hood) {
-    aero.push(['Hood', build.aeroAndAppearance.hood]);
+  if (upgrades.aeroAndAppearance.hood) {
+    aero.push(['Hood', upgrades.aeroAndAppearance.hood]);
   }
 
   if (aero.length === 0) return [];
@@ -294,7 +267,7 @@ function formatAeroBuild(build: BuildSettings): string[] {
   return formatTable(['Aero and Appearance', ''], aero, false, TextAlign.left);
 }
 
-function formatBuildSection<T extends BuildSectionUpgrades>(section: T) {
+function formatUpgradesSection<T extends object>(section: T) {
   const keys = Object.keys(section);
   return keys
     .filter((key) => {
@@ -302,6 +275,19 @@ function formatBuildSection<T extends BuildSectionUpgrades>(section: T) {
       return value && value.toString() !== 'N/A';
     })
     .map((key) => [capitalCase(key), section[key as keyof T]]);
+}
+
+export function formatUpgrades(upgrades: PerformanceUpgrades, driveType: DriveType): string[] {
+  const text = [
+    ...formatConversions(upgrades, driveType),
+    ...formatTable(['Engine', ''], formatUpgradesSection(upgrades.engine), false, TextAlign.left),
+    ...formatTable(['Platform And Handling', ''], formatUpgradesSection(upgrades.platformAndHandling), false, TextAlign.left),
+    ...formatTable(['Drivetrain', ''], formatUpgradesSection(upgrades.drivetrain), false, TextAlign.left),
+    ...formatTiresAndRims(upgrades),
+    ...formatAeroBuild(upgrades),
+  ];
+
+  return text;
 }
 
 interface StatUnits {
@@ -323,7 +309,7 @@ const statUnits: Record<'Metric' | 'Imperial', StatUnits> = {
   },
 };
 
-function formatStatisticsTable(form: SettingsFormV1, globalUnits: 'Metric' | 'Imperial') {
+function formatStatisticsTable(form: FMSetup, globalUnits: 'Metric' | 'Imperial') {
   const text: string[] = [];
   const piClass = `${form.stats.classification} ${form.stats.pi}`.trim();
   if (form.model) text.push(`${form.model}`);
@@ -348,22 +334,9 @@ function formatStatisticsTable(form: SettingsFormV1, globalUnits: 'Metric' | 'Im
   ];
 }
 
-export function formatBuild(build: BuildSettings, model: string): string[] {
-  const text = [
-    ...formatConversions(build, model),
-    ...formatTable(['Engine', ''], formatBuildSection(build.engine), false, TextAlign.left),
-    ...formatTable(['Platform And Handling', ''], formatBuildSection(build.platformAndHandling), false, TextAlign.left),
-    ...formatTable(['Drivetrain', ''], formatBuildSection(build.drivetrain), false, TextAlign.left),
-    ...formatTiresAndRims(build),
-    ...formatAeroBuild(build),
-  ];
-
-  return text;
-}
-
-export default function useRedditMarkdownGenerator(props: FormattingFormProps, form: SettingsFormV1, linkUrl: Ref<string>, globalUnit: Ref<'Metric' | 'Imperial'>) {
+export default function useFMRedditMarkdownGenerator(props: FormattingFormProps, form: FMSetup, linkUrl: Ref<string>, globalUnit: Ref<'Metric' | 'Imperial'>) {
   const format = reactive({
-    build: formatBuild,
+    build: formatUpgrades,
     tune: formatTune,
   });
 
@@ -371,10 +344,10 @@ export default function useRedditMarkdownGenerator(props: FormattingFormProps, f
 
   function onVersionUpdated() {
     if (props.version === 'v2') {
-      format.build = formatBuild;
+      format.build = formatUpgrades;
       format.tune = formatTune;
     } else {
-      format.build = formatBuild;
+      format.build = formatUpgrades;
       format.tune = formatTune;
     }
   }
@@ -384,7 +357,7 @@ export default function useRedditMarkdownGenerator(props: FormattingFormProps, f
     `[View this tune on optn.club](${linkUrl.value})\n`,
     '---\n',
     '## Build\n',
-    ...formatBuild(form.build, form.model),
+    ...formatUpgrades(form.upgrades, form.upgrades.conversions.drivetrain),
     '---\n',
     '## Tune\n',
     ...formatTune(form, form.model),

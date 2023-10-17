@@ -18,14 +18,18 @@ import iconDiscord from '../assets/icon-discord.png';
 
     <div class="flex grow w-full items-center justify-between z-10">
       <div class="nav-bar">
-        <router-link class="nav-link" :to="{ name: 'formatter' }">Formatter</router-link>
-        <!-- <router-link class="nav-link" :to="{ name: 'calculator' }">Calculator</router-link> -->
+        <router-link class="nav-link" :to="{ name: 'formatter-fh5', params: { version: 'v2' } }">FH5 Formatter</router-link>
+        <router-link class="nav-link" :to="{ name: 'formatter-fm8', params: { version: 'v2' } }">FM Formatter</router-link>
         <router-link class="nav-link" :to="{ name: 'tuningchart' }">Tuning Chart</router-link>
       </div>
 
       <ul class="link-bar">
         <li>
-          <a href="https://discord.gg/K2Kk5Kj6PP" target="_blank">
+          <a
+            href="https://discord.gg/K2Kk5Kj6PP"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <img :src="iconDiscord" alt="Discord">
           </a>
         </li>
@@ -33,12 +37,17 @@ import iconDiscord from '../assets/icon-discord.png';
           <a
             href="https://reddit.com/r/ForzaOpenTunes"
             target="_blank"
+            rel="noopener noreferrer"
           >
             <img :src="iconReddit" alt="Reddit">
           </a>
         </li>
         <li>
-          <a href="https://github.com/OPTN-Club" target="_blank">
+          <a
+            href="https://github.com/OPTN-Club"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <img :src="iconGithub" alt="Github">
           </a>
         </li>

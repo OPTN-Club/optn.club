@@ -1,16 +1,19 @@
 <script setup lang="ts">
-defineProps<{
-  modelValue: 'Metric' | 'Imperial';
-}>();
+import { useFormattingForm } from '../lib/useFormattingForm';
 
-const emit = defineEmits<{
-  (e: 'update:modelValue', v: string): void;
-}>();
+const {
+  convertOnUnitChange,
+  globalUnit,
+} = useFormattingForm();
 
 function onInput(e: Event) {
-  const value = (e.target as HTMLInputElement).value;
-  emit('update:modelValue', value);
+  globalUnit.value = (e.target as HTMLInputElement).value as 'Metric' | 'Imperial';
 }
+
+function onConvertInput(e: Event) {
+  convertOnUnitChange.value = (e.target as HTMLInputElement).checked;
+}
+
 </script>
 
 <template>
@@ -23,7 +26,7 @@ function onInput(e: Event) {
       <div class="flex items-center h-full">
         <label class="inline radio">
           <input
-            :checked="modelValue === 'Metric'"
+            :checked="globalUnit === 'Metric'"
             type="radio"
             name="globalUnit"
             value="Metric"
@@ -33,13 +36,24 @@ function onInput(e: Event) {
         </label>
         <label class="inline radio">
           <input
-            :checked="modelValue === 'Imperial'"
+            :checked="globalUnit === 'Imperial'"
             type="radio"
             name="globalUnit"
             value="Imperial"
             @input="onInput"
           >
           Imperial
+        </label>
+      </div>
+      <div class="flex items-center">
+        <label class="checkbox">
+          <input
+            :checked="convertOnUnitChange"
+            type="checkbox"
+            name="convertOnUnitChange"
+            @input="onConvertInput"
+          >
+          Convert values when changed
         </label>
       </div>
     </div>

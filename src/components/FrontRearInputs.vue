@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive, watch } from 'vue';
+
 import { v1 as uuid } from 'uuid';
 import { FrontAndRearSettings } from '../lib/types';
 
@@ -27,16 +28,19 @@ const emit = defineEmits<{
   (e: 'update:modelValue', v: FrontAndRearSettings): void,
 }>();
 
+// eslint-disable-next-line vue/no-setup-props-reactivity-loss
 const state = reactive({ form: { ...props.modelValue } });
 
 const id = uuid();
 
 watch(state, () => {
   emit('update:modelValue', state.form);
-});
+}, { deep: true });
 
-watch(() => props.modelValue, (current) => {
-  if (current !== state.form) state.form = { ...current };
+watch([() => props.modelValue.front, () => props.modelValue.rear], () => {
+  if (props.modelValue.front !== state.form.front || props.modelValue.rear !== state.form.rear) {
+    state.form = { ...props.modelValue };
+  }
 });
 </script>
 

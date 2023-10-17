@@ -59,6 +59,7 @@ export function getUnits(unit: UnitOfMeasure) {
   if (isPressureUnit(unit)) return PressureUnit;
   if (isSpringRateUnit(unit)) return SpringRateUnit;
   if (isLengthUnit(unit)) return LengthUnit;
+  if (isForceUnit(unit)) return ForceUnit;
   throw new Error(`Invalid Unit of Measure: ${unit}`);
 }
 
