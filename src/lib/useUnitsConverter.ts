@@ -1,10 +1,21 @@
 import { ref, watch } from 'vue';
+
 import {
-  ForceUnit, FrontAndRearWithUnits, LengthUnit, PressureUnit, SpeedUnit, SpringRateUnit, WeightUnit,
-} from './types';
-import {
-  convertPressure, convertSpringRate, convertLength, convertForce, convertSpeed,
+  convertForce,
+  convertLength,
+  convertPressure,
+  convertSpeed,
+  convertSpringRate,
 } from './conversions';
+import {
+  ForceUnit,
+  FrontAndRearWithUnits,
+  LengthUnit,
+  PressureUnit,
+  SpeedUnit,
+  SpringRateUnit,
+  WeightUnit,
+} from './types';
 import { formatFloat } from './utils';
 
 interface StoredUnits {
@@ -69,7 +80,6 @@ export default function useUnitsConverter(form: FormSettingsWithUnits, isBlank: 
   });
 
   function setUnits() {
-    console.log('Updating global units to', globalUnit.value);
     if (globalUnit.value === 'Imperial') {
       form.tune.tires.units = PressureUnit.psi;
       form.tune.springs.units = SpringRateUnit.lbs;
@@ -112,7 +122,6 @@ export default function useUnitsConverter(form: FormSettingsWithUnits, isBlank: 
       rideHeight: form.tune.rideHeight.units,
       aero: form.tune.aero.units,
     };
-    console.dir(units);
     localStorage.setItem(UNITS_KEY, JSON.stringify(units));
   }
 

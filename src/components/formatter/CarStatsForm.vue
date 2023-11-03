@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue';
-import { useFormattingForm } from '../../lib/useFormattingForm';
+
 import { PIClass } from '../../lib/types';
+import { useFormattingForm } from '../../lib/useFormattingForm';
 import EnumSelect from '../EnumSelect.vue';
 import MakeModelSelect from '../MakeModelSelect.vue';
 import NumberInput from '../NumberInput.vue';

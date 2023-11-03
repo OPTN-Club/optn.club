@@ -1,15 +1,15 @@
 import {
-  PressureUnit,
-  LengthUnit,
-  SpringRateUnit,
-  SpringRateValues,
-  PressureValues,
-  LengthValues,
   ForceUnit,
   ForceValues,
-  WeightUnit,
+  LengthUnit,
+  LengthValues,
+  PressureUnit,
+  PressureValues,
   SpeedUnit,
   SpeedValues,
+  SpringRateUnit,
+  SpringRateValues,
+  WeightUnit,
 } from './types';
 import { ensureFloat } from './utils';
 

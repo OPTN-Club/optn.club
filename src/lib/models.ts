@@ -1,7 +1,7 @@
-import makes from './makes';
 import importedCars from './cars';
-import { sortUsingProp } from './utils';
+import makes from './makes';
 import { Car, CarModel } from './types';
+import { sortUsingProp } from './utils';
 
 const cars: Car[] = importedCars;
 

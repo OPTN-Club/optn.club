@@ -1,6 +1,7 @@
 import { compressToBase64, decompressFromBase64 } from 'lz-string';
-import { mangleValueMap } from './mangle-lookup';
+
 import getDefaultForm from './defaultForm';
+import { mangleValueMap } from './mangle-lookup';
 import getDefaultFormV1, { SettingsFormV1 } from './SettingsFormV1';
 
 const unmangleValueMap: Record<string, string> = Object

@@ -1,24 +1,22 @@
 import {
   computed,
+  ComputedRef,
   inject,
   provide,
-  Ref,
-  ComputedRef,
-  ref,
-  watch,
   reactive,
+  ref,
+  Ref,
+  watch,
 } from 'vue';
 import { useRouter } from 'vue-router';
-import useRedditMarkdownGenerator, { getDrivetrain } from './generator';
+
 import getDefaultForm from './defaultForm';
-import {
-  DriveType,
-  FormattingFormProps,
-} from './types';
-import useUpgrades, { UseUpgrades } from './useUpgrades';
-import useUnitsConverter from './useUnitsConverter';
+import useRedditMarkdownGenerator, { getDrivetrain } from './generator';
 import { SettingsFormV1 } from './SettingsFormV1';
+import { DriveType, FormattingFormProps } from './types';
 import useFormEncoder from './useFormEncoder';
+import useUnitsConverter from './useUnitsConverter';
+import useUpgrades, { UseUpgrades } from './useUpgrades';
 
 interface UseFormattingForm {
   form: SettingsFormV1;

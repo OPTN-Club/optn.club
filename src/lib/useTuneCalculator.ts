@@ -1,25 +1,33 @@
 import {
+  computed,
   reactive,
   watch,
-  computed,
 } from 'vue';
-import { convertSpringRate, convertWeightToMass, multipliers } from './conversions';
+
 import {
-  defaultSpringTypeModifiersMap,
-  SpringTypeModifiersMap,
-  TuneInputs,
-  TuneModifiers,
-  defaultARBClassModifiersMap,
-  ClassModifiersMap,
-  valueDeltas,
+  convertSpringRate,
+  convertWeightToMass,
+  multipliers,
+} from './conversions';
+import {
   calcSpringsDeltas,
+  ClassModifiersMap,
+  defaultARBClassModifiersMap,
+  defaultFrequencyClassModifiersMap,
+  defaultSpringTypeModifiersMap,
   FrontRear,
   SpringsType,
+  SpringTypeModifiersMap,
   TuneCalculatorResult,
-  defaultFrequencyClassModifiersMap,
+  TuneInputs,
+  TuneModifiers,
+  valueDeltas,
 } from './tune-calculator';
 import {
-  DriveType, PIClass, SpringRateUnit, WeightUnit,
+  DriveType,
+  PIClass,
+  SpringRateUnit,
+  WeightUnit,
 } from './types';
 
 export default function useTuneCalculator() {

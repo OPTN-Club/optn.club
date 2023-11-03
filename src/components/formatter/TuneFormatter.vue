@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { useFormattingFormProvider } from '../../lib/useFormattingForm';
-import BuildSettingsForm from './BuildSettingsForm.vue';
-import TuneSettingsForm from './TuneSettingsForm.vue';
 import GlobalUnitSelect from '../GlobalUnitSelect.vue';
-import FormattedTuneTextarea from './FormattedTuneTextarea.vue';
+
+import BuildSettingsForm from './BuildSettingsForm.vue';
 import CarStatsForm from './CarStatsForm.vue';
+import FormattedTuneTextarea from './FormattedTuneTextarea.vue';
 import ShareCodesForm from './ShareCodesForm.vue';
+import TuneSettingsForm from './TuneSettingsForm.vue';
 
 const {
   form,

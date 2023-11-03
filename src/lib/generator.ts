@@ -1,8 +1,13 @@
 import { capitalCase } from 'change-case';
 import {
-  Ref, computed, reactive, watch,
+  computed,
+  reactive,
+  Ref,
+  watch,
 } from 'vue';
+
 import { byFullname } from './models';
+import { SettingsFormV1 } from './SettingsFormV1';
 import {
   BuildSectionUpgrades,
   BuildSettings,
@@ -12,9 +17,8 @@ import {
   FrontAndRearWithUnits,
   TuneSettings,
 } from './types';
-import { addSuffix as suffixize, formatFloat } from './utils';
 import { formatUnit, formatUnitHeaders } from './unitsOfMeasure';
-import { SettingsFormV1 } from './SettingsFormV1';
+import { formatFloat, addSuffix as suffixize } from './utils';
 
 const tableSeparator = '\n######\n';
 

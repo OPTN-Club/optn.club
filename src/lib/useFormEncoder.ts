@@ -1,7 +1,11 @@
 import { compressToBase64, decompressFromBase64 } from 'lz-string';
 import {
-  Ref, computed, ref, watch,
+  computed,
+  ref,
+  Ref,
+  watch,
 } from 'vue';
+
 import { mangleValueMap } from './mangle-lookup';
 
 export interface FormEncoderOptions {
@@ -36,7 +40,7 @@ export default function useFormEncoder(
 
   function encode(form: Record<string, unknown>): string {
     const flattened = flattenObject(form);
-    console.dir(flattened);
+    // console.dir(flattened);
     const serialized = serializer.value.serialize(flattened);
 
     if (serialized === serializedDefaultForm.value) return '';
@@ -95,8 +99,6 @@ export default function useFormEncoder(
     keys.forEach((key) => {
       const valuePath = [...path, key];
       const targetValue = target[key];
-
-      const isObject = typeof targetValue === 'object' && !Array.isArray(targetValue);
 
       if (targetValue && typeof targetValue === 'object' && !Array.isArray(targetValue)) {
         target[key] = unflattenObjectInto(source, targetValue as Record<string, unknown>, valuePath);
@@ -168,7 +170,7 @@ function deserializeFlatObject(value: string, flattenedKeys: string[]): Record<s
 
   const flattenedForm: Record<string, never> = {};
   flattenedKeys.forEach((key, index) => {
-    console.log(key, index);
+    // console.log(key, index);
     flattenedForm[key] = unmangleValue(values[index]) as never;
   });
   return flattenedForm;
@@ -188,7 +190,7 @@ export function deserializeFlatObjectV1(value: string, flattenedKeys: string[]):
 
   const flattenedForm: Record<string, never> = {};
   flattenedKeys.forEach((key, index) => {
-    console.log(key, index);
+    // console.log(key, index);
     flattenedForm[key] = unmangleValue(values[index]) as never;
   });
   return flattenedForm;

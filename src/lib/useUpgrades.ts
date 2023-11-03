@@ -1,8 +1,11 @@
-import { computed, ComputedRef, Ref } from 'vue';
 import {
-  DriveType, TransmissionUpgrade,
-} from './types';
+  computed,
+  ComputedRef,
+  Ref,
+} from 'vue';
+
 import { SettingsFormV1 } from './SettingsFormV1';
+import { DriveType, TransmissionUpgrade } from './types';
 
 const finalRatio = [
   TransmissionUpgrade.sport,

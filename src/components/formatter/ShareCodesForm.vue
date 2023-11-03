@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { reactive, watch } from 'vue';
+
 import { useFormattingForm } from '../../lib/useFormattingForm';
 import InputControl from '../InputControl.vue';
 

@@ -1,17 +1,21 @@
 <script setup lang="ts">
 import {
-  TransmissionUpgrade, DriveType, TireCompound, RimStyleType, TrackWidthType,
+  DriveType,
+  RimStyleType,
+  TireCompound,
+  TrackWidthType,
+  TransmissionUpgrade,
 } from '../../lib/types';
 import { useFormattingForm } from '../../lib/useFormattingForm';
-import FullUpgradeSelect from '../FullUpgradeSelect.vue';
-import InputControl from '../InputControl.vue';
+import { enumToOptions } from '../../lib/utils';
 import EnumSelect from '../EnumSelect.vue';
-import UpgradeSelect from '../UpgradeSelect.vue';
-import LimitedUpgradeSelect from '../LimitedUpgradeSelect.vue';
-import RestrictorUpgradeSelect from '../RestrictorUpgradeSelect.vue';
 import FrontRearInputs from '../FrontRearInputs.vue';
 import FrontRearSelects from '../FrontRearSelects.vue';
-import { enumToOptions } from '../../lib/utils';
+import FullUpgradeSelect from '../FullUpgradeSelect.vue';
+import InputControl from '../InputControl.vue';
+import LimitedUpgradeSelect from '../LimitedUpgradeSelect.vue';
+import RestrictorUpgradeSelect from '../RestrictorUpgradeSelect.vue';
+import UpgradeSelect from '../UpgradeSelect.vue';
 import UpgradeTurboSelect from '../UpgradeTurboSelect.vue';
 
 const { form } = useFormattingForm();
@@ -43,36 +47,99 @@ const trackWidthOptions = enumToOptions(TrackWidthType);
       <div class="content">
         <h3>Engine</h3>
         <div class="set-upgrades">
-          <UpgradeSelect v-model="form.build.engine.intake" label="Intake" />
-          <UpgradeSelect v-model="form.build.engine.intakeManifold" label="Intake Manifold" />
-          <UpgradeSelect v-model="form.build.engine.carburator" label="Carburator" />
-          <UpgradeSelect v-model="form.build.engine.fuelSystem" label="Fuel System" />
-          <UpgradeSelect v-model="form.build.engine.ignition" label="Ignition" />
-          <UpgradeSelect v-model="form.build.engine.exhaust" label="Exhaust" />
-          <UpgradeSelect v-model="form.build.engine.camshaft" label="Camshaft" />
-          <UpgradeSelect v-model="form.build.engine.valves" label="Valves" />
-          <UpgradeSelect v-model="form.build.engine.displacement" label="Displacement" />
-          <UpgradeSelect v-model="form.build.engine.pistons" label="Pistons" />
-          <UpgradeTurboSelect v-model="form.build.engine.turbo" label="Turbo" />
-          <UpgradeTurboSelect v-model="form.build.engine.twinTurbo" label="Twin Turbo" />
-          <LimitedUpgradeSelect v-model="form.build.engine.supercharger" label="Supercharger" />
-          <LimitedUpgradeSelect v-model="form.build.engine.centrifugalSupercharger" label="Centrifugal Supercharger" />
-          <LimitedUpgradeSelect v-model="form.build.engine.intercooler" label="Intercooler" />
-          <UpgradeSelect v-model="form.build.engine.oilCooling" label="Oil Cooling" />
-          <UpgradeSelect v-model="form.build.engine.flywheel" label="Flywheel" />
-          <RestrictorUpgradeSelect v-model="form.build.engine.restrictorPlate" label="Restrictor Plate" />
+          <UpgradeSelect
+            v-model="form.build.engine.intake"
+            label="Intake"
+          />
+          <UpgradeSelect
+            v-model="form.build.engine.intakeManifold"
+            label="Intake Manifold"
+          />
+          <UpgradeSelect
+            v-model="form.build.engine.carburator"
+            label="Carburator"
+          />
+          <UpgradeSelect
+            v-model="form.build.engine.fuelSystem"
+            label="Fuel System"
+          />
+          <UpgradeSelect
+            v-model="form.build.engine.ignition"
+            label="Ignition"
+          />
+          <UpgradeSelect
+            v-model="form.build.engine.exhaust"
+            label="Exhaust"
+          />
+          <UpgradeSelect
+            v-model="form.build.engine.camshaft"
+            label="Camshaft"
+          />
+          <UpgradeSelect
+            v-model="form.build.engine.valves"
+            label="Valves"
+          />
+          <UpgradeSelect
+            v-model="form.build.engine.displacement"
+            label="Displacement"
+          />
+          <UpgradeSelect
+            v-model="form.build.engine.pistons"
+            label="Pistons"
+          />
+          <UpgradeTurboSelect
+            v-model="form.build.engine.turbo"
+            label="Turbo"
+          />
+          <UpgradeTurboSelect
+            v-model="form.build.engine.twinTurbo"
+            label="Twin Turbo"
+          />
+          <LimitedUpgradeSelect
+            v-model="form.build.engine.supercharger"
+            label="Supercharger"
+          />
+          <LimitedUpgradeSelect
+            v-model="form.build.engine.centrifugalSupercharger"
+            label="Centrifugal Supercharger"
+          />
+          <LimitedUpgradeSelect
+            v-model="form.build.engine.intercooler"
+            label="Intercooler"
+          />
+          <UpgradeSelect
+            v-model="form.build.engine.oilCooling"
+            label="Oil Cooling"
+          />
+          <UpgradeSelect
+            v-model="form.build.engine.flywheel"
+            label="Flywheel"
+          />
+          <RestrictorUpgradeSelect
+            v-model="form.build.engine.restrictorPlate"
+            label="Restrictor Plate"
+          />
         </div>
       </div>
       <div class="content">
         <h3>Platform and Handling</h3>
         <div class="set-upgrades">
-          <UpgradeSelect v-model="form.build.platformAndHandling.brakes" label="Brakes" />
-          <FullUpgradeSelect v-model="form.build.platformAndHandling.springs" label="Springs" />
+          <UpgradeSelect
+            v-model="form.build.platformAndHandling.brakes"
+            label="Brakes"
+          />
+          <FullUpgradeSelect
+            v-model="form.build.platformAndHandling.springs"
+            label="Springs"
+          />
           <UpgradeSelect
             v-model="form.build.platformAndHandling.frontArb"
             label="Front ARB"
           />
-          <UpgradeSelect v-model="form.build.platformAndHandling.rearArb" label="Rear ARB" />
+          <UpgradeSelect
+            v-model="form.build.platformAndHandling.rearArb"
+            label="Rear ARB"
+          />
           <UpgradeSelect
             v-model="form.build.platformAndHandling.chassisReinforcement"
             label="Chassis Reinforcement"
@@ -86,15 +153,24 @@ const trackWidthOptions = enumToOptions(TrackWidthType);
       <div class="content">
         <h3>Drivetrain</h3>
         <div class="set-upgrades">
-          <UpgradeSelect v-model="form.build.drivetrain.clutch" label="Clutch" />
+          <UpgradeSelect
+            v-model="form.build.drivetrain.clutch"
+            label="Clutch"
+          />
           <EnumSelect
             v-model="form.build.drivetrain.transmission"
             label="Transmission"
             :type="TransmissionUpgrade"
             rootClass="!min-w-[205px]"
           />
-          <UpgradeSelect v-model="form.build.drivetrain.driveline" label="Driveline" />
-          <FullUpgradeSelect v-model="form.build.drivetrain.differential" label="Differential" />
+          <UpgradeSelect
+            v-model="form.build.drivetrain.driveline"
+            label="Driveline"
+          />
+          <FullUpgradeSelect
+            v-model="form.build.drivetrain.differential"
+            label="Differential"
+          />
         </div>
       </div>
       <div class="content">
@@ -125,7 +201,10 @@ const trackWidthOptions = enumToOptions(TrackWidthType);
           />
         </div>
         <div class="set-upgrades">
-          <FrontRearInputs v-model="form.build.tiresAndRims.rimSize" label="Rim Size" />
+          <FrontRearInputs
+            v-model="form.build.tiresAndRims.rimSize"
+            label="Rim Size"
+          />
         </div>
         <div class="set-upgrades">
           <FrontRearSelects

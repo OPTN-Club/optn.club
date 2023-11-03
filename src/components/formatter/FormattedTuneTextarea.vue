@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref } from 'vue';
+
 import { useFormattingForm } from '../../lib/useFormattingForm';
 
 const state = useFormattingForm();
