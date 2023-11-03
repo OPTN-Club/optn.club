@@ -225,95 +225,11 @@ export interface BrakeTuneSettings {
   pressure: string;
 }
 
-export interface TuneSettings {
-  tires: FrontAndRearWithUnits<PressureUnit>;
-  gears: GearTuneSettings;
-  camber: FrontAndRearSettings;
-  toe: FrontAndRearSettings;
-  caster: string;
-  arb: FrontAndRearSettings;
-  springs: FrontAndRearWithUnits<SpringRateUnit>;
-  rideHeight: FrontAndRearWithUnits<LengthUnit>;
-  damping: FrontAndRearSettings;
-  bump: FrontAndRearSettings;
-  aero: FrontAndRearWithUnits<ForceUnit>;
-  brake: BrakeTuneSettings;
-  diff: DifferentialTuneSettings;
-}
-
 export interface ConversionSettings {
   engine: string;
   drivetrain: DriveType;
   aspiration: string;
   bodyKit: string;
-}
-
-type BuildUpgrade =
-  | Upgrade
-  | FullUpgrade
-  | TransmissionUpgrade
-  | LimitedUpgrade
-  | TurboUpgrade
-  | RestrictorUpgrade;
-
-export interface BuildSectionUpgrades {
-  [k: string]: BuildUpgrade;
-}
-
-export interface EngineUpgrades extends BuildSectionUpgrades {
-  intake: Upgrade;
-  intakeManifold: Upgrade;
-  carburator: Upgrade;
-  fuelSystem: Upgrade;
-  ignition: Upgrade; // sport and race only
-  exhaust: Upgrade;
-  camshaft: Upgrade;
-  valves: Upgrade;
-  displacement: Upgrade;
-  pistons: Upgrade;
-  turbo: TurboUpgrade; // sport and race only
-  twinTurbo: TurboUpgrade; // sport and race only
-  supercharger: LimitedUpgrade; // sport and race only
-  centrifugalSupercharger: LimitedUpgrade; // sport and race only
-  intercooler: LimitedUpgrade; // sport and race only
-  oilCooling: Upgrade;
-  flywheel: Upgrade;
-  restrictorPlate: RestrictorUpgrade;
-}
-
-export interface PlatformAndHandlingUpgrades extends BuildSectionUpgrades {
-  brakes: Upgrade;
-  springs: FullUpgrade;
-  frontArb: Upgrade;
-  rearArb: Upgrade; // sport and race only
-  chassisReinforcement: Upgrade; // sport and race only
-  weightReduction: Upgrade;
-}
-
-export interface DrivetrainUpgrades extends BuildSectionUpgrades {
-  clutch: Upgrade;
-  transmission: TransmissionUpgrade;
-  driveline: Upgrade;
-  differential: FullUpgrade;
-}
-
-export interface RimStyle {
-  type: RimStyleType;
-  name: string;
-}
-
-export interface TrackWidth {
-  front: TrackWidthType;
-  rear: TrackWidthType;
-}
-
-export interface TiresAndRimsUpgrades {
-  compound: TireCompound;
-  width: FrontAndRearSettings; // always mm
-  rimStyle: RimStyle;
-  rimSize: FrontAndRearSettings;
-  trackWidth: TrackWidth;
-  profileSize: FrontAndRearSettings<TrackWidthType>;
 }
 
 export interface AeroAndAppearanceUpgrades {
@@ -322,46 +238,6 @@ export interface AeroAndAppearanceUpgrades {
   rearWing: string;
   sideSkirts: string;
   hood: string;
-}
-
-export interface BuildSettings {
-  conversions: ConversionSettings;
-  engine: EngineUpgrades;
-  platformAndHandling: PlatformAndHandlingUpgrades;
-  drivetrain: DrivetrainUpgrades;
-  tiresAndRims: TiresAndRimsUpgrades;
-  aeroAndAppearance: AeroAndAppearanceUpgrades;
-}
-
-export enum PIClass {
-  D = 'D',
-  C = 'C',
-  B = 'B',
-  A = 'A',
-  S1 = 'S1',
-  S2 = 'S2',
-  X = 'X',
-}
-
-export interface TuneStatistics {
-  pi: number;
-  classification: PIClass;
-  hp: number;
-  torque: number;
-  weight: number;
-  balance: number;
-  topSpeed: number;
-  zeroToSixty: number;
-  zeroToHundred: number;
-  shareCode: string;
-}
-
-export interface SettingsForm {
-  make: string;
-  model: string;
-  tune: TuneSettings;
-  build: BuildSettings;
-  stats: TuneStatistics;
 }
 
 interface BaseCarModel {

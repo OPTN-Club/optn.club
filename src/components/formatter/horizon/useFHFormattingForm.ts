@@ -10,16 +10,16 @@ import {
 } from 'vue';
 import { useRouter } from 'vue-router';
 
-import getDefaultForm from './defaultForm';
-import useRedditMarkdownGenerator, { getDrivetrain } from './generator';
-import { SettingsFormV1 } from './SettingsFormV1';
-import { DriveType, FormattingFormProps } from './types';
-import useFormEncoder from './useFormEncoder';
-import useUnitsConverter from './useUnitsConverter';
-import useUpgrades, { UseUpgrades } from './useUpgrades';
+import { DriveType, FormattingFormProps } from '../../../lib/types';
+import useFormEncoder from '../../../lib/useFormEncoder';
+import useUnitsConverter from '../../../lib/useUnitsConverter';
 
-interface UseFormattingForm {
-  form: SettingsFormV1;
+import useRedditMarkdownGenerator, { getDrivetrain } from './FHRedditGenerator';
+import { FHSetup, getEncoderOptions } from './FHSetup';
+import useUpgrades, { UseUpgrades } from './useFHEnabledControls';
+
+interface UseFHFormattingForm {
+  form: FHSetup;
   driveType: ComputedRef<DriveType>;
   globalUnit: Ref<'Metric' | 'Imperial'>;
   convertOnUnitChange: Ref<boolean>;
@@ -29,19 +29,23 @@ interface UseFormattingForm {
   reset(): void;
 }
 
-const providerKey = 'formatting-form';
+const providerKey = 'fh-formatting-form';
 
-export function useFormattingFormProvider(props: FormattingFormProps) {
+export function useFHFormattingFormProvider(props: FormattingFormProps) {
   const router = useRouter();
-  const encoder = useFormEncoder(props);
 
-  const form = reactive(encoder.decode(props.encodedForm));
+  const options = ref(getEncoderOptions(props.version));
+  watch(() => props.version, () => {
+    options.value = getEncoderOptions(props.version);
+  });
 
-  // watch(() => props.game, (current, previous) => { });
+  const encoder = useFormEncoder(options);
+
+  const form = reactive(encoder.decode(props.encodedForm) as unknown as FHSetup);
 
   const driveType = computed(() => getDrivetrain(form.build));
 
-  const show = useUpgrades(form, driveType);
+  const show = useUpgrades(form);
 
   const {
     globalUnit,
@@ -65,7 +69,7 @@ export function useFormattingFormProvider(props: FormattingFormProps) {
   const { markdown } = useRedditMarkdownGenerator(props, form, linkUrl, globalUnit);
 
   function reset() {
-    const defaultForm = getDefaultForm(props.version);
+    const defaultForm = options.value.getDefaultForm();
     form.build = defaultForm.build;
     form.make = defaultForm.make;
     form.model = defaultForm.model;
@@ -74,7 +78,7 @@ export function useFormattingFormProvider(props: FormattingFormProps) {
     setUnits();
   }
 
-  const state: UseFormattingForm = {
+  const state: UseFHFormattingForm = {
     form,
     driveType,
     globalUnit,
@@ -90,8 +94,8 @@ export function useFormattingFormProvider(props: FormattingFormProps) {
   return state;
 }
 
-export function useFormattingForm() {
-  const state = inject<UseFormattingForm>(providerKey);
+export function useFHFormattingForm() {
+  const state = inject<UseFHFormattingForm>(providerKey);
   if (!state) throw new Error('Injected state not available');
   return state;
 }

@@ -5,7 +5,6 @@ import { useRoute } from 'vue-router';
 import {
   DifferentialTuneSettings,
   DriveType,
-  FormattingFormProps,
   FrontAndRearSettings,
   FrontAndRearWithUnits,
 } from '../../../lib/types';
@@ -109,11 +108,12 @@ function formatGears(tune: TuneSettings): string[] {
 
 function formatAlignment(tune: TuneSettings): string[] {
   return formatFrontRear(
-    ['Alignment', 'Camber', 'Toe', 'Caster'],
+    ['Alignment', 'Camber', 'Toe', 'Caster', 'Steering Angle'],
     [
       tune.alignment.camber,
       tune.alignment.toe,
       { front: tune.alignment.caster, rear: '' },
+      { front: tune.alignment.steeringAngle, rear: '' },
     ],
     1,
     '°',
@@ -140,7 +140,14 @@ function formatSprings(tune: TuneSettings): string[] {
 }
 
 function formatDamping(tune: TuneSettings): string[] {
-  return formatFrontRear(['Damping', 'Rebound', 'Bump'], [tune.rebound, tune.bump]);
+  return formatFrontRear(['Damping', 'Bump', 'Rebound'], [tune.bump, tune.rebound]);
+}
+
+function formatSuspensionGeometry(tune: TuneSettings): string[] {
+  return formatFrontRear(
+    ['Suspension Geometry', 'Roll Center Height Offset', 'Anti-Geometry Percent'],
+    [tune.rollCenterHeightOffset, tune.antiGeometryPercent],
+  );
 }
 
 function formatAero(tune: TuneSettings): string[] {
@@ -210,6 +217,19 @@ function formatDifferential(diff: DifferentialTuneSettings, driveType: DriveType
   return formatTable(header, body);
 }
 
+function formatSteeringWheel(tune: TuneSettings): string[] {
+  const headers = ['Steering Wheel', ''];
+
+  if (tune.steeringWheel.na) {
+    return formatTable(headers, [['Not Applicable', '']]);
+  }
+
+  return formatTable(headers, [
+    ['FFB Scale', tune.steeringWheel.ffbScale],
+    ['Steering Lock Range', tune.steeringWheel.steeringLockRange],
+  ]);
+}
+
 export function formatTune(form: FMSetup, model: string): string[] {
   const text = [
     ...formatTires(form.tune),
@@ -218,9 +238,11 @@ export function formatTune(form: FMSetup, model: string): string[] {
     ...formatAntiRollbars(form.tune),
     ...formatSprings(form.tune),
     ...formatDamping(form.tune),
+    ...formatSuspensionGeometry(form.tune),
     ...formatAero(form.tune),
     ...formatBrakes(form.tune),
     ...formatDifferential(form.tune.diff, form.upgrades.conversions.drivetrain),
+    ...formatSteeringWheel(form.tune),
   ];
 
   return text;
@@ -242,16 +264,25 @@ function formatConversions(upgrades: PerformanceUpgrades, driveType: DriveType):
   return formatTable(headers, body);
 }
 
-function formatTiresAndRims(upgrades: PerformanceUpgrades): string[] {
+function formatTireUpgrades(upgrades: PerformanceUpgrades): string[] {
   return formatTable(
-    ['Tires And Rims', ''],
+    ['Tires', ''],
     [
       ['Compound', upgrades.tires.compound],
       ['Tire Width', `Front ${upgrades.tires.width.front} mm, Rear ${upgrades.tires.width.rear} mm`],
-      ['Rim Style', `${upgrades.wheels.style} ${upgrades.wheels.style}`],
-      ['Rim Size', `Front ${upgrades.wheels.size.front} in, Rear ${upgrades.wheels.size.rear} in`],
-      // ['Track Width', `Front ${upgrades.tires.trackWidth.front}, Rear ${upgrades.tires.trackWidth.rear}`],
-      // ['Profile Size', `Front ${upgrades.tires.profileSize.front}, Rear ${upgrades.tires.profileSize.rear}`],
+      ['Track Width', `Front ${upgrades.tires.trackWidth.front}, Rear ${upgrades.tires.trackWidth.rear}`],
+    ],
+    false,
+    TextAlign.left,
+  );
+}
+
+function formatWheelUpgrades(upgrades: PerformanceUpgrades): string[] {
+  return formatTable(
+    ['Wheels', ''],
+    [
+      ['Style', `${upgrades.wheels.style} ${upgrades.wheels.style}`],
+      ['Size', `Front ${upgrades.wheels.size.front} in, Rear ${upgrades.wheels.size.rear} in`],
     ],
     false,
     TextAlign.left,
@@ -297,7 +328,8 @@ export function formatUpgrades(upgrades: PerformanceUpgrades, driveType: DriveTy
     ...formatTable(['Engine', ''], formatUpgradesSection(upgrades.engine), false, TextAlign.left),
     ...formatTable(['Platform And Handling', ''], formatUpgradesSection(upgrades.platformAndHandling), false, TextAlign.left),
     ...formatTable(['Drivetrain', ''], formatUpgradesSection(upgrades.drivetrain), false, TextAlign.left),
-    ...formatTiresAndRims(upgrades),
+    ...formatTireUpgrades(upgrades),
+    ...formatWheelUpgrades(upgrades),
     ...formatAeroBuild(upgrades),
   ];
 

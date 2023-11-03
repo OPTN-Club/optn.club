@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { reactive, watch } from 'vue';
 
-import { useFormattingForm } from '../../lib/useFormattingForm';
-import InputControl from '../InputControl.vue';
+import InputControl from '../../InputControl.vue';
 
-const { form } = useFormattingForm();
+import { useFHFormattingForm } from './useFHFormattingForm';
+
+const { form } = useFHFormattingForm();
 
 const shareCodes = reactive({
   tune: '',

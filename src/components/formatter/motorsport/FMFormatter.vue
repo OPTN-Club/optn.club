@@ -2,11 +2,11 @@
 import { useRouter } from 'vue-router';
 
 import GlobalUnitSelect from '../../GlobalUnitSelect.vue';
-import FormattedTuneTextarea from '../FormattedTuneTextarea.vue';
-import ShareCodesForm from '../ShareCodesForm.vue';
 
 import FMCarStatsForm from './FMCarStatsForm.vue';
+import FMFormattedTuneTextarea from './FMFormattedTuneTextarea.vue';
 import FMPerformanceUpgradesForm from './FMPerformanceUpgradesForm.vue';
+import FMShareCodesForm from './FMShareCodesForm.vue';
 import FMTuneSetupForm from './FMTuneSetupForm.vue';
 import { useFMFormattingFormProvider } from './useFMFormattingForm';
 
@@ -16,7 +16,10 @@ const props = defineProps<{
   encodedForm?: string;
 }>();
 
-useFMFormattingFormProvider(props);
+const {
+  globalUnit,
+  convertOnUnitChange,
+} = useFMFormattingFormProvider(props);
 
 const router = useRouter();
 </script>
@@ -91,12 +94,15 @@ const router = useRouter();
       Steering Wheel
     </pre> -->
     <form class="grow">
-      <GlobalUnitSelect />
+      <GlobalUnitSelect
+        v-model:global-unit="globalUnit"
+        v-model:convertOnUnitChange="convertOnUnitChange"
+      />
       <FMCarStatsForm />
-      <ShareCodesForm />
+      <FMShareCodesForm />
       <FMPerformanceUpgradesForm />
       <FMTuneSetupForm />
     </form>
-    <FormattedTuneTextarea />
+    <FMFormattedTuneTextarea />
   </div>
 </template>

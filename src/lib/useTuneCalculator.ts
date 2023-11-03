@@ -4,6 +4,8 @@ import {
   watch,
 } from 'vue';
 
+import { FHPIClass } from '../components/formatter/horizon/FHSetup';
+
 import {
   convertSpringRate,
   convertWeightToMass,
@@ -25,7 +27,6 @@ import {
 } from './tune-calculator';
 import {
   DriveType,
-  PIClass,
   SpringRateUnit,
   WeightUnit,
 } from './types';
@@ -34,7 +35,7 @@ export default function useTuneCalculator() {
   const inputs = reactive<TuneInputs>({
     drivetrain: DriveType.rwd,
     springs: SpringsType.race,
-    piClass: PIClass.S1,
+    piClass: FHPIClass.S1,
     weight: 1500,
     weightBalance: 50,
     frontAero: 112,

@@ -1,9 +1,9 @@
-import getDefaultFormV1, { SettingsFormV1 } from './SettingsFormV1';
+import getFHDefaultFormV1, { FHSetup } from '../components/formatter/horizon/FHSetup';
 
-export default function getDefaultForm(version: string): SettingsFormV1 {
+export default function getDefaultForm(version: string): FHSetup {
   if (version === 'v2') {
-    return getDefaultFormV1();
+    return getFHDefaultFormV1();
   }
 
-  return getDefaultFormV1();
+  return getFHDefaultFormV1();
 }

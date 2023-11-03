@@ -1,4 +1,6 @@
-import { DriveType, PIClass } from './types';
+import { FHPIClass } from '../components/formatter/horizon/FHSetup';
+
+import { DriveType } from './types';
 
 export interface FrontRear {
   front: number;
@@ -15,7 +17,7 @@ export enum SpringsType {
 export interface TuneInputs {
   drivetrain: DriveType;
   springs: SpringsType;
-  piClass: PIClass;
+  piClass: FHPIClass;
   weight: number;
   weightBalance: number;
   frontAero: number;
@@ -50,26 +52,26 @@ export interface TuneCalculatorResult {
 
 export type TuneModifiers = SpringTypeModifiers & GeneralModifiers;
 
-export type ClassModifiersMap = Record<PIClass, number>;
+export type ClassModifiersMap = Record<FHPIClass, number>;
 
 export const defaultARBClassModifiersMap: ClassModifiersMap = {
-  [PIClass.D]: 50,
-  [PIClass.C]: 60,
-  [PIClass.B]: 70,
-  [PIClass.A]: 80,
-  [PIClass.S1]: 90,
-  [PIClass.S2]: 100,
-  [PIClass.X]: 100,
+  [FHPIClass.D]: 50,
+  [FHPIClass.C]: 60,
+  [FHPIClass.B]: 70,
+  [FHPIClass.A]: 80,
+  [FHPIClass.S1]: 90,
+  [FHPIClass.S2]: 100,
+  [FHPIClass.X]: 100,
 };
 
 export const defaultFrequencyClassModifiersMap: ClassModifiersMap = {
-  [PIClass.D]: 2.8,
-  [PIClass.C]: 2.9,
-  [PIClass.B]: 3.0,
-  [PIClass.A]: 3.0,
-  [PIClass.S1]: 3.1,
-  [PIClass.S2]: 3.2,
-  [PIClass.X]: 3.3,
+  [FHPIClass.D]: 2.8,
+  [FHPIClass.C]: 2.9,
+  [FHPIClass.B]: 3.0,
+  [FHPIClass.A]: 3.0,
+  [FHPIClass.S1]: 3.1,
+  [FHPIClass.S2]: 3.2,
+  [FHPIClass.X]: 3.3,
 };
 
 export type SpringTypeModifiersMap = Record<SpringsType, SpringTypeModifiers>;

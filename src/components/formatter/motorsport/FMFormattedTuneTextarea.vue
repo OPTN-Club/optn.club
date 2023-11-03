@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref } from 'vue';
 
-import { useFormattingForm } from '../../lib/useFormattingForm';
+import { useFMFormattingForm } from './useFMFormattingForm';
 
-const state = useFormattingForm();
+const state = useFMFormattingForm();
 
 const copyButtonText = ref('Copy text');
 const copyUrlButtonText = ref('Copy URL');

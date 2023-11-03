@@ -4,8 +4,9 @@ import {
   Ref,
 } from 'vue';
 
-import { FHSetup } from '../components/formatter/horizon/FHSetup';
-import { DriveType, TransmissionUpgrade } from './types';
+import { DriveType, TransmissionUpgrade } from '../../../lib/types';
+
+import { FHSetup } from './FHSetup';
 
 const finalRatio = [
   TransmissionUpgrade.sport,
@@ -42,16 +43,16 @@ function getGearCount(transmission: TransmissionUpgrade): number {
   return gearCounts[transmission] || 10;
 }
 
-export default function useUpgrades(transmission: TransmissionUpgrade, driveType: ComputedRef<DriveType>) {
+export default function useFHEnabledControls(form: FHSetup) {
   const enabled = computed<UseUpgrades>(() => ({
     gears: {
-      final: finalRatio.includes(transmission),
-      count: getGearCount(transmission),
+      final: finalRatio.includes(form.build.drivetrain.transmission),
+      count: getGearCount(form.build.drivetrain.transmission),
     },
     diff: {
-      front: [DriveType.awd, DriveType.fwd].includes(driveType.value),
-      rear: [DriveType.awd, DriveType.rwd].includes(driveType.value),
-      center: DriveType.awd === driveType.value,
+      front: [DriveType.awd, DriveType.fwd].includes(form.build.conversions.drivetrain),
+      rear: [DriveType.awd, DriveType.rwd].includes(form.build.conversions.drivetrain),
+      center: DriveType.awd === form.build.conversions.drivetrain,
     },
   }));
   return enabled;

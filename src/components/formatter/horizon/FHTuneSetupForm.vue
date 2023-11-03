@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-import { PressureUnit } from '../../lib/types';
-import { useFormattingForm } from '../../lib/useFormattingForm';
-import { addSuffix } from '../../lib/utils';
-import AccelDecelInputs from '../AccelDecelInputs.vue';
-import CheckboxControl from '../CheckboxControl.vue';
-import FrontRearInputs from '../FrontRearInputs.vue';
-import NumberInput from '../NumberInput.vue';
-import UnitSelect from '../UnitSelect.vue';
+import { PressureUnit } from '../../../lib/types';
+import { addSuffix } from '../../../lib/utils';
+import AccelDecelInputs from '../../AccelDecelInputs.vue';
+import CheckboxControl from '../../CheckboxControl.vue';
+import FrontRearInputs from '../../FrontRearInputs.vue';
+import NumberInput from '../../NumberInput.vue';
+import UnitSelect from '../../UnitSelect.vue';
 
-const { form, show } = useFormattingForm();
+import { useFHFormattingForm } from './useFHFormattingForm';
+
+const { form, show } = useFHFormattingForm();
 
 const gears = computed(() => form.tune.gears.ratios.slice(1, show.value.gears.count + 1));
 

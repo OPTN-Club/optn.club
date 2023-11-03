@@ -5,20 +5,21 @@ import {
   TireCompound,
   TrackWidthType,
   TransmissionUpgrade,
-} from '../../lib/types';
-import { useFormattingForm } from '../../lib/useFormattingForm';
-import { enumToOptions } from '../../lib/utils';
-import EnumSelect from '../EnumSelect.vue';
-import FrontRearInputs from '../FrontRearInputs.vue';
-import FrontRearSelects from '../FrontRearSelects.vue';
-import FullUpgradeSelect from '../FullUpgradeSelect.vue';
-import InputControl from '../InputControl.vue';
-import LimitedUpgradeSelect from '../LimitedUpgradeSelect.vue';
-import RestrictorUpgradeSelect from '../RestrictorUpgradeSelect.vue';
-import UpgradeSelect from '../UpgradeSelect.vue';
-import UpgradeTurboSelect from '../UpgradeTurboSelect.vue';
+} from '../../../lib/types';
+import { enumToOptions } from '../../../lib/utils';
+import EnumSelect from '../../EnumSelect.vue';
+import FrontRearInputs from '../../FrontRearInputs.vue';
+import FrontRearSelects from '../../FrontRearSelects.vue';
+import FullUpgradeSelect from '../../FullUpgradeSelect.vue';
+import InputControl from '../../InputControl.vue';
+import LimitedUpgradeSelect from '../../LimitedUpgradeSelect.vue';
+import RestrictorUpgradeSelect from '../../RestrictorUpgradeSelect.vue';
+import UpgradeSelect from '../../UpgradeSelect.vue';
+import UpgradeTurboSelect from '../../UpgradeTurboSelect.vue';
 
-const { form } = useFormattingForm();
+import { useFHFormattingForm } from './useFHFormattingForm';
+
+const { form } = useFHFormattingForm();
 const trackWidthOptions = enumToOptions(TrackWidthType);
 </script>
 <template>

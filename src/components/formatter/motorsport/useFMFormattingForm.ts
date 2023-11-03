@@ -19,7 +19,7 @@ import useFMRedditMarkdownGenerator from './FMRedditGenerator';
 import { FMSetup, getEncoderOptions } from './FMSetup';
 import useFMEnabledControls from './useFMEnabledControls';
 
-interface UseFormattingForm {
+interface UseFMFormattingForm {
   form: FMSetup;
   driveType: ComputedRef<DriveType>;
   globalUnit: Ref<'Metric' | 'Imperial'>;
@@ -30,7 +30,7 @@ interface UseFormattingForm {
   reset(): void;
 }
 
-const providerKey = 'formatting-form';
+const providerKey = 'fm-formatting-form';
 
 export function useFMFormattingFormProvider(props: FormattingFormProps) {
   const router = useRouter();
@@ -78,7 +78,7 @@ export function useFMFormattingFormProvider(props: FormattingFormProps) {
     setUnits();
   }
 
-  const state: UseFormattingForm = {
+  const state: UseFMFormattingForm = {
     form,
     driveType,
     globalUnit,
@@ -95,7 +95,7 @@ export function useFMFormattingFormProvider(props: FormattingFormProps) {
 }
 
 export function useFMFormattingForm() {
-  const state = inject<UseFormattingForm>(providerKey);
+  const state = inject<UseFMFormattingForm>(providerKey);
   if (!state) throw new Error('Injected state not available');
   return state;
 }

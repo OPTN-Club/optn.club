@@ -95,6 +95,7 @@ export interface PlatformAndHandlingUpgrades {
 
 export interface TireUpgrades {
   width: FrontAndRearSettings;
+  trackWidth: FrontAndRearSettings<TrackWidthType>;
   compound: FMTireCompound;
 }
 
@@ -250,6 +251,10 @@ function getFMDefaultFormV2(): FMSetup {
           rear: '245',
         },
         compound: FMTireCompound.street,
+        trackWidth: {
+          front: TrackWidthType.first,
+          rear: TrackWidthType.first,
+        },
       },
       wheels: {
         style: '',

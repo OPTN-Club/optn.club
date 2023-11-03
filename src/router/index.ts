@@ -2,9 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import AppHome from '../components/AppHome.vue';
 import TuningChart from '../components/chart/TuningChart.vue';
-import FormatterHorizon from '../components/formatter/FormatterHorizon.vue';
+import FHFormatter from '../components/formatter/horizon/FHFormatter.vue';
 import FMFormatter from '../components/formatter/motorsport/FMFormatter.vue';
-import TuneFormatter from '../components/formatter/TuneFormatter.vue';
 import MakesAndModels from '../components/MakesAndModels.vue';
 
 const router = createRouter({
@@ -18,7 +17,7 @@ const router = createRouter({
         {
           name: 'formatter-fh5',
           path: 'forza/horizon5/:version/:encodedForm?',
-          component: FormatterHorizon,
+          component: FHFormatter,
           props: (route) => ({
             game: 'horizon',
             version: route.params.version,
@@ -32,16 +31,6 @@ const router = createRouter({
           props: (route) => ({
             game: 'motorsport',
             version: route.params.version,
-            encodedForm: route.params.encodedForm,
-          }),
-        },
-        {
-          name: 'formatter-v1',
-          path: ':encodedForm?',
-          component: TuneFormatter,
-          props: (route) => ({
-            game: 'horizon',
-            version: 'v1',
             encodedForm: route.params.encodedForm,
           }),
         },

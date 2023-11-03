@@ -1,17 +1,20 @@
 <script setup lang="ts">
-import { useFormattingForm } from '../lib/useFormattingForm';
+defineProps<{
+  convertOnUnitChange: boolean;
+  globalUnit: 'Metric' | 'Imperial';
+}>();
 
-const {
-  convertOnUnitChange,
-  globalUnit,
-} = useFormattingForm();
+const emit = defineEmits<{
+  (e: 'update:convertOnUnitChange', value: boolean): void;
+  (e: 'update:globalUnit', value: 'Metric' | 'Imperial'): void;
+}>();
 
 function onInput(e: Event) {
-  globalUnit.value = (e.target as HTMLInputElement).value as 'Metric' | 'Imperial';
+  emit('update:globalUnit', (e.target as HTMLInputElement).value as 'Metric' | 'Imperial');
 }
 
 function onConvertInput(e: Event) {
-  convertOnUnitChange.value = (e.target as HTMLInputElement).checked;
+  emit('update:convertOnUnitChange', (e.target as HTMLInputElement).checked);
 }
 
 </script>

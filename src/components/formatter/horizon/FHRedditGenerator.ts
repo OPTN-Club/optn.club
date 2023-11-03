@@ -6,19 +6,22 @@ import {
   watch,
 } from 'vue';
 
-import { byFullname } from './models';
-import { FHSetup } from '../components/formatter/horizon/FHSetup';
+import { byFullname } from '../../../lib/models';
 import {
-  BuildSectionUpgrades,
-  BuildSettings,
   DriveType,
   FormattingFormProps,
   FrontAndRearSettings,
   FrontAndRearWithUnits,
+} from '../../../lib/types';
+import { formatUnit, formatUnitHeaders } from '../../../lib/unitsOfMeasure';
+import { formatFloat, addSuffix as suffixize } from '../../../lib/utils';
+
+import {
+  BuildSectionUpgrades,
+  BuildSettings,
+  FHSetup,
   TuneSettings,
-} from './types';
-import { formatUnit, formatUnitHeaders } from './unitsOfMeasure';
-import { formatFloat, addSuffix as suffixize } from './utils';
+} from './FHSetup';
 
 const tableSeparator = '\n######\n';
 

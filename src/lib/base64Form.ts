@@ -2,7 +2,7 @@ import { compressToBase64, decompressFromBase64 } from 'lz-string';
 
 import getDefaultForm from './defaultForm';
 import { mangleValueMap } from './mangle-lookup';
-import getDefaultFormV1, { SettingsFormV1 } from './SettingsFormV1';
+import getFHDefaultFormV1, { FHSetup } from '../components/formatter/horizon/FHSetup';
 
 const unmangleValueMap: Record<string, string> = Object
   .keys(mangleValueMap)
@@ -68,10 +68,10 @@ export default class Base64FormEncoder {
       return getDefaultForm(this.version);
     }
 
-    return getDefaultFormV1();
+    return getFHDefaultFormV1();
   }
 
-  encode(form: SettingsFormV1): string {
+  encode(form: FHSetup): string {
     const flattened = this.flattenObject(form);
     const serialized = this.serializer.serialize(flattened);
 
@@ -81,7 +81,7 @@ export default class Base64FormEncoder {
     return compressed;
   }
 
-  decode(encoded?: string): SettingsFormV1 {
+  decode(encoded?: string): FHSetup {
     const defaultForm = this.getDefaultForm();
 
     if (!encoded) return defaultForm;
