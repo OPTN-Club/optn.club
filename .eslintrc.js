@@ -59,6 +59,50 @@ module.exports = {
         },
       },
     ],
+    'import/order': ['error', {
+      groups: [
+        'builtin',
+        'external',
+        'internal',
+        'index',
+        'parent',
+        'sibling',
+        'object',
+        'type',
+      ],
+      alphabetize: {
+        order: 'asc',
+        // orderImportKind: 'asc',
+        caseInsensitive: true,
+      },
+      'newlines-between': 'always',
+      pathGroups: [
+        {
+          group: 'internal',
+          pattern: '@/**',
+          position: 'before',
+        },
+      ],
+    }],
+    'import-newlines/enforce': [
+      'error',
+      { items: 2 },
+    ],
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
+    'sort-imports': ['error', {
+      allowSeparatedGroups: true,
+      ignoreCase: true,
+      ignoreDeclarationSort: true,
+    }],
     'max-len': [
       'error',
       {
@@ -97,15 +141,14 @@ module.exports = {
     '@typescript-eslint/func-call-spacing': ['error'],
 
     // ** Vue specific rules ** //
-    'vue/max-attributes-per-line': [
-      'error',
-      {
-        singleline: 2,
-        multiline: {
-          max: 1,
-        },
+    'vue/max-attributes-per-line': ['error', {
+      singleline: {
+        max: 1,
       },
-    ],
+      multiline: {
+        max: 1,
+      },
+    }],
     'vue/singleline-html-element-content-newline': [
       'off',
       {
@@ -119,14 +162,13 @@ module.exports = {
     'vue/order-in-components': 'error',
     'vue/this-in-template': 'error',
     'vue/no-setup-props-destructure': 'off',
-    // "vue/no-setup-props-reactivity-loss": "error",
-    'vue/max-len': [
-      'off',
-      {
-        code: 140,
-        tabWidth: 2,
-      },
-    ],
+    'vue/max-len': ['error', {
+      code: 140,
+      tabWidth: 2,
+      ignoreComments: true,
+      ignoreRegExpLiterals: true,
+      ignoreStrings: true,
+    }],
     'vue/v-on-event-hyphenation': ['error', 'never'],
     'vuejs-accessibility/form-control-has-label': 'off',
     'vuejs-accessibility/label-has-for': [
@@ -135,16 +177,6 @@ module.exports = {
         required: {
           some: ['nesting', 'id'],
         },
-      },
-    ],
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
       },
     ],
   },

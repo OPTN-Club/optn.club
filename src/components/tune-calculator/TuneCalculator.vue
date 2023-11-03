@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { DriveType, PIClass } from '../../lib/types';
 import { SpringsType } from '../../lib/tune-calculator';
+import { DriveType, PIClass } from '../../lib/types';
 import useTuneCalculator from '../../lib/useTuneCalculator';
-import EnumSelect from '../EnumSelect.vue';
 import CounterInput from '../CounterInput.vue';
+import EnumSelect from '../EnumSelect.vue';
+
 import CalculatorResults from './CalculatorResults.vue';
 
 const state = useTuneCalculator();
@@ -214,7 +215,10 @@ const state = useTuneCalculator();
           </div>
         </section>
       </form>
-      <CalculatorResults :tune="state.tune.value" :inputs="state.inputs" />
+      <CalculatorResults
+        :tune="state.tune.value"
+        :inputs="state.inputs"
+      />
     </div>
   </div>
 </template>

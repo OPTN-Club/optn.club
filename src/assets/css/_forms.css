@@ -83,4 +83,12 @@
   .engine .control {
     min-width: 100px;
   }
+
+  .text-control {
+    @apply
+      h-10
+      leading-10
+      border
+      border-transparent;
+  }
 }

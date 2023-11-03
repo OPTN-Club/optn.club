@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RestrictorUpgrade } from '../lib/types';
+
 import EnumSelect from './EnumSelect.vue';
 
 defineProps<{

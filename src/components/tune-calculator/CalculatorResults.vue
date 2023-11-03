@@ -1,5 +1,10 @@
 <script setup lang="ts">import { computed } from 'vue';
-import { FrontRear, TuneCalculatorResult, TuneInputs } from '../../lib/tune-calculator';
+
+import {
+  FrontRear,
+  TuneCalculatorResult,
+  TuneInputs,
+} from '../../lib/tune-calculator';
 
 const props = defineProps<{
   tune: TuneCalculatorResult;
@@ -78,12 +83,22 @@ const formatted = computed(() => ({
           <tr>
             <th>Brake Balance</th>
             <td>{{ formatted.brakeBalance }}</td>
-            <td colspan="3" class="unit">%</td>
+            <td
+              colspan="3"
+              class="unit"
+            >
+              %
+            </td>
           </tr>
           <tr v-if="inputs.drivetrain === 'AWD'">
             <th>Center Diff</th>
             <td>{{ formatted.centerDiff }}</td>
-            <td colspan="3" class="unit">%</td>
+            <td
+              colspan="3"
+              class="unit"
+            >
+              %
+            </td>
           </tr>
         </tbody>
       </table>

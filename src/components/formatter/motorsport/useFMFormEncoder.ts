@@ -1,7 +1,13 @@
 import { compressToBase64, decompressFromBase64 } from 'lz-string';
-import { computed, ref, watch } from 'vue';
+import {
+  computed,
+  ref,
+  watch,
+} from 'vue';
+
 import { mangleValueMap } from '../../../lib/mangle-lookup';
 import { FormattingFormProps } from '../../../lib/types';
+
 import { getFMDefaultForm } from './FMSetup';
 
 export default function useFMFormEncoder<T extends Record<string, never>>(

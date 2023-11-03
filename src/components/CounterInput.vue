@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import {
-  computed, reactive, onBeforeUnmount, watch,
-} from 'vue';
 import { v4 as uuid } from 'uuid';
+import {
+  computed,
+  onBeforeUnmount,
+  reactive,
+  watch,
+} from 'vue';
+
 import RepeatButton, { Modifiers } from './RepeatButton.vue';
 
 const props = withDefaults(defineProps<{

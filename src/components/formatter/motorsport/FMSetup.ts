@@ -1,25 +1,25 @@
 import {
-  PressureUnit,
-  SpringRateUnit,
-  LengthUnit,
-  Upgrade,
-  LimitedUpgrade,
-  TransmissionUpgrade,
-  DriveType,
-  ForceUnit,
+  AeroAndAppearanceUpgrades,
   BallastType,
+  BrakeTuneSettings,
+  ConversionSettings,
+  DifferentialTuneSettings,
+  DriveType,
   FMFullUpgrade,
-  FrontAndRearSettings,
   FMTireCompound,
+  ForceUnit,
+  FrontAndRearSettings,
   FrontAndRearWithUnits,
   GearTuneSettings,
-  BrakeTuneSettings,
-  DifferentialTuneSettings,
-  ConversionSettings,
-  TrackWidthType,
-  AeroAndAppearanceUpgrades,
-  WeightUnit,
+  LengthUnit,
+  LimitedUpgrade,
+  PressureUnit,
   SpeedUnit,
+  SpringRateUnit,
+  TrackWidthType,
+  TransmissionUpgrade,
+  Upgrade,
+  WeightUnit,
 } from '../../../lib/types';
 import { FormEncoderOptions } from '../../../lib/useFormEncoder';
 
@@ -111,12 +111,18 @@ export interface SteeringWheelTuneSettings {
   steeringLockRange: string;
 }
 
-export interface TuneSettings {
-  tires: FrontAndRearWithUnits<PressureUnit>;
-  gears: GearTuneSettings;
+export interface FMAlignmentTuneSettings {
   camber: FrontAndRearSettings;
   toe: FrontAndRearSettings;
   caster: string;
+  steeringAngle: string;
+  na: boolean;
+}
+
+export interface TuneSettings {
+  tires: FrontAndRearWithUnits<PressureUnit>;
+  gears: GearTuneSettings;
+  alignment: FMAlignmentTuneSettings;
   arb: FrontAndRearSettings;
   springs: FrontAndRearWithUnits<SpringRateUnit>;
   rideHeight: FrontAndRearWithUnits<LengthUnit>;
@@ -146,9 +152,10 @@ export interface PerformanceUpgrades {
   conversions: ConversionSettings;
 }
 
-export interface FMTuneStatistics {
+export interface FMSetupStatistics {
   pi: number;
   classification: FMPIClass;
+  carPoints: number;
   hp: number;
   torque: number;
   weight: number;
@@ -160,9 +167,10 @@ export interface FMTuneStatistics {
 }
 
 export interface FMSetup {
+  year: string;
   make: string;
   model: string;
-  stats: FMTuneStatistics;
+  stats: FMSetupStatistics;
   upgrades: PerformanceUpgrades;
   tune: TuneSettings;
 }
@@ -188,11 +196,13 @@ const defaultFormMap: DefaultFormMap<FMSetup> = {
 
 function getFMDefaultFormV2(): FMSetup {
   const defaultForm: FMSetup = {
+    year: '',
     make: '',
     model: '',
     stats: {
       pi: 700,
       classification: FMPIClass.A,
+      carPoints: 0,
       hp: 0,
       torque: 0,
       weight: 0,
@@ -278,15 +288,19 @@ function getFMDefaultFormV2(): FMSetup {
         ratios: ['', '', '', '', '', '', '', '', '', '', ''],
         na: false,
       },
-      camber: {
-        front: '-1',
-        rear: '-1',
+      alignment: {
+        camber: {
+          front: '-1',
+          rear: '-1',
+        },
+        toe: {
+          front: '0',
+          rear: '0',
+        },
+        caster: '5',
+        steeringAngle: '60',
+        na: false,
       },
-      toe: {
-        front: '0',
-        rear: '0',
-      },
-      caster: '5',
       arb: {
         front: '',
         rear: '',

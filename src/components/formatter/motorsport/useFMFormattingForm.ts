@@ -1,25 +1,23 @@
 import {
   computed,
+  ComputedRef,
   inject,
   provide,
-  Ref,
-  ComputedRef,
-  ref,
-  watch,
   reactive,
+  ref,
+  Ref,
+  watch,
 } from 'vue';
 import { useRouter } from 'vue-router';
-import useRedditMarkdownGenerator, { getDrivetrain } from '../../../lib/generator';
-import getDefaultForm from '../../../lib/defaultForm';
-import {
-  DriveType,
-  FormattingFormProps,
-} from '../../../lib/types';
-import useUpgrades, { UseUpgrades } from '../../../lib/useUpgrades';
-import useUnitsConverter from '../../../lib/useUnitsConverter';
-import { FMSetup, getEncoderOptions } from './FMSetup';
+
+import { DriveType, FormattingFormProps } from '../../../lib/types';
 import useFormEncoder from '../../../lib/useFormEncoder';
+import useUnitsConverter from '../../../lib/useUnitsConverter';
+import { UseUpgrades } from '../../../lib/useUpgrades';
+
 import useFMRedditMarkdownGenerator from './FMRedditGenerator';
+import { FMSetup, getEncoderOptions } from './FMSetup';
+import useFMEnabledControls from './useFMEnabledControls';
 
 interface UseFormattingForm {
   form: FMSetup;
@@ -48,7 +46,7 @@ export function useFMFormattingFormProvider(props: FormattingFormProps) {
 
   const driveType = computed(() => form.upgrades.conversions.drivetrain);
 
-  const show = useUpgrades(form.upgrades.drivetrain.transmission, driveType);
+  const show = useFMEnabledControls(form);
 
   const {
     globalUnit,
@@ -68,8 +66,7 @@ export function useFMFormattingFormProvider(props: FormattingFormProps) {
     }
   });
 
-  const linkUrl = computed(() => `https://optn.club${router.currentRoute.value.fullPath}`);
-  const { markdown } = useFMRedditMarkdownGenerator(props, form, linkUrl, globalUnit);
+  const { markdown } = useFMRedditMarkdownGenerator(form, globalUnit);
 
   function reset() {
     const defaultForm = options.value.getDefaultForm();

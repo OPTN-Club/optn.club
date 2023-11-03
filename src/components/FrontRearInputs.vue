@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { computed, reactive, watch } from 'vue';
-
 import { v1 as uuid } from 'uuid';
+import {
+  computed,
+  reactive,
+  watch,
+} from 'vue';
+
 import { FrontAndRearSettings } from '../lib/types';
 
 const props = withDefaults(defineProps<{
@@ -45,7 +49,10 @@ watch([() => props.modelValue.front, () => props.modelValue.rear], () => {
 </script>
 
 <template>
-  <div class="control !min-w-[250px]" :class="{ disabled }">
+  <div
+    class="control !min-w-[250px]"
+    :class="{ disabled }"
+  >
     <div class="label">{{ label }}</div>
     <div class="flex w-full">
       <slot name="attach-left" />

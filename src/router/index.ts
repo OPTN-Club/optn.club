@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
+
 import AppHome from '../components/AppHome.vue';
-import MakesAndModels from '../components/MakesAndModels.vue';
 import TuningChart from '../components/chart/TuningChart.vue';
-import FMFormatter from '../components/formatter/motorsport/FMFormatter.vue';
 import FormatterHorizon from '../components/formatter/FormatterHorizon.vue';
+import FMFormatter from '../components/formatter/motorsport/FMFormatter.vue';
 import TuneFormatter from '../components/formatter/TuneFormatter.vue';
+import MakesAndModels from '../components/MakesAndModels.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

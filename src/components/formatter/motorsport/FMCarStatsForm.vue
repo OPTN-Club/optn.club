@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue';
+
 import EnumSelect from '../../EnumSelect.vue';
-import MakeModelSelect from '../../MakeModelSelect.vue';
+import InputControl from '../../InputControl.vue';
 import NumberInput from '../../NumberInput.vue';
+
 import { FMPIClass, fmPiClassMap } from './FMSetup';
 import { useFMFormattingForm } from './useFMFormattingForm';
 
@@ -38,6 +40,8 @@ watch(() => form.stats.classification, (current) => {
   form.stats.pi = fmPiClassMap[current];
 });
 
+const balanceRear = computed(() => (form.stats.balance ? 100 - form.stats.balance : 0));
+
 </script>
 <template>
   <section>
@@ -46,10 +50,28 @@ watch(() => form.stats.classification, (current) => {
       <p>Which beast have you tamed?</p>
     </div>
     <div class="grow">
-      <MakeModelSelect
-        v-model:make="form.make"
-        v-model:model="form.model"
-      />
+      <div class="content">
+        <div class="set-upgrades">
+          <InputControl
+            v-model="form.year"
+            type="number"
+            label="Year"
+            class="w-56"
+          />
+        </div>
+        <div class="set-upgrades">
+          <InputControl
+            v-model="form.make"
+            label="Make"
+            class="w-56"
+          />
+          <InputControl
+            v-model="form.model"
+            label="Model"
+            class="w-56"
+          />
+        </div>
+      </div>
       <div class="content">
         <h3>Statistics</h3>
         <p class="text-sm mb-6">Optional, though helpful for others.</p>
@@ -66,6 +88,19 @@ watch(() => form.stats.classification, (current) => {
             rootClass="upgrade-select"
           />
           <NumberInput
+            v-model="form.stats.carPoints"
+            label="Car Points"
+            rootClass="upgrade-select"
+          />
+          <!-- <UnitSelect
+            v-model="form.stats.weight."
+            type="weight"
+            class="rounded-l-none"
+            :disabled="form.tune.aero.na"
+          /> -->
+        </div>
+        <div class="set-upgrades">
+          <NumberInput
             v-model="form.stats.hp"
             label="HP"
             rootClass="upgrade-select"
@@ -79,12 +114,6 @@ watch(() => form.stats.classification, (current) => {
               {{ units.torque }}
             </template>
           </NumberInput>
-          <!-- <UnitSelect
-            v-model="form.stats.weight."
-            type="weight"
-            class="rounded-l-none"
-            :disabled="form.tune.aero.na"
-          /> -->
         </div>
         <div class="set-upgrades">
           <NumberInput
@@ -95,10 +124,13 @@ watch(() => form.stats.classification, (current) => {
           </NumberInput>
           <NumberInput
             v-model="form.stats.balance"
-            label="Balance"
+            label="Balance Front"
           >
             <template #suffix>%</template>
           </NumberInput>
+          <div class="text-control">
+            &sol; {{ balanceRear }} %
+          </div>
         </div>
         <div class="set-upgrades">
           <NumberInput

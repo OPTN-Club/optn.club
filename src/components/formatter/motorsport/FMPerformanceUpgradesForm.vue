@@ -1,13 +1,20 @@
 <script setup lang="ts">
 import {
-  TransmissionUpgrade, DriveType, TireCompound, RimStyleType, TrackWidthType, BallastType, FMFullUpgrade,
+  BallastType,
+  DriveType,
+  FMFullUpgrade,
+  RimStyleType,
+  TireCompound,
+  TrackWidthType,
+  TransmissionUpgrade,
 } from '../../../lib/types';
-import InputControl from '../../InputControl.vue';
-import EnumSelect from '../../EnumSelect.vue';
-import UpgradeSelect from '../../UpgradeSelect.vue';
-import LimitedUpgradeSelect from '../../LimitedUpgradeSelect.vue';
-import FrontRearInputs from '../../FrontRearInputs.vue';
 import { enumToOptions } from '../../../lib/utils';
+import EnumSelect from '../../EnumSelect.vue';
+import FrontRearInputs from '../../FrontRearInputs.vue';
+import InputControl from '../../InputControl.vue';
+import LimitedUpgradeSelect from '../../LimitedUpgradeSelect.vue';
+import UpgradeSelect from '../../UpgradeSelect.vue';
+
 import { useFMFormattingForm } from './useFMFormattingForm';
 
 const { form } = useFMFormattingForm();
@@ -83,38 +90,92 @@ Conversion
       <div class="content">
         <h3>Fuel and Air</h3>
         <div class="set-upgrades">
-          <UpgradeSelect v-model="form.upgrades.fuelAndAir.exhaust" label="Exhaust" />
-          <UpgradeSelect v-model="form.upgrades.fuelAndAir.airFilter" label="Air Filter" />
-          <UpgradeSelect v-model="form.upgrades.fuelAndAir.intakeManifold" label="Intake Manifold" />
-          <UpgradeSelect v-model="form.upgrades.fuelAndAir.carburator" label="Carburator" />
+          <UpgradeSelect
+            v-model="form.upgrades.fuelAndAir.exhaust"
+            label="Exhaust"
+          />
+          <UpgradeSelect
+            v-model="form.upgrades.fuelAndAir.airFilter"
+            label="Air Filter"
+          />
+          <UpgradeSelect
+            v-model="form.upgrades.fuelAndAir.intakeManifold"
+            label="Intake Manifold"
+          />
+          <UpgradeSelect
+            v-model="form.upgrades.fuelAndAir.carburator"
+            label="Carburator"
+          />
           <InputControl
             v-model="form.upgrades.fuelAndAir.restrictorPlate"
             label="Restrictor Plate"
           />
-          <UpgradeSelect v-model="form.upgrades.fuelAndAir.fuelSystem" label="Fuel System" />
-          <UpgradeSelect v-model="form.upgrades.fuelAndAir.ignition" label="Ignition" />
-          <LimitedUpgradeSelect v-model="form.upgrades.fuelAndAir.singleTurbo" label="Turbo" />
-          <LimitedUpgradeSelect v-model="form.upgrades.fuelAndAir.twinTurbo" label="Twin Turbo" />
-          <LimitedUpgradeSelect v-model="form.upgrades.fuelAndAir.supercharger" label="Supercharger" />
-          <LimitedUpgradeSelect v-model="form.upgrades.fuelAndAir.centrifugalSupercharger" label="Centrifugal Supercharger" />
-          <LimitedUpgradeSelect v-model="form.upgrades.fuelAndAir.intercooler" label="Intercooler" />
+          <UpgradeSelect
+            v-model="form.upgrades.fuelAndAir.fuelSystem"
+            label="Fuel System"
+          />
+          <UpgradeSelect
+            v-model="form.upgrades.fuelAndAir.ignition"
+            label="Ignition"
+          />
+          <LimitedUpgradeSelect
+            v-model="form.upgrades.fuelAndAir.singleTurbo"
+            label="Turbo"
+          />
+          <LimitedUpgradeSelect
+            v-model="form.upgrades.fuelAndAir.twinTurbo"
+            label="Twin Turbo"
+          />
+          <LimitedUpgradeSelect
+            v-model="form.upgrades.fuelAndAir.supercharger"
+            label="Supercharger"
+          />
+          <LimitedUpgradeSelect
+            v-model="form.upgrades.fuelAndAir.centrifugalSupercharger"
+            label="Centrifugal Supercharger"
+          />
+          <LimitedUpgradeSelect
+            v-model="form.upgrades.fuelAndAir.intercooler"
+            label="Intercooler"
+          />
         </div>
       </div>
       <div class="content">
         <h3>Engine</h3>
         <div class="set-upgrades">
-          <UpgradeSelect v-model="form.upgrades.engine.oilAndCooling" label="Oil And Cooling" />
-          <UpgradeSelect v-model="form.upgrades.engine.flywheel" label="Flywheel" />
-          <UpgradeSelect v-model="form.upgrades.engine.camshaft" label="Camshaft" />
-          <UpgradeSelect v-model="form.upgrades.engine.valves" label="Valves" />
-          <UpgradeSelect v-model="form.upgrades.engine.displacement" label="Displacement" />
-          <UpgradeSelect v-model="form.upgrades.engine.pistons" label="Pistons" />
+          <UpgradeSelect
+            v-model="form.upgrades.engine.oilAndCooling"
+            label="Oil And Cooling"
+          />
+          <UpgradeSelect
+            v-model="form.upgrades.engine.flywheel"
+            label="Flywheel"
+          />
+          <UpgradeSelect
+            v-model="form.upgrades.engine.camshaft"
+            label="Camshaft"
+          />
+          <UpgradeSelect
+            v-model="form.upgrades.engine.valves"
+            label="Valves"
+          />
+          <UpgradeSelect
+            v-model="form.upgrades.engine.displacement"
+            label="Displacement"
+          />
+          <UpgradeSelect
+            v-model="form.upgrades.engine.pistons"
+            label="Pistons"
+          />
         </div>
       </div>
       <div class="content">
         <h3>Platform and Handling</h3>
         <div class="set-upgrades">
-          <UpgradeSelect v-model="form.upgrades.platformAndHandling.brakes" label="Brakes" />
+          <UpgradeSelect
+            v-model="form.upgrades.platformAndHandling.brakes"
+            label="Brakes"
+          />
           <UpgradeSelect
             v-model="form.upgrades.platformAndHandling.chassisReinforcement"
             label="Chassis Reinforcement"
@@ -169,7 +230,10 @@ Conversion
           />
         </div>
         <div class="set-upgrades">
-          <FrontRearInputs v-model="form.upgrades.wheels.size" label="Size" />
+          <FrontRearInputs
+            v-model="form.upgrades.wheels.size"
+            label="Size"
+          />
         </div>
         <!-- <div class="set-upgrades">
           <FrontRearSelects

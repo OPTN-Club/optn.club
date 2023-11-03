@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { ChartDataCornerSpeed } from './types';
+
 import ChartItemsList from './ChartItemsList.vue';
+import { ChartDataCornerSpeed } from './types';
 
 const props = defineProps<{
   title: string;

@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { addSuffix } from '../../../lib/utils';
+
 import { PressureUnit } from '../../../lib/types';
-import NumberInput from '../../NumberInput.vue';
-import UnitSelect from '../../UnitSelect.vue';
+import { addSuffix } from '../../../lib/utils';
+import AccelDecelInputs from '../../AccelDecelInputs.vue';
 import CheckboxControl from '../../CheckboxControl.vue';
 import FrontRearInputs from '../../FrontRearInputs.vue';
-import AccelDecelInputs from '../../AccelDecelInputs.vue';
+import NumberInput from '../../NumberInput.vue';
+import UnitSelect from '../../UnitSelect.vue';
+
 import { useFMFormattingForm } from './useFMFormattingForm';
 
 const { form, show } = useFMFormattingForm();
@@ -78,28 +80,43 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
         </div>
       </div>
       <div class="content">
-        <h3>Alignment</h3>
+        <div class="content-header flex items-end">
+          <h3>Alignment</h3>
+          <CheckboxControl
+            v-model="form.tune.alignment.na"
+            label="Not Applicable"
+            class="mb-0 ml-3"
+          />
+        </div>
         <div class="set-upgrades">
           <FrontRearInputs
-            v-model="form.tune.camber"
+            v-model="form.tune.alignment.camber"
             label="Camber"
             step="0.1"
             min="-10"
             max="10"
           />
           <FrontRearInputs
-            v-model="form.tune.toe"
+            v-model="form.tune.alignment.toe"
             label="Toe"
             step="0.1"
             min="-10"
             max="10"
           />
+        </div>
+        <div class="set-upgrades">
           <NumberInput
-            v-model="form.tune.caster"
+            v-model="form.tune.alignment.caster"
             label="Caster"
-            required
             max="7.5"
             step="0.1"
+          />
+          <NumberInput
+            v-model="form.tune.alignment.steeringAngle"
+            label="Steering Angle"
+            min="15"
+            max="75"
+            step="1"
           />
         </div>
       </div>

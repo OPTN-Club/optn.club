@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { useFMFormattingFormProvider } from './useFMFormattingForm';
-import FMPerformanceUpgradesForm from './FMPerformanceUpgradesForm.vue';
-import FMTuneSetupForm from './FMTuneSetupForm.vue';
+
 import GlobalUnitSelect from '../../GlobalUnitSelect.vue';
 import FormattedTuneTextarea from '../FormattedTuneTextarea.vue';
-import FMCarStatsForm from './FMCarStatsForm.vue';
 import ShareCodesForm from '../ShareCodesForm.vue';
-import { FormattingFormProps } from '../../../lib/types';
+
+import FMCarStatsForm from './FMCarStatsForm.vue';
+import FMPerformanceUpgradesForm from './FMPerformanceUpgradesForm.vue';
+import FMTuneSetupForm from './FMTuneSetupForm.vue';
+import { useFMFormattingFormProvider } from './useFMFormattingForm';
 
 const props = defineProps<{
   game: 'horizon' | 'motorsport';

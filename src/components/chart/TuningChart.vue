@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ChartData } from './types';
 import ChartRow from './ChartRow.vue';
+import { ChartData } from './types';
 
 const data: ChartData = {
   understeer: {
@@ -76,7 +76,10 @@ const data: ChartData = {
     </ul>
   </div>
   <section class="tune-chart">
-    <ChartRow label="To Fix Understeer" :data="data.understeer" />
+    <ChartRow
+      label="To Fix Understeer"
+      :data="data.understeer"
+    />
     <ChartRow
       class="mt-8"
       label="To Fix Oversteer"

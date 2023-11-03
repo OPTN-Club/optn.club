@@ -47,15 +47,24 @@ function onInput(e: Event) {
 </script>
 
 <template>
-  <div class="control" :class="[rootClass, { disabled }]">
-    <label :for="`#${id}`" :class="{ required }">
+  <div
+    class="control"
+    :class="[rootClass, { disabled }]"
+  >
+    <label
+      :for="`#${id}`"
+      :class="{ required }"
+    >
       <slot name="label">
         {{ label }}
       </slot>
       <span class="label-note">{{ note }}</span>
     </label>
     <div class="flex items-center relative">
-      <div v-if="$slots.prefix" class="absolute suffix">
+      <div
+        v-if="$slots.prefix"
+        class="absolute suffix"
+      >
         <slot name="prefix" />
       </div>
       <input
@@ -70,11 +79,17 @@ function onInput(e: Event) {
         v-bind="$attrs"
         @input="onInput"
       >
-      <div v-if="$slots.suffix" class="absolute suffix">
+      <div
+        v-if="$slots.suffix"
+        class="absolute suffix"
+      >
         <slot name="suffix" />
       </div>
       <slot />
     </div>
-    <span v-if="errorMsg" class="validation-message">{{ errorMsg }}</span>
+    <span
+      v-if="errorMsg"
+      class="validation-message"
+    >{{ errorMsg }}</span>
   </div>
 </template>

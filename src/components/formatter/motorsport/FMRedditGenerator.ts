@@ -1,7 +1,7 @@
 import { capitalCase } from 'change-case';
-import {
-  Ref, computed, reactive, watch,
-} from 'vue';
+import { computed, Ref } from 'vue';
+import { useRoute } from 'vue-router';
+
 import {
   DifferentialTuneSettings,
   DriveType,
@@ -9,9 +9,14 @@ import {
   FrontAndRearSettings,
   FrontAndRearWithUnits,
 } from '../../../lib/types';
-import { addSuffix as suffixize, formatFloat } from '../../../lib/utils';
 import { formatUnit, formatUnitHeaders } from '../../../lib/unitsOfMeasure';
-import { FMSetup, PerformanceUpgrades, TuneSettings } from './FMSetup';
+import { formatFloat, addSuffix as suffixize } from '../../../lib/utils';
+
+import {
+  FMSetup,
+  PerformanceUpgrades,
+  TuneSettings,
+} from './FMSetup';
 
 const tableSeparator = '\n######\n';
 
@@ -103,7 +108,16 @@ function formatGears(tune: TuneSettings): string[] {
 }
 
 function formatAlignment(tune: TuneSettings): string[] {
-  return formatFrontRear(['Alignment', 'Camber', 'Toe', 'Caster'], [tune.camber, tune.toe, { front: tune.caster, rear: '' }], 1, '°');
+  return formatFrontRear(
+    ['Alignment', 'Camber', 'Toe', 'Caster'],
+    [
+      tune.alignment.camber,
+      tune.alignment.toe,
+      { front: tune.alignment.caster, rear: '' },
+    ],
+    1,
+    '°',
+  );
 }
 
 function formatAntiRollbars(tune: TuneSettings): string[] {
@@ -334,23 +348,9 @@ function formatStatisticsTable(form: FMSetup, globalUnits: 'Metric' | 'Imperial'
   ];
 }
 
-export default function useFMRedditMarkdownGenerator(props: FormattingFormProps, form: FMSetup, linkUrl: Ref<string>, globalUnit: Ref<'Metric' | 'Imperial'>) {
-  const format = reactive({
-    build: formatUpgrades,
-    tune: formatTune,
-  });
-
-  watch(() => props.version, onVersionUpdated, { immediate: true });
-
-  function onVersionUpdated() {
-    if (props.version === 'v2') {
-      format.build = formatUpgrades;
-      format.tune = formatTune;
-    } else {
-      format.build = formatUpgrades;
-      format.tune = formatTune;
-    }
-  }
+export default function useFMRedditMarkdownGenerator(form: FMSetup, globalUnit: Ref<'Metric' | 'Imperial'>) {
+  const route = useRoute();
+  const linkUrl = computed(() => `https://optn.club${route.fullPath}`);
 
   const markdown = computed(() => [
     ...formatStatisticsTable(form, globalUnit.value),
