@@ -6,12 +6,14 @@ const data: ChartData = {
   understeer: {
     entry: {
       high: [
+        'Lower anti-dive',
         'Reduce front ride height',
         'Increase front aero',
         'Move brake bias back',
         'Decrease rear differential deceleration',
       ],
       medToLow: [
+        'Lower anti-dive',
         'Increase caster',
         'Increase toe-out (positive toe)',
         'Reduce front ride height',
@@ -19,16 +21,18 @@ const data: ChartData = {
     },
     mid: {
       all: [
-        'Soften front springs',
-        'Increase front rebound damping',
-        'Reduce front ride height',
+        'Lower front suspension geometry offset',
         'Soften front ARB',
+        'Soften front springs',
+        'Reduce front ride height',
+        'Increase front rebound damping',
         'Reduce front bump damping',
         'Increase front camber',
       ],
     },
     exit: {
       all: [
+        'Increase anti-squat',
         'Increase front rebound damping',
       ],
     },
@@ -37,17 +41,19 @@ const data: ChartData = {
     entry: {
       all: [
         'Increase rear differential deceleration',
+        'Increase anti-dive',
         'Move brake bias forward',
       ],
     },
     mid: {
       high: [
-        'Increase rear damping',
+        'Increase rear bump and rebound damping',
         'Increase rear downforce',
       ],
       medToLow: [
-        'Soften rear springs',
+        'Lower rear suspension geometry offset',
         'Soften rear ARB',
+        'Soften rear springs',
         'Reduce rear ride height',
         'Increase rear bump damping',
         'Decrease rear rebound damping',
@@ -55,6 +61,7 @@ const data: ChartData = {
     },
     exit: {
       all: [
+        'Decrease anti-squat',
         'Reduce rear ride height',
         'Increase rear bump damping',
         'Decrease rear rebound damping',
