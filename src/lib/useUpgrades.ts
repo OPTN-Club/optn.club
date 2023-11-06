@@ -1,7 +1,11 @@
-import { computed, ComputedRef, Ref } from 'vue';
 import {
-  Car, DriveType, SettingsForm, TransmissionUpgrade,
-} from './types';
+  computed,
+  ComputedRef,
+  Ref,
+} from 'vue';
+
+import { FHSetup } from '../components/formatter/horizon/FHSetup';
+import { DriveType, TransmissionUpgrade } from './types';
 
 const finalRatio = [
   TransmissionUpgrade.sport,
@@ -34,15 +38,15 @@ export interface UseUpgrades {
   };
 }
 
-function getGearCount(form: SettingsForm, car: ComputedRef<Car | null>): number {
-  return gearCounts[form.build.drivetrain.transmission] || 10;
+function getGearCount(transmission: TransmissionUpgrade): number {
+  return gearCounts[transmission] || 10;
 }
 
-export default function useUpgrades(form: SettingsForm, car: ComputedRef<Car | null>, driveType: ComputedRef<DriveType>) {
+export default function useUpgrades(transmission: TransmissionUpgrade, driveType: ComputedRef<DriveType>) {
   const enabled = computed<UseUpgrades>(() => ({
     gears: {
-      final: finalRatio.includes(form.build.drivetrain.transmission),
-      count: getGearCount(form, car),
+      final: finalRatio.includes(transmission),
+      count: getGearCount(transmission),
     },
     diff: {
       front: [DriveType.awd, DriveType.fwd].includes(driveType.value),

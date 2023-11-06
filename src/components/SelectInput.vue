@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { v1 as uuid } from 'uuid';
+
 import { SelectOption } from '../lib/types';
 
 defineProps<{

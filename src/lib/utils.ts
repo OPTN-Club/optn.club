@@ -59,7 +59,7 @@ export function ensureArray<T>(value: T | T[]): T[] {
 }
 
 export function formatFloat(value: string | number, precision: number, suffix = '', includeSuffix = true) {
-  const f = typeof value === 'string' ? parseFloat(value) : value;
+  const f = ensureFloat(value);
   if (Number.isNaN(f)) return '';
   return `${f.toFixed(precision)}${includeSuffix ? suffix : ''}`;
 }

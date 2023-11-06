@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import logoUrl from '../assets/OPTN_logo.png';
+import iconDiscord from '../assets/icon-discord.png';
 import iconGithub from '../assets/icon-github.png';
 import iconReddit from '../assets/icon-reddit.png';
-import iconDiscord from '../assets/icon-discord.png';
+import logoUrl from '../assets/OPTN_logo.png';
 </script>
 <template>
   <header>
@@ -18,28 +18,61 @@ import iconDiscord from '../assets/icon-discord.png';
 
     <div class="flex grow w-full items-center justify-between z-10">
       <div class="nav-bar">
-        <router-link class="nav-link" :to="{ name: 'formatter' }">Formatter</router-link>
-        <!-- <router-link class="nav-link" :to="{ name: 'calculator' }">Calculator</router-link> -->
-        <router-link class="nav-link" :to="{ name: 'tuningchart' }">Tuning Chart</router-link>
+        <router-link
+          class="nav-link"
+          :to="{ name: 'formatter-fh5', params: { version: 'v1' } }"
+        >
+          FH5 Formatter
+        </router-link>
+        <router-link
+          class="nav-link"
+          :to="{ name: 'formatter-fm8', params: { version: 'v2' } }"
+        >
+          FM Formatter
+        </router-link>
+        <router-link
+          class="nav-link"
+          :to="{ name: 'tuningchart' }"
+        >
+          Tuning Chart
+        </router-link>
       </div>
 
       <ul class="link-bar">
         <li>
-          <a href="https://discord.gg/K2Kk5Kj6PP" target="_blank">
-            <img :src="iconDiscord" alt="Discord">
+          <a
+            href="https://discord.gg/K2Kk5Kj6PP"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              :src="iconDiscord"
+              alt="Discord"
+            >
           </a>
         </li>
         <li>
           <a
             href="https://reddit.com/r/ForzaOpenTunes"
             target="_blank"
+            rel="noopener noreferrer"
           >
-            <img :src="iconReddit" alt="Reddit">
+            <img
+              :src="iconReddit"
+              alt="Reddit"
+            >
           </a>
         </li>
         <li>
-          <a href="https://github.com/OPTN-Club" target="_blank">
-            <img :src="iconGithub" alt="Github">
+          <a
+            href="https://github.com/OPTN-Club"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              :src="iconGithub"
+              alt="Github"
+            >
           </a>
         </li>
       </ul>

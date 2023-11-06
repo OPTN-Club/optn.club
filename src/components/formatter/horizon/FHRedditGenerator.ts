@@ -1,18 +1,27 @@
 import { capitalCase } from 'change-case';
-import { byFullname } from './models';
+import {
+  computed,
+  reactive,
+  Ref,
+  watch,
+} from 'vue';
+
+import { byFullname } from '../../../lib/models';
+import {
+  DriveType,
+  FormattingFormProps,
+  FrontAndRearSettings,
+  FrontAndRearWithUnits,
+} from '../../../lib/types';
+import { formatUnit, formatUnitHeaders } from '../../../lib/unitsOfMeasure';
+import { formatFloat, addSuffix as suffixize } from '../../../lib/utils';
+
 import {
   BuildSectionUpgrades,
   BuildSettings,
-  Car,
-  DriveType,
-  FrontAndRearSettings,
-  FrontAndRearWithUnits,
-  SettingsForm,
+  FHSetup,
   TuneSettings,
-  TuneStatistics,
-} from './types';
-import { addSuffix as suffixize, formatFloat } from './utils';
-import { formatUnit, formatUnitHeaders } from './unitsOfMeasure';
+} from './FHSetup';
 
 const tableSeparator = '\n######\n';
 
@@ -169,19 +178,15 @@ function isDrivetrain(value: string): value is DriveType {
   return Object.values(DriveType).includes(value as DriveType);
 }
 
-export function getDrivetrain(build: BuildSettings, stockDriveType: string): DriveType {
-  // return build.conversions.drivetrain || (stockDriveType);
+export function getDrivetrain(build: BuildSettings): DriveType {
   if (build.conversions.drivetrain) {
     return build.conversions.drivetrain;
-  }
-  if (isDrivetrain(stockDriveType)) {
-    return stockDriveType;
   }
   return DriveType.awd;
 }
 
-function formatDifferential(form: SettingsForm, car: Car | undefined): string[] {
-  const drivetrain = getDrivetrain(form.build, car?.drive || '');
+function formatDifferential(form: FHSetup): string[] {
+  const drivetrain = getDrivetrain(form.build);
   const header = ['Differential', 'Accel', 'Decel'];
 
   if (form.tune.diff.na) {
@@ -221,7 +226,7 @@ function formatDifferential(form: SettingsForm, car: Car | undefined): string[] 
   return formatTable(header, body);
 }
 
-export function formatTune(form: SettingsForm, model: string): string[] {
+export function formatTune(form: FHSetup, model: string): string[] {
   const car = byFullname.get(model);
   const text = [
     ...formatTires(form.tune),
@@ -232,7 +237,7 @@ export function formatTune(form: SettingsForm, model: string): string[] {
     ...formatDamping(form.tune),
     ...formatAero(form.tune),
     ...formatBrakes(form.tune),
-    ...formatDifferential(form, car),
+    ...formatDifferential(form),
   ];
 
   return text;
@@ -306,32 +311,6 @@ function formatBuildSection<T extends BuildSectionUpgrades>(section: T) {
     .map((key) => [capitalCase(key), section[key as keyof T]]);
 }
 
-// function formatStatistics(form: SettingsForm) {
-//   const text: string[] = [];
-//   const header = `${form.stats.classification} ${form.stats.pi} ${form.model}`.trim();
-//   if (header) text.push(`#${header}`);
-
-//   const line: string[] = [];
-//   if (form.stats.weight) line.push(form.stats.weight);
-//   if (form.stats.balance) line.push(`${form.stats.balance}% front balance`);
-//   if (line.length > 0) text.push(`${line.join(' &nbsp; ')}  `);
-
-//   const line2: string[] = [];
-//   if (form.stats.hp) line2.push(`${form.stats.hp} hp`);
-//   if (form.stats.torque) line2.push(`${form.stats.torque} torque`);
-//   if (line2.length > 0) text.push(`${line2.join(' &nbsp; ')}  `);
-
-//   if (form.stats.topSpeed) text.push(`Top Speed ${form.stats.topSpeed}`);
-//   const line3: string[] = [];
-//   if (form.stats.zeroToSixty) line3.push(`0-60 ${form.stats.zeroToSixty}s`);
-//   if (form.stats.zeroToHundred) line3.push(`0-100 ${form.stats.zeroToHundred}s`);
-//   if (line3.length > 0) text.push(line3.join(' &nbsp; '));
-//   if (form.stats.shareCode) text.push(`Share Code: ${form.stats.shareCode}`);
-//   text.push('');
-
-//   return text;
-// }
-
 interface StatUnits {
   weight: string;
   torque: string;
@@ -351,7 +330,7 @@ const statUnits: Record<'Metric' | 'Imperial', StatUnits> = {
   },
 };
 
-function formatStatisticsTable(form: SettingsForm, globalUnits: 'Metric' | 'Imperial') {
+function formatStatisticsTable(form: FHSetup, globalUnits: 'Metric' | 'Imperial') {
   const text: string[] = [];
   const piClass = `${form.stats.classification} ${form.stats.pi}`.trim();
   if (form.model) text.push(`${form.model}`);
@@ -389,10 +368,27 @@ export function formatBuild(build: BuildSettings, model: string): string[] {
   return text;
 }
 
-export function generateRedditMarkdown(form: SettingsForm, tuneUrl: string, globalUnits: 'Metric' | 'Imperial') {
-  return [
-    ...formatStatisticsTable(form, globalUnits),
-    `[View this tune on optn.club](${tuneUrl})\n`,
+export default function useRedditMarkdownGenerator(props: FormattingFormProps, form: FHSetup, linkUrl: Ref<string>, globalUnit: Ref<'Metric' | 'Imperial'>) {
+  const format = reactive({
+    build: formatBuild,
+    tune: formatTune,
+  });
+
+  watch(() => props.version, onVersionUpdated, { immediate: true });
+
+  function onVersionUpdated() {
+    if (props.version === 'v2') {
+      format.build = formatBuild;
+      format.tune = formatTune;
+    } else {
+      format.build = formatBuild;
+      format.tune = formatTune;
+    }
+  }
+
+  const markdown = computed(() => [
+    ...formatStatisticsTable(form, globalUnit.value),
+    `[View this tune on optn.club](${linkUrl.value})\n`,
     '---\n',
     '## Build\n',
     ...formatBuild(form.build, form.model),
@@ -402,5 +398,9 @@ export function generateRedditMarkdown(form: SettingsForm, tuneUrl: string, glob
     '---\n',
     'Formatted text generated by the [OPTN.club Tune Formatter](https://optn.club/formatter)  \n',
     'Submit bugs, feature requests, and questions on [Github](https://github.com/OPTN-Club/optn.club/issues)',
-  ].join('\n');
+  ].join('\n'));
+
+  return {
+    markdown,
+  };
 }

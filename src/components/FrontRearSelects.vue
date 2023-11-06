@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { reactive, watch } from 'vue';
 import { v1 as uuid } from 'uuid';
+import { reactive, watch } from 'vue';
+
 import { FrontAndRearSettings, SelectOption } from '../lib/types';
 
 const props = withDefaults(defineProps<{
@@ -31,7 +32,10 @@ watch(() => props.modelValue, (current) => {
 </script>
 
 <template>
-  <div class="control !min-w-[250px]" :class="{ disabled }">
+  <div
+    class="control !min-w-[250px]"
+    :class="{ disabled }"
+  >
     <div class="label">{{ label }}</div>
     <div class="front-rear-selects">
       <div class="relative grow sm:grow-0">

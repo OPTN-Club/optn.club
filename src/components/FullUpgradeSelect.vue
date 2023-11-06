@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { FullUpgrade } from '../lib/types';
+
 import EnumSelect from './EnumSelect.vue';
 
 defineProps<{

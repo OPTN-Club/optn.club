@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+
 import {
-  SpringRateUnit, LengthUnit, PressureUnit, ForceUnit, WeightUnit,
+  ForceUnit,
+  LengthUnit,
+  PressureUnit,
+  SpringRateUnit,
+  WeightUnit,
 } from '../lib/types';
+
 import SelectInput from './SelectInput.vue';
 
 const props = defineProps<{

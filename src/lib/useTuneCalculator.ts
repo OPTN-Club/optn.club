@@ -1,32 +1,41 @@
 import {
+  computed,
   reactive,
   watch,
-  computed,
 } from 'vue';
-import { convertSpringRate, convertWeightToMass, multipliers } from './conversions';
+
+import { FHPIClass } from '../components/formatter/horizon/FHSetup';
+
 import {
-  defaultSpringTypeModifiersMap,
-  SpringTypeModifiersMap,
-  TuneInputs,
-  TuneModifiers,
-  defaultARBClassModifiersMap,
-  ClassModifiersMap,
-  valueDeltas,
+  convertSpringRate,
+  convertWeightToMass,
+  multipliers,
+} from './conversions';
+import {
   calcSpringsDeltas,
+  ClassModifiersMap,
+  defaultARBClassModifiersMap,
+  defaultFrequencyClassModifiersMap,
+  defaultSpringTypeModifiersMap,
   FrontRear,
   SpringsType,
+  SpringTypeModifiersMap,
   TuneCalculatorResult,
-  defaultFrequencyClassModifiersMap,
+  TuneInputs,
+  TuneModifiers,
+  valueDeltas,
 } from './tune-calculator';
 import {
-  DriveType, PIClass, SpringRateUnit, WeightUnit,
+  DriveType,
+  SpringRateUnit,
+  WeightUnit,
 } from './types';
 
 export default function useTuneCalculator() {
   const inputs = reactive<TuneInputs>({
     drivetrain: DriveType.rwd,
     springs: SpringsType.race,
-    piClass: PIClass.S1,
+    piClass: FHPIClass.S1,
     weight: 1500,
     weightBalance: 50,
     frontAero: 112,

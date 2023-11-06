@@ -1,14 +1,15 @@
-const express = require('express');
-const compression = require('compression');
-const enforce = require('express-sslify');
 const path = require('path');
+
+const compression = require('compression');
+const express = require('express');
+const enforce = require('express-sslify');
 
 const app = express();
 
 const staticMiddleware = express.static(path.join(__dirname, '/docs'));
 const spaMiddleware = (req, res) => {
   res.sendFile(path.join(__dirname, '/docs/index.html'));
-}
+};
 
 app.set('x-powered-by', false);
 if (process.env.NODE_ENV !== 'development') {

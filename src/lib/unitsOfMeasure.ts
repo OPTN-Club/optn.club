@@ -1,8 +1,15 @@
 import {
-  convertPressureFrom, convertSpringRateFrom, convertLengthFrom, convertForceFrom,
+  convertForceFrom,
+  convertLengthFrom,
+  convertPressureFrom,
+  convertSpringRateFrom,
 } from './conversions';
 import {
-  SpringRateUnit, LengthUnit, PressureUnit, UnitOfMeasure, ForceUnit,
+  ForceUnit,
+  LengthUnit,
+  PressureUnit,
+  SpringRateUnit,
+  UnitOfMeasure,
 } from './types';
 import { formatFloat } from './utils';
 
@@ -59,6 +66,7 @@ export function getUnits(unit: UnitOfMeasure) {
   if (isPressureUnit(unit)) return PressureUnit;
   if (isSpringRateUnit(unit)) return SpringRateUnit;
   if (isLengthUnit(unit)) return LengthUnit;
+  if (isForceUnit(unit)) return ForceUnit;
   throw new Error(`Invalid Unit of Measure: ${unit}`);
 }
 

@@ -13,3 +13,27 @@ Website for formatting Forza Horizon tuning builds for open source sharing on re
 - [Suspension Secrets - Dampers](https://suspensionsecrets.co.uk/dampers/)
 - [Hypercoils.com Spring Rate Calculator](https://www.hypercoils.com/spring-rate-calculator/)
 - A huge resource: [OptimumG Tech Papers](https://optimumg.com/category/technical-papers/tech-tips/)
+
+## TODO
+
+- [x] Completely remove the brand and car lists. Instead add open text boxes so people type their car manually. This way you won't have to update the formatter every time they add content.
+- [ ] Add a toggle to switch between FM8, Forza Horizon 5 and "other"(for previous games).
+- [ ] New banner/picture to better represent both FM and FH (After FM comes out)
+
+### Homepage
+
+- [ ] Add a word that we support both the Horizon and Motorsport sides of the franchise.
+- [ ] Add sections about video guides and the soon to be released Tuning Academy
+
+### Tuning
+
+- [ ] Add Suspension Geometry ![Suspension Geometry](todo_suspension_geometry.png)
+  - [ ] Roll Center Height Offset (Low/High): Front and Rear
+  - [ ] Anti-geometry Percent: Anti-dive (front) and Anti-dive (rear)
+- [ ] Car-Specific Steering Wheel Tuning ![Car-Specific Steering Wheel Tuning](todo_steering_wheel.png)
+  - [ ] Force Feedback Scale
+  - [ ] Steering Lock Range
+
+### Upgrades
+
+- [ ] Ballast: Add ballast in increments of 2.5%, from 0% to 12.5% ![Ballast Upgrade](todo_ballast_upgrade.png)

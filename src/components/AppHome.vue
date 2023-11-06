@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import iconReddit from '../assets/icon-reddit.png';
 import iconDiscord from '../assets/icon-discord.png';
+import iconReddit from '../assets/icon-reddit.png';
 
 const xboxClubLink = 'https://account.xbox.com/en-ca/clubs/profile?clubid=3379875686571131&csrf=8pknUkepH9Fer0B8L4kkDml3eJUBA0QC3XhOOHgAMwO7ie104Lkr4HI_cYBdFPkKDxqj13LJD7-VzHGV-6mANkBsOGM1&wa=wsignin1.0';
 </script>
@@ -19,6 +19,7 @@ const xboxClubLink = 'https://account.xbox.com/en-ca/clubs/profile?clubid=337987
       <a
         href="https://discord.gg/K2Kk5Kj6PP"
         target="_blank"
+        rel="noopener noreferrer"
         class="inline-flex items-center align-middle"
       >
         <img
@@ -43,6 +44,7 @@ const xboxClubLink = 'https://account.xbox.com/en-ca/clubs/profile?clubid=337987
       <a
         href="https://reddit.com/r/ForzaOpenTunes"
         target="_blank"
+        rel="noopener noreferrer"
         class="inline-flex items-center align-middle"
       >
         <img
@@ -54,7 +56,10 @@ const xboxClubLink = 'https://account.xbox.com/en-ca/clubs/profile?clubid=337987
       </a>
       which is also where tunes must be posted to be eligible to win.
       Join the discussion on
-      <a href="https://discord.gg/UQQd9XdZnN" class="inline-flex items-center align-middle">
+      <a
+        href="https://discord.gg/UQQd9XdZnN"
+        class="inline-flex items-center align-middle"
+      >
         <img
           :src="iconDiscord"
           alt="Discord"
@@ -70,6 +75,7 @@ const xboxClubLink = 'https://account.xbox.com/en-ca/clubs/profile?clubid=337987
       <a
         :href="xboxClubLink"
         target="_blank"
+        rel="noopener noreferrer"
       >
         OPTN Club on Xbox
       </a>
@@ -82,6 +88,7 @@ const xboxClubLink = 'https://account.xbox.com/en-ca/clubs/profile?clubid=337987
       <a
         href="https://docs.google.com/document/d/1r5auWYA46yrxjB6hsg8bYs02qmJt6R2LyAK8TOG1I0M/edit?usp=sharing"
         target="_blank"
+        rel="noopener noreferrer"
       >
         Tuning Guide
       </a>

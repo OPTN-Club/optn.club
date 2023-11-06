@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { reactive, watch } from 'vue';
 import { v1 as uuid } from 'uuid';
+import { reactive, watch } from 'vue';
+
 import { AccelDecelSettings } from '../lib/types';
 
 const props = withDefaults(defineProps<{
@@ -41,7 +42,10 @@ watch(() => props.modelValue, (current) => {
 </script>
 
 <template>
-  <div class="control !min-w-[250px] shrink-0" :class="{ disabled }">
+  <div
+    class="control !min-w-[250px] shrink-0"
+    :class="{ disabled }"
+  >
     <div class="label">{{ label }}</div>
     <div class="flex">
       <div class="relative grow sm:grow-0">

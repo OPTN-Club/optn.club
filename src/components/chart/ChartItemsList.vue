@@ -21,8 +21,14 @@ const listItems = computed(() => props.items.map((item) => {
   <div class="ts-panel ts-speed">
     <h4>{{ title }}</h4>
     <ul class="chart-list">
-      <li v-for="item in listItems" :key="item.text">
-        {{ item.text }}<span v-if="item.asterisks" class="asterisk">{{ item.asterisks }}</span>
+      <li
+        v-for="item in listItems"
+        :key="item.text"
+      >
+        {{ item.text }}<span
+          v-if="item.asterisks"
+          class="asterisk"
+        >{{ item.asterisks }}</span>
       </li>
     </ul>
   </div>

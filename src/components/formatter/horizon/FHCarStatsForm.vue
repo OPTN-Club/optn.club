@@ -1,24 +1,14 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue';
-import { useFormattingForm } from '../../lib/useFormattingForm';
-import { PIClass } from '../../lib/types';
-import EnumSelect from '../EnumSelect.vue';
-import MakeModelSelect from '../MakeModelSelect.vue';
-import NumberInput from '../NumberInput.vue';
-import InputControl from '../InputControl.vue';
-import UnitSelect from '../UnitSelect.vue';
 
-const { form, globalUnit } = useFormattingForm();
+import EnumSelect from '../../EnumSelect.vue';
+import MakeModelSelect from '../../MakeModelSelect.vue';
+import NumberInput from '../../NumberInput.vue';
 
-const piClassMap: Record<PIClass, number> = {
-  [PIClass.D]: 500,
-  [PIClass.C]: 600,
-  [PIClass.B]: 700,
-  [PIClass.A]: 800,
-  [PIClass.S1]: 900,
-  [PIClass.S2]: 998,
-  [PIClass.X]: 999,
-};
+import { FHPIClass, fhPiClassMap } from './FHSetup';
+import { useFHFormattingForm } from './useFHFormattingForm';
+
+const { form, globalUnit } = useFHFormattingForm();
 
 const units = computed(() => {
   if (globalUnit.value === 'Imperial') {
@@ -36,7 +26,7 @@ const units = computed(() => {
 });
 
 watch(() => form.stats.classification, (current) => {
-  form.stats.pi = piClassMap[current];
+  form.stats.pi = fhPiClassMap[current];
 });
 
 </script>
@@ -58,7 +48,7 @@ watch(() => form.stats.classification, (current) => {
           <EnumSelect
             v-model="form.stats.classification"
             label="Class"
-            :type="PIClass"
+            :type="FHPIClass"
             rootClass="upgrade-select"
           />
           <NumberInput

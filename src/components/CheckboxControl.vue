@@ -19,7 +19,10 @@ function onInput(e: Event) {
 </script>
 
 <template>
-  <label :for="id" class="inline checkbox">
+  <label
+    :for="id"
+    class="inline checkbox"
+  >
     <input
       :id="id"
       :checked="modelValue"

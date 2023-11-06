@@ -1,6 +1,8 @@
 <script lang="ts">
 import { v1 as uuid } from 'uuid';
+
 import { SelectOption } from '../lib/types';
+
 import SelectInput from './SelectInput.vue';
 
 export default {
@@ -32,8 +34,14 @@ function onUpdate(value: string) {
 </script>
 
 <template>
-  <div class="control" :class="[rootClass, { disabled }]">
-    <label v-if="label" :for="id">
+  <div
+    class="control"
+    :class="[rootClass, { disabled }]"
+  >
+    <label
+      v-if="label"
+      :for="id"
+    >
       <span>{{ label }}</span>
       <span class="label-note">{{ note }}</span>
     </label>

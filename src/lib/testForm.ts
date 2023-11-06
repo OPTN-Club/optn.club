@@ -1,23 +1,23 @@
+import { FHPIClass, FHSetup } from '../components/formatter/horizon/FHSetup';
+
 import {
-  PressureUnit,
-  SpringRateUnit,
-  LengthUnit,
   DriveType,
-  Upgrade,
-  LimitedUpgrade,
-  FullUpgrade,
-  TransmissionUpgrade,
-  TireCompound,
-  RimStyleType,
-  SettingsForm,
-  TrackWidthType,
   ForceUnit,
-  PIClass,
+  FullUpgrade,
+  LengthUnit,
+  LimitedUpgrade,
+  PressureUnit,
   RestrictorUpgrade,
+  RimStyleType,
+  SpringRateUnit,
+  TireCompound,
+  TrackWidthType,
+  TransmissionUpgrade,
   TurboUpgrade,
+  Upgrade,
 } from './types';
 
-export default function getTestForm(): SettingsForm {
+export default function getTestForm(): FHSetup {
   return {
     make: 'Ferrari',
     model: '2019 Ferrari 488 Pista',
@@ -170,7 +170,7 @@ export default function getTestForm(): SettingsForm {
     },
     stats: {
       pi: 0,
-      classification: PIClass.A,
+      classification: FHPIClass.A,
       hp: 0,
       torque: 0,
       weight: 0,
