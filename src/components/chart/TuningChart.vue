@@ -59,7 +59,7 @@ const data: ChartData = {
         'Increase rear bump damping',
         'Decrease rear rebound damping',
         'Decrease rear differential acceleration',
-        'Increase toe-in (negative toe)',
+        'Increase rear toe-in (negative toe)',
       ],
     },
   },
