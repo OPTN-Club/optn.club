@@ -69,11 +69,12 @@ export function useFMFormattingFormProvider(props: FormattingFormProps) {
   const { markdown } = useFMRedditMarkdownGenerator(form, globalUnit);
 
   function reset() {
-    const defaultForm = options.value.getDefaultForm();
-    form.upgrades = defaultForm.upgrades;
+    const defaultForm = options.value.getDefaultForm() as unknown as FMSetup;
+    form.year = defaultForm.year;
     form.make = defaultForm.make;
     form.model = defaultForm.model;
     form.stats = defaultForm.stats;
+    form.upgrades = defaultForm.upgrades;
     form.tune = defaultForm.tune;
     setUnits();
   }

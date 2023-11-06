@@ -11,7 +11,6 @@ import FHTuneSetupForm from './FHTuneSetupForm.vue';
 import { useFHFormattingFormProvider } from './useFHFormattingForm';
 
 const props = defineProps<{
-  game: 'horizon' | 'motorsport';
   version: string;
   encodedForm?: string;
 }>();

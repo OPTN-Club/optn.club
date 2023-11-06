@@ -21,7 +21,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
 <template>
   <section>
     <div class="heading">
-      <h2>Tuning</h2>
+      <h2>Tune</h2>
       <p>
         This section is for tuning.
         <br>If you leave something stock (Ex. brakes), or leave the default

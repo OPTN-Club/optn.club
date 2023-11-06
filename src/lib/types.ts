@@ -1,5 +1,4 @@
 export interface FormattingFormProps {
-  game: 'horizon' | 'motorsport';
   version: string;
   encodedForm?: string;
 }
@@ -139,10 +138,9 @@ export enum FMTireCompound {
   stock = 'Stock',
   street = 'Street',
   sport = 'Sport',
-  semiSlick = 'Semi-Slick',
-  slick = 'Slick',
-  drift = 'Drift',
+  race = 'Race',
   drag = 'Drag',
+  vintage = 'Vintage',
 }
 
 export enum TireCompound {

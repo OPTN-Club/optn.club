@@ -6,12 +6,10 @@ import GlobalUnitSelect from '../../GlobalUnitSelect.vue';
 import FMCarStatsForm from './FMCarStatsForm.vue';
 import FMFormattedTuneTextarea from './FMFormattedTuneTextarea.vue';
 import FMPerformanceUpgradesForm from './FMPerformanceUpgradesForm.vue';
-import FMShareCodesForm from './FMShareCodesForm.vue';
 import FMTuneSetupForm from './FMTuneSetupForm.vue';
 import { useFMFormattingFormProvider } from './useFMFormattingForm';
 
 const props = defineProps<{
-  game: 'horizon' | 'motorsport';
   version: string;
   encodedForm?: string;
 }>();
@@ -99,7 +97,6 @@ const router = useRouter();
         v-model:convertOnUnitChange="convertOnUnitChange"
       />
       <FMCarStatsForm />
-      <FMShareCodesForm />
       <FMPerformanceUpgradesForm />
       <FMTuneSetupForm />
     </form>

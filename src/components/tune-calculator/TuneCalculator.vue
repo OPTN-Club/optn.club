@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { SpringsType } from '../../lib/tune-calculator';
-import { DriveType, PIClass } from '../../lib/types';
+import { DriveType } from '../../lib/types';
 import useTuneCalculator from '../../lib/useTuneCalculator';
 import CounterInput from '../CounterInput.vue';
 import EnumSelect from '../EnumSelect.vue';
+import { FHPIClass } from '../formatter/horizon/FHSetup';
 
 import CalculatorResults from './CalculatorResults.vue';
 
@@ -51,7 +52,7 @@ const state = useTuneCalculator();
                 <EnumSelect
                   v-model="state.inputs.piClass"
                   label="Class"
-                  :type="PIClass"
+                  :type="FHPIClass"
                 />
               </div>
               <div class="set-upgrades">

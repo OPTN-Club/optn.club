@@ -81,6 +81,7 @@ export interface EngineUpgrades {
   valves: Upgrade;
   displacement: Upgrade;
   pistons: Upgrade;
+  motorAndBattery: Upgrade;
 }
 
 export interface PlatformAndHandlingUpgrades {
@@ -235,6 +236,7 @@ function getFMDefaultFormV2(): FMSetup {
         valves: Upgrade.stock,
         displacement: Upgrade.stock,
         pistons: Upgrade.stock,
+        motorAndBattery: Upgrade.na,
       },
       platformAndHandling: {
         brakes: Upgrade.stock,

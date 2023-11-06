@@ -3,14 +3,15 @@ import {
   BallastType,
   DriveType,
   FMFullUpgrade,
+  FMTireCompound,
   RimStyleType,
-  TireCompound,
   TrackWidthType,
   TransmissionUpgrade,
 } from '../../../lib/types';
 import { enumToOptions } from '../../../lib/utils';
 import EnumSelect from '../../EnumSelect.vue';
 import FrontRearInputs from '../../FrontRearInputs.vue';
+import FrontRearSelects from '../../FrontRearSelects.vue';
 import InputControl from '../../InputControl.vue';
 import LimitedUpgradeSelect from '../../LimitedUpgradeSelect.vue';
 import UpgradeSelect from '../../UpgradeSelect.vue';
@@ -35,6 +36,7 @@ Engine
   Valves
   Displacement
   Pistons and Compression
+  Motor and Battery
 Platform and Handling
   Brakes
   Chassis Reinforcement and Roll Cage
@@ -167,6 +169,10 @@ Conversion
             v-model="form.upgrades.engine.pistons"
             label="Pistons"
           />
+          <UpgradeSelect
+            v-model="form.upgrades.engine.motorAndBattery"
+            label="Motor and Battery"
+          />
         </div>
       </div>
       <div class="content">
@@ -210,7 +216,7 @@ Conversion
           <EnumSelect
             v-model="form.upgrades.tires.compound"
             label="Compound"
-            :type="TireCompound"
+            :type="FMTireCompound"
           />
         </div>
         <div class="set-upgrades">
@@ -219,6 +225,13 @@ Conversion
             label="Tire Width"
           />
         </div>
+        <!-- <div class="set-upgrades">
+          <FrontRearSelects
+            v-model="form.upgrades.tires.trackWidth"
+            label="Track Width"
+            :options="trackWidthOptions"
+          />
+        </div> -->
       </div>
       <div class="content">
         <h3>Wheels</h3>
@@ -235,18 +248,6 @@ Conversion
             label="Size"
           />
         </div>
-        <!-- <div class="set-upgrades">
-          <FrontRearSelects
-            v-model="form.upgrades.tiresAndRims.trackWidth"
-            label="Track Width"
-            :options="trackWidthOptions"
-          />
-          <FrontRearSelects
-            v-model="form.upgrades.tiresAndRims.profileSize"
-            label="Profile Size"
-            :options="trackWidthOptions"
-          />
-        </div> -->
       </div>
       <div class="content">
         <h3>Drivetrain</h3>

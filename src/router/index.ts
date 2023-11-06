@@ -19,7 +19,6 @@ const router = createRouter({
           path: 'forza/horizon5/:version/:encodedForm?',
           component: FHFormatter,
           props: (route) => ({
-            game: 'horizon',
             version: route.params.version,
             encodedForm: route.params.encodedForm,
           }),
@@ -29,9 +28,19 @@ const router = createRouter({
           path: 'forza/motorsport/:version/:encodedForm?',
           component: FMFormatter,
           props: (route) => ({
-            game: 'motorsport',
             version: route.params.version,
             encodedForm: route.params.encodedForm,
+          }),
+        },
+        {
+          path: ':encodedForm?',
+          redirect: (to) => ({
+            name: 'formatter-fh5',
+            params: {
+              version: 'v1',
+              encodedForm: to.params.encodedForm,
+            },
+
           }),
         },
       ],

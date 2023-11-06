@@ -20,7 +20,7 @@ import logoUrl from '../assets/OPTN_logo.png';
       <div class="nav-bar">
         <router-link
           class="nav-link"
-          :to="{ name: 'formatter-fh5', params: { version: 'v2' } }"
+          :to="{ name: 'formatter-fh5', params: { version: 'v1' } }"
         >
           FH5 Formatter
         </router-link>
