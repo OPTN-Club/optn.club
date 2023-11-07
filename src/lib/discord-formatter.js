@@ -14,14 +14,33 @@ Exhaust | Sport | 893
 Air Filter | Stock | 333
 */
 function createTable(headers, body) {
-    logRow(headers)
+    let table = createRow(headers)
+    table += "\n"
+    let divider = "="
+    for (let i = 0; i < headers.length; i++) {
+
+        for (let count = 0; count < 23; count++) {
+            divider += "="        
+        }
+    }
+    table += divider
+    table += "\n"
     for (let i = 0; i < body.length; i++) {
         const row = body[i];
-        // row now equals ['Exhaust',    'Sport']
-        logRow(row)
-    }
+        table += createRow(row) 
+    table += "\n"
+}
+    return table
 }
 
+function padString(value, totalLength){
+    let numSpaces = totalLength - value.length
+    for (let count = 0; count < numSpaces; count++) {
+        value +=" "        
+    }
+    return value
+}
+padString("length", 10)
 const sampleHeaders = ['Fuel and Air', 'Upgrade', 'Number']
 const sampleTable = [
 //           0              1
@@ -29,17 +48,19 @@ const sampleTable = [
 /* 1 */    ['Air Filter', 'Stock', '333'],
 ]
 
-function logRow(row) { // row is an array: 
+function createRow(row) { // row is an array: 
     // Should output:
     // Fuel and Air | Upgrade | Number
     let output = "| "
     for (let i = 0; i < row.length; i++) {
-        const element = row[i];
-        output += `${element} | `
+        const strValue = row[i];
+        const padded = padString(strValue, 20)
+        output += `${padded} | `
     }
     
-    console.log(output)
+    return output
 }
 
 // logRow(sampleHeaders);
-createTable(sampleHeaders, sampleTable)
+const formated = createTable(sampleHeaders, sampleTable)
+console.log(formated)
