@@ -249,10 +249,10 @@ function getFMDefaultFormV2(): FMSetup {
       },
       tires: {
         width: {
-          front: '245',
-          rear: '245',
+          front: 'Stock',
+          rear: 'Stock',
         },
-        compound: FMTireCompound.street,
+        compound: FMTireCompound.stock,
         trackWidth: {
           front: TrackWidthType.first,
           rear: TrackWidthType.first,
@@ -287,8 +287,8 @@ function getFMDefaultFormV2(): FMSetup {
     },
     tune: {
       tires: {
-        front: '2',
-        rear: '2',
+        front: '',
+        rear: '',
         units: PressureUnit.bar,
       },
       gears: {
@@ -297,15 +297,15 @@ function getFMDefaultFormV2(): FMSetup {
       },
       alignment: {
         camber: {
-          front: '-1',
-          rear: '-1',
+          front: '',
+          rear: '',
         },
         toe: {
-          front: '0',
-          rear: '0',
+          front: '',
+          rear: '',
         },
-        caster: '5',
-        steeringAngle: '60',
+        caster: '',
+        steeringAngle: '',
         na: false,
       },
       arb: {

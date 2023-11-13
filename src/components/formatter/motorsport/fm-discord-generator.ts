@@ -190,6 +190,10 @@ function formatFrontRearWithUnit(header: string, value: FrontAndRearWithUnits, p
 }
 
 function formatTires(tune: TuneSettings): string[] {
+  const table = formatFrontRearWithUnit('', tune.tires, 1);
+
+  if (table.length === 0) return [];
+
   return [
     h1('Tires'),
     ...formatFrontRearWithUnit('', tune.tires, 1),
@@ -224,20 +228,38 @@ function formatAlignment(tune: TuneSettings): string[] {
   if (tune.alignment.na) {
     return [];
   }
+
+  const lines: string[] = [];
+  if (tune.alignment.camber.front || tune.alignment.camber.rear) {
+    lines.push(...formatFrontRear('Camber', tune.alignment.camber, 1, '°', TextAlign.right));
+  }
+  if (tune.alignment.toe.front || tune.alignment.toe.rear) {
+    lines.push(...formatFrontRear('Toe', tune.alignment.toe, 1, '°', TextAlign.right));
+  }
+  if (tune.alignment.caster) {
+    lines.push(`Caster ${tune.alignment.caster}°`);
+  }
+  if (tune.alignment.steeringAngle) {
+    lines.push(`Steering Angle ${tune.alignment.steeringAngle}°`);
+  }
+
+  if (lines.length === 0) return [];
+
+  if (tune.alignment.caster || tune.alignment.steeringAngle) {
+    lines.push('');
+  }
+
   return [
     h1('Alignment'),
-    ...formatFrontRear('Camber', tune.alignment.camber, 1, '°', TextAlign.right),
-    ...formatFrontRear('Toe', tune.alignment.toe, 1, '°', TextAlign.right),
-    `Caster ${tune.alignment.caster}°`,
-    `Steering Angle ${tune.alignment.steeringAngle}°`,
-    '',
+    ...lines,
   ];
 }
 
 function formatAntiRollbars(tune: TuneSettings): string[] {
-  if (tune.arb.na) {
+  if (tune.arb.na || (!tune.arb.front && !tune.arb.rear)) {
     return [];
   }
+
   return [
     h1('Anti-roll Bars'),
     ...formatFrontRear('', tune.arb),
@@ -248,10 +270,20 @@ function formatSprings(tune: TuneSettings): string[] {
   if (tune.springs.na) {
     return [];
   }
+
+  const lines: string[] = [];
+  if (tune.springs.front || tune.springs.rear) {
+    lines.push(...formatFrontRearWithUnit('Springs', tune.springs, 1));
+  }
+  if (tune.rideHeight.front || tune.rideHeight.rear) {
+    lines.push(...formatFrontRearWithUnit('Ride Height', tune.rideHeight, 1));
+  }
+
+  if (lines.length === 0) return [];
+
   return [
     h1('Springs'),
-    ...formatFrontRearWithUnit('Springs', tune.springs, 1),
-    ...formatFrontRearWithUnit('Ride Height', tune.rideHeight, 1),
+    ...lines,
   ];
 }
 
@@ -341,7 +373,7 @@ function formatDiffLine(label: string, setting: AccelDecelSettings) {
   } else {
     line.push('-');
   }
-  if (line.length === 1) {
+  if (line[1] === '-' && line[2] === '-') {
     return [];
   }
   return line;
@@ -477,6 +509,9 @@ function formatUpgradesSection<T extends object>(header: string, section: T) {
       return showUpgrade(value as string);
     })
     .map((key) => [formatLabel(key), section[key as keyof T] as string]);
+
+  if (rows.length === 0) return [];
+
   return [
     h1(header),
     ...formatTable('', rows),
