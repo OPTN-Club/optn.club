@@ -17,7 +17,9 @@ const route = useRoute();
 
 const globalUnits = useGlobalUnits();
 
-const selectedFormat = ref<'reddit' | 'discord'>('discord');
+const storedFormat = (localStorage.getItem('SELECTED_FORMATTER') || 'reddit') as 'reddit' | 'discord';
+const selectedFormat = ref<'reddit' | 'discord'>(storedFormat);
+
 const copyButtonText = ref('Copy text');
 const copyUrlButtonText = ref('Copy URL');
 const errorText = ref('');
@@ -88,6 +90,7 @@ async function onShareURLClick() {
 
 function onFormatSelect(e: Event) {
   selectedFormat.value = (e.target as HTMLInputElement).value as 'reddit' | 'discord';
+  localStorage.setItem('SELECTED_FORMATTER', selectedFormat.value);
 }
 
 </script>
@@ -140,16 +143,20 @@ function onFormatSelect(e: Event) {
       rows="10"
       cols="25"
     />
-    <p>
-      Character Count: {{ formattedText.length }}
-    </p>
+    <!--
     <p>
       URL Length: {{ linkUrl.length }}
-    </p>
-    <p class="text-sm text-light-mist px-1 text-center mb-10">
+    </p> -->
+    <p
+      v-if="selectedFormat === 'reddit'"
+      class="text-sm text-light-mist px-1 text-center mb-10"
+    >
       <strong class="text-yellow">NOTE:</strong>
       Be sure the editor is in &quot;Markdown&quot; mode<br>
       when creating your post on Reddit!
+    </p>
+    <p v-else>
+      Character Count: {{ formattedText.length }}
     </p>
     <button
       type="button"
