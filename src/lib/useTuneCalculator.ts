@@ -146,8 +146,8 @@ export default function useTuneCalculator() {
   }));
 
   const springRates = computed<FrontRear>(() => ({
-    front: convertSpringRate(springRatesInNewtons.value.front, SpringRateUnit.nmm, SpringRateUnit.kgf) / 100,
-    rear: convertSpringRate(springRatesInNewtons.value.rear, SpringRateUnit.nmm, SpringRateUnit.kgf) / 100,
+    front: convertSpringRate(springRatesInNewtons.value.front, SpringRateUnit.lbs, SpringRateUnit.kgf) / 100,
+    rear: convertSpringRate(springRatesInNewtons.value.rear, SpringRateUnit.lbs, SpringRateUnit.kgf) / 100,
   }));
 
   const weightBalance = computed(() => ({
