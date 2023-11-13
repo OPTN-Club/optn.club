@@ -21,7 +21,7 @@ import {
   Upgrade,
   WeightUnit,
 } from '../../../lib/types';
-import { FormEncoderOptions } from '../../../lib/useFormEncoder';
+import { FormEncoderOptions, GenericForm } from '../../../lib/useFormEncoder';
 
 /*
 Class X – 999 PI
@@ -178,17 +178,17 @@ export interface FMSetup {
 }
 
 export function getEncoderOptions(version: string): FormEncoderOptions {
-  return { getDefaultForm: () => getFMDefaultForm(version) as unknown as Record<string, never> };
+  return { getDefaultForm: () => getFMDefaultForm(version) as GenericForm };
 }
 
-export function getFMDefaultForm(version: string): FMSetup {
-  if (defaultFormMap[version]) {
-    return defaultFormMap[version]();
-  }
-  return defaultFormMap.v2();
+export function getFMDefaultForm(version: string): GenericForm {
+  const creator = defaultFormMap[version] ?? defaultFormMap.v2;
+  return creator() as unknown as GenericForm;
 }
 
-interface DefaultFormMap<T = Record<string, never>> extends Record<string, (() => T)> {
+export const getLatestDefaultForm = getFMDefaultFormV2;
+
+interface DefaultFormMap<T> {
   [key: string]: (() => T);
 }
 
@@ -282,7 +282,7 @@ function getFMDefaultFormV2(): FMSetup {
         aspiration: '',
         bodyKit: '',
         engine: '',
-        drivetrain: DriveType.rwd,
+        drivetrain: DriveType.stock,
       },
     },
     tune: {

@@ -1,4 +1,8 @@
-import { ref, watch } from 'vue';
+import {
+  Ref,
+  ref,
+  watch,
+} from 'vue';
 
 import {
   convertForce,
@@ -6,6 +10,7 @@ import {
   convertPressure,
   convertSpeed,
   convertSpringRate,
+  convertTo,
 } from './conversions';
 import {
   ForceUnit,
@@ -14,8 +19,10 @@ import {
   PressureUnit,
   SpeedUnit,
   SpringRateUnit,
+  UnitOfMeasure,
   WeightUnit,
 } from './types';
+import { getUnits } from './unitsOfMeasure';
 import { formatFloat } from './utils';
 
 interface StoredUnits {
@@ -57,12 +64,12 @@ export interface TuneStatisticsWithUnits {
   topSpeed: number;
 }
 
-export interface FormSettingsWithUnits {
+export interface SetupFormWithUnits {
   tune: TuneSettingsWithUnits;
   stats: TuneStatisticsWithUnits;
 }
 
-export default function useUnitsConverter(form: FormSettingsWithUnits, isBlank: boolean) {
+export default function useUnitsConverter<T extends object>(form: T, isBlank: boolean) {
   const storedUnits = getStoredUnits();
 
   const globalUnit = ref<'Metric' | 'Imperial'>(storedUnits.global);

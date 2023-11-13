@@ -1,17 +1,19 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue';
 
+import { useGlobalUnits } from '../../../lib/useGlobalUnits';
 import EnumSelect from '../../EnumSelect.vue';
 import MakeModelSelect from '../../MakeModelSelect.vue';
 import NumberInput from '../../NumberInput.vue';
 
 import { FHPIClass, fhPiClassMap } from './FHSetup';
-import { useFHFormattingForm } from './useFHFormattingForm';
+import { useFHSetupForm } from './useFHSetupForm';
 
-const { form, globalUnit } = useFHFormattingForm();
+const { form } = useFHSetupForm();
+const globalUnits = useGlobalUnits();
 
 const units = computed(() => {
-  if (globalUnit.value === 'Imperial') {
+  if (globalUnits.value.globalUnit === 'Imperial') {
     return {
       torque: 'ft-lbs',
       weight: 'lbs',

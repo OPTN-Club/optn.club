@@ -1,111 +1,102 @@
 import { compressToBase64, decompressFromBase64 } from 'lz-string';
-import {
-  computed,
-  ref,
-  Ref,
-  watch,
-} from 'vue';
 
 import { mangleValueMap } from './mangle-lookup';
 
 export interface FormEncoderOptions {
-  getDefaultForm(): Record<string, never>;
-  serialize?: (form: Record<string, never>) => string;
-  deserialize?: (encoded: string, flattenedKeys: string[]) => Record<string, never>;
+  getDefaultForm(): GenericForm;
+  serialize?: (flattenedObj: FlattenedObject) => string;
+  deserialize?: (encoded: string, flattenedKeys: string[]) => FlattenedObject;
 }
 
-export default function useFormEncoder(
-  options: Ref<FormEncoderOptions>,
+export interface GenericForm {
+  [key: string]: string | number | string[] | number[] | boolean | GenericForm;
+}
+
+export interface FlattenedObject {
+  [key: string]: string | number | string[] | number[] | boolean;
+}
+
+export default function useFormEncoder<T>(
+  blankFormFactory: () => T,
 ) {
-  const serializedDefaultForm = ref('');
-
-  const serializer = computed(() => ({
-    getDefaultForm: options.value.getDefaultForm,
-    serialize: options.value.serialize || serializeFlatObject,
-    deserialize: options.value.deserialize || deserializeFlatObject,
-  }));
-
-  const flattenedKeys = ref<string[]>([]);
-
-  watch(options, onVersionUpdated, { immediate: true });
-
-  function onVersionUpdated() {
-    const defaultForm = serializer.value.getDefaultForm();
-    const keys = Object.keys(flattenObject(defaultForm));
-    keys.sort();
-    flattenedKeys.value = keys;
-
-    serializedDefaultForm.value = encode(defaultForm);
+  function getBlankForm(): GenericForm {
+    const blankForm = blankFormFactory();
+    return blankForm as unknown as GenericForm;
   }
 
-  function encode(form: Record<string, unknown>): string {
-    const flattened = flattenObject(form);
-    // console.dir(flattened);
-    const serialized = serializer.value.serialize(flattened);
+  const flattenedBlankForm = flattenForm(getBlankForm());
 
-    if (serialized === serializedDefaultForm.value) return '';
+  const flattenedKeys = Object.keys(flattenedBlankForm);
+  flattenedKeys.sort();
+
+  const serializedDefaultForm = serializeFlatObject(flattenedBlankForm);
+
+  function encode(form: T): string {
+    const flattened = flattenForm(form as GenericForm);
+    // console.dir(flattened);
+    const serialized = serializeFlatObject(flattened);
+
+    if (serialized === serializedDefaultForm) return '';
 
     const compressed = compressToBase64(serialized);
     return compressed;
   }
 
-  function decode(encoded?: string): Record<string, unknown> {
-    const defaultForm = options.value.getDefaultForm();
+  function decode(encoded?: string): T {
+    const defaultForm = getBlankForm();
 
-    if (!encoded) return defaultForm;
+    if (!encoded) return defaultForm as T;
 
     const json = decompressFromBase64(encoded);
     if (!json) {
       throw new Error('Decompressed string is empty');
     }
-    const flattened = serializer.value.deserialize(json, flattenedKeys.value);
-    const form = unflattenObjectInto(flattened, defaultForm);
+    const flattened = deserializeFlatObject(json, flattenedKeys);
+    const form = unflattenFormInto(flattened, defaultForm);
     if (!form || !Object.keys(form).length) {
       throw new Error('Undefined or empty object.');
     }
 
-    return form;
+    return form as T;
   }
 
-  function flattenObject(object: Record<string, unknown>, path: string[] = []): Record<string, never> {
+  function flattenForm(object: GenericForm, path: string[] = []): FlattenedObject {
     const keys = Object.keys(object);
-    // console.log('keys', keys);
-    const flattened: Record<string, never> = {};
+    const flattened: FlattenedObject = {};
 
     keys.forEach((key) => {
       const value = object[key];
       const valuePath = [...path, key];
       const flattenedKey = valuePath.join('.');
-
-      if (value && typeof value === 'object' && !Array.isArray(value)) {
-        const flattenedValue = flattenObject(value as Record<string, unknown>, valuePath);
+      if (typeof value === 'boolean' || typeof value === 'string' || typeof value === 'number' || Array.isArray(value)) {
+        flattened[flattenedKey] = value;
+      } else {
+        const flattenedValue = flattenForm(value, valuePath);
         Object.keys(flattenedValue).forEach((valueKey) => {
           flattened[valueKey] = flattenedValue[valueKey];
         });
-      } else {
-        flattened[flattenedKey] = value as never;
       }
     });
 
     return flattened;
   }
 
-  function unflattenObjectInto(
-    source: Record<string, string>,
-    target: Record<string, unknown>,
+  function unflattenFormInto(
+    source: FlattenedObject,
+    target: GenericForm,
     path: string[] = [],
-  ): Record<string, unknown> {
+  ): GenericForm {
     const keys = Object.keys(target);
     keys.forEach((key) => {
       const valuePath = [...path, key];
       const targetValue = target[key];
 
-      if (targetValue && typeof targetValue === 'object' && !Array.isArray(targetValue)) {
-        target[key] = unflattenObjectInto(source, targetValue as Record<string, unknown>, valuePath);
-      } else {
+      if (typeof targetValue === 'boolean' || typeof targetValue === 'string' || typeof targetValue === 'number' || Array.isArray(targetValue)) {
         const flattenedKey = valuePath.join('.');
         const sourceValue = source[flattenedKey];
         target[key] = sourceValue;
+      } else {
+        target[key] = unflattenFormInto(source, targetValue, valuePath);
       }
     });
 
@@ -149,26 +140,26 @@ function unmangleValue<T>(value: string | number) {
  * This results in a much shorter encoded string.
  */
 
-function serializeFlatObject(form: Record<string, never>): string {
-  const keys = Object.keys(form);
+function serializeFlatObject(flattenedObj: FlattenedObject): string {
+  const keys = Object.keys(flattenedObj);
   keys.sort();
 
   const values: unknown[] = [];
   keys.forEach((key) => {
-    values.push(mangleValue(form[key]));
+    values.push(mangleValue(flattenedObj[key]));
   });
 
   return JSON.stringify(values);
 }
 
-function deserializeFlatObject(value: string, flattenedKeys: string[]): Record<string, never> {
+function deserializeFlatObject(value: string, flattenedKeys: string[]): FlattenedObject {
   const values = JSON.parse(value) as never[];
 
   if (values.length !== flattenedKeys.length) {
     throw new Error('Invalid form');
   }
 
-  const flattenedForm: Record<string, never> = {};
+  const flattenedForm: FlattenedObject = {};
   flattenedKeys.forEach((key, index) => {
     // console.log(key, index);
     flattenedForm[key] = unmangleValue(values[index]) as never;

@@ -11,14 +11,13 @@ import {
 import { enumToOptions } from '../../../lib/utils';
 import EnumSelect from '../../EnumSelect.vue';
 import FrontRearInputs from '../../FrontRearInputs.vue';
-import FrontRearSelects from '../../FrontRearSelects.vue';
 import InputControl from '../../InputControl.vue';
 import LimitedUpgradeSelect from '../../LimitedUpgradeSelect.vue';
 import UpgradeSelect from '../../UpgradeSelect.vue';
 
-import { useFMFormattingForm } from './useFMFormattingForm';
+import { useFMSetupForm } from './useFMSetupForm';
 
-const { form } = useFMFormattingForm();
+const { form } = useFMSetupForm();
 const trackWidthOptions = enumToOptions(TrackWidthType);
 /*
 Fuel and Air

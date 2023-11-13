@@ -8,17 +8,14 @@ import FHCarStatsForm from './FHCarStatsForm.vue';
 import FHFormattedTuneTextarea from './FHFormattedTuneTextarea.vue';
 import FHShareCodesForm from './FHShareCodesForm.vue';
 import FHTuneSetupForm from './FHTuneSetupForm.vue';
-import { useFHFormattingFormProvider } from './useFHFormattingForm';
+import { useFHSetupFormProvider } from './useFHSetupForm';
 
 const props = defineProps<{
   version: string;
   encodedForm?: string;
 }>();
 
-const {
-  globalUnit,
-  convertOnUnitChange,
-} = useFHFormattingFormProvider(props);
+useFHSetupFormProvider(props);
 
 const router = useRouter();
 </script>
@@ -33,10 +30,7 @@ const router = useRouter();
 
   <div class="flex flex-col md:flex-row items-start">
     <form class="grow">
-      <GlobalUnitSelect
-        v-model:global-unit="globalUnit"
-        v-model:convertOnUnitChange="convertOnUnitChange"
-      />
+      <GlobalUnitSelect />
       <FHCarStatsForm />
       <FHShareCodesForm />
       <FHBuildSetupForm />

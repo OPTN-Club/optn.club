@@ -9,6 +9,7 @@ import {
   SpeedValues,
   SpringRateUnit,
   SpringRateValues,
+  UnitOfMeasure,
   WeightUnit,
 } from './types';
 import { ensureFloat } from './utils';
@@ -24,6 +25,40 @@ export const multipliers = {
   weightNewtonsToMass: 9.80665,
   speed: 0.621371,
 };
+
+const convertToMap: Record<UnitOfMeasure, (value: string | number) => number> = {
+  [PressureUnit.bar]: (value) => convertPressure(value, PressureUnit.psi),
+  [PressureUnit.psi]: (value) => convertPressure(value, PressureUnit.bar),
+  [SpringRateUnit.kgf]: (value) => convertSpringRate(value, SpringRateUnit.kgf, SpringRateUnit.lbs),
+  [SpringRateUnit.lbs]: (value) => convertSpringRate(value, SpringRateUnit.lbs, SpringRateUnit.kgf),
+  [LengthUnit.cm]: (value) => convertLength(value, LengthUnit.in),
+  [LengthUnit.in]: (value) => convertLength(value, LengthUnit.cm),
+  [ForceUnit.kgf]: (value) => convertForce(value, ForceUnit.lbf),
+  [ForceUnit.lbf]: (value) => convertForce(value, ForceUnit.kgf),
+  [SpeedUnit.kph]: (value) => convertSpeed(value, SpeedUnit.mph),
+  [SpeedUnit.mph]: (value) => convertSpeed(value, SpeedUnit.kph),
+};
+
+export function convertTo<T extends UnitOfMeasure>(value: string | number, to: T, precision = 0): string {
+  return convertToMap[to](value).toFixed(precision);
+}
+
+const switchUnitMap: Record<UnitOfMeasure, UnitOfMeasure> = {
+  [PressureUnit.bar]: PressureUnit.psi,
+  [PressureUnit.psi]: PressureUnit.bar,
+  [SpringRateUnit.kgf]: SpringRateUnit.lbs,
+  [SpringRateUnit.lbs]: SpringRateUnit.kgf,
+  [LengthUnit.cm]: LengthUnit.in,
+  [LengthUnit.in]: LengthUnit.cm,
+  [ForceUnit.kgf]: ForceUnit.lbf,
+  [ForceUnit.lbf]: ForceUnit.kgf,
+  [SpeedUnit.kph]: SpeedUnit.mph,
+  [SpeedUnit.mph]: SpeedUnit.kph,
+};
+
+export function switchUnit<U extends UnitOfMeasure>(unit: U): U {
+  return switchUnitMap[unit] as U;
+}
 
 export function convertWeightToMass(value: string | number, from: WeightUnit) {
   const v = ensureFloat(value);

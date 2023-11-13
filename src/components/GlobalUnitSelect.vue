@@ -1,8 +1,7 @@
 <script setup lang="ts">
-defineProps<{
-  convertOnUnitChange: boolean;
-  globalUnit: 'Metric' | 'Imperial';
-}>();
+import { useGlobalUnits } from '../lib/useGlobalUnits';
+
+const globalUnits = useGlobalUnits();
 
 const emit = defineEmits<{
   (e: 'update:convertOnUnitChange', value: boolean): void;
@@ -10,11 +9,11 @@ const emit = defineEmits<{
 }>();
 
 function onInput(e: Event) {
-  emit('update:globalUnit', (e.target as HTMLInputElement).value as 'Metric' | 'Imperial');
+  globalUnits.value.globalUnit = (e.target as HTMLInputElement).value as 'Metric' | 'Imperial';
 }
 
 function onConvertInput(e: Event) {
-  emit('update:convertOnUnitChange', (e.target as HTMLInputElement).checked);
+  globalUnits.value.convertOnUnitChange = (e.target as HTMLInputElement).checked;
 }
 
 </script>
@@ -29,7 +28,7 @@ function onConvertInput(e: Event) {
       <div class="flex items-center h-full">
         <label class="inline radio">
           <input
-            :checked="globalUnit === 'Metric'"
+            :checked="globalUnits.globalUnit === 'Metric'"
             type="radio"
             name="globalUnit"
             value="Metric"
@@ -39,7 +38,7 @@ function onConvertInput(e: Event) {
         </label>
         <label class="inline radio">
           <input
-            :checked="globalUnit === 'Imperial'"
+            :checked="globalUnits.globalUnit === 'Imperial'"
             type="radio"
             name="globalUnit"
             value="Imperial"
@@ -51,7 +50,7 @@ function onConvertInput(e: Event) {
       <div class="flex items-center">
         <label class="checkbox">
           <input
-            :checked="convertOnUnitChange"
+            :checked="globalUnits.convertOnUnitChange"
             type="checkbox"
             name="convertOnUnitChange"
             @input="onConvertInput"

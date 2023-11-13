@@ -9,9 +9,9 @@ import FrontRearInputs from '../../FrontRearInputs.vue';
 import NumberInput from '../../NumberInput.vue';
 import UnitSelect from '../../UnitSelect.vue';
 
-import { useFHFormattingForm } from './useFHFormattingForm';
+import { useFHSetupForm } from './useFHSetupForm';
 
-const { form, show } = useFHFormattingForm();
+const { form, show } = useFHSetupForm();
 
 const gears = computed(() => form.tune.gears.ratios.slice(1, show.value.gears.count + 1));
 

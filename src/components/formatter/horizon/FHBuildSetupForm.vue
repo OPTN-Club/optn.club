@@ -17,9 +17,9 @@ import RestrictorUpgradeSelect from '../../RestrictorUpgradeSelect.vue';
 import UpgradeSelect from '../../UpgradeSelect.vue';
 import UpgradeTurboSelect from '../../UpgradeTurboSelect.vue';
 
-import { useFHFormattingForm } from './useFHFormattingForm';
+import { useFHSetupForm } from './useFHSetupForm';
 
-const { form } = useFHFormattingForm();
+const { form } = useFHSetupForm();
 const trackWidthOptions = enumToOptions(TrackWidthType);
 </script>
 <template>

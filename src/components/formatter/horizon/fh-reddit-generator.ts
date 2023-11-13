@@ -1,21 +1,28 @@
 import { capitalCase } from 'change-case';
-import { computed, Ref } from 'vue';
-import { useRoute } from 'vue-router';
-
 import {
-  DifferentialTuneSettings,
+  computed,
+  reactive,
+  Ref,
+  watch,
+} from 'vue';
+
+import { byFullname } from '../../../lib/models';
+import {
   DriveType,
+  FormattingFormProps,
   FrontAndRearSettings,
   FrontAndRearWithUnits,
+  GlobalUnit,
 } from '../../../lib/types';
 import { formatUnit, formatUnitHeaders } from '../../../lib/unitsOfMeasure';
 import { formatFloat, addSuffix as suffixize } from '../../../lib/utils';
 
 import {
-  FMSetup,
-  PerformanceUpgrades,
+  BuildSectionUpgrades,
+  BuildSettings,
+  FHSetup,
   TuneSettings,
-} from './FMSetup';
+} from './FHSetup';
 
 const tableSeparator = '\n######\n';
 
@@ -107,21 +114,11 @@ function formatGears(tune: TuneSettings): string[] {
 }
 
 function formatAlignment(tune: TuneSettings): string[] {
-  return formatFrontRear(
-    ['Alignment', 'Camber', 'Toe', 'Caster', 'Steering Angle'],
-    [
-      tune.alignment.camber,
-      tune.alignment.toe,
-      { front: tune.alignment.caster, rear: '' },
-      { front: tune.alignment.steeringAngle, rear: '' },
-    ],
-    1,
-    '°',
-  );
+  return formatFrontRear(['Alignment', 'Camber', 'Toe', 'Caster'], [tune.camber, tune.toe, { front: tune.caster, rear: '' }], 1, '°');
 }
 
 function formatAntiRollbars(tune: TuneSettings): string[] {
-  const headers = ['Anti-roll Bars', ''];
+  const headers = ['ARBs', ''];
   if (tune.arb.na) {
     return formatTable(headers, [['Not Applicable', '']]);
   }
@@ -140,14 +137,7 @@ function formatSprings(tune: TuneSettings): string[] {
 }
 
 function formatDamping(tune: TuneSettings): string[] {
-  return formatFrontRear(['Damping', 'Bump', 'Rebound'], [tune.bump, tune.rebound]);
-}
-
-function formatSuspensionGeometry(tune: TuneSettings): string[] {
-  return formatFrontRear(
-    ['Suspension Geometry', 'Roll Center Offset', 'Anti-Geometry'],
-    [tune.rollCenterHeightOffset, tune.antiGeometryPercent],
-  );
+  return formatFrontRear(['Damping', 'Rebound', 'Bump'], [tune.damping, tune.bump]);
 }
 
 function formatAero(tune: TuneSettings): string[] {
@@ -185,10 +175,22 @@ function formatBrakes(tune: TuneSettings): string[] {
   ]);
 }
 
-function formatDifferential(diff: DifferentialTuneSettings, driveType: DriveType): string[] {
+function isDrivetrain(value: string): value is DriveType {
+  return Object.values(DriveType).includes(value as DriveType);
+}
+
+export function getDrivetrain(build: BuildSettings): DriveType {
+  if (build.conversions.drivetrain) {
+    return build.conversions.drivetrain;
+  }
+  return DriveType.awd;
+}
+
+function formatDifferential(form: FHSetup): string[] {
+  const drivetrain = getDrivetrain(form.build);
   const header = ['Differential', 'Accel', 'Decel'];
 
-  if (diff.na) {
+  if (form.tune.diff.na) {
     return formatTable(header, [['Not Applicable', '', '']]);
   }
 
@@ -197,40 +199,36 @@ function formatDifferential(diff: DifferentialTuneSettings, driveType: DriveType
   const center = ['Center', '', ''];
   const body: string[][] = [];
 
-  if ([DriveType.fwd, DriveType.awd].includes(driveType)) {
+  if ([DriveType.fwd, DriveType.awd].includes(drivetrain)) {
     body.push(front);
-    front[1] = formatFloat(diff.front.accel, 0, '%');
-    front[2] = formatFloat(diff.front.decel, 0, '%');
+    front[1] = formatFloat(form.tune.diff.front.accel, 0, '%');
+    front[2] = formatFloat(form.tune.diff.front.decel, 0, '%');
   }
 
-  if ([DriveType.rwd, DriveType.awd].includes(driveType)) {
+  if ([DriveType.rwd, DriveType.awd].includes(drivetrain)) {
     body.push(rear);
-    rear[1] = formatFloat(diff.rear.accel, 0, '%');
-    rear[2] = formatFloat(diff.rear.decel, 0, '%');
+    rear[1] = formatFloat(form.tune.diff.rear.accel, 0, '%');
+    rear[2] = formatFloat(form.tune.diff.rear.decel, 0, '%');
   }
 
-  if (driveType === DriveType.awd) {
+  if (drivetrain === DriveType.awd) {
     body.push(center);
-    center[1] = formatFloat(diff.center, 0, '%');
+    center[1] = formatFloat(form.tune.diff.center, 0, '%');
+    // ...formatTable(
+    //   ['Center', ''],
+    //   [['Balance', formatFloat(form.tune.diff.center, 0, '%')]],
+    // ));
   }
+  // const table = [
+  //   '### Differential\n',
+  //   ...formatTable(header, body),
+  // ];
 
   return formatTable(header, body);
 }
 
-function formatSteeringWheel(tune: TuneSettings): string[] {
-  const headers = ['Steering Wheel', ''];
-
-  if (tune.steeringWheel.na) {
-    return formatTable(headers, [['Not Applicable', '']]);
-  }
-
-  return formatTable(headers, [
-    ['FFB Scale', tune.steeringWheel.ffbScale],
-    ['Steering Lock Range', tune.steeringWheel.steeringLockRange],
-  ]);
-}
-
-export function formatTune(form: FMSetup, model: string): string[] {
+export function formatTune(form: FHSetup, model: string): string[] {
+  const car = byFullname.get(model);
   const text = [
     ...formatTires(form.tune),
     ...formatGears(form.tune),
@@ -238,73 +236,65 @@ export function formatTune(form: FMSetup, model: string): string[] {
     ...formatAntiRollbars(form.tune),
     ...formatSprings(form.tune),
     ...formatDamping(form.tune),
-    ...formatSuspensionGeometry(form.tune),
     ...formatAero(form.tune),
     ...formatBrakes(form.tune),
-    ...formatDifferential(form.tune.diff, form.upgrades.conversions.drivetrain),
-    ...formatSteeringWheel(form.tune),
+    ...formatDifferential(form),
   ];
 
   return text;
 }
 
-function formatConversions(upgrades: PerformanceUpgrades, driveType: DriveType): string[] {
+function formatConversions(build: BuildSettings, model: string): string[] {
   const headers = ['Conversions', ''];
 
+  const car = byFullname.get(model);
+  const drivetrain = build.conversions.drivetrain === car?.drive ? 'Stock' : build.conversions.drivetrain;
+
   const body = [
-    ['Engine', upgrades.conversions.engine || 'Stock'],
-    ['Drivetrain', driveType || 'Stock'],
+    ['Engine', build.conversions.engine || 'Stock'],
+    ['Drivetrain', drivetrain || 'Stock'],
   ];
-  if (upgrades.conversions.aspiration) {
-    body.push(['Aspiration', upgrades.conversions.aspiration || 'Stock']);
+  if (build.conversions.aspiration) {
+    body.push(['Aspiration', build.conversions.aspiration || 'Stock']);
   }
-  if (upgrades.conversions.aspiration) {
-    body.push(['Body Kit', upgrades.conversions.bodyKit || 'Stock']);
+  if (build.conversions.aspiration) {
+    body.push(['Body Kit', build.conversions.bodyKit || 'Stock']);
   }
   return formatTable(headers, body);
 }
 
-function formatTireUpgrades(upgrades: PerformanceUpgrades): string[] {
+function formatTiresAndRims(build: BuildSettings): string[] {
   return formatTable(
-    ['Tires', ''],
+    ['Tires And Rims', ''],
     [
-      ['Compound', upgrades.tires.compound],
-      ['Tire Width', `Front ${upgrades.tires.width.front} mm, Rear ${upgrades.tires.width.rear} mm`],
-      // ['Track Width', `Front ${upgrades.tires.trackWidth.front}, Rear ${upgrades.tires.trackWidth.rear}`],
+      ['Compound', build.tiresAndRims.compound],
+      ['Tire Width', `Front ${build.tiresAndRims.width.front} mm, Rear ${build.tiresAndRims.width.rear} mm`],
+      ['Rim Style', `${build.tiresAndRims.rimStyle.type} ${build.tiresAndRims.rimStyle.name}`],
+      ['Rim Size', `Front ${build.tiresAndRims.rimSize.front} in, Rear ${build.tiresAndRims.rimSize.rear} in`],
+      ['Track Width', `Front ${build.tiresAndRims.trackWidth.front}, Rear ${build.tiresAndRims.trackWidth.rear}`],
+      ['Profile Size', `Front ${build.tiresAndRims.profileSize.front}, Rear ${build.tiresAndRims.profileSize.rear}`],
     ],
     false,
     TextAlign.left,
   );
 }
 
-function formatWheelUpgrades(upgrades: PerformanceUpgrades): string[] {
-  return formatTable(
-    ['Wheels', ''],
-    [
-      ['Style', `${upgrades.wheels.style} ${upgrades.wheels.style}`],
-      ['Size', `Front ${upgrades.wheels.size.front} in, Rear ${upgrades.wheels.size.rear} in`],
-    ],
-    false,
-    TextAlign.left,
-  );
-}
-
-function formatAeroBuild(upgrades: PerformanceUpgrades): string[] {
+function formatAeroBuild(build: BuildSettings): string[] {
   const aero: string[][] = [];
-  if (upgrades.aeroAndAppearance.frontBumper) {
-    aero.push(['Front Bumper', upgrades.aeroAndAppearance.frontBumper]);
+  if (build.aeroAndAppearance.frontBumper) {
+    aero.push(['Front Bumper', build.aeroAndAppearance.frontBumper]);
   }
-  if (upgrades.aeroAndAppearance.rearBumper) {
-    aero.push(['Rear Bumper', upgrades.aeroAndAppearance.rearBumper]);
+  if (build.aeroAndAppearance.rearBumper) {
+    aero.push(['Rear Bumper', build.aeroAndAppearance.rearBumper]);
   }
-  if (upgrades.aeroAndAppearance.rearWing) {
-    aero.push(['Rear Wing', upgrades.aeroAndAppearance.rearWing]);
+  if (build.aeroAndAppearance.rearWing) {
+    aero.push(['Rear Wing', build.aeroAndAppearance.rearWing]);
   }
-  if (upgrades.aeroAndAppearance.sideSkirts) {
-    aero.push(['Side Skirts', upgrades.aeroAndAppearance.sideSkirts]);
+  if (build.aeroAndAppearance.sideSkirts) {
+    aero.push(['Side Skirts', build.aeroAndAppearance.sideSkirts]);
   }
-  if (upgrades.aeroAndAppearance.hood) {
-    aero.push(['Hood', upgrades.aeroAndAppearance.hood]);
+  if (build.aeroAndAppearance.hood) {
+    aero.push(['Hood', build.aeroAndAppearance.hood]);
   }
 
   if (aero.length === 0) return [];
@@ -312,7 +302,7 @@ function formatAeroBuild(upgrades: PerformanceUpgrades): string[] {
   return formatTable(['Aero and Appearance', ''], aero, false, TextAlign.left);
 }
 
-function formatUpgradesSection<T extends object>(section: T) {
+function formatBuildSection<T extends BuildSectionUpgrades>(section: T) {
   const keys = Object.keys(section);
   return keys
     .filter((key) => {
@@ -320,21 +310,6 @@ function formatUpgradesSection<T extends object>(section: T) {
       return value && value.toString() !== 'N/A';
     })
     .map((key) => [capitalCase(key), section[key as keyof T]]);
-}
-
-export function formatUpgrades(upgrades: PerformanceUpgrades, driveType: DriveType): string[] {
-  const text = [
-    ...formatConversions(upgrades, driveType),
-    ...formatTable(['Fuel and Air'], formatUpgradesSection(upgrades.fuelAndAir), false, TextAlign.left),
-    ...formatTable(['Engine', ''], formatUpgradesSection(upgrades.engine), false, TextAlign.left),
-    ...formatTable(['Platform And Handling', ''], formatUpgradesSection(upgrades.platformAndHandling), false, TextAlign.left),
-    ...formatTireUpgrades(upgrades),
-    ...formatWheelUpgrades(upgrades),
-    ...formatTable(['Drivetrain', ''], formatUpgradesSection(upgrades.drivetrain), false, TextAlign.left),
-    ...formatAeroBuild(upgrades),
-  ];
-
-  return text;
 }
 
 interface StatUnits {
@@ -356,15 +331,15 @@ const statUnits: Record<'Metric' | 'Imperial', StatUnits> = {
   },
 };
 
-function formatStatisticsTable(form: FMSetup, globalUnits: 'Metric' | 'Imperial') {
+function formatStatisticsTable(form: FHSetup, globalUnits: 'Metric' | 'Imperial') {
   const text: string[] = [];
-  text.push([form.year, form.make, form.model].join(' '));
+  const piClass = `${form.stats.classification} ${form.stats.pi}`.trim();
+  if (form.model) text.push(`${form.model}`);
   text.push(`${form.stats.classification} ${form.stats.pi}`);
   const header = `#${text.join(' - ')}\n`;
 
   const units = statUnits[globalUnits];
   const stats: string[][] = [];
-  stats.push(['Car Points Required', `${form.stats.carPoints}`]);
 
   if (form.stats.weight) stats.push(['Weight', `${form.stats.weight} ${units.weight}`]);
   if (form.stats.balance) stats.push(['Balance', `${form.stats.balance}%`]);
@@ -373,6 +348,7 @@ function formatStatisticsTable(form: FMSetup, globalUnits: 'Metric' | 'Imperial'
   if (form.stats.topSpeed) stats.push(['Top Speed', `${form.stats.topSpeed} ${units.speed}`]);
   if (form.stats.zeroToSixty) stats.push(['0-60', `${form.stats.zeroToSixty}s`]);
   if (form.stats.zeroToHundred) stats.push(['0-100', `${form.stats.zeroToHundred}s`]);
+  if (form.stats.shareCode) stats.push(['Share Code', `${form.stats.shareCode}`]);
 
   return [
     header,
@@ -380,25 +356,31 @@ function formatStatisticsTable(form: FMSetup, globalUnits: 'Metric' | 'Imperial'
   ];
 }
 
-export default function useFMRedditMarkdownGenerator(form: FMSetup, globalUnit: Ref<'Metric' | 'Imperial'>) {
-  const route = useRoute();
-  const linkUrl = computed(() => `https://optn.club${route.fullPath}`);
+export function formatBuild(build: BuildSettings, model: string): string[] {
+  const text = [
+    ...formatConversions(build, model),
+    ...formatTable(['Engine', ''], formatBuildSection(build.engine), false, TextAlign.left),
+    ...formatTable(['Platform And Handling', ''], formatBuildSection(build.platformAndHandling), false, TextAlign.left),
+    ...formatTable(['Drivetrain', ''], formatBuildSection(build.drivetrain), false, TextAlign.left),
+    ...formatTiresAndRims(build),
+    ...formatAeroBuild(build),
+  ];
 
-  const markdown = computed(() => [
-    ...formatStatisticsTable(form, globalUnit.value),
-    `[View this tune on optn.club](${linkUrl.value})\n`,
+  return text;
+}
+
+export default function fhRedditGenerator(form: FHSetup, globalUnit: GlobalUnit, linkUrl: string) {
+  return [
+    ...formatStatisticsTable(form, globalUnit),
+    `[View this tune on optn.club](${linkUrl})\n`,
     '---\n',
-    '## Peformance\n',
-    ...formatUpgrades(form.upgrades, form.upgrades.conversions.drivetrain),
+    '## Build\n',
+    ...formatBuild(form.build, form.model),
     '---\n',
     '## Tune\n',
     ...formatTune(form, form.model),
     '---\n',
-    'Formatted text generated by the [OPTN.club FM Setup Formatter](https://optn.club/formatter/forza/motorsport/v2)  \n',
+    'Formatted text generated by the [OPTN.club Tune Formatter](https://optn.club/formatter)  \n',
     'Submit bugs, feature requests, and questions on [Github](https://github.com/OPTN-Club/optn.club/issues)',
-  ].join('\n'));
-
-  return {
-    markdown,
-  };
+  ].join('\n');
 }

@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue';
 
+import { useGlobalUnits } from '../../../lib/useGlobalUnits';
 import EnumSelect from '../../EnumSelect.vue';
 import InputControl from '../../InputControl.vue';
 import NumberInput from '../../NumberInput.vue';
 
 import { FMPIClass, fmPiClassMap } from './FMSetup';
-import { useFMFormattingForm } from './useFMFormattingForm';
+import { useFMSetupForm } from './useFMSetupForm';
 
-const { form, globalUnit } = useFMFormattingForm();
+const { form } = useFMSetupForm();
+const globalUnits = useGlobalUnits();
 /*
 Class X – 999 PI
 Class P – 901-998 PI
@@ -22,7 +24,7 @@ Class E – 0-300 PI
 */
 
 const units = computed(() => {
-  if (globalUnit.value === 'Imperial') {
+  if (globalUnits.value.globalUnit === 'Imperial') {
     return {
       torque: 'ft-lbs',
       weight: 'lbs',

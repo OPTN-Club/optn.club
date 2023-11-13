@@ -8,6 +8,7 @@ import {
   ForceUnit,
   LengthUnit,
   PressureUnit,
+  SpeedUnit,
   SpringRateUnit,
   UnitOfMeasure,
 } from './types';
@@ -34,7 +35,7 @@ export function formatSpringRate(force: string | number, unit: SpringRateUnit, p
   return [
     formatFloat(values.kgf, precision, ' kgf/mm', includeUnit),
     formatFloat(values.lbs, precision, ' lbs/in', includeUnit),
-    formatFloat(values.newtons, precision, ' n/mm', includeUnit),
+    // formatFloat(values.newtons, precision, ' n/mm', includeUnit),
   ];
 }
 
@@ -62,11 +63,16 @@ export function isLengthUnit(unit: UnitOfMeasure): unit is LengthUnit {
   return Object.values(LengthUnit).includes(unit as LengthUnit);
 }
 
+export function isSpeedUnit(unit: UnitOfMeasure): unit is SpeedUnit {
+  return Object.values(LengthUnit).includes(unit as LengthUnit);
+}
+
 export function getUnits(unit: UnitOfMeasure) {
   if (isPressureUnit(unit)) return PressureUnit;
   if (isSpringRateUnit(unit)) return SpringRateUnit;
   if (isLengthUnit(unit)) return LengthUnit;
   if (isForceUnit(unit)) return ForceUnit;
+  if (isSpeedUnit(unit)) return SpeedUnit;
   throw new Error(`Invalid Unit of Measure: ${unit}`);
 }
 

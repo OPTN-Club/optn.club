@@ -3,9 +3,9 @@ import { reactive, watch } from 'vue';
 
 import InputControl from '../../InputControl.vue';
 
-import { useFHFormattingForm } from './useFHFormattingForm';
+import { useFHSetupForm } from './useFHSetupForm';
 
-const { form } = useFHFormattingForm();
+const { form } = useFHSetupForm();
 
 const shareCodes = reactive({
   tune: '',

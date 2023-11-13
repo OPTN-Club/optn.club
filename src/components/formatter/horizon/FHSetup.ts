@@ -157,17 +157,19 @@ export interface FHSetup {
 }
 
 export function getEncoderOptions(version: string): FormEncoderOptions {
-  return { getDefaultForm: () => getFMDefaultForm(version) as unknown as Record<string, never> };
+  return { getDefaultForm: () => getFHDefaultForm(version) as unknown as Record<string, never> };
 }
 
-export function getFMDefaultForm(version: string): FHSetup {
+export function getFHDefaultForm(version: string): FHSetup {
   if (defaultFormMap[version]) {
     return defaultFormMap[version]();
   }
   return defaultFormMap.v1();
 }
 
-interface DefaultFormMap<T = Record<string, never>> extends Record<string, (() => T)> {
+export const getLatestDefaultForm = getFHDefaultFormV1;
+
+interface DefaultFormMap<T> {
   [key: string]: (() => T);
 }
 

@@ -13,7 +13,7 @@ import SelectInput from './SelectInput.vue';
 
 const props = defineProps<{
   modelValue: string,
-  type: 'pressure' | 'height' | 'force' | 'springrate' | 'weight',
+  type: 'pressure' | 'height' | 'force' | 'springrate' | 'weight' | 'length',
 }>();
 
 const emit = defineEmits<{
@@ -32,7 +32,6 @@ const units = {
   springrate: [
     { label: 'kgf/mm', value: SpringRateUnit.kgf },
     { label: 'lbs/in', value: SpringRateUnit.lbs },
-    { label: 'n/mm', value: SpringRateUnit.nmm },
   ],
   height: [
     { label: 'cm', value: LengthUnit.cm },
@@ -45,6 +44,10 @@ const units = {
   weight: [
     { label: 'kg', value: WeightUnit.kg },
     { label: 'lbs', value: WeightUnit.lbs },
+  ],
+  length: [
+    { label: 'cm', value: LengthUnit.cm },
+    { label: 'in', value: LengthUnit.in },
   ],
 };
 

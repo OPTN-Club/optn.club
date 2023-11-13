@@ -43,7 +43,7 @@ function getGearCount(transmission: TransmissionUpgrade): number {
   return gearCounts[transmission] || 10;
 }
 
-export default function useFHEnabledControls(form: FHSetup) {
+export function useFHEnabledControls(form: FHSetup) {
   const enabled = computed<UseUpgrades>(() => ({
     gears: {
       final: finalRatio.includes(form.build.drivetrain.transmission),

@@ -1,10 +1,23 @@
 <script setup lang="ts">
-import { onBeforeUnmount, ref } from 'vue';
+import {
+  computed,
+  onBeforeUnmount,
+  ref,
+} from 'vue';
+import { useRoute } from 'vue-router';
 
-import { useFMFormattingForm } from './useFMFormattingForm';
+import { useGlobalUnits } from '../../../lib/useGlobalUnits';
 
-const state = useFMFormattingForm();
+import fmDiscordGenerator from './fm-discord-generator';
+import fmRedditGenerator from './fm-reddit-generator';
+import { useFMSetupForm } from './useFMSetupForm';
 
+const state = useFMSetupForm();
+const route = useRoute();
+
+const globalUnits = useGlobalUnits();
+
+const selectedFormat = ref<'reddit' | 'discord'>('discord');
 const copyButtonText = ref('Copy text');
 const copyUrlButtonText = ref('Copy URL');
 const errorText = ref('');
@@ -14,6 +27,15 @@ const shareTimeout = ref(0);
 const errorTimeout = ref(0);
 
 const textareaRef = ref<HTMLTextAreaElement | null>(null);
+
+const linkUrl = computed(() => `https://optn.club${route.fullPath}`);
+
+const generator = computed(() => {
+  if (selectedFormat.value === 'discord') return fmDiscordGenerator;
+  return fmRedditGenerator;
+});
+
+const formattedText = computed(() => generator.value(state.form, globalUnits.value.globalUnit, linkUrl.value));
 
 onBeforeUnmount(() => {
   clearTimeout(copyTimeout.value);
@@ -34,7 +56,7 @@ function onResetClick() {
 
 function onCopyClick() {
   try {
-    navigator.clipboard.writeText(state.markdown.value);
+    navigator.clipboard.writeText(formattedText.value);
     copyButtonText.value = 'Copied!';
     copyTimeout.value = window.setTimeout(() => {
       copyButtonText.value = 'Copy To Clipboard';
@@ -64,6 +86,10 @@ async function onShareURLClick() {
   }
 }
 
+function onFormatSelect(e: Event) {
+  selectedFormat.value = (e.target as HTMLInputElement).value as 'reddit' | 'discord';
+}
+
 </script>
 <template>
   <div class="actions">
@@ -74,6 +100,31 @@ async function onShareURLClick() {
     >
       {{ copyUrlButtonText }}
     </button>
+
+    <div class="flex justify-between mb-2">
+      <label class="radio cursor-pointer">
+        <input
+          :checked="selectedFormat === 'reddit'"
+          class="cursor-pointer"
+          type="radio"
+          name="generateFor"
+          value="reddit"
+          @input="onFormatSelect"
+        >
+        Reddit
+      </label>
+      <label class="radio cursor-pointer">
+        <input
+          :checked="selectedFormat === 'discord'"
+          class="cursor-pointer"
+          type="radio"
+          name="generateFor"
+          value="discord"
+          @input="onFormatSelect"
+        >
+        Discord
+      </label>
+    </div>
     <button
       type="button"
       class="w-full secondary"
@@ -83,12 +134,18 @@ async function onShareURLClick() {
     </button>
     <textarea
       ref="textareaRef"
-      :value="state.markdown.value"
+      :value="formattedText"
       readonly
       class="markdown-text"
       rows="10"
       cols="25"
     />
+    <p>
+      Character Count: {{ formattedText.length }}
+    </p>
+    <p>
+      URL Length: {{ linkUrl.length }}
+    </p>
     <p class="text-sm text-light-mist px-1 text-center mb-10">
       <strong class="text-yellow">NOTE:</strong>
       Be sure the editor is in &quot;Markdown&quot; mode<br>

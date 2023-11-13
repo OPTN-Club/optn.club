@@ -9,9 +9,9 @@ import FrontRearInputs from '../../FrontRearInputs.vue';
 import NumberInput from '../../NumberInput.vue';
 import UnitSelect from '../../UnitSelect.vue';
 
-import { useFMFormattingForm } from './useFMFormattingForm';
+import { useFMSetupForm } from './useFMSetupForm';
 
-const { form, show } = useFMFormattingForm();
+const { form, show } = useFMSetupForm();
 
 const gears = computed(() => form.tune.gears.ratios.slice(1, show.value.gears.count + 1));
 
@@ -229,7 +229,16 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
             min="0.0"
             step="0.1"
             :disabled="form.tune.rollCenterHeightOffset.na"
-          />
+          >
+            <template #attach-right>
+              <UnitSelect
+                v-model="form.tune.rollCenterHeightOffset.units"
+                type="length"
+                class="rounded-l-none flex-1"
+                :disabled="form.tune.rollCenterHeightOffset.na"
+              />
+            </template>
+          </FrontRearInputs>
           <FrontRearInputs
             v-model="form.tune.antiGeometryPercent"
             label="Anti-Geometry Percent"
@@ -310,7 +319,6 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
         </div>
         <div class="set-upgrades">
           <AccelDecelInputs
-            v-if="show.diff.front"
             v-model="form.tune.diff.front"
             label="Front"
             min="0"
@@ -319,7 +327,6 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
             :disabled="form.tune.diff.na"
           />
           <AccelDecelInputs
-            v-if="show.diff.rear"
             v-model="form.tune.diff.rear"
             label="Rear"
             min="0"
@@ -330,7 +337,6 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
         </div>
         <div class="set-upgrades">
           <NumberInput
-            v-if="show.diff.center"
             v-model="form.tune.diff.center"
             label="Center Balance"
             min="0"

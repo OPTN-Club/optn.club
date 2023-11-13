@@ -1,10 +1,23 @@
 <script setup lang="ts">
-import { onBeforeUnmount, ref } from 'vue';
+import {
+  computed,
+  onBeforeUnmount,
+  ref,
+} from 'vue';
+import { useRoute } from 'vue-router';
 
-import { useFHFormattingForm } from './useFHFormattingForm';
+import { useGlobalUnits } from '../../../lib/useGlobalUnits';
 
-const state = useFHFormattingForm();
+import fhDiscordGenerator from './fh-discord-generator';
+import fhRedditGenerator from './fh-reddit-generator';
+import { useFHSetupForm } from './useFHSetupForm';
 
+const state = useFHSetupForm();
+const route = useRoute();
+
+const globalUnits = useGlobalUnits();
+
+const selectedFormat = ref<'reddit' | 'discord'>('reddit');
 const copyButtonText = ref('Copy text');
 const copyUrlButtonText = ref('Copy URL');
 const errorText = ref('');
@@ -14,6 +27,15 @@ const shareTimeout = ref(0);
 const errorTimeout = ref(0);
 
 const textareaRef = ref<HTMLTextAreaElement | null>(null);
+
+const linkUrl = computed(() => `https://optn.club${route.fullPath}`);
+
+const generator = computed(() => {
+  if (selectedFormat.value === 'discord') return fhDiscordGenerator;
+  return fhRedditGenerator;
+});
+
+const formattedText = computed(() => generator.value(state.form, globalUnits.value.globalUnit, linkUrl.value));
 
 onBeforeUnmount(() => {
   clearTimeout(copyTimeout.value);
@@ -34,7 +56,7 @@ function onResetClick() {
 
 function onCopyClick() {
   try {
-    navigator.clipboard.writeText(state.markdown.value);
+    navigator.clipboard.writeText(formattedText.value);
     copyButtonText.value = 'Copied!';
     copyTimeout.value = window.setTimeout(() => {
       copyButtonText.value = 'Copy To Clipboard';
@@ -83,7 +105,7 @@ async function onShareURLClick() {
     </button>
     <textarea
       ref="textareaRef"
-      :value="state.markdown.value"
+      :value="formattedText"
       readonly
       class="markdown-text"
       rows="10"

@@ -1,5 +1,6 @@
+export type GlobalUnit = 'Metric' | 'Imperial';
+
 export interface FormattingFormProps {
-  version: string;
   encodedForm?: string;
 }
 
@@ -27,7 +28,6 @@ export enum WeightUnit {
 export enum SpringRateUnit {
   kgf = 'kgf/mm',
   lbs = 'lbs/in',
-  nmm = 'n/mm',
 }
 
 export enum LengthUnit {
@@ -173,6 +173,7 @@ export enum TrackWidthType {
 }
 
 export enum DriveType {
+  stock = 'Stock',
   fwd = 'FWD',
   rwd = 'RWD',
   awd = 'AWD',
@@ -193,7 +194,7 @@ export interface FrontAndRearSettings<T = string> {
   na?: boolean;
 }
 
-export type UnitOfMeasure = PressureUnit | SpringRateUnit | LengthUnit | ForceUnit;
+export type UnitOfMeasure = PressureUnit | SpringRateUnit | LengthUnit | ForceUnit | SpeedUnit;
 
 export interface FrontAndRearWithUnits<U extends UnitOfMeasure = UnitOfMeasure, T = string>
   extends FrontAndRearSettings<T> {
