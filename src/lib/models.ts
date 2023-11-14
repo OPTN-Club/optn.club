@@ -8,7 +8,6 @@ const cars: Car[] = importedCars;
 const byFullname: Map<string, Car> = new Map();
 
 const byMake: Map<string, CarModel[]> = new Map();
-console.log('makes:', makes.length);
 makes.forEach((make) => {
   byMake.set(make, []);
 });

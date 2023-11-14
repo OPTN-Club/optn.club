@@ -1,8 +1,9 @@
 import { compressToBase64, decompressFromBase64 } from 'lz-string';
 
+import getFHDefaultFormV1, { FHSetup } from '../components/formatter/horizon/FHSetup';
+
 import getDefaultForm from './defaultForm';
 import { mangleValueMap } from './mangle-lookup';
-import getFHDefaultFormV1, { FHSetup } from '../components/formatter/horizon/FHSetup';
 
 const unmangleValueMap: Record<string, string> = Object
   .keys(mangleValueMap)
@@ -101,7 +102,6 @@ export default class Base64FormEncoder {
 
   flattenObject<T extends object>(object: T, path: string[] = []): Record<string, never> {
     const keys = Object.keys(object);
-    // console.log('keys', keys);
     const flattened: Record<string, never> = {};
 
     keys.forEach((key) => {
@@ -174,7 +174,6 @@ function deserializeFlatObjectV1(value: string, flattenedKeys: string[]): Record
 
   const flattenedForm: Record<string, never> = {};
   flattenedKeys.forEach((key, index) => {
-    console.log(key, index);
     flattenedForm[key] = unmangleValue(values[index]) as never;
   });
   return flattenedForm;

@@ -2,6 +2,7 @@ import { capitalCase } from 'change-case';
 import { computed, Ref } from 'vue';
 import { useRoute } from 'vue-router';
 
+import { getUnitsForGlobalUnit } from '../../../lib/conversions';
 import {
   AccelDecelSettings,
   DifferentialTuneSettings,
@@ -9,6 +10,7 @@ import {
   FrontAndRearSettings,
   FrontAndRearWithUnits,
   GlobalUnit,
+  UnitOfMeasure,
 } from '../../../lib/types';
 import { formatUnit, formatUnitHeaders } from '../../../lib/unitsOfMeasure';
 import { formatFloat, addSuffix as suffixize } from '../../../lib/utils';
@@ -44,17 +46,17 @@ enum TextAlign {
   center = ':-:',
 }
 
-const BOX_LINE_HORIZONTAL = '─';
-const BOX_LINE_VERTICAL = '│';
-const BOX_LINE_TOP_LEFT = '┌';
-const BOX_LINE_TOP_RIGHT = '┐';
-const BOX_LINE_BOTTOM_LEFT = '└';
-const BOX_LINE_BOTTOM_RIGHT = '┘';
-const BOX_LINE_TOP = '┬';
-const BOX_LINE_BOTTOM = '┴';
-const BOX_LINE_LEFT = '├';
-const BOX_LINE_RIGHT = '┤';
-const BOX_LINE_CROSS = '┼';
+// const BOX_LINE_HORIZONTAL = '─';
+// const BOX_LINE_VERTICAL = '│';
+// const BOX_LINE_TOP_LEFT = '┌';
+// const BOX_LINE_TOP_RIGHT = '┐';
+// const BOX_LINE_BOTTOM_LEFT = '└';
+// const BOX_LINE_BOTTOM_RIGHT = '┘';
+// const BOX_LINE_TOP = '┬';
+// const BOX_LINE_BOTTOM = '┴';
+// const BOX_LINE_LEFT = '├';
+// const BOX_LINE_RIGHT = '┤';
+// const BOX_LINE_CROSS = '┼';
 
 function getColumnWidths(rows: string[][]) {
   const widths = Array.from({ length: rows[0].length }, () => 0);
@@ -69,15 +71,9 @@ function getColumnWidths(rows: string[][]) {
 function formatTable(header: string, body: string[][], alignment = TextAlign.left): string[] {
   if (body.length === 0) return [];
   const widths = getColumnWidths(body);
-  const totalWidth = widths.reduce((prev, cur) => prev + cur, 0) + widths.length + 1;
-  const topBorder = `${BOX_LINE_TOP_LEFT}${BOX_LINE_HORIZONTAL.repeat(totalWidth - 2)}${BOX_LINE_TOP_RIGHT}`;
-  const separator = `${BOX_LINE_LEFT}${BOX_LINE_HORIZONTAL.repeat(totalWidth - 2)}${BOX_LINE_RIGHT}`;
-  const bottomBorder = `${BOX_LINE_BOTTOM_LEFT}${BOX_LINE_HORIZONTAL.repeat(totalWidth - 2)}${BOX_LINE_BOTTOM_RIGHT}`;
   const table: string[] = [];
   if (header) table.push(h2(header));
-  // console.log(header);
-  // table.push(...body.map((row) => formatTableRow(row, widths, alignment)));
-  table.push(...body.map((row) => formatTableRowSpaces(row, widths, alignment)));
+  table.push(...body.map((row) => formatTableRow(row, widths, alignment)));
   table.push(tableSeparator);
 
   return table;
@@ -105,7 +101,6 @@ function getPaddingFor(text: string, width: number) {
     const paddingNeeded = normalizedWidth - text.length - spacesNeeded;
     const tabsNeeded = Math.floor(paddingNeeded / 4);
 
-    console.log('cell:', normalizedWidth, 'text:', text.length, 'spacesNeeded:', spacesNeeded, 'tabs needed:', tabsNeeded);
     padding.spaces = ' '.repeat(spacesNeeded);
     padding.tabs = '\t'.repeat(tabsNeeded);
   }
@@ -122,17 +117,15 @@ function padText(text: string, width: number, alignment: TextAlign) {
   return `${padding.tabs}${padding.spaces}${text}`;
 }
 
-function formatTableRow(row: string[], widths: number[], alignment = TextAlign.left) {
-  // console.log(widths);
-  const rowText = row.map((cell, index) => {
-    const cellAlign = index === 0 ? TextAlign.left : alignment;
-    return padText(cell, widths[index], cellAlign);
-  });
-  return rowText.join(' ').trim();
-}
+// function formatTableRow(row: string[], widths: number[], alignment = TextAlign.left) {
+//   const rowText = row.map((cell, index) => {
+//     const cellAlign = index === 0 ? TextAlign.left : alignment;
+//     return padText(cell, widths[index], cellAlign);
+//   });
+//   return rowText.join(' ').trim();
+// }
 
-function formatTableRowSpaces(row: string[], widths: number[], alignment = TextAlign.left) {
-  // console.log(widths);
+function formatTableRow(row: string[], widths: number[], alignment = TextAlign.left) {
   const rowText = row.map((cell, index) => {
     const width = widths[index];
     if (cell === '/') {
@@ -178,11 +171,13 @@ function formatFrontRearWithUnit(header: string, value: FrontAndRearWithUnits, p
   }
 
   const body: string[][] = [];
-  if (showAll || value.front) {
-    body.push(['F ', ...separate(formatUnit(value.front, value.units, precision, true), '/')]);
+  if (showAll || showUpgrade(value.front)) {
+    const numValue = value.front === 'Stock' ? 0 : value.front;
+    body.push(['F ', ...separate(formatUnit(numValue, value.units, precision, true), '/')]);
   }
-  if (showAll || value.rear) {
-    body.push(['R ', ...separate(formatUnit(value.rear, value.units, precision, true), '/')]);
+  if (showAll || showUpgrade(value.rear)) {
+    const numValue = value.front === 'Stock' ? 0 : value.rear;
+    body.push(['R ', ...separate(formatUnit(numValue, value.units, precision, true), '/')]);
   }
 
   if (body.length === 0) return [];
@@ -534,35 +529,22 @@ export function formatUpgrades(upgrades: PerformanceUpgrades, driveType: DriveTy
   return text;
 }
 
-interface StatUnits {
-  weight: string;
-  torque: string;
-  speed: string;
+function formatUnitWithSeparator(value: string | number, unit: UnitOfMeasure, precision = 1, showUnit = false) {
+  const formatted = formatUnit(value, unit, precision, showUnit);
+  return separate(formatted, '/');
 }
 
-const statUnits: Record<'Metric' | 'Imperial', StatUnits> = {
-  Metric: {
-    weight: 'kg',
-    torque: 'nm',
-    speed: 'kph',
-  },
-  Imperial: {
-    weight: 'lbs',
-    torque: 'lb-ft',
-    speed: 'mph',
-  },
-};
-
-function formatStatistics(form: FMSetup, globalUnits: 'Metric' | 'Imperial') {
-  const units = statUnits[globalUnits];
+function formatStatistics(form: FMSetup, globalUnit: 'Metric' | 'Imperial') {
   const stats: string[][] = [];
 
-  if (form.stats.carPoints) stats.push(['CP', `${form.stats.carPoints}`]);
-  if (form.stats.weight) stats.push(['Weight', `${form.stats.weight} ${units.weight}`]);
+  const units = getUnitsForGlobalUnit(globalUnit);
+
+  if (form.stats.carPoints) stats.push(['CP', `${form.stats.carPoints}`, '']);
+  if (form.stats.weight) stats.push(['Weight', ...formatUnitWithSeparator(form.stats.weight, units.weight, 0, true)]);
   if (form.stats.balance) stats.push(['Balance', `${form.stats.balance}%`]);
-  if (form.stats.hp) stats.push(['HP', `${form.stats.hp}`]);
-  if (form.stats.torque) stats.push(['Torque', `${form.stats.torque} ${units.torque}`]);
-  if (form.stats.topSpeed) stats.push(['Top Speed', `${form.stats.topSpeed} ${units.speed}`]);
+  if (form.stats.hp) stats.push(['Power', ...formatUnitWithSeparator(form.stats.hp, units.power, 0, true)]);
+  if (form.stats.torque) stats.push(['Torque', ...formatUnitWithSeparator(form.stats.torque, units.torque, 0, true)]);
+  if (form.stats.topSpeed) stats.push(['Top Speed', ...formatUnitWithSeparator(form.stats.topSpeed, units.speed, 0, true)]);
   if (form.stats.zeroToSixty) stats.push(['0-60', `${form.stats.zeroToSixty}s`]);
   if (form.stats.zeroToHundred) stats.push(['0-100', `${form.stats.zeroToHundred}s`]);
 

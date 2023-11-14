@@ -2,12 +2,14 @@ import { capitalCase } from 'change-case';
 import { computed, Ref } from 'vue';
 import { useRoute } from 'vue-router';
 
+import { getUnitsForGlobalUnit } from '../../../lib/conversions';
 import {
   DifferentialTuneSettings,
   DriveType,
   FrontAndRearSettings,
   FrontAndRearWithUnits,
   GlobalUnit,
+  UnitOfMeasure,
 } from '../../../lib/types';
 import { formatUnit, formatUnitHeaders } from '../../../lib/unitsOfMeasure';
 import { formatFloat, addSuffix as suffixize } from '../../../lib/utils';
@@ -61,6 +63,17 @@ function formatFrontRear(headers: string[], values: FrontAndRearSettings[], prec
   ];
 
   return formatTable(headers, body);
+}
+
+function separate(values: string[], separator: string) {
+  const separated: string[] = [];
+  for (let index = 0; index < values.length; index++) {
+    separated.push(values[index]);
+    if (index < values.length - 1) {
+      separated.push(separator);
+    }
+  }
+  return separated;
 }
 
 function formatFrontRearWithUnit(header: string, value: FrontAndRearWithUnits, precision = 1): string[] {
@@ -153,7 +166,6 @@ function getFormattedRollCenterOffset(value: FrontAndRearWithUnits) {
 
 function formatSuspensionGeometry(tune: TuneSettings): string[] {
   const offset = getFormattedRollCenterOffset(tune.rollCenterHeightOffset);
-  console.log(offset);
 
   return formatTable(
     ['Suspension Geometry', 'Roll Center Offset', 'Anti-Geometry'],
@@ -352,41 +364,27 @@ export function formatUpgrades(upgrades: PerformanceUpgrades, driveType: DriveTy
   return text;
 }
 
-interface StatUnits {
-  weight: string;
-  torque: string;
-  speed: string;
+function formatUnitWithSeparator(value: string | number, unit: UnitOfMeasure, precision = 1, showUnit = false) {
+  const formatted = formatUnit(value, unit, precision, showUnit);
+  return separate(formatted, '/');
 }
 
-const statUnits: Record<'Metric' | 'Imperial', StatUnits> = {
-  Metric: {
-    weight: 'kg',
-    torque: 'nm',
-    speed: 'kph',
-  },
-  Imperial: {
-    weight: 'lbs',
-    torque: 'lb-ft',
-    speed: 'mph',
-  },
-};
-
-function formatStatisticsTable(form: FMSetup, globalUnits: 'Metric' | 'Imperial') {
-  const units = statUnits[globalUnits];
+function formatStatisticsTable(form: FMSetup, globalUnit: 'Metric' | 'Imperial') {
+  const units = getUnitsForGlobalUnit(globalUnit);
   const stats: string[][] = [];
 
-  if (form.stats.carPoints) stats.push(['Car Points Required', `${form.stats.carPoints}`]);
-  if (form.stats.weight) stats.push(['Weight', `${form.stats.weight} ${units.weight}`]);
+  if (form.stats.carPoints) stats.push(['CP', `${form.stats.carPoints}`, '']);
+  if (form.stats.weight) stats.push(['Weight', ...formatUnit(form.stats.weight, units.weight, 0, true)]);
   if (form.stats.balance) stats.push(['Balance', `${form.stats.balance}%`]);
-  if (form.stats.hp) stats.push(['HP', `${form.stats.hp}`]);
-  if (form.stats.torque) stats.push(['Torque', `${form.stats.torque} ${units.torque}`]);
-  if (form.stats.topSpeed) stats.push(['Top Speed', `${form.stats.topSpeed} ${units.speed}`]);
-  if (form.stats.zeroToSixty) stats.push(['0-60', `${form.stats.zeroToSixty}s`]);
-  if (form.stats.zeroToHundred) stats.push(['0-100', `${form.stats.zeroToHundred}s`]);
+  if (form.stats.hp) stats.push(['Power', ...formatUnit(form.stats.hp, units.power, 0, true)]);
+  if (form.stats.torque) stats.push(['Torque', ...formatUnit(form.stats.torque, units.torque, 0, true)]);
+  if (form.stats.topSpeed) stats.push(['Top Speed', ...formatUnit(form.stats.topSpeed, units.speed, 0, true)]);
+  if (form.stats.zeroToSixty) stats.push(['0-60', `${form.stats.zeroToSixty}s`, '']);
+  if (form.stats.zeroToHundred) stats.push(['0-100', `${form.stats.zeroToHundred}s`, '']);
 
   if (stats.length === 0) return [];
 
-  return formatTable(['Stats', ''], stats, true, TextAlign.left);
+  return formatTable(['Stats', '', ''], stats, true, TextAlign.left);
 }
 
 function formatHeader(form: FMSetup) {

@@ -59,7 +59,7 @@ export default function getTestForm(): FHSetup {
       springs: {
         front: '705.1',
         rear: '943.1',
-        units: SpringRateUnit.lbs,
+        units: SpringRateUnit.lbfin,
       },
       rideHeight: {
         front: '14',

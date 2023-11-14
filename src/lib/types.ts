@@ -16,18 +16,17 @@ export enum PressureUnit {
 
 export enum ForceUnit {
   kgf = 'kgf',
-  lbf = 'lb',
+  lbf = 'lbf',
 }
 
 export enum WeightUnit {
   kg = 'kg',
   lbs = 'lbs',
-  n = 'n',
 }
 
 export enum SpringRateUnit {
-  kgf = 'kgf/mm',
-  lbs = 'lbs/in',
+  kgfmm = 'kgf/mm',
+  lbfin = 'lbf/in',
 }
 
 export enum LengthUnit {
@@ -39,6 +38,20 @@ export enum SpeedUnit {
   kph = 'kph',
   mph = 'mph',
 }
+
+export enum PowerUnit {
+  hp = 'HP',
+  kw = 'kW',
+}
+
+export enum TorqueUnit {
+  lbfft = 'lbf·ft',
+  nm = 'N·m',
+}
+
+export type UnitOfMeasureValues<U extends UnitOfMeasure, T extends string | number> = {
+  [key in U]: T;
+};
 
 export interface ForceValues<T extends string | number> {
   kgf: T;
@@ -66,10 +79,10 @@ export interface SpeedValues<T extends string | number> {
   mph: T;
 }
 
-export type UnitValues<T extends string | number> =
-  | SpringRateValues<T>
-  | PressureValues<T>
-  | LengthValues<T>;
+export interface PowerValues<T extends string | number> {
+  hp: T;
+  kw: T;
+}
 
 export enum Upgrade {
   na = 'N/A',
@@ -194,7 +207,15 @@ export interface FrontAndRearSettings<T = string> {
   na?: boolean;
 }
 
-export type UnitOfMeasure = PressureUnit | SpringRateUnit | LengthUnit | ForceUnit | SpeedUnit;
+export type UnitOfMeasure =
+  | PressureUnit
+  | SpringRateUnit
+  | LengthUnit
+  | ForceUnit
+  | SpeedUnit
+  | PowerUnit
+  | TorqueUnit
+  | WeightUnit;
 
 export interface FrontAndRearWithUnits<U extends UnitOfMeasure = UnitOfMeasure, T = string>
   extends FrontAndRearSettings<T> {

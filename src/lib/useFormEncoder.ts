@@ -161,7 +161,6 @@ function deserializeFlatObject(value: string, flattenedKeys: string[]): Flattene
 
   const flattenedForm: FlattenedObject = {};
   flattenedKeys.forEach((key, index) => {
-    // console.log(key, index);
     flattenedForm[key] = unmangleValue(values[index]) as never;
   });
   return flattenedForm;
@@ -181,7 +180,6 @@ export function deserializeFlatObjectV1(value: string, flattenedKeys: string[]):
 
   const flattenedForm: Record<string, never> = {};
   flattenedKeys.forEach((key, index) => {
-    // console.log(key, index);
     flattenedForm[key] = unmangleValue(values[index]) as never;
   });
   return flattenedForm;

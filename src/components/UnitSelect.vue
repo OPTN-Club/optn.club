@@ -30,8 +30,8 @@ const units = {
     { label: PressureUnit.psi, value: PressureUnit.psi },
   ],
   springrate: [
-    { label: 'kgf/mm', value: SpringRateUnit.kgf },
-    { label: 'lbs/in', value: SpringRateUnit.lbs },
+    { label: 'kgf/mm', value: SpringRateUnit.kgfmm },
+    { label: 'lbf/in', value: SpringRateUnit.lbfin },
   ],
   height: [
     { label: 'cm', value: LengthUnit.cm },
@@ -39,7 +39,7 @@ const units = {
   ],
   force: [
     { label: 'kgf', value: ForceUnit.kgf },
-    { label: 'lbs', value: ForceUnit.lbf },
+    { label: 'lbf', value: ForceUnit.lbf },
   ],
   weight: [
     { label: 'kg', value: WeightUnit.kg },

@@ -104,7 +104,7 @@ function onFormatSelect(e: Event) {
       {{ copyUrlButtonText }}
     </button>
 
-    <div class="flex justify-between mb-2">
+    <div class="flex justify-around mb-2">
       <label class="radio cursor-pointer">
         <input
           :checked="selectedFormat === 'reddit'"

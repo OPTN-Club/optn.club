@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue';
 
+import { getUnitsForGlobalUnit } from '../../../lib/conversions';
+import {
+  PowerUnit,
+  SpeedUnit,
+  TorqueUnit,
+  WeightUnit,
+} from '../../../lib/types';
 import { useGlobalUnits } from '../../../lib/useGlobalUnits';
 import EnumSelect from '../../EnumSelect.vue';
 import InputControl from '../../InputControl.vue';
@@ -23,26 +30,15 @@ Class D – 301-400 PI
 Class E – 0-300 PI
 */
 
-const units = computed(() => {
-  if (globalUnits.value.globalUnit === 'Imperial') {
-    return {
-      torque: 'ft-lbs',
-      weight: 'lbs',
-      speed: 'mph',
-    };
-  }
-  return {
-    torque: 'Nm',
-    weight: 'kg',
-    speed: 'kph',
-  };
-});
+const units = computed(() => getUnitsForGlobalUnit(globalUnits.value.globalUnit));
 
 watch(() => form.stats.classification, (current) => {
   form.stats.pi = fmPiClassMap[current];
 });
 
-const balanceRear = computed(() => (form.stats.balance ? 100 - form.stats.balance : 0));
+const balance = computed(() => Number(form.stats.balance) || 0);
+
+const balanceRear = computed(() => (form.stats.balance ? (100 - balance.value).toString() : ''));
 
 </script>
 <template>
@@ -104,9 +100,13 @@ const balanceRear = computed(() => (form.stats.balance ? 100 - form.stats.balanc
         <div class="set-upgrades">
           <NumberInput
             v-model="form.stats.hp"
-            label="HP"
+            label="Power"
             rootClass="upgrade-select"
-          />
+          >
+            <template #suffix>
+              {{ units.power }}
+            </template>
+          </NumberInput>
           <NumberInput
             v-model="form.stats.torque"
             label="Torque"

@@ -1,7 +1,6 @@
 import vue from '@vitejs/plugin-vue';
 import { build, defineConfig } from 'vite';
 
-console.log(process.env.NODE_ENV);
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {

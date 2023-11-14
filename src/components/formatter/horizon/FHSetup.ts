@@ -208,7 +208,7 @@ export default function getFHDefaultFormV1(): FHSetup {
       springs: {
         front: '',
         rear: '',
-        units: SpringRateUnit.kgf,
+        units: SpringRateUnit.kgfmm,
         na: false,
       },
       rideHeight: {

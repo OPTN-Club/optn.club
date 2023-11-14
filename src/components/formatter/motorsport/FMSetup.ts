@@ -157,14 +157,14 @@ export interface PerformanceUpgrades {
 export interface FMSetupStatistics {
   pi: number;
   classification: FMPIClass;
-  carPoints: number;
-  hp: number;
-  torque: number;
-  weight: number;
-  balance: number;
-  topSpeed: number;
-  zeroToSixty: number;
-  zeroToHundred: number;
+  carPoints: string;
+  hp: string;
+  torque: string;
+  weight: string;
+  balance: string;
+  topSpeed: string;
+  zeroToSixty: string;
+  zeroToHundred: string;
   shareCode: string;
 }
 
@@ -204,14 +204,14 @@ function getFMDefaultFormV2(): FMSetup {
     stats: {
       pi: 700,
       classification: FMPIClass.A,
-      carPoints: 0,
-      hp: 0,
-      torque: 0,
-      weight: 0,
-      balance: 0,
-      topSpeed: 0,
-      zeroToSixty: 0,
-      zeroToHundred: 0,
+      carPoints: '',
+      hp: '',
+      torque: '',
+      weight: '',
+      balance: '',
+      topSpeed: '',
+      zeroToSixty: '',
+      zeroToHundred: '',
       shareCode: '',
     },
     upgrades: {
@@ -316,7 +316,7 @@ function getFMDefaultFormV2(): FMSetup {
       springs: {
         front: '',
         rear: '',
-        units: SpringRateUnit.kgf,
+        units: SpringRateUnit.kgfmm,
         na: false,
       },
       rideHeight: {

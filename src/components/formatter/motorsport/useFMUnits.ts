@@ -5,18 +5,36 @@ import {
 } from 'vue';
 
 import { convertTo, switchUnit } from '../../../lib/conversions';
+import {
+  ForceUnit,
+  PowerUnit,
+  SpeedUnit,
+  WeightUnit,
+} from '../../../lib/types';
 import { UseGlobalUnits } from '../../../lib/useGlobalUnits';
 import useLocalStorageState from '../../../lib/useLocalStorageState';
 
 import { FMSetup } from './FMSetup';
 
 export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnits>) {
-  watch(() => globalUnits.value.globalUnit, () => {
+  watch(() => globalUnits.value.globalUnit, (current) => {
     form.tune.tires.units = switchUnit(form.tune.tires.units);
     form.tune.springs.units = switchUnit(form.tune.springs.units);
     form.tune.rideHeight.units = switchUnit(form.tune.rideHeight.units);
     form.tune.aero.units = switchUnit(form.tune.aero.units);
     form.tune.rollCenterHeightOffset.units = switchUnit(form.tune.rollCenterHeightOffset.units);
+
+    if (current === 'Metric') {
+      form.stats.hp = convertTo(form.stats.hp, PowerUnit.kw, 0);
+      form.stats.torque = convertTo(form.stats.torque, ForceUnit.kgf, 0);
+      form.stats.weight = convertTo(form.stats.weight, WeightUnit.kg, 0);
+      form.stats.topSpeed = convertTo(form.stats.topSpeed, SpeedUnit.kph, 0);
+    } else {
+      form.stats.hp = convertTo(form.stats.hp, PowerUnit.hp, 0);
+      form.stats.torque = convertTo(form.stats.torque, ForceUnit.lbf, 0);
+      form.stats.weight = convertTo(form.stats.weight, WeightUnit.lbs, 0);
+      form.stats.topSpeed = convertTo(form.stats.topSpeed, SpeedUnit.mph, 0);
+    }
   });
 
   const units = computed(() => ({

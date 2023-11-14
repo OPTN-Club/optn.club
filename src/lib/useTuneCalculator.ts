@@ -7,11 +7,6 @@ import {
 import { FHPIClass } from '../components/formatter/horizon/FHSetup';
 
 import {
-  convertSpringRate,
-  convertWeightToMass,
-  multipliers,
-} from './conversions';
-import {
   calcSpringsDeltas,
   ClassModifiersMap,
   defaultARBClassModifiersMap,
@@ -30,6 +25,19 @@ import {
   SpringRateUnit,
   WeightUnit,
 } from './types';
+
+const multipliers = {
+  springs: {
+    newtonsKgf: 0.1019716212978,
+    newtonsLbs: 0.57101471743224,
+  },
+  force: 0.45359236844386,
+  pressure: 0.0689475728,
+  length: 0.39370078740214,
+  weightNewtonsToMass: 9.80665,
+  speed: 0.621371,
+  power: 0.7456998715822702,
+};
 
 export default function useTuneCalculator() {
   const inputs = reactive<TuneInputs>({
@@ -136,8 +144,8 @@ export default function useTuneCalculator() {
   }));
 
   const cornerMass = computed<FrontRear>(() => ({
-    front: convertWeightToMass(cornerWeight.value.front, WeightUnit.kg),
-    rear: convertWeightToMass(cornerWeight.value.rear, WeightUnit.kg),
+    front: cornerWeight.value.front,
+    rear: cornerWeight.value.rear,
   }));
 
   const springRatesInNewtons = computed<FrontRear>(() => ({
@@ -146,8 +154,8 @@ export default function useTuneCalculator() {
   }));
 
   const springRates = computed<FrontRear>(() => ({
-    front: convertSpringRate(springRatesInNewtons.value.front, SpringRateUnit.lbs, SpringRateUnit.kgf) / 100,
-    rear: convertSpringRate(springRatesInNewtons.value.rear, SpringRateUnit.lbs, SpringRateUnit.kgf) / 100,
+    front: 1,
+    rear: 1,
   }));
 
   const weightBalance = computed(() => ({
