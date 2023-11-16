@@ -29,7 +29,11 @@ section .content {
 section .content > h3,
 section .content > .content-header {
   @apply
-    mb-3;
+    mb-3
+    flex
+    flex-col
+    sm:items-end
+    sm:flex-row;
 }
 
 section + section {
