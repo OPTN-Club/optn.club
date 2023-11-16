@@ -20,7 +20,7 @@ const globalUnits = useGlobalUnits();
 const storedFormat = (localStorage.getItem('SELECTED_FORMATTER') || 'reddit') as 'reddit' | 'discord';
 const selectedFormat = ref<'reddit' | 'discord'>(storedFormat);
 
-const copyButtonText = ref('Copy text');
+const copyButtonText = ref('Copy To Clipboard');
 const copyUrlButtonText = ref('Copy URL');
 const errorText = ref('');
 
@@ -59,9 +59,10 @@ function onResetClick() {
 function onCopyClick() {
   try {
     navigator.clipboard.writeText(formattedText.value);
+    const originalText = copyButtonText.value;
     copyButtonText.value = 'Copied!';
     copyTimeout.value = window.setTimeout(() => {
-      copyButtonText.value = 'Copy To Clipboard';
+      copyButtonText.value = originalText;
     }, 2000);
   } catch (error) {
     showError('Clipboard Error - Copy Manually');
@@ -78,9 +79,10 @@ async function onShareURLClick() {
       await navigator.share({ url });
     } else {
       navigator.clipboard.writeText(url);
+      const originalText = copyUrlButtonText.value;
       copyUrlButtonText.value = 'Copied!';
       shareTimeout.value = window.setTimeout(() => {
-        copyUrlButtonText.value = 'Share URL';
+        copyUrlButtonText.value = originalText;
       }, 2000);
     }
   } catch (error) {
@@ -128,6 +130,21 @@ function onFormatSelect(e: Event) {
         Discord
       </label>
     </div>
+    <p
+      class="text-sm px-1 text-center mb-4"
+    >
+      <span class="text-yellow font-bold">NOTE:</span>
+      <template v-if="selectedFormat === 'reddit'">
+        Be sure the editor is in &quot;Markdown&quot; mode<br>
+        when creating your post on Reddit!
+      </template>
+      <template v-else>
+        Please also copy the URL and include it with your post!
+      </template>
+    </p>
+    <!-- <p>
+      Character Count: {{ formattedText.length }}
+    </p> -->
     <button
       type="button"
       class="w-full secondary"
@@ -147,17 +164,6 @@ function onFormatSelect(e: Event) {
     <p>
       URL Length: {{ linkUrl.length }}
     </p> -->
-    <p
-      v-if="selectedFormat === 'reddit'"
-      class="text-sm text-light-mist px-1 text-center mb-10"
-    >
-      <strong class="text-yellow">NOTE:</strong>
-      Be sure the editor is in &quot;Markdown&quot; mode<br>
-      when creating your post on Reddit!
-    </p>
-    <p v-else>
-      Character Count: {{ formattedText.length }}
-    </p>
     <button
       type="button"
       class="w-full outlined"
