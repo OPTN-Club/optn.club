@@ -40,6 +40,23 @@ function h3(text: string): string {
   return `**${text}**`;
 }
 
+const falseyValues = [
+  null,
+  undefined,
+  '',
+  'N/A',
+  'Stock',
+  'None',
+];
+
+function showValue(value: string | undefined): boolean {
+  return !falseyValues.includes(value);
+}
+
+function showFrontRearValues(values: FrontAndRearSettings) {
+  return showValue(values.front) || showValue(values.rear);
+}
+
 enum TextAlign {
   left = ':--',
   right = '--:',
@@ -143,7 +160,7 @@ function formatTableRow(row: string[], widths: number[], alignment = TextAlign.l
 }
 
 function formatFrontRear(header: string, values: FrontAndRearSettings, precision = 1, suffix = '', alignment = TextAlign.left): string[] {
-  if (values.na || (!values.front && !values.rear)) {
+  if (values.na || !showFrontRearValues(values)) {
     return [];
   }
   const body: string[][] = [
@@ -171,11 +188,11 @@ function formatFrontRearWithUnit(header: string, value: FrontAndRearWithUnits, p
   }
 
   const body: string[][] = [];
-  if (showAll || showUpgrade(value.front)) {
+  if (showAll || showValue(value.front)) {
     const numValue = value.front === 'Stock' ? 0 : value.front;
     body.push(['F ', ...separate(formatUnit(numValue, value.units, precision, true), '/')]);
   }
-  if (showAll || showUpgrade(value.rear)) {
+  if (showAll || showValue(value.rear)) {
     const numValue = value.front === 'Stock' ? 0 : value.rear;
     body.push(['R ', ...separate(formatUnit(numValue, value.units, precision, true), '/')]);
   }
@@ -206,8 +223,8 @@ function formatGears(tune: TuneSettings): string[] {
     ['FR', parseFloat(tune.gears.ratios[0]).toFixed(precision)],
   ];
   for (let index = 1; index < tune.gears.ratios.length; index++) {
+    if (!showValue(tune.gears.ratios[index])) break;
     const value = parseFloat(tune.gears.ratios[index]);
-    if (!value) break;
     body.push([`${index}${suffixize(index)}`, value.toFixed(precision)]);
   }
 
@@ -231,16 +248,19 @@ function formatAlignment(tune: TuneSettings): string[] {
   if (tune.alignment.toe.front || tune.alignment.toe.rear) {
     lines.push(...formatFrontRear('Toe', tune.alignment.toe, 1, '°', TextAlign.right));
   }
-  if (tune.alignment.caster) {
+  let addBlank = false;
+  if (showValue(tune.alignment.caster)) {
     lines.push(`Caster ${tune.alignment.caster}°`);
+    addBlank = true;
   }
-  if (tune.alignment.steeringAngle) {
+  if (showValue(tune.alignment.steeringAngle)) {
     lines.push(`Steering Angle ${tune.alignment.steeringAngle}°`);
+    addBlank = true;
   }
 
   if (lines.length === 0) return [];
 
-  if (tune.alignment.caster || tune.alignment.steeringAngle) {
+  if (addBlank) {
     lines.push('');
   }
 
@@ -251,7 +271,7 @@ function formatAlignment(tune: TuneSettings): string[] {
 }
 
 function formatAntiRollbars(tune: TuneSettings): string[] {
-  if (tune.arb.na || (!tune.arb.front && !tune.arb.rear)) {
+  if (tune.arb.na || !showFrontRearValues(tune.arb)) {
     return [];
   }
 
@@ -267,10 +287,10 @@ function formatSprings(tune: TuneSettings): string[] {
   }
 
   const lines: string[] = [];
-  if (tune.springs.front || tune.springs.rear) {
+  if (showFrontRearValues(tune.springs)) {
     lines.push(...formatFrontRearWithUnit('Springs', tune.springs, 1));
   }
-  if (tune.rideHeight.front || tune.rideHeight.rear) {
+  if (showFrontRearValues(tune.rideHeight)) {
     lines.push(...formatFrontRearWithUnit('Ride Height', tune.rideHeight, 1));
   }
 
@@ -289,10 +309,10 @@ function formatDamping(tune: TuneSettings): string[] {
   const lines: string[] = [
     h1('Damping'),
   ];
-  if (tune.bump.front || tune.bump.rear) {
+  if (showFrontRearValues(tune.bump)) {
     lines.push(...formatFrontRear('Bump', tune.bump));
   }
-  if (tune.rebound.front || tune.rebound.rear) {
+  if (showFrontRearValues(tune.rebound)) {
     lines.push(...formatFrontRear('Rebound', tune.rebound));
   }
 
@@ -309,10 +329,10 @@ function formatSuspensionGeometry(tune: TuneSettings): string[] {
     h1('Suspension Geometry'),
   ];
 
-  if (showUpgrade(tune.rollCenterHeightOffset.front) || showUpgrade(tune.rollCenterHeightOffset.rear)) {
+  if (showFrontRearValues(tune.rollCenterHeightOffset)) {
     lines.push(...formatFrontRearWithUnit('Roll Center Offset', tune.rollCenterHeightOffset, 1));
   }
-  if (showUpgrade(tune.antiGeometryPercent.front) || showUpgrade(tune.antiGeometryPercent.rear)) {
+  if (showFrontRearValues(tune.antiGeometryPercent)) {
     lines.push(...formatFrontRear('Anti-Geometry', tune.antiGeometryPercent, 0, '%'));
   }
 
@@ -335,16 +355,16 @@ function formatAero(tune: TuneSettings): string[] {
 }
 
 function formatBrakes(tune: TuneSettings): string[] {
-  if (tune.brake.na || (!tune.brake.bias && !tune.brake.pressure)) {
+  if (tune.brake.na) {
     return [];
   }
 
   const lines = [];
 
-  if (tune.brake.bias && tune.brake.bias !== '50') {
+  if (showValue(tune.brake.bias) && tune.brake.bias !== '50') {
     lines.push(['Balance', formatFloat(tune.brake.bias, 0, '%')]);
   }
-  if (tune.brake.pressure && tune.brake.pressure !== '100') {
+  if (showValue(tune.brake.pressure) && tune.brake.pressure !== '100') {
     lines.push(['Pressure', formatFloat(tune.brake.pressure, 0, '%')]);
   }
 
@@ -358,12 +378,12 @@ function formatBrakes(tune: TuneSettings): string[] {
 
 function formatDiffLine(label: string, setting: AccelDecelSettings) {
   const line = [label];
-  if (setting.accel) {
+  if (showValue(setting.accel)) {
     line.push(formatFloat(setting.accel, 0, '%'));
   } else {
     line.push('-');
   }
-  if (setting.decel) {
+  if (showValue(setting.decel)) {
     line.push(formatFloat(setting.decel, 0, '%'));
   } else {
     line.push('-');
@@ -396,7 +416,7 @@ function formatDifferential(diff: DifferentialTuneSettings, driveType: DriveType
     ]));
   }
 
-  if (diff.center && diff.center !== '50') {
+  if (showValue(diff.center) && diff.center !== '50') {
     lines.push(`Center ${formatFloat(diff.center, 0, '%')}`, '');
   }
 
@@ -415,10 +435,10 @@ function formatSteeringWheel(tune: TuneSettings): string[] {
 
   const lines: string[][] = [];
 
-  if (tune.steeringWheel.ffbScale && tune.steeringWheel.ffbScale !== '100') {
+  if (showValue(tune.steeringWheel.ffbScale) && tune.steeringWheel.ffbScale !== '100') {
     lines.push(['FFB Scale', tune.steeringWheel.ffbScale]);
   }
-  if (tune.steeringWheel.steeringLockRange && tune.steeringWheel.steeringLockRange !== '900') {
+  if (showValue(tune.steeringWheel.steeringLockRange) && tune.steeringWheel.steeringLockRange !== '900') {
     lines.push(['Steering Lock', tune.steeringWheel.steeringLockRange]);
   }
 
@@ -454,7 +474,7 @@ function formatTireUpgrades(upgrades: PerformanceUpgrades): string[] {
     width: '',
   };
 
-  if (showUpgrade(upgrades.tires.width.front) || showUpgrade(upgrades.tires.width.rear)) {
+  if (showFrontRearValues(upgrades.tires.width)) {
     tires.width = `F ${upgrades.tires.width.front || 'Stock'} / R ${upgrades.tires.width.rear || 'Stock'}`;
   }
 
@@ -467,15 +487,11 @@ function formatWheelUpgrades(upgrades: PerformanceUpgrades): string[] {
     size: '',
   };
 
-  if (showUpgrade(upgrades.wheels.size.front) || showUpgrade(upgrades.wheels.size.rear)) {
+  if (showFrontRearValues(upgrades.wheels.size)) {
     wheels.size = `F ${upgrades.wheels.size.front || 'Stock'} / R ${upgrades.wheels.size.rear || 'Stock'}`;
   }
 
   return formatUpgradesSection('Wheels', wheels);
-}
-
-function showUpgrade(value: string | undefined): boolean {
-  return !!value && value !== 'N/A' && value !== 'Stock' && value !== 'None';
 }
 
 const labelMap: Record<string, string> = {
@@ -501,7 +517,7 @@ function formatUpgradesSection<T extends object>(header: string, section: T) {
   const rows: string[][] = keys
     .filter((key) => {
       const value = section[key as keyof T];
-      return showUpgrade(value as string);
+      return showValue(value as string);
     })
     .map((key) => [formatLabel(key), section[key as keyof T] as string]);
 

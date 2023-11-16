@@ -50,12 +50,12 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
         </div>
       </div>
       <div class="content">
-        <div class="content-header flex items-end">
+        <div class="content-header">
           <h3>Gearing</h3>
           <CheckboxControl
             v-model="form.tune.gears.na"
             label="Not Applicable"
-            class="mb-0 ml-3"
+            class="mb-0 sm:ml-3"
           />
         </div>
         <div class="set-upgrades vertical">
@@ -80,12 +80,12 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
         </div>
       </div>
       <div class="content">
-        <div class="content-header flex items-end">
+        <div class="content-header">
           <h3>Alignment</h3>
           <CheckboxControl
             v-model="form.tune.alignment.na"
             label="Not Applicable"
-            class="mb-0 ml-3"
+            class="mb-0 sm:ml-3"
           />
         </div>
         <div class="set-upgrades">
@@ -121,12 +121,12 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
         </div>
       </div>
       <div class="content">
-        <div class="content-header flex items-end">
+        <div class="content-header">
           <h3>Antiroll Bars</h3>
           <CheckboxControl
             v-model="form.tune.arb.na"
             label="Not Applicable"
-            class="mb-0 ml-3"
+            class="mb-0 sm:ml-3"
           />
         </div>
         <div class="set-upgrades">
@@ -140,12 +140,12 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
         </div>
       </div>
       <div class="content">
-        <div class="content-header flex items-end">
+        <div class="content-header">
           <h3>Springs</h3>
           <CheckboxControl
             v-model="form.tune.springs.na"
             label="Not Applicable"
-            class="mb-0 ml-3"
+            class="mb-0 sm:ml-3"
           />
         </div>
         <div class="set-upgrades">
@@ -188,12 +188,12 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
         </div>
       </div>
       <div class="content">
-        <div class="content-header flex items-end">
+        <div class="content-header">
           <h3>Damping</h3>
           <CheckboxControl
             v-model="form.tune.bump.na"
             label="Not Applicable"
-            class="mb-0 ml-3"
+            class="mb-0 sm:ml-3"
           />
         </div>
         <div class="set-upgrades">
@@ -214,12 +214,12 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
         </div>
       </div>
       <div class="content">
-        <div class="content-header flex items-end">
+        <div class="content-header">
           <h3>Suspension Geometry</h3>
           <CheckboxControl
             v-model="form.tune.rollCenterHeightOffset.na"
             label="Not Applicable"
-            class="mb-0 ml-3"
+            class="mb-0 sm:ml-3"
           />
         </div>
         <div class="set-upgrades">
@@ -249,12 +249,12 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
         </div>
       </div>
       <div class="content">
-        <div class="content-header flex items-end">
+        <div class="content-header">
           <h3>Aero</h3>
           <CheckboxControl
             v-model="form.tune.aero.na"
             label="Not Applicable"
-            class="mb-0 ml-3"
+            class="mb-0 sm:ml-3"
           />
         </div>
         <div class="set-upgrades">
@@ -277,12 +277,12 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
         </div>
       </div>
       <div class="content">
-        <div class="content-header flex items-end">
+        <div class="content-header">
           <h3>Brake</h3>
           <CheckboxControl
             v-model="form.tune.brake.na"
             label="Not Applicable"
-            class="mb-0 ml-3"
+            class="mb-0 sm:ml-3"
           />
         </div>
         <div class="set-upgrades">
@@ -309,12 +309,12 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
         </div>
       </div>
       <div class="content">
-        <div class="content-header flex items-end ">
+        <div class="content-header ">
           <h3>Differential</h3>
           <CheckboxControl
             v-model="form.tune.diff.na"
             label="Not Applicable"
-            class="mb-0 ml-3"
+            class="mb-0 sm:ml-3"
           />
         </div>
         <div class="set-upgrades">
@@ -347,12 +347,12 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
         </div>
       </div>
       <div class="content">
-        <div class="content-header flex items-end ">
+        <div class="content-header ">
           <h3>Steering Wheel</h3>
           <CheckboxControl
             v-model="form.tune.steeringWheel.na"
             label="Not Applicable"
-            class="mb-0 ml-3"
+            class="mb-0 sm:ml-3"
           />
         </div>
         <div class="set-upgrades">
