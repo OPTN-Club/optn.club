@@ -34,10 +34,11 @@
     @apply
       grow
       md:grow-0
-      px-4
+      sm:px-4
       py-2
       text-ghost-white
       whitespace-nowrap
+      text-[4vw]
       sm:text-xl
       font-normal
       border-y-4
