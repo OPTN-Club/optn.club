@@ -1,18 +1,16 @@
 import { capitalCase } from 'change-case';
-import {
-  computed,
-  reactive,
-  Ref,
-  watch,
-} from 'vue';
+import { computed, Ref } from 'vue';
+import { useRoute } from 'vue-router';
 
-import { byFullname } from '../../../lib/models';
+import { getUnitsForGlobalUnit } from '../../../lib/conversions';
 import {
+  AccelDecelSettings,
+  DifferentialTuneSettings,
   DriveType,
-  FormattingFormProps,
   FrontAndRearSettings,
   FrontAndRearWithUnits,
   GlobalUnit,
+  UnitOfMeasure,
 } from '../../../lib/types';
 import { formatUnit, formatUnitHeaders } from '../../../lib/unitsOfMeasure';
 import { formatFloat, addSuffix as suffixize } from '../../../lib/utils';
@@ -24,17 +22,40 @@ import {
   TuneSettings,
 } from './FHSetup';
 
-const tableSeparator = '\n######\n';
+const tableSeparator = '';
 
 function bold(value: string): string {
   if (!value) return value;
-  return `**${value.replace(/\*\*/g, '')}**`;
+  return `** ${value.replace(/\*\*/g, '')} **`;
 }
 
-function formatTableRow(row: string[], boldFirstCol = false) {
-  const r = [...row];
-  if (boldFirstCol) r[0] = bold(r[0]);
-  return `|${r.join('|')}|`;
+function h1(text: string): string {
+  return `== ${text} ==\n`;
+}
+
+function h2(text: string): string {
+  return `-- ${text} --`;
+}
+
+function h3(text: string): string {
+  return `**${text}**`;
+}
+
+const falseyValues = [
+  null,
+  undefined,
+  '',
+  'N/A',
+  'Stock',
+  'None',
+];
+
+function showValue(value: string | undefined): boolean {
+  return !falseyValues.includes(value);
+}
+
+function showFrontRearValues(values: FrontAndRearSettings) {
+  return showValue(values.front) || showValue(values.rear);
 }
 
 enum TextAlign {
@@ -43,192 +64,336 @@ enum TextAlign {
   center = ':-:',
 }
 
-function formatTable(header: string[], body: string[][], boldFirstCol = false, textAlign = TextAlign.right): string[] {
-  const rowSeparator = [':--', textAlign];
-  for (let index = 2; index < header.length; index++) {
-    rowSeparator.push(textAlign);
-  }
-  return [
-    formatTableRow(header.map(bold)),
-    formatTableRow(rowSeparator),
-    ...body.map((row) => formatTableRow(row, boldFirstCol)),
-    tableSeparator,
-  ];
+// const BOX_LINE_HORIZONTAL = '─';
+// const BOX_LINE_VERTICAL = '│';
+// const BOX_LINE_TOP_LEFT = '┌';
+// const BOX_LINE_TOP_RIGHT = '┐';
+// const BOX_LINE_BOTTOM_LEFT = '└';
+// const BOX_LINE_BOTTOM_RIGHT = '┘';
+// const BOX_LINE_TOP = '┬';
+// const BOX_LINE_BOTTOM = '┴';
+// const BOX_LINE_LEFT = '├';
+// const BOX_LINE_RIGHT = '┤';
+// const BOX_LINE_CROSS = '┼';
+
+function getColumnWidths(rows: string[][]) {
+  const widths = Array.from({ length: rows[0].length }, () => 0);
+  rows.forEach((row) => {
+    row.forEach((cell, index) => {
+      widths[index] = Math.max(widths[index], cell.length);
+    });
+  });
+  return widths;
 }
 
-function formatFrontRear(headers: string[], values: FrontAndRearSettings[], precision = 1, suffix = ''): string[] {
-  if (values.every((v) => v.na)) {
-    const cells = Array.from({ length: values.length }, () => '');
-    return formatTable(headers, [['Not Applicable', ...cells]]);
+function formatTable(header: string, body: string[][], alignment = TextAlign.left): string[] {
+  if (body.length === 0) return [];
+  const widths = getColumnWidths(body);
+  const table: string[] = [];
+  if (header) table.push(h2(header));
+  table.push(...body.map((row) => formatTableRow(row, widths, alignment)));
+  table.push(tableSeparator);
+
+  return table;
+}
+
+function bumpUpToMultipleOf(value: number, multipleOf: number) {
+  const remainder = value % multipleOf;
+  if (remainder) {
+    return value + (multipleOf - remainder);
+  }
+  return value;
+}
+
+function getPaddingFor(text: string, width: number) {
+  const padding = {
+    spaces: '',
+    tabs: '',
+  };
+
+  if (width <= 4) {
+    padding.spaces = ' '.repeat(width - text.length);
+  } else {
+    const normalizedWidth = bumpUpToMultipleOf(width, 4);
+    const spacesNeeded = bumpUpToMultipleOf(text.length, 4) - text.length;
+    const paddingNeeded = normalizedWidth - text.length - spacesNeeded;
+    const tabsNeeded = Math.floor(paddingNeeded / 4);
+
+    padding.spaces = ' '.repeat(spacesNeeded);
+    padding.tabs = '\t'.repeat(tabsNeeded);
+  }
+
+  return padding;
+}
+
+function padText(text: string, width: number, alignment: TextAlign) {
+  const padding = getPaddingFor(text, width);
+
+  if (alignment === TextAlign.left) {
+    return `${text}${padding.spaces}${padding.tabs}`;
+  }
+  return `${padding.tabs}${padding.spaces}${text}`;
+}
+
+function formatTableRow(row: string[], widths: number[], alignment = TextAlign.left) {
+  const rowText = row.map((cell, index) => {
+    const width = widths[index];
+    if (cell === '/') {
+      return cell;
+    }
+    if (alignment === TextAlign.center) {
+      return cell.padStart(width / 2).padEnd(width);
+    }
+    if (alignment === TextAlign.left) {
+      return cell.padEnd(width);
+    }
+    return cell.padStart(width);
+  });
+  return rowText.join(' ').trim();
+}
+
+function formatFrontRear(header: string, values: FrontAndRearSettings, precision = 1, suffix = '', alignment = TextAlign.left): string[] {
+  if (values.na || !showFrontRearValues(values)) {
+    return [];
   }
   const body: string[][] = [
-    ['Front', ...values.map((value) => formatFloat(value.front, precision, suffix))],
-    ['Rear', ...values.map((value) => formatFloat(value.rear, precision, suffix))],
+    ['F ', formatFloat(values.front, precision, suffix)],
+    ['R ', formatFloat(values.rear, precision, suffix)],
   ];
 
-  return formatTable(headers, body);
+  return formatTable(header, body, alignment);
 }
 
-function formatFrontRearWithUnit(header: string, value: FrontAndRearWithUnits, precision = 1): string[] {
-  const headers = [
-    header,
-    ...formatUnitHeaders(value.units),
-  ];
+function separate(values: string[], separator: string) {
+  const separated: string[] = [];
+  for (let index = 0; index < values.length; index++) {
+    separated.push(values[index]);
+    if (index < values.length - 1) {
+      separated.push(separator);
+    }
+  }
+  return separated;
+}
 
+function formatFrontRearWithUnit(header: string, value: FrontAndRearWithUnits, precision = 1, showAll = false): string[] {
   if (value.na) {
-    return formatTable(headers, [['Not Applicable', ...formatUnit('', value.units, precision)]]);
+    return [];
   }
 
-  const body: string[][] = [
-    ['Front', ...formatUnit(value.front, value.units, precision)],
-    ['Rear', ...formatUnit(value.rear, value.units, precision)],
-  ];
+  const body: string[][] = [];
+  if (showAll || showValue(value.front)) {
+    const numValue = value.front === 'Stock' ? 0 : value.front;
+    body.push(['F ', ...separate(formatUnit(numValue, value.units, precision, true), '/')]);
+  }
+  if (showAll || showValue(value.rear)) {
+    const numValue = value.front === 'Stock' ? 0 : value.rear;
+    body.push(['R ', ...separate(formatUnit(numValue, value.units, precision, true), '/')]);
+  }
 
-  return formatTable(headers, body);
+  if (body.length === 0) return [];
+  return formatTable(header, body, TextAlign.right);
 }
 
 function formatTires(tune: TuneSettings): string[] {
-  return formatFrontRearWithUnit('Tires', tune.tires, 1);
+  const table = formatFrontRearWithUnit('', tune.tires, 1);
+
+  if (table.length === 0) return [];
+
+  return [
+    h1('Tires'),
+    ...formatFrontRearWithUnit('', tune.tires, 1),
+  ];
 }
 
 function formatGears(tune: TuneSettings): string[] {
   const precision = 2;
-  const headers = ['Gears', 'Ratio'];
 
   if (tune.gears.na) {
-    return formatTable(headers, [['Not Applicable', '']]);
+    return [];
   }
 
   const body: string[][] = [
-    ['Final Drive', parseFloat(tune.gears.ratios[0]).toFixed(precision)],
+    ['FR', parseFloat(tune.gears.ratios[0]).toFixed(precision)],
   ];
   for (let index = 1; index < tune.gears.ratios.length; index++) {
+    if (!showValue(tune.gears.ratios[index])) break;
     const value = parseFloat(tune.gears.ratios[index]);
-    if (!value) break;
     body.push([`${index}${suffixize(index)}`, value.toFixed(precision)]);
   }
 
   if (body.length === 1 && tune.gears.ratios[0] === '') return [];
 
-  return formatTable(headers, body);
+  return [
+    h1('Gearing'),
+    ...formatTable('', body),
+  ];
 }
 
 function formatAlignment(tune: TuneSettings): string[] {
-  return formatFrontRear(['Alignment', 'Camber', 'Toe', 'Caster'], [tune.camber, tune.toe, { front: tune.caster, rear: '' }], 1, '°');
+  const lines: string[] = [];
+  if (tune.camber.front || tune.camber.rear) {
+    lines.push(...formatFrontRear('Camber', tune.camber, 1, '°', TextAlign.right));
+  }
+  if (tune.toe.front || tune.toe.rear) {
+    lines.push(...formatFrontRear('Toe', tune.toe, 1, '°', TextAlign.right));
+  }
+  let addBlank = false;
+  if (showValue(tune.caster)) {
+    lines.push(`Caster ${tune.caster}°`);
+    addBlank = true;
+  }
+
+  if (lines.length === 0) return [];
+
+  if (addBlank) {
+    lines.push('');
+  }
+
+  return [
+    h1('Alignment'),
+    ...lines,
+  ];
 }
 
 function formatAntiRollbars(tune: TuneSettings): string[] {
-  const headers = ['ARBs', ''];
-  if (tune.arb.na) {
-    return formatTable(headers, [['Not Applicable', '']]);
+  if (tune.arb.na || !showFrontRearValues(tune.arb)) {
+    return [];
   }
-  return formatFrontRear(headers, [tune.arb]);
+
+  return [
+    h1('Anti-roll Bars'),
+    ...formatFrontRear('', tune.arb),
+  ];
 }
 
 function formatSprings(tune: TuneSettings): string[] {
-  const headers = ['ARBs', ''];
-  if (tune.arb.na) {
-    return formatTable(headers, [['Not Applicable', '']]);
+  if (tune.springs.na) {
+    return [];
   }
+
+  const lines: string[] = [];
+  if (showFrontRearValues(tune.springs)) {
+    lines.push(...formatFrontRearWithUnit('Springs', tune.springs, 1));
+  }
+  if (showFrontRearValues(tune.rideHeight)) {
+    lines.push(...formatFrontRearWithUnit('Ride Height', tune.rideHeight, 1));
+  }
+
+  if (lines.length === 0) return [];
+
   return [
-    ...formatFrontRearWithUnit('Springs', tune.springs, 1),
-    ...formatFrontRearWithUnit('Ride Height', tune.rideHeight, 1),
+    h1('Springs'),
+    ...lines,
   ];
 }
 
 function formatDamping(tune: TuneSettings): string[] {
-  return formatFrontRear(['Damping', 'Rebound', 'Bump'], [tune.damping, tune.bump]);
+  if (tune.damping.na && tune.bump.na) {
+    return [];
+  }
+  const lines: string[] = [
+    h1('Damping'),
+  ];
+  if (showFrontRearValues(tune.bump)) {
+    lines.push(...formatFrontRear('Bump', tune.bump));
+  }
+  if (showFrontRearValues(tune.damping)) {
+    lines.push(...formatFrontRear('Rebound', tune.damping));
+  }
+
+  if (lines.length === 1) return [];
+
+  return lines;
 }
 
 function formatAero(tune: TuneSettings): string[] {
-  const headers = ['Aero', ...formatUnitHeaders(tune.aero.units)];
-
   if (tune.aero.na) {
-    return formatTable(headers, [['Not Applicable', ...formatUnit('', tune.aero.units)]]);
+    return [];
   }
+  const lines: string[] = [
+    h1('Aero'),
+    ...formatFrontRearWithUnit('', tune.aero, 1),
+  ];
 
-  const front = ['Front'];
-  const rear = ['Rear'];
-  if (tune.aero.front === '') {
-    front.push('N/A', '', '');
-  } else {
-    front.push(...formatUnit(tune.aero.front, tune.aero.units, 1));
-  }
-  if (tune.aero.rear === '') {
-    rear.push('N/A', '', '');
-  } else {
-    rear.push(...formatUnit(tune.aero.rear, tune.aero.units, 1));
-  }
-  return formatTable(headers, [front, rear]);
+  if (lines.length === 1) return [];
+  return lines;
 }
 
 function formatBrakes(tune: TuneSettings): string[] {
-  const headers = ['Brakes', '%'];
-
-  if (!tune.brake.bias && !tune.brake.pressure) {
-    return formatTable(headers, [['Not Applicable', '']]);
+  if (tune.brake.na) {
+    return [];
   }
 
-  return formatTable(headers, [
-    ['Balance', formatFloat(tune.brake.bias, 0, '%')],
-    ['Pressure', formatFloat(tune.brake.pressure, 0, '%')],
-  ]);
-}
+  const lines = [];
 
-function isDrivetrain(value: string): value is DriveType {
-  return Object.values(DriveType).includes(value as DriveType);
-}
-
-export function getDrivetrain(build: BuildSettings): DriveType {
-  if (build.conversions.drivetrain) {
-    return build.conversions.drivetrain;
+  if (showValue(tune.brake.bias) && tune.brake.bias !== '50') {
+    lines.push(['Balance', formatFloat(tune.brake.bias, 0, '%')]);
   }
-  return DriveType.awd;
-}
-
-function formatDifferential(form: FHSetup): string[] {
-  const drivetrain = getDrivetrain(form.build);
-  const header = ['Differential', 'Accel', 'Decel'];
-
-  if (form.tune.diff.na) {
-    return formatTable(header, [['Not Applicable', '', '']]);
+  if (showValue(tune.brake.pressure) && tune.brake.pressure !== '100') {
+    lines.push(['Pressure', formatFloat(tune.brake.pressure, 0, '%')]);
   }
 
-  const front = ['Front', 'N/A', 'N/A'];
-  const rear = ['Rear', 'N/A', 'N/A'];
-  const center = ['Center', '', ''];
+  if (lines.length === 0) return [];
+
+  return [
+    h1('Brakes'),
+    ...formatTable('', lines),
+  ];
+}
+
+function formatDiffLine(label: string, setting: AccelDecelSettings) {
+  const line = [label];
+  if (showValue(setting.accel)) {
+    line.push(formatFloat(setting.accel, 0, '%'));
+  } else {
+    line.push('-');
+  }
+  if (showValue(setting.decel)) {
+    line.push(formatFloat(setting.decel, 0, '%'));
+  } else {
+    line.push('-');
+  }
+  if (line[1] === '-' && line[2] === '-') {
+    return [];
+  }
+  return line;
+}
+
+function formatDifferential(diff: DifferentialTuneSettings, driveType: DriveType): string[] {
+  if (diff.na) {
+    return [];
+  }
+
+  const lines: string[] = [];
+
   const body: string[][] = [];
 
-  if ([DriveType.fwd, DriveType.awd].includes(drivetrain)) {
-    body.push(front);
-    front[1] = formatFloat(form.tune.diff.front.accel, 0, '%');
-    front[2] = formatFloat(form.tune.diff.front.decel, 0, '%');
+  const front = formatDiffLine('F ', diff.front);
+  if (front.length) body.push(front);
+
+  const rear = formatDiffLine('R ', diff.rear);
+  if (rear.length) body.push(rear);
+
+  if (body.length) {
+    lines.push(...formatTable('', [
+      ['-', 'Accel', 'Decel'],
+      ...body,
+    ]));
   }
 
-  if ([DriveType.rwd, DriveType.awd].includes(drivetrain)) {
-    body.push(rear);
-    rear[1] = formatFloat(form.tune.diff.rear.accel, 0, '%');
-    rear[2] = formatFloat(form.tune.diff.rear.decel, 0, '%');
+  if (showValue(diff.center) && diff.center !== '50') {
+    lines.push(`Center ${formatFloat(diff.center, 0, '%')}`, '');
   }
 
-  if (drivetrain === DriveType.awd) {
-    body.push(center);
-    center[1] = formatFloat(form.tune.diff.center, 0, '%');
-    // ...formatTable(
-    //   ['Center', ''],
-    //   [['Balance', formatFloat(form.tune.diff.center, 0, '%')]],
-    // ));
-  }
-  // const table = [
-  //   '### Differential\n',
-  //   ...formatTable(header, body),
-  // ];
+  if (lines.length === 0) return [];
 
-  return formatTable(header, body);
+  return [
+    h1('Differential'),
+    ...lines,
+  ];
 }
 
 export function formatTune(form: FHSetup, model: string): string[] {
-  const car = byFullname.get(model);
   const text = [
     ...formatTires(form.tune),
     ...formatGears(form.tune),
@@ -238,149 +403,161 @@ export function formatTune(form: FHSetup, model: string): string[] {
     ...formatDamping(form.tune),
     ...formatAero(form.tune),
     ...formatBrakes(form.tune),
-    ...formatDifferential(form),
+    ...formatDifferential(form.tune.diff, form.build.conversions.drivetrain)
   ];
 
   return text;
 }
 
-function formatConversions(build: BuildSettings, model: string): string[] {
-  const headers = ['Conversions', ''];
+function formatTireUpgrades(upgrades: BuildSettings): string[] {
+  const tires = {
+    compound: upgrades.tiresAndRims.compound,
+    width: '',
+  };
 
-  const car = byFullname.get(model);
-  const drivetrain = build.conversions.drivetrain === car?.drive ? 'Stock' : build.conversions.drivetrain;
+  if (showFrontRearValues(upgrades.tiresAndRims.width)) {
+    tires.width = `F ${upgrades.tiresAndRims.width.front || 'Stock'} / R ${upgrades.tiresAndRims.width.rear || 'Stock'}`;
+  }
 
-  const body = [
-    ['Engine', build.conversions.engine || 'Stock'],
-    ['Drivetrain', drivetrain || 'Stock'],
-  ];
-  if (build.conversions.aspiration) {
-    body.push(['Aspiration', build.conversions.aspiration || 'Stock']);
-  }
-  if (build.conversions.aspiration) {
-    body.push(['Body Kit', build.conversions.bodyKit || 'Stock']);
-  }
-  return formatTable(headers, body);
+  return formatUpgradesSection('Tires', tires);
 }
 
-function formatTiresAndRims(build: BuildSettings): string[] {
-  return formatTable(
-    ['Tires And Rims', ''],
-    [
-      ['Compound', build.tiresAndRims.compound],
-      ['Tire Width', `Front ${build.tiresAndRims.width.front} mm, Rear ${build.tiresAndRims.width.rear} mm`],
-      ['Rim Style', `${build.tiresAndRims.rimStyle.type} ${build.tiresAndRims.rimStyle.name}`],
-      ['Rim Size', `Front ${build.tiresAndRims.rimSize.front} in, Rear ${build.tiresAndRims.rimSize.rear} in`],
-      ['Track Width', `Front ${build.tiresAndRims.trackWidth.front}, Rear ${build.tiresAndRims.trackWidth.rear}`],
-      ['Profile Size', `Front ${build.tiresAndRims.profileSize.front}, Rear ${build.tiresAndRims.profileSize.rear}`],
-    ],
-    false,
-    TextAlign.left,
-  );
+function formatWheelUpgrades(upgrades: BuildSettings): string[] {
+  const style = [
+    upgrades.tiresAndRims.rimStyle.type,
+    upgrades.tiresAndRims.rimStyle.name,
+  ].filter((n) => n).join(' ');
+
+  const wheels = { style, size: '' };
+
+  if (showFrontRearValues(upgrades.tiresAndRims.rimSize)) {
+    wheels.size = `F ${upgrades.tiresAndRims.rimSize.front || 'Stock'} / R ${upgrades.tiresAndRims.rimSize.rear || 'Stock'}`;
+  }
+
+  return formatUpgradesSection('Wheels', wheels);
 }
 
-function formatAeroBuild(build: BuildSettings): string[] {
-  const aero: string[][] = [];
-  if (build.aeroAndAppearance.frontBumper) {
-    aero.push(['Front Bumper', build.aeroAndAppearance.frontBumper]);
-  }
-  if (build.aeroAndAppearance.rearBumper) {
-    aero.push(['Rear Bumper', build.aeroAndAppearance.rearBumper]);
-  }
-  if (build.aeroAndAppearance.rearWing) {
-    aero.push(['Rear Wing', build.aeroAndAppearance.rearWing]);
-  }
-  if (build.aeroAndAppearance.sideSkirts) {
-    aero.push(['Side Skirts', build.aeroAndAppearance.sideSkirts]);
-  }
-  if (build.aeroAndAppearance.hood) {
-    aero.push(['Hood', build.aeroAndAppearance.hood]);
-  }
-
-  if (aero.length === 0) return [];
-
-  return formatTable(['Aero and Appearance', ''], aero, false, TextAlign.left);
-}
-
-function formatBuildSection<T extends BuildSectionUpgrades>(section: T) {
-  const keys = Object.keys(section);
-  return keys
-    .filter((key) => {
-      const value = section[key as keyof T];
-      return value && value.toString() !== 'N/A';
-    })
-    .map((key) => [capitalCase(key), section[key as keyof T]]);
-}
-
-interface StatUnits {
-  weight: string;
-  torque: string;
-  speed: string;
-}
-
-const statUnits: Record<'Metric' | 'Imperial', StatUnits> = {
-  Metric: {
-    weight: 'kg',
-    torque: 'nm',
-    speed: 'kph',
-  },
-  Imperial: {
-    weight: 'lbs',
-    torque: 'lb-ft',
-    speed: 'mph',
-  },
+const labelMap: Record<string, string> = {
+  chassisReinforcement: 'Chassis',
+  frontArb: 'ARB F',
+  rearArb: 'ARB R',
+  weightReduction: 'Weight',
+  differential: 'Diff',
+  frontBumper: 'F Bumper',
+  rearBumper: 'R Bumper',
+  rearWing: 'R Wing',
 };
 
-function formatStatisticsTable(form: FHSetup, globalUnits: 'Metric' | 'Imperial') {
-  const text: string[] = [];
-  const piClass = `${form.stats.classification} ${form.stats.pi}`.trim();
-  if (form.model) text.push(`${form.model}`);
-  text.push(`${form.stats.classification} ${form.stats.pi}`);
-  const header = `#${text.join(' - ')}\n`;
+function formatLabel(label: string) {
+  if (label in labelMap) {
+    return labelMap[label];
+  }
+  return capitalCase(label);
+}
 
-  const units = statUnits[globalUnits];
-  const stats: string[][] = [];
+function formatUpgradesSection<T extends object>(header: string, section: T) {
+  const keys = Object.keys(section);
+  const rows: string[][] = keys
+    .filter((key) => {
+      const value = section[key as keyof T];
+      return showValue(value as string);
+    })
+    .map((key) => [formatLabel(key), section[key as keyof T] as string]);
 
-  if (form.stats.weight) stats.push(['Weight', `${form.stats.weight} ${units.weight}`]);
-  if (form.stats.balance) stats.push(['Balance', `${form.stats.balance}%`]);
-  if (form.stats.hp) stats.push(['HP', `${form.stats.hp}`]);
-  if (form.stats.torque) stats.push(['Torque', `${form.stats.torque} ${units.torque}`]);
-  if (form.stats.topSpeed) stats.push(['Top Speed', `${form.stats.topSpeed} ${units.speed}`]);
-  if (form.stats.zeroToSixty) stats.push(['0-60', `${form.stats.zeroToSixty}s`]);
-  if (form.stats.zeroToHundred) stats.push(['0-100', `${form.stats.zeroToHundred}s`]);
-  if (form.stats.shareCode) stats.push(['Share Code', `${form.stats.shareCode}`]);
+  if (rows.length === 0) return [];
 
   return [
-    header,
-    ...formatTable(['Stats', ''], stats, true, TextAlign.left),
+    h1(header),
+    ...formatTable('', rows),
   ];
 }
 
-export function formatBuild(build: BuildSettings, model: string): string[] {
+export function formatUpgrades(upgrades: BuildSettings, driveType: DriveType): string[] {
   const text = [
-    ...formatConversions(build, model),
-    ...formatTable(['Engine', ''], formatBuildSection(build.engine), false, TextAlign.left),
-    ...formatTable(['Platform And Handling', ''], formatBuildSection(build.platformAndHandling), false, TextAlign.left),
-    ...formatTable(['Drivetrain', ''], formatBuildSection(build.drivetrain), false, TextAlign.left),
-    ...formatTiresAndRims(build),
-    ...formatAeroBuild(build),
+    ...formatUpgradesSection('Conversions', upgrades.conversions),
+    ...formatUpgradesSection('Engine', upgrades.engine),
+    ...formatUpgradesSection('Platform And Handling', upgrades.platformAndHandling),
+    ...formatTireUpgrades(upgrades),
+    ...formatWheelUpgrades(upgrades),
+    ...formatUpgradesSection('Drivetrain', upgrades.drivetrain),
+    ...formatUpgradesSection('Aero and Appearance', upgrades.aeroAndAppearance),
   ];
 
   return text;
 }
 
-export default function fhDiscordGenerator(form: FHSetup, globalUnit: GlobalUnit, linkUrl: string) {
-  return [
-    ...formatStatisticsTable(form, globalUnit),
-    `[View this tune on optn.club](${linkUrl})\n`,
-    '---\n',
-    '## Build\n',
-    ...formatBuild(form.build, form.model),
-    '---\n',
-    '## Tune\n',
-    ...formatTune(form, form.model),
-    '---\n',
-    'Formatted text generated by the [OPTN.club Tune Formatter](https://optn.club/formatter)  \n',
-    'Submit bugs, feature requests, and questions on [Github](https://github.com/OPTN-Club/optn.club/issues)',
-  ].join('\n');
+function formatUnitWithSeparator(value: string | number, unit: UnitOfMeasure, precision = 1, showUnit = false) {
+  const formatted = formatUnit(value, unit, precision, showUnit);
+  return separate(formatted, '/');
+}
+
+function formatStatistics(form: FHSetup, globalUnit: 'Metric' | 'Imperial') {
+  const stats: string[][] = [];
+
+  const units = getUnitsForGlobalUnit(globalUnit);
+
+  if (form.stats.weight) stats.push(['Weight', ...formatUnitWithSeparator(form.stats.weight, units.weight, 0, true)]);
+  if (form.stats.balance) stats.push(['Balance', `${form.stats.balance}%`]);
+  if (form.stats.hp) stats.push(['Power', ...formatUnitWithSeparator(form.stats.hp, units.power, 0, true)]);
+  if (form.stats.torque) stats.push(['Torque', ...formatUnitWithSeparator(form.stats.torque, units.torque, 0, true)]);
+  if (form.stats.topSpeed) stats.push(['Top Speed', ...formatUnitWithSeparator(form.stats.topSpeed, units.speed, 0, true)]);
+  if (form.stats.zeroToSixty) stats.push(['0-60', `${form.stats.zeroToSixty}s`]);
+  if (form.stats.zeroToHundred) stats.push(['0-100', `${form.stats.zeroToHundred}s`]);
+
+  if (stats.length === 0) return [];
+
+  return formatTable('', stats);
+}
+
+function formatHeader(form: FHSetup) {
+  const text: string[] = [];
+  text.push([form.make || 'Make', form.model || 'Model'].join(' '));
+  text.push(`${form.stats.classification} ${form.stats.pi}`);
+  const header = `**${text.join(' - ')}**\n`;
+
+  return header;
+}
+
+export default function fmDiscordGenerator(form: FHSetup, globalUnit: GlobalUnit, linkUrl: string) {
+  const lines = [formatHeader(form)];
+
+  const stats = formatStatistics(form, globalUnit);
+  if (stats.length) {
+    lines.push(
+      bold('Stats'),
+      '```',
+      ...stats,
+      '```',
+    );
+  }
+
+  const upgrades = formatUpgrades(form.build, form.build.conversions.drivetrain);
+  if (upgrades.length) {
+    lines.push(
+      bold('Upgrades'),
+      '```',
+      ...upgrades,
+      '```',
+    );
+  }
+
+  const tune = formatTune(form, form.model);
+  if (tune.length) {
+    lines.push(
+      bold('Tune'),
+      '```',
+      ...tune,
+      '```',
+    );
+  }
+
+  lines.push(
+    'Formatted using:',
+    'https://optn.club/formatter/forza/motorsport/v2',
+  );
+
+  // `[View this tune on optn.club](${linkUrl})`,
+  // 'Formatted text generated by the [OPTN.club FM Setup Formatter](https://optn.club/formatter/forza/motorsport/v2)  \n',
+  // 'Submit bugs, feature requests, and questions on [Github](https://github.com/OPTN-Club/optn.club/issues)',
+  return lines.join('\n');
 }
