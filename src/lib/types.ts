@@ -40,13 +40,13 @@ export enum SpeedUnit {
 }
 
 export enum PowerUnit {
-  hp = 'HP',
   kw = 'kW',
+  hp = 'HP',
 }
 
 export enum TorqueUnit {
-  lbfft = 'lbf·ft',
   nm = 'N·m',
+  lbfft = 'lbf·ft',
 }
 
 export type UnitOfMeasureValues<U extends UnitOfMeasure, T extends string | number> = {
@@ -145,6 +145,13 @@ export enum TransmissionUpgrade {
   raceNine = 'Race Nine Speed',
   raceTen = 'Race Ten Speed',
   drift = 'Drift Four Speed',
+}
+
+export enum LimitedTransmissionUpgrade {
+  stock = 'Stock',
+  sport = 'Sport',
+  street = 'Street',
+  race = 'Race',
 }
 
 export enum FMTireCompound {

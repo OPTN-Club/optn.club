@@ -2,6 +2,11 @@ import { compressToBase64, decompressFromBase64 } from 'lz-string';
 
 import { mangleValueMap } from './mangle-lookup';
 
+const VALUE_COUNT_BEFORE_TIRE_PROFILE_UPDATE = 98;
+const VALUE_COUNT_BEFORE_MOTOR_AND_BATTERY_UPDATE = 100;
+const TIRE_PROFILE_SIZE_INDEX = 39;
+const MOTOR_AND_BATTERY_INDEX = 24;
+
 export interface FormEncoderOptions {
   getDefaultForm(): GenericForm;
   serialize?: (flattenedObj: FlattenedObject) => string;
@@ -155,32 +160,26 @@ function serializeFlatObject(flattenedObj: FlattenedObject): string {
 function deserializeFlatObject(value: string, flattenedKeys: string[]): FlattenedObject {
   const values = JSON.parse(value) as never[];
 
-  if (values.length !== flattenedKeys.length) {
-    throw new Error('Invalid form');
+  /**
+   * Added Tire Profile Size
+   * If a link is before this was added, we need to
+   * insert the values into the parsed array
+   */
+  if (values.length === VALUE_COUNT_BEFORE_TIRE_PROFILE_UPDATE) {
+    values.splice(TIRE_PROFILE_SIZE_INDEX, 0, 's' as never, 's' as never);
+  }
+
+  /**
+   * Added Motor and Battery
+   */
+  if (values.length === VALUE_COUNT_BEFORE_MOTOR_AND_BATTERY_UPDATE) {
+    values.splice(MOTOR_AND_BATTERY_INDEX, 0, 'na' as never);
   }
 
   const flattenedForm: FlattenedObject = {};
   flattenedKeys.forEach((key, index) => {
     flattenedForm[key] = unmangleValue(values[index]) as never;
   });
-  return flattenedForm;
-}
 
-export function deserializeFlatObjectV1(value: string, flattenedKeys: string[]): Record<string, never> {
-  const values = JSON.parse(value) as never[];
-
-  /**
-   * Added Tire Profile Size
-   * If a link is before this was added, we need to
-   * insert the values into the parsed array
-   */
-  if (values.length === 98) {
-    values.splice(38, 0, 's' as never, 's' as never);
-  }
-
-  const flattenedForm: Record<string, never> = {};
-  flattenedKeys.forEach((key, index) => {
-    flattenedForm[key] = unmangleValue(values[index]) as never;
-  });
   return flattenedForm;
 }

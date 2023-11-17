@@ -4,27 +4,17 @@ import {
   Ref,
 } from 'vue';
 
-import { DriveType, TransmissionUpgrade } from '../../../lib/types';
+import { DriveType, LimitedTransmissionUpgrade } from '../../../lib/types';
 
 import { FMSetup } from './FMSetup';
 
 const finalRatio = [
-  TransmissionUpgrade.sport,
-  TransmissionUpgrade.race,
-  TransmissionUpgrade.raceSix,
-  TransmissionUpgrade.raceSeven,
-  TransmissionUpgrade.raceEight,
-  TransmissionUpgrade.raceNine,
-  TransmissionUpgrade.raceTen,
+  LimitedTransmissionUpgrade.sport,
+  LimitedTransmissionUpgrade.race,
 ];
 
 const gearCounts: Record<string, number> = {
-  [TransmissionUpgrade.race]: 6,
-  [TransmissionUpgrade.raceSix]: 6,
-  [TransmissionUpgrade.raceSeven]: 7,
-  [TransmissionUpgrade.raceEight]: 8,
-  [TransmissionUpgrade.raceNine]: 9,
-  [TransmissionUpgrade.raceTen]: 10,
+  [LimitedTransmissionUpgrade.race]: 10,
 };
 
 export interface UseUpgrades {
@@ -39,8 +29,8 @@ export interface UseUpgrades {
   };
 }
 
-function getGearCount(transmission: TransmissionUpgrade): number {
-  return gearCounts[transmission] || 10;
+function getGearCount(transmission: LimitedTransmissionUpgrade): number {
+  return 10;
 }
 
 export default function useFMEnabledControls(form: FMSetup) {

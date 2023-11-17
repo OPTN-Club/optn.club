@@ -38,7 +38,7 @@ export const multipliersFromMetric: Record<string, number> = {
   [PressureUnit.bar]: 14.503773773,
   [ForceUnit.kgf]: 2.20462262185,
   [WeightUnit.kg]: 2.20462262185,
-  [SpringRateUnit.kgfmm]: 0.0867961665,
+  [SpringRateUnit.kgfmm]: 8.6796166500,
   [LengthUnit.cm]: 0.3937007874157,
   [SpeedUnit.kph]: 0.62137119223733,
   [PowerUnit.kw]: 1.341022089595,

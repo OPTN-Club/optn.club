@@ -12,12 +12,12 @@ import {
   FrontAndRearWithUnits,
   GearTuneSettings,
   LengthUnit,
+  LimitedTransmissionUpgrade,
   LimitedUpgrade,
   PressureUnit,
   SpeedUnit,
   SpringRateUnit,
   TrackWidthType,
-  TransmissionUpgrade,
   Upgrade,
   WeightUnit,
 } from '../../../lib/types';
@@ -102,7 +102,7 @@ export interface TireUpgrades {
 
 export interface DrivetrainUpgrades {
   clutch: Upgrade;
-  transmission: TransmissionUpgrade;
+  transmission: LimitedTransmissionUpgrade;
   differential: FMFullUpgrade;
   driveline: Upgrade;
 }
@@ -267,7 +267,7 @@ function getFMDefaultFormV2(): FMSetup {
       },
       drivetrain: {
         clutch: Upgrade.stock,
-        transmission: TransmissionUpgrade.stock,
+        transmission: LimitedTransmissionUpgrade.stock,
         differential: FMFullUpgrade.stock,
         driveline: Upgrade.stock,
       },
