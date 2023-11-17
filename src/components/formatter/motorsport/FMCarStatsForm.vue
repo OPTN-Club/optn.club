@@ -130,9 +130,6 @@ const balanceRear = computed(() => (form.stats.balance ? (100 - balance.value).t
           >
             <template #suffix>%</template>
           </NumberInput>
-          <div class="text-control">
-            &sol; {{ balanceRear }} %
-          </div>
         </div>
         <div class="set-upgrades">
           <NumberInput
