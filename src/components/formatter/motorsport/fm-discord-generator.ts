@@ -556,10 +556,10 @@ function formatStatistics(form: FMSetup, globalUnit: 'Metric' | 'Imperial') {
   const units = getUnitsForGlobalUnit(globalUnit);
 
   if (form.stats.carPoints) stats.push(['CP', `${form.stats.carPoints}`, '']);
-  if (form.stats.weight) stats.push(['Weight', ...formatUnitWithSeparator(form.stats.weight, units.weight, 0, true)]);
-  if (form.stats.balance) stats.push(['Balance', `${form.stats.balance}%`]);
   if (form.stats.hp) stats.push(['Power', ...formatUnitWithSeparator(form.stats.hp, units.power, 0, true)]);
   if (form.stats.torque) stats.push(['Torque', ...formatUnitWithSeparator(form.stats.torque, units.torque, 0, true)]);
+  if (form.stats.weight) stats.push(['Weight', ...formatUnitWithSeparator(form.stats.weight, units.weight, 0, true)]);
+  if (form.stats.balance) stats.push(['Balance', `${form.stats.balance}%`]);
   if (form.stats.topSpeed) stats.push(['Top Speed', ...formatUnitWithSeparator(form.stats.topSpeed, units.speed, 0, true)]);
   if (form.stats.zeroToSixty) stats.push(['0-60', `${form.stats.zeroToSixty}s`]);
   if (form.stats.zeroToHundred) stats.push(['0-100', `${form.stats.zeroToHundred}s`]);
