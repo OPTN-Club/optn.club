@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { v1 as uuid } from 'uuid';
-import {
-  computed,
-  reactive,
-  watch,
-} from 'vue';
+import { reactive, watch } from 'vue';
 
 import { FrontAndRearSettings } from '../lib/types';
 
@@ -41,11 +37,11 @@ watch(state, () => {
   emit('update:modelValue', state.form);
 }, { deep: true });
 
-watch([() => props.modelValue.front, () => props.modelValue.rear], () => {
-  if (props.modelValue.front !== state.form.front || props.modelValue.rear !== state.form.rear) {
+watch(() => props.modelValue, () => {
+  if (JSON.stringify(props.modelValue) !== JSON.stringify(state.form)) {
     state.form = { ...props.modelValue };
   }
-});
+}, { deep: true });
 </script>
 
 <template>
