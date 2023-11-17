@@ -1,12 +1,8 @@
 import {
   computed,
   ComputedRef,
-  inject,
-  provide,
   reactive,
-  ref,
   Ref,
-  unref,
   watch,
 } from 'vue';
 import { useRouter } from 'vue-router';
@@ -18,16 +14,11 @@ import { UseGlobalUnits, useGlobalUnitsProvider } from '../../lib/useGlobalUnits
 interface UseFormattingForm<T> {
   form: T;
   globalUnits: Ref<UseGlobalUnits>;
-  // driveType: ComputedRef<DriveType>;
-  // convertOnUnitChange: Ref<boolean>;
-  // markdown: ComputedRef<string>;
   encoded: ComputedRef<string>;
   reset(): void;
 }
 
-const providerKey = 'fh-formatting-form';
-
-export function useSetupFormProvider<T extends object>(props: FormattingFormProps, blankFormFactory: () => T) {
+export default function useSetupForm<T extends object>(props: FormattingFormProps, blankFormFactory: () => T) {
   const router = useRouter();
 
   const encoder = useFormEncoder<T>(blankFormFactory);
@@ -65,13 +56,5 @@ export function useSetupFormProvider<T extends object>(props: FormattingFormProp
     reset,
   };
 
-  provide(providerKey, state);
-
-  return state;
-}
-
-export function useSetupForm<T>() {
-  const state = inject<UseFormattingForm<T>>(providerKey);
-  if (!state) throw new Error('Injected state not available');
   return state;
 }

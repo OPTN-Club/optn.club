@@ -7,7 +7,7 @@ import {
 
 import { DriveType, FormattingFormProps } from '../../../lib/types';
 import { UseUpgrades } from '../../../lib/useUpgrades';
-import { useSetupFormProvider } from '../useSetupForm';
+import useSetupForm from '../useSetupForm';
 
 import { FMSetup, getLatestDefaultForm } from './FMSetup';
 import useFMEnabledControls from './useFMEnabledControls';
@@ -29,7 +29,7 @@ export function useFMSetupFormProvider(props: FormattingFormProps) {
     encoded,
     globalUnits,
     reset,
-  } = useSetupFormProvider(props, getLatestDefaultForm);
+  } = useSetupForm(props, getLatestDefaultForm);
 
   const driveType = computed(() => form.upgrades.conversions.drivetrain);
 

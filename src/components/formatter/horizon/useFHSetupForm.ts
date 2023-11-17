@@ -6,7 +6,7 @@ import {
 } from 'vue';
 
 import { DriveType, FormattingFormProps } from '../../../lib/types';
-import { useSetupFormProvider } from '../useSetupForm';
+import useSetupForm from '../useSetupForm';
 
 import { getDrivetrain } from './fh-reddit-generator';
 import { FHSetup, getLatestDefaultForm } from './FHSetup';
@@ -28,7 +28,7 @@ export function useFHSetupFormProvider(props: FormattingFormProps) {
     encoded,
     globalUnits,
     reset,
-  } = useSetupFormProvider(props, getLatestDefaultForm);
+  } = useSetupForm(props, getLatestDefaultForm);
 
   const driveType = computed(() => getDrivetrain(form.build));
 

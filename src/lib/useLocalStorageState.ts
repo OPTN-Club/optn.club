@@ -10,6 +10,8 @@ export default function useLocalStorageState<T>(key: string, defaultState: T) {
 
   const state = ref<T>(initial);
 
+  if (!stored) localStorage.setItem(key, JSON.stringify(state.value));
+
   watch(state, (newVal) => {
     localStorage.setItem(key, JSON.stringify(newVal));
   }, { deep: true });

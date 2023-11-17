@@ -7,6 +7,7 @@ import {
 import { convertTo, switchUnit } from '../../../lib/conversions';
 import {
   ForceUnit,
+  GlobalUnit,
   PowerUnit,
   SpeedUnit,
   WeightUnit,
@@ -17,14 +18,8 @@ import useLocalStorageState from '../../../lib/useLocalStorageState';
 import { FMSetup } from './FMSetup';
 
 export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnits>) {
-  watch(() => globalUnits.value.globalUnit, (current) => {
-    form.tune.tires.units = switchUnit(form.tune.tires.units);
-    form.tune.springs.units = switchUnit(form.tune.springs.units);
-    form.tune.rideHeight.units = switchUnit(form.tune.rideHeight.units);
-    form.tune.aero.units = switchUnit(form.tune.aero.units);
-    form.tune.rollCenterHeightOffset.units = switchUnit(form.tune.rollCenterHeightOffset.units);
-
-    if (current === 'Metric') {
+  function setStatsUnits(globalUnit: GlobalUnit) {
+    if (globalUnit === 'Metric') {
       form.stats.hp = convertTo(form.stats.hp, PowerUnit.kw, 0);
       form.stats.torque = convertTo(form.stats.torque, ForceUnit.kgf, 0);
       form.stats.weight = convertTo(form.stats.weight, WeightUnit.kg, 0);
@@ -35,7 +30,9 @@ export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnit
       form.stats.weight = convertTo(form.stats.weight, WeightUnit.lbs, 0);
       form.stats.topSpeed = convertTo(form.stats.topSpeed, SpeedUnit.mph, 0);
     }
-  });
+  }
+
+  setStatsUnits(globalUnits.value.globalUnit);
 
   const units = computed(() => ({
     tires: form.tune.tires.units,
@@ -45,8 +42,17 @@ export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnit
     rollCenterHeightOffset: form.tune.rollCenterHeightOffset.units,
   }));
 
-  const stored = useLocalStorageState('FM_UNITS', units.value);
+  watch(() => globalUnits.value.globalUnit, (current) => {
+    form.tune.tires.units = switchUnit(form.tune.tires.units);
+    form.tune.springs.units = switchUnit(form.tune.springs.units);
+    form.tune.rideHeight.units = switchUnit(form.tune.rideHeight.units);
+    form.tune.aero.units = switchUnit(form.tune.aero.units);
+    form.tune.rollCenterHeightOffset.units = switchUnit(form.tune.rollCenterHeightOffset.units);
 
+    setStatsUnits(current);
+  });
+
+  const stored = useLocalStorageState('FM_UNITS', units.value);
   form.tune.tires.units = stored.value.tires;
   form.tune.springs.units = stored.value.springs;
   form.tune.rideHeight.units = stored.value.rideHeight;
