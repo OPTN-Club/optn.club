@@ -56,7 +56,7 @@ function onResetClick() {
   state.reset();
 }
 
-function onCopyClick() {
+function onCopyClick(e: MouseEvent) {
   try {
     navigator.clipboard.writeText(formattedText.value);
     const originalText = copyButtonText.value;
@@ -68,6 +68,15 @@ function onCopyClick() {
     showError('Clipboard Error - Copy Manually');
     textareaRef.value?.select();
     textareaRef.value?.focus();
+  }
+}
+
+function onCopyAsJsonClick() {
+  try {
+    const jsonText = JSON.stringify(state.form, null, 2);
+    navigator.clipboard.writeText(jsonText);
+  } catch (error) {
+    showError('Clipboard Error - Copy Manually');
   }
 }
 
@@ -170,6 +179,13 @@ function onFormatSelect(e: Event) {
       @click="onResetClick"
     >
       Reset Form
+    </button>
+    <button
+      type="button"
+      class="w-full outlined small mt-4"
+      @click="onCopyAsJsonClick"
+    >
+      Copy as JSON
     </button>
   </div>
 </template>
