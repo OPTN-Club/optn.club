@@ -4,9 +4,9 @@ import {
   DriveType,
   FMFullUpgrade,
   FMTireCompound,
+  LimitedTransmissionUpgrade,
   RimStyleType,
   TrackWidthType,
-  TransmissionUpgrade,
 } from '../../../lib/types';
 import { enumToOptions } from '../../../lib/utils';
 import EnumSelect from '../../EnumSelect.vue';
@@ -258,7 +258,7 @@ Conversion
           <EnumSelect
             v-model="form.upgrades.drivetrain.transmission"
             label="Transmission"
-            :type="TransmissionUpgrade"
+            :type="LimitedTransmissionUpgrade"
             rootClass="!min-w-[205px]"
           />
           <EnumSelect

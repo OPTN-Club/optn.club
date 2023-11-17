@@ -147,6 +147,13 @@ export enum TransmissionUpgrade {
   drift = 'Drift Four Speed',
 }
 
+export enum LimitedTransmissionUpgrade {
+  stock = 'Stock',
+  sport = 'Sport',
+  street = 'Street',
+  race = 'Race',
+}
+
 export enum FMTireCompound {
   stock = 'Stock',
   street = 'Street',
