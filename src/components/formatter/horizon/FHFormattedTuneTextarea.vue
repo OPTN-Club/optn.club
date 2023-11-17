@@ -18,7 +18,7 @@ const route = useRoute();
 const globalUnits = useGlobalUnits();
 
 const selectedFormat = ref<'reddit' | 'discord'>('reddit');
-const copyButtonText = ref('Copy text');
+const copyButtonText = ref('Copy To Clipboard');
 const copyUrlButtonText = ref('Copy URL');
 const errorText = ref('');
 
@@ -86,6 +86,11 @@ async function onShareURLClick() {
   }
 }
 
+function onFormatSelect(e: Event) {
+  selectedFormat.value = (e.target as HTMLInputElement).value as 'reddit' | 'discord';
+  localStorage.setItem('SELECTED_FORMATTER', selectedFormat.value);
+}
+
 </script>
 <template>
   <div class="actions">
@@ -96,6 +101,43 @@ async function onShareURLClick() {
     >
       {{ copyUrlButtonText }}
     </button>
+
+    <div class="flex justify-around mb-2">
+      <label class="radio cursor-pointer">
+        <input
+          :checked="selectedFormat === 'reddit'"
+          class="cursor-pointer"
+          type="radio"
+          name="generateFor"
+          value="reddit"
+          @input="onFormatSelect"
+        >
+        Reddit
+      </label>
+      <label class="radio cursor-pointer">
+        <input
+          :checked="selectedFormat === 'discord'"
+          class="cursor-pointer"
+          type="radio"
+          name="generateFor"
+          value="discord"
+          @input="onFormatSelect"
+        >
+        Discord
+      </label>
+    </div>
+
+    <p class="text-sm px-1 text-center mb-4">
+      <span class="text-yellow font-bold">NOTE:</span>
+      <template v-if="selectedFormat === 'reddit'">
+        Be sure the editor is in &quot;Markdown&quot; mode<br>
+        when creating your post on Reddit!
+      </template>
+      <template v-else>
+        Please also copy the URL and include it with your post!
+      </template>
+    </p>
+
     <button
       type="button"
       class="w-full secondary"
@@ -111,11 +153,6 @@ async function onShareURLClick() {
       rows="10"
       cols="25"
     />
-    <p class="text-sm text-light-mist px-1 text-center mb-10">
-      <strong class="text-yellow">NOTE:</strong>
-      Be sure the editor is in &quot;Markdown&quot; mode<br>
-      when creating your post on Reddit!
-    </p>
     <button
       type="button"
       class="w-full outlined"
