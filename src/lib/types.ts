@@ -40,13 +40,13 @@ export enum SpeedUnit {
 }
 
 export enum PowerUnit {
-  hp = 'HP',
   kw = 'kW',
+  hp = 'HP',
 }
 
 export enum TorqueUnit {
-  lbfft = 'lbf·ft',
   nm = 'N·m',
+  lbfft = 'lbf·ft',
 }
 
 export type UnitOfMeasureValues<U extends UnitOfMeasure, T extends string | number> = {
