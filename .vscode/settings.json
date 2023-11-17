@@ -16,19 +16,19 @@
     ]
   },
   "workbench.colorCustomizations": {
-    "sash.hoverBorder": "#1f6fd0",
-    "statusBar.background": "#1857a4",
-    "statusBar.border": "#1857a4",
+    "sash.hoverBorder": "#00afd6",
+    "statusBar.background": "#0085a3",
+    "statusBar.border": "#0085a3",
     "statusBar.foreground": "#e7e7e7",
-    "statusBarItem.hoverBackground": "#1f6fd0",
-    "statusBarItem.remoteBackground": "#1857a4",
+    "statusBarItem.hoverBackground": "#00afd6",
+    "statusBarItem.remoteBackground": "#0085a3",
     "statusBarItem.remoteForeground": "#e7e7e7",
-    "titleBar.activeBackground": "#1857a4",
+    "titleBar.activeBackground": "#0085a3",
     "titleBar.activeForeground": "#e7e7e7",
-    "titleBar.border": "#1857a4",
-    "titleBar.inactiveBackground": "#1857a499",
+    "titleBar.border": "#0085a3",
+    "titleBar.inactiveBackground": "#0085a399",
     "titleBar.inactiveForeground": "#e7e7e799",
     "commandCenter.border": "#e7e7e799"
   },
-  "peacock.color": "#1857a4"
+  "peacock.color": "rgb(0, 133, 163)"
 }
