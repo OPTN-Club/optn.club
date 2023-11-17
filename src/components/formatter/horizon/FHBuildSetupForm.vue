@@ -116,6 +116,10 @@ const trackWidthOptions = enumToOptions(TrackWidthType);
             v-model="form.build.engine.flywheel"
             label="Flywheel"
           />
+          <UpgradeSelect
+            v-model="form.build.engine.motorAndBattery"
+            label="Motor and Battery"
+          />
           <RestrictorUpgradeSelect
             v-model="form.build.engine.restrictorPlate"
             label="Restrictor Plate"

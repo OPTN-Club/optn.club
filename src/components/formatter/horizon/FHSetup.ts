@@ -72,6 +72,7 @@ export interface EngineUpgrades extends BuildSectionUpgrades {
   intercooler: LimitedUpgrade; // sport and race only
   oilCooling: Upgrade;
   flywheel: Upgrade;
+  motorAndBattery: Upgrade;
   restrictorPlate: RestrictorUpgrade;
 }
 
@@ -276,6 +277,7 @@ export default function getFHDefaultFormV1(): FHSetup {
         intercooler: LimitedUpgrade.stock,
         oilCooling: Upgrade.stock,
         flywheel: Upgrade.stock,
+        motorAndBattery: Upgrade.na,
         restrictorPlate: RestrictorUpgrade.na,
       },
       platformAndHandling: {
