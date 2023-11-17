@@ -8,8 +8,11 @@ import { convertTo, switchUnit } from '../../../lib/conversions';
 import {
   ForceUnit,
   GlobalUnit,
+  LengthUnit,
   PowerUnit,
+  PressureUnit,
   SpeedUnit,
+  SpringRateUnit,
   WeightUnit,
 } from '../../../lib/types';
 import { UseGlobalUnits } from '../../../lib/useGlobalUnits';
@@ -43,11 +46,19 @@ export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnit
   }));
 
   watch(() => globalUnits.value.globalUnit, (current) => {
-    form.tune.tires.units = switchUnit(form.tune.tires.units);
-    form.tune.springs.units = switchUnit(form.tune.springs.units);
-    form.tune.rideHeight.units = switchUnit(form.tune.rideHeight.units);
-    form.tune.aero.units = switchUnit(form.tune.aero.units);
-    form.tune.rollCenterHeightOffset.units = switchUnit(form.tune.rollCenterHeightOffset.units);
+    if (current === 'Metric') {
+      form.tune.tires.units = PressureUnit.bar;
+      form.tune.springs.units = SpringRateUnit.kgfmm;
+      form.tune.rideHeight.units = LengthUnit.cm;
+      form.tune.aero.units = ForceUnit.kgf;
+      form.tune.rollCenterHeightOffset.units = LengthUnit.cm;
+    } else {
+      form.tune.tires.units = PressureUnit.psi;
+      form.tune.springs.units = SpringRateUnit.lbfin;
+      form.tune.rideHeight.units = LengthUnit.in;
+      form.tune.aero.units = ForceUnit.lbf;
+      form.tune.rollCenterHeightOffset.units = LengthUnit.in;
+    }
 
     setStatsUnits(current);
   });
