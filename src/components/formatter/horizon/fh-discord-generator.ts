@@ -401,7 +401,7 @@ export function formatTune(form: FHSetup, model: string): string[] {
     ...formatDamping(form.tune),
     ...formatAero(form.tune),
     ...formatBrakes(form.tune),
-    ...formatDifferential(form.tune.diff, form.build.conversions.drivetrain)
+    ...formatDifferential(form.tune.diff, form.build.conversions.drivetrain),
   ];
 
   return text;
@@ -425,11 +425,17 @@ function formatWheelUpgrades(upgrades: BuildSettings): string[] {
     style: upgrades.tiresAndRims.rimStyle.type,
     name: upgrades.tiresAndRims.rimStyle.name,
     size: '',
+    trackWidth: '',
   };
 
   if (showFrontRearValues(upgrades.tiresAndRims.rimSize)) {
     const { front, rear } = upgrades.tiresAndRims.rimSize;
     wheels.size = `F ${front ? `${front}"` : 'Stock'} / R ${rear ? `${rear}"` : 'Stock'}`;
+  }
+
+  if (showFrontRearValues(upgrades.tiresAndRims.trackWidth)) {
+    const { front, rear } = upgrades.tiresAndRims.trackWidth;
+    wheels.trackWidth = `F ${front || 'Stock'} / R ${rear || 'Stock'}`;
   }
 
   return formatUpgradesSection('Wheels', wheels);
@@ -578,7 +584,7 @@ export default function fmDiscordGenerator(form: FHSetup, globalUnit: GlobalUnit
 
   lines.push(
     'Formatted using:',
-    'https://optn.club/formatter/forza/motorsport/v2',
+    'https://optn.club/formatter/forza/horizon5/v1',
   );
 
   // `[View this tune on optn.club](${linkUrl})`,
