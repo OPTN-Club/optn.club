@@ -340,10 +340,10 @@ function formatStatisticsTable(form: FHSetup, globalUnits: 'Metric' | 'Imperial'
   const units = statUnits[globalUnits];
   const stats: string[][] = [];
 
-  if (form.stats.weight) stats.push(['Weight', `${form.stats.weight} ${units.weight}`]);
-  if (form.stats.balance) stats.push(['Balance', `${form.stats.balance}%`]);
   if (form.stats.hp) stats.push(['Power', `${form.stats.hp} ${units.power}`]);
   if (form.stats.torque) stats.push(['Torque', `${form.stats.torque} ${units.torque}`]);
+  if (form.stats.weight) stats.push(['Weight', `${form.stats.weight} ${units.weight}`]);
+  if (form.stats.balance) stats.push(['Balance', `${form.stats.balance}%`]);
   if (form.stats.topSpeed) stats.push(['Top Speed', `${form.stats.topSpeed} ${units.speed}`]);
   if (form.stats.zeroToSixty) stats.push(['0-60', `${form.stats.zeroToSixty}s`]);
   if (form.stats.zeroToHundred) stats.push(['0-100', `${form.stats.zeroToHundred}s`]);

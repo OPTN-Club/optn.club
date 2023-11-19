@@ -1,6 +1,4 @@
 import { capitalCase } from 'change-case';
-import { computed, Ref } from 'vue';
-import { useRoute } from 'vue-router';
 
 import { getUnitsForGlobalUnit } from '../../../lib/conversions';
 import {
@@ -10,13 +8,13 @@ import {
   FrontAndRearSettings,
   FrontAndRearWithUnits,
   GlobalUnit,
+  PowerUnit,
   UnitOfMeasure,
 } from '../../../lib/types';
-import { formatUnit, formatUnitHeaders } from '../../../lib/unitsOfMeasure';
+import { formatUnit } from '../../../lib/unitsOfMeasure';
 import { formatFloat, addSuffix as suffixize } from '../../../lib/utils';
 
 import {
-  BuildSectionUpgrades,
   BuildSettings,
   FHSetup,
   TuneSettings,
@@ -494,9 +492,9 @@ function formatUnitWithSeparator(value: string | number, unit: UnitOfMeasure, pr
 function formatStatistics(form: FHSetup, globalUnit: 'Metric' | 'Imperial') {
   const stats: string[][] = [];
 
-  const units = getUnitsForGlobalUnit(globalUnit);
+  const units = getUnitsForGlobalUnit(globalUnit, true);
 
-  if (form.stats.hp) stats.push(['Power', ...formatUnitWithSeparator(form.stats.hp, units.power, 0, true)]);
+  if (form.stats.hp) stats.push(['Power', `${form.stats.hp} ${units.power}`]);
   if (form.stats.torque) stats.push(['Torque', ...formatUnitWithSeparator(form.stats.torque, units.torque, 0, true)]);
   if (form.stats.weight) stats.push(['Weight', ...formatUnitWithSeparator(form.stats.weight, units.weight, 0, true)]);
   if (form.stats.balance) stats.push(['Balance', `${form.stats.balance}%`]);

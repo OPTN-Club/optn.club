@@ -91,7 +91,7 @@ export function switchUnit<U extends UnitOfMeasure>(unit: U): U {
   return switchUnitMap[unit] as U;
 }
 
-export function getUnitsForGlobalUnit(globalUnit: GlobalUnit) {
+export function getUnitsForGlobalUnit(globalUnit: GlobalUnit, useImperialHpForMetric: boolean = false) {
   if (globalUnit === 'Imperial') {
     return {
       power: PowerUnit.hp,
@@ -101,7 +101,7 @@ export function getUnitsForGlobalUnit(globalUnit: GlobalUnit) {
     };
   }
   return {
-    power: PowerUnit.kw,
+    power: useImperialHpForMetric ? PowerUnit.hp : PowerUnit.kw,
     torque: TorqueUnit.nm,
     weight: WeightUnit.kg,
     speed: SpeedUnit.kph,
