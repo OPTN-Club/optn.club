@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue';
 
+import {
+  PowerUnit,
+  SpeedUnit,
+  TorqueUnit,
+  WeightUnit,
+} from '../../../lib/types';
 import { useGlobalUnits } from '../../../lib/useGlobalUnits';
 import EnumSelect from '../../EnumSelect.vue';
 import MakeModelSelect from '../../MakeModelSelect.vue';
@@ -15,18 +21,18 @@ const globalUnits = useGlobalUnits();
 const units = computed(() => {
   if (globalUnits.value.globalUnit === 'Imperial') {
     return {
-      power: 'hp',
-      torque: 'ft-lbs',
-      weight: 'lbs',
-      speed: 'mph',
+      power: PowerUnit.hp,
+      torque: TorqueUnit.lbfft,
+      weight: WeightUnit.lbs,
+      speed: SpeedUnit.mph,
     };
   }
 
   return {
-    power: 'hp', // Imperial horsepower; we'll use it for metric anyway because that's what most players do
-    torque: 'Nm',
-    weight: 'kg',
-    speed: 'kph',
+    power: PowerUnit.hp, // Imperial horsepower; we'll use it for metric anyway because that's what most players do
+    torque: TorqueUnit.nm,
+    weight: WeightUnit.kg,
+    speed: SpeedUnit.kph,
   };
 });
 
@@ -61,6 +67,8 @@ watch(() => form.stats.classification, (current) => {
             label="PI"
             rootClass="upgrade-select"
           />
+        </div>
+        <div class="set-upgrades">
           <NumberInput
             v-model="form.stats.hp"
             label="Power"
