@@ -421,15 +421,15 @@ function formatTireUpgrades(upgrades: BuildSettings): string[] {
 }
 
 function formatWheelUpgrades(upgrades: BuildSettings): string[] {
-  const style = [
-    upgrades.tiresAndRims.rimStyle.type,
-    upgrades.tiresAndRims.rimStyle.name,
-  ].filter((n) => n).join(' ');
-
-  const wheels = { style, size: '' };
+  const wheels = {
+    style: upgrades.tiresAndRims.rimStyle.type,
+    name: upgrades.tiresAndRims.rimStyle.name,
+    size: '',
+  };
 
   if (showFrontRearValues(upgrades.tiresAndRims.rimSize)) {
-    wheels.size = `F ${upgrades.tiresAndRims.rimSize.front || 'Stock'} / R ${upgrades.tiresAndRims.rimSize.rear || 'Stock'}`;
+    const { front, rear } = upgrades.tiresAndRims.rimSize;
+    wheels.size = `F ${front ? `${front}"` : 'Stock'} / R ${rear ? `${rear}"` : 'Stock'}`;
   }
 
   return formatUpgradesSection('Wheels', wheels);
