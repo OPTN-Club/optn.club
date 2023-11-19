@@ -9,6 +9,7 @@ import {
   FrontAndRearWithUnits,
   GlobalUnit,
   PowerUnit,
+  TrackWidthType,
   UnitOfMeasure,
 } from '../../../lib/types';
 import { formatUnit } from '../../../lib/unitsOfMeasure';
@@ -433,9 +434,9 @@ function formatWheelUpgrades(upgrades: BuildSettings): string[] {
     wheels.size = `F ${front ? `${front}"` : 'Stock'} / R ${rear ? `${rear}"` : 'Stock'}`;
   }
 
-  if (showFrontRearValues(upgrades.tiresAndRims.trackWidth)) {
-    const { front, rear } = upgrades.tiresAndRims.trackWidth;
-    wheels.trackWidth = `F ${front || 'Stock'} / R ${rear || 'Stock'}`;
+  const { front: twFront, rear: twRear } = upgrades.tiresAndRims.trackWidth;
+  if (twFront !== TrackWidthType.stock || twRear !== TrackWidthType.stock) {
+    wheels.trackWidth = `F ${twFront || 'Stock'} / R ${twRear || 'Stock'}`;
   }
 
   return formatUpgradesSection('Wheels', wheels);
