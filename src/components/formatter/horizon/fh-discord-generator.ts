@@ -539,7 +539,7 @@ function formatShareCodes(form: FHSetup) {
 
 function formatHeader(form: FHSetup) {
   const text: string[] = [];
-  text.push([form.make || 'Make', form.model || 'Model'].join(' '));
+  text.push([form.make, form.model].filter((val) => val).join(' '));
   text.push(`${form.stats.classification} ${form.stats.pi}`);
   const header = `**${text.join(' - ')}**\n`;
 
