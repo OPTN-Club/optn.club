@@ -507,6 +507,23 @@ function formatStatistics(form: FHSetup, globalUnit: 'Metric' | 'Imperial') {
   return formatTable('', stats);
 }
 
+function formatShareCodes(form: FHSetup) {
+  const codes: string[][] = [];
+
+  if (form.stats.shareCode) {
+    const chunks = form.stats.shareCode.split(',');
+    const tune = chunks[0] || '';
+    const livery = chunks[1] || '';
+
+    if (tune) codes.push(['Tune', tune]);
+    if (livery) codes.push(['Livery', livery]);
+  }
+
+  if (codes.length === 0) return [];
+
+  return formatTable('', codes);
+}
+
 function formatHeader(form: FHSetup) {
   const text: string[] = [];
   text.push([form.make || 'Make', form.model || 'Model'].join(' '));
@@ -525,6 +542,16 @@ export default function fmDiscordGenerator(form: FHSetup, globalUnit: GlobalUnit
       bold('Stats'),
       '```',
       ...stats,
+      '```',
+    );
+  }
+
+  const codes = formatShareCodes(form);
+  if (codes.length) {
+    lines.push(
+      bold('Share Codes'),
+      '```',
+      ...codes,
       '```',
     );
   }
