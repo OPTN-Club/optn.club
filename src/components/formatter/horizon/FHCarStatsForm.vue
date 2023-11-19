@@ -15,12 +15,15 @@ const globalUnits = useGlobalUnits();
 const units = computed(() => {
   if (globalUnits.value.globalUnit === 'Imperial') {
     return {
+      power: 'hp',
       torque: 'ft-lbs',
       weight: 'lbs',
       speed: 'mph',
     };
   }
+
   return {
+    power: 'hp', // Imperial horsepower; we'll use it for metric anyway because that's what most players do
     torque: 'Nm',
     weight: 'kg',
     speed: 'kph',
@@ -60,9 +63,13 @@ watch(() => form.stats.classification, (current) => {
           />
           <NumberInput
             v-model="form.stats.hp"
-            label="HP"
+            label="Power"
             rootClass="upgrade-select"
-          />
+          >
+            <template #suffix>
+              {{ units.power }}
+            </template>
+          </NumberInput>
           <NumberInput
             v-model="form.stats.torque"
             label="Torque"
@@ -72,12 +79,6 @@ watch(() => form.stats.classification, (current) => {
               {{ units.torque }}
             </template>
           </NumberInput>
-          <!-- <UnitSelect
-            v-model="form.stats.weight."
-            type="weight"
-            class="rounded-l-none"
-            :disabled="form.tune.aero.na"
-          /> -->
         </div>
         <div class="set-upgrades">
           <NumberInput
