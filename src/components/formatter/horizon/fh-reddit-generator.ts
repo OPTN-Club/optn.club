@@ -321,7 +321,7 @@ interface StatUnits {
 const statUnits: Record<'Metric' | 'Imperial', StatUnits> = {
   Metric: {
     weight: 'kg',
-    torque: 'nm',
+    torque: 'Nm',
     speed: 'kph',
   },
   Imperial: {
