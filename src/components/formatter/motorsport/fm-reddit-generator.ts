@@ -389,7 +389,7 @@ function formatStatisticsTable(form: FMSetup, globalUnit: 'Metric' | 'Imperial')
 
 function formatHeader(form: FMSetup) {
   const text: string[] = [];
-  text.push([form.year || 'Year', form.make || 'Make', form.model || 'Model'].join(' '));
+  text.push([form.year, form.make, form.model].filter((val) => val).join(' '));
   text.push(`${form.stats.classification} ${form.stats.pi}`);
   const header = `# ${text.join(' - ')}\n`;
 

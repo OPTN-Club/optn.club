@@ -30,24 +30,24 @@ const units = {
     { label: PressureUnit.psi, value: PressureUnit.psi },
   ],
   springrate: [
-    { label: 'kgf/mm', value: SpringRateUnit.kgfmm },
-    { label: 'lbf/in', value: SpringRateUnit.lbfin },
+    { label: SpringRateUnit.kgfmm, value: SpringRateUnit.kgfmm },
+    { label: SpringRateUnit.lbfin, value: SpringRateUnit.lbfin },
   ],
   height: [
-    { label: 'cm', value: LengthUnit.cm },
-    { label: 'in', value: LengthUnit.in },
+    { label: LengthUnit.cm, value: LengthUnit.cm },
+    { label: LengthUnit.in, value: LengthUnit.in },
   ],
   force: [
-    { label: 'kgf', value: ForceUnit.kgf },
-    { label: 'lbf', value: ForceUnit.lbf },
+    { label: ForceUnit.kgf, value: ForceUnit.kgf },
+    { label: ForceUnit.lbf, value: ForceUnit.lbf },
   ],
   weight: [
-    { label: 'kg', value: WeightUnit.kg },
-    { label: 'lbs', value: WeightUnit.lbs },
+    { label: WeightUnit.kg, value: WeightUnit.kg },
+    { label: WeightUnit.lbs, value: WeightUnit.lbs },
   ],
   length: [
-    { label: 'cm', value: LengthUnit.cm },
-    { label: 'in', value: LengthUnit.in },
+    { label: LengthUnit.cm, value: LengthUnit.cm },
+    { label: LengthUnit.in, value: LengthUnit.in },
   ],
 };
 

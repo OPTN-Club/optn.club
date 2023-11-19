@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue';
 
+import {
+  PowerUnit,
+  SpeedUnit,
+  TorqueUnit,
+  WeightUnit,
+} from '../../../lib/types';
 import { useGlobalUnits } from '../../../lib/useGlobalUnits';
 import EnumSelect from '../../EnumSelect.vue';
 import MakeModelSelect from '../../MakeModelSelect.vue';
@@ -15,15 +21,18 @@ const globalUnits = useGlobalUnits();
 const units = computed(() => {
   if (globalUnits.value.globalUnit === 'Imperial') {
     return {
-      torque: 'ft-lbs',
-      weight: 'lbs',
-      speed: 'mph',
+      power: PowerUnit.hp,
+      torque: TorqueUnit.lbfft,
+      weight: WeightUnit.lbs,
+      speed: SpeedUnit.mph,
     };
   }
+
   return {
-    torque: 'Nm',
-    weight: 'kg',
-    speed: 'kph',
+    power: PowerUnit.hp, // Imperial horsepower; we'll use it for metric anyway because that's what most players do
+    torque: TorqueUnit.nm,
+    weight: WeightUnit.kg,
+    speed: SpeedUnit.kph,
   };
 });
 
@@ -58,11 +67,17 @@ watch(() => form.stats.classification, (current) => {
             label="PI"
             rootClass="upgrade-select"
           />
+        </div>
+        <div class="set-upgrades">
           <NumberInput
             v-model="form.stats.hp"
-            label="HP"
+            label="Power"
             rootClass="upgrade-select"
-          />
+          >
+            <template #suffix>
+              {{ units.power }}
+            </template>
+          </NumberInput>
           <NumberInput
             v-model="form.stats.torque"
             label="Torque"
@@ -72,12 +87,6 @@ watch(() => form.stats.classification, (current) => {
               {{ units.torque }}
             </template>
           </NumberInput>
-          <!-- <UnitSelect
-            v-model="form.stats.weight."
-            type="weight"
-            class="rounded-l-none"
-            :disabled="form.tune.aero.na"
-          /> -->
         </div>
         <div class="set-upgrades">
           <NumberInput

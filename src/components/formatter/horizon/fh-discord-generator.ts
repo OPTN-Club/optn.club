@@ -1,6 +1,4 @@
 import { capitalCase } from 'change-case';
-import { computed, Ref } from 'vue';
-import { useRoute } from 'vue-router';
 
 import { getUnitsForGlobalUnit } from '../../../lib/conversions';
 import {
@@ -10,13 +8,14 @@ import {
   FrontAndRearSettings,
   FrontAndRearWithUnits,
   GlobalUnit,
+  PowerUnit,
+  TrackWidthType,
   UnitOfMeasure,
 } from '../../../lib/types';
-import { formatUnit, formatUnitHeaders } from '../../../lib/unitsOfMeasure';
+import { formatUnit } from '../../../lib/unitsOfMeasure';
 import { formatFloat, addSuffix as suffixize } from '../../../lib/utils';
 
 import {
-  BuildSectionUpgrades,
   BuildSettings,
   FHSetup,
   TuneSettings,
@@ -403,7 +402,7 @@ export function formatTune(form: FHSetup, model: string): string[] {
     ...formatDamping(form.tune),
     ...formatAero(form.tune),
     ...formatBrakes(form.tune),
-    ...formatDifferential(form.tune.diff, form.build.conversions.drivetrain)
+    ...formatDifferential(form.tune.diff, form.build.conversions.drivetrain),
   ];
 
   return text;
@@ -423,15 +422,27 @@ function formatTireUpgrades(upgrades: BuildSettings): string[] {
 }
 
 function formatWheelUpgrades(upgrades: BuildSettings): string[] {
-  const style = [
-    upgrades.tiresAndRims.rimStyle.type,
-    upgrades.tiresAndRims.rimStyle.name,
-  ].filter((n) => n).join(' ');
-
-  const wheels = { style, size: '' };
+  const wheels = {
+    style: upgrades.tiresAndRims.rimStyle.type,
+    name: upgrades.tiresAndRims.rimStyle.name,
+    size: '',
+    trackWidth: '',
+    profileSize: '',
+  };
 
   if (showFrontRearValues(upgrades.tiresAndRims.rimSize)) {
-    wheels.size = `F ${upgrades.tiresAndRims.rimSize.front || 'Stock'} / R ${upgrades.tiresAndRims.rimSize.rear || 'Stock'}`;
+    const { front, rear } = upgrades.tiresAndRims.rimSize;
+    wheels.size = `F ${front ? `${front}"` : 'Stock'} / R ${rear ? `${rear}"` : 'Stock'}`;
+  }
+
+  const { front: twFront, rear: twRear } = upgrades.tiresAndRims.trackWidth;
+  if (twFront !== TrackWidthType.stock || twRear !== TrackWidthType.stock) {
+    wheels.trackWidth = `F ${twFront || 'Stock'} / R ${twRear || 'Stock'}`;
+  }
+
+  const { front: psFront, rear: psRear } = upgrades.tiresAndRims.profileSize;
+  if (psFront !== TrackWidthType.stock || psRear !== TrackWidthType.stock) {
+    wheels.profileSize = `F ${psFront || 'Stock'} / R ${psRear || 'Stock'}`;
   }
 
   return formatUpgradesSection('Wheels', wheels);
@@ -494,9 +505,9 @@ function formatUnitWithSeparator(value: string | number, unit: UnitOfMeasure, pr
 function formatStatistics(form: FHSetup, globalUnit: 'Metric' | 'Imperial') {
   const stats: string[][] = [];
 
-  const units = getUnitsForGlobalUnit(globalUnit);
+  const units = getUnitsForGlobalUnit(globalUnit, true);
 
-  if (form.stats.hp) stats.push(['Power', ...formatUnitWithSeparator(form.stats.hp, units.power, 0, true)]);
+  if (form.stats.hp) stats.push(['Power', `${form.stats.hp} ${units.power}`]);
   if (form.stats.torque) stats.push(['Torque', ...formatUnitWithSeparator(form.stats.torque, units.torque, 0, true)]);
   if (form.stats.weight) stats.push(['Weight', ...formatUnitWithSeparator(form.stats.weight, units.weight, 0, true)]);
   if (form.stats.balance) stats.push(['Balance', `${form.stats.balance}%`]);
@@ -509,9 +520,26 @@ function formatStatistics(form: FHSetup, globalUnit: 'Metric' | 'Imperial') {
   return formatTable('', stats);
 }
 
+function formatShareCodes(form: FHSetup) {
+  const codes: string[][] = [];
+
+  if (form.stats.shareCode) {
+    const chunks = form.stats.shareCode.split(',');
+    const tune = chunks[0] || '';
+    const livery = chunks[1] || '';
+
+    if (tune) codes.push(['Tune', tune]);
+    if (livery) codes.push(['Livery', livery]);
+  }
+
+  if (codes.length === 0) return [];
+
+  return formatTable('', codes);
+}
+
 function formatHeader(form: FHSetup) {
   const text: string[] = [];
-  text.push([form.make || 'Make', form.model || 'Model'].join(' '));
+  text.push([form.make, form.model].filter((val) => val).join(' '));
   text.push(`${form.stats.classification} ${form.stats.pi}`);
   const header = `**${text.join(' - ')}**\n`;
 
@@ -527,6 +555,16 @@ export default function fmDiscordGenerator(form: FHSetup, globalUnit: GlobalUnit
       bold('Stats'),
       '```',
       ...stats,
+      '```',
+    );
+  }
+
+  const codes = formatShareCodes(form);
+  if (codes.length) {
+    lines.push(
+      bold('Share Codes'),
+      '```',
+      ...codes,
       '```',
     );
   }
@@ -553,7 +591,7 @@ export default function fmDiscordGenerator(form: FHSetup, globalUnit: GlobalUnit
 
   lines.push(
     'Formatted using:',
-    'https://optn.club/formatter/forza/motorsport/v2',
+    'https://optn.club/formatter/forza/horizon5/v1',
   );
 
   // `[View this tune on optn.club](${linkUrl})`,

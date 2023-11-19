@@ -1,18 +1,15 @@
 import { capitalCase } from 'change-case';
-import {
-  computed,
-  reactive,
-  Ref,
-  watch,
-} from 'vue';
 
 import { byFullname } from '../../../lib/models';
 import {
   DriveType,
-  FormattingFormProps,
   FrontAndRearSettings,
   FrontAndRearWithUnits,
   GlobalUnit,
+  PowerUnit,
+  SpeedUnit,
+  TorqueUnit,
+  WeightUnit,
 } from '../../../lib/types';
 import { formatUnit, formatUnitHeaders } from '../../../lib/unitsOfMeasure';
 import { formatFloat, addSuffix as suffixize } from '../../../lib/utils';
@@ -313,6 +310,7 @@ function formatBuildSection<T extends BuildSectionUpgrades>(section: T) {
 }
 
 interface StatUnits {
+  power: string;
   weight: string;
   torque: string;
   speed: string;
@@ -320,31 +318,32 @@ interface StatUnits {
 
 const statUnits: Record<'Metric' | 'Imperial', StatUnits> = {
   Metric: {
-    weight: 'kg',
-    torque: 'nm',
-    speed: 'kph',
+    power: PowerUnit.hp,
+    weight: WeightUnit.kg,
+    torque: TorqueUnit.nm,
+    speed: SpeedUnit.kph,
   },
   Imperial: {
-    weight: 'lbs',
-    torque: 'lb-ft',
-    speed: 'mph',
+    power: PowerUnit.hp,
+    weight: WeightUnit.lbs,
+    torque: TorqueUnit.lbfft,
+    speed: SpeedUnit.mph,
   },
 };
 
 function formatStatisticsTable(form: FHSetup, globalUnits: 'Metric' | 'Imperial') {
   const text: string[] = [];
-  const piClass = `${form.stats.classification} ${form.stats.pi}`.trim();
-  if (form.model) text.push(`${form.model}`);
+  if (form.make || form.model) text.push([form.make, form.model].filter((val) => val).join(' '));
   text.push(`${form.stats.classification} ${form.stats.pi}`);
   const header = `#${text.join(' - ')}\n`;
 
   const units = statUnits[globalUnits];
   const stats: string[][] = [];
 
+  if (form.stats.hp) stats.push(['Power', `${form.stats.hp} ${units.power}`]);
+  if (form.stats.torque) stats.push(['Torque', `${form.stats.torque} ${units.torque}`]);
   if (form.stats.weight) stats.push(['Weight', `${form.stats.weight} ${units.weight}`]);
   if (form.stats.balance) stats.push(['Balance', `${form.stats.balance}%`]);
-  if (form.stats.hp) stats.push(['HP', `${form.stats.hp}`]);
-  if (form.stats.torque) stats.push(['Torque', `${form.stats.torque} ${units.torque}`]);
   if (form.stats.topSpeed) stats.push(['Top Speed', `${form.stats.topSpeed} ${units.speed}`]);
   if (form.stats.zeroToSixty) stats.push(['0-60', `${form.stats.zeroToSixty}s`]);
   if (form.stats.zeroToHundred) stats.push(['0-100', `${form.stats.zeroToHundred}s`]);
