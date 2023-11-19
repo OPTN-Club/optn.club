@@ -333,7 +333,7 @@ const statUnits: Record<'Metric' | 'Imperial', StatUnits> = {
 
 function formatStatisticsTable(form: FHSetup, globalUnits: 'Metric' | 'Imperial') {
   const text: string[] = [];
-  if (form.model) text.push(`${form.model}`);
+  if (form.make || form.model) text.push([form.make, form.model].filter((val) => val).join(' '));
   text.push(`${form.stats.classification} ${form.stats.pi}`);
   const header = `#${text.join(' - ')}\n`;
 
