@@ -1,6 +1,4 @@
 import { capitalCase } from 'change-case';
-import { computed, Ref } from 'vue';
-import { useRoute } from 'vue-router';
 
 import { getUnitsForGlobalUnit } from '../../../lib/conversions';
 import {
@@ -12,7 +10,7 @@ import {
   GlobalUnit,
   UnitOfMeasure,
 } from '../../../lib/types';
-import { formatUnit, formatUnitHeaders } from '../../../lib/unitsOfMeasure';
+import { formatUnit } from '../../../lib/unitsOfMeasure';
 import { formatFloat, addSuffix as suffixize } from '../../../lib/utils';
 
 import {
@@ -571,7 +569,7 @@ function formatStatistics(form: FMSetup, globalUnit: 'Metric' | 'Imperial') {
 
 function formatHeader(form: FMSetup) {
   const text: string[] = [];
-  text.push([form.year || 'Year', form.make || 'Make', form.model || 'Model'].join(' '));
+  text.push([form.year, form.make, form.model].filter((val) => val).join(' '));
   text.push(`${form.stats.classification} ${form.stats.pi}`);
   const header = `**${text.join(' - ')}**\n`;
 
