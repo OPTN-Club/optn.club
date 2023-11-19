@@ -41,7 +41,7 @@ export enum SpeedUnit {
 
 export enum PowerUnit {
   kw = 'kW',
-  hp = 'HP',
+  hp = 'hp',
 }
 
 export enum TorqueUnit {
