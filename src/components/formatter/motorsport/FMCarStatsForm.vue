@@ -2,12 +2,6 @@
 import { computed, watch } from 'vue';
 
 import { getUnitsForGlobalUnit } from '../../../lib/conversions';
-import {
-  PowerUnit,
-  SpeedUnit,
-  TorqueUnit,
-  WeightUnit,
-} from '../../../lib/types';
 import { useGlobalUnits } from '../../../lib/useGlobalUnits';
 import EnumSelect from '../../EnumSelect.vue';
 import InputControl from '../../InputControl.vue';
@@ -90,12 +84,6 @@ const balanceRear = computed(() => (form.stats.balance ? (100 - balance.value).t
             label="Car Points"
             rootClass="upgrade-select"
           />
-          <!-- <UnitSelect
-            v-model="form.stats.weight."
-            type="weight"
-            class="rounded-l-none"
-            :disabled="form.tune.aero.na"
-          /> -->
         </div>
         <div class="set-upgrades">
           <NumberInput
