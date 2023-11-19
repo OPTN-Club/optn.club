@@ -427,6 +427,7 @@ function formatWheelUpgrades(upgrades: BuildSettings): string[] {
     name: upgrades.tiresAndRims.rimStyle.name,
     size: '',
     trackWidth: '',
+    profileSize: '',
   };
 
   if (showFrontRearValues(upgrades.tiresAndRims.rimSize)) {
@@ -437,6 +438,11 @@ function formatWheelUpgrades(upgrades: BuildSettings): string[] {
   const { front: twFront, rear: twRear } = upgrades.tiresAndRims.trackWidth;
   if (twFront !== TrackWidthType.stock || twRear !== TrackWidthType.stock) {
     wheels.trackWidth = `F ${twFront || 'Stock'} / R ${twRear || 'Stock'}`;
+  }
+
+  const { front: psFront, rear: psRear } = upgrades.tiresAndRims.profileSize;
+  if (psFront !== TrackWidthType.stock || psRear !== TrackWidthType.stock) {
+    wheels.profileSize = `F ${psFront || 'Stock'} / R ${psRear || 'Stock'}`;
   }
 
   return formatUpgradesSection('Wheels', wheels);
