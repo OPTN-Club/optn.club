@@ -33,6 +33,19 @@ function formatTableRow(row: string[], boldFirstCol = false) {
   return `|${r.join('|')}|`;
 }
 
+const falseyValues = [
+  null,
+  undefined,
+  '',
+  'N/A',
+  'Stock',
+  'None',
+];
+
+function showValue(value: string | undefined): boolean {
+  return !falseyValues.includes(value);
+}
+
 enum TextAlign {
   left = ':--',
   right = '--:',
@@ -219,26 +232,30 @@ function formatDifferential(diff: DifferentialTuneSettings, driveType: DriveType
     return formatTable(header, [['Not Applicable', '', '']]);
   }
 
-  const front = ['Front', 'N/A', 'N/A'];
-  const rear = ['Rear', 'N/A', 'N/A'];
-  const center = ['Center', '', ''];
   const body: string[][] = [];
 
-  if ([DriveType.fwd, DriveType.awd].includes(driveType)) {
-    body.push(front);
-    front[1] = formatFloat(diff.front.accel, 0, '%');
-    front[2] = formatFloat(diff.front.decel, 0, '%');
+  if (showValue(diff.front.accel) || showValue(diff.front.decel)) {
+    body.push([
+      'Front',
+      formatFloat(diff.front.accel, 0, '%'),
+      formatFloat(diff.front.decel, 0, '%'),
+    ]);
   }
 
-  if ([DriveType.rwd, DriveType.awd].includes(driveType)) {
-    body.push(rear);
-    rear[1] = formatFloat(diff.rear.accel, 0, '%');
-    rear[2] = formatFloat(diff.rear.decel, 0, '%');
+  if (showValue(diff.rear.accel) || showValue(diff.rear.decel)) {
+    body.push([
+      'Rear',
+      formatFloat(diff.rear.accel, 0, '%'),
+      formatFloat(diff.rear.decel, 0, '%'),
+    ]);
   }
 
-  if (driveType === DriveType.awd) {
-    body.push(center);
-    center[1] = formatFloat(diff.center, 0, '%');
+  if (showValue(diff.center)) {
+    body.push([
+      'Center',
+      formatFloat(diff.center, 0, '%'),
+      '',
+    ]);
   }
 
   return formatTable(header, body);
