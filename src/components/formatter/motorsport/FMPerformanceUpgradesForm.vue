@@ -6,9 +6,7 @@ import {
   FMTireCompound,
   LimitedTransmissionUpgrade,
   RimStyleType,
-  TrackWidthType,
 } from '../../../lib/types';
-import { enumToOptions } from '../../../lib/utils';
 import EnumSelect from '../../EnumSelect.vue';
 import FrontRearInputs from '../../FrontRearInputs.vue';
 import InputControl from '../../InputControl.vue';
@@ -91,6 +89,18 @@ Conversion
         <h3>Fuel and Air</h3>
         <div class="set-upgrades">
           <UpgradeSelect
+            v-model="form.upgrades.fuelAndAir.fuelSystem"
+            label="Fuel System"
+          />
+          <UpgradeSelect
+            v-model="form.upgrades.fuelAndAir.carburator"
+            label="Carburetor"
+          />
+          <UpgradeSelect
+            v-model="form.upgrades.fuelAndAir.ignition"
+            label="Ignition"
+          />
+          <UpgradeSelect
             v-model="form.upgrades.fuelAndAir.exhaust"
             label="Exhaust"
           />
@@ -102,21 +112,13 @@ Conversion
             v-model="form.upgrades.fuelAndAir.intakeManifold"
             label="Intake Manifold"
           />
-          <UpgradeSelect
-            v-model="form.upgrades.fuelAndAir.carburator"
-            label="Carburator"
-          />
           <InputControl
             v-model="form.upgrades.fuelAndAir.restrictorPlate"
             label="Restrictor Plate"
           />
-          <UpgradeSelect
-            v-model="form.upgrades.fuelAndAir.fuelSystem"
-            label="Fuel System"
-          />
-          <UpgradeSelect
-            v-model="form.upgrades.fuelAndAir.ignition"
-            label="Ignition"
+          <LimitedUpgradeSelect
+            v-model="form.upgrades.fuelAndAir.centrifugalSupercharger"
+            label="Centrifugal Supercharger"
           />
           <LimitedUpgradeSelect
             v-model="form.upgrades.fuelAndAir.singleTurbo"
@@ -131,10 +133,6 @@ Conversion
             label="Supercharger"
           />
           <LimitedUpgradeSelect
-            v-model="form.upgrades.fuelAndAir.centrifugalSupercharger"
-            label="Centrifugal Supercharger"
-          />
-          <LimitedUpgradeSelect
             v-model="form.upgrades.fuelAndAir.intercooler"
             label="Intercooler"
           />
@@ -143,14 +141,6 @@ Conversion
       <div class="content">
         <h3>Engine</h3>
         <div class="set-upgrades">
-          <UpgradeSelect
-            v-model="form.upgrades.engine.oilAndCooling"
-            label="Oil And Cooling"
-          />
-          <UpgradeSelect
-            v-model="form.upgrades.engine.flywheel"
-            label="Flywheel"
-          />
           <UpgradeSelect
             v-model="form.upgrades.engine.camshaft"
             label="Camshaft"
@@ -168,6 +158,14 @@ Conversion
             label="Pistons"
           />
           <UpgradeSelect
+            v-model="form.upgrades.engine.flywheel"
+            label="Flywheel"
+          />
+          <UpgradeSelect
+            v-model="form.upgrades.engine.oilAndCooling"
+            label="Oil And Cooling"
+          />
+          <UpgradeSelect
             v-model="form.upgrades.engine.motorAndBattery"
             label="Motor and Battery"
           />
@@ -180,14 +178,10 @@ Conversion
             v-model="form.upgrades.platformAndHandling.brakes"
             label="Brakes"
           />
-          <UpgradeSelect
-            v-model="form.upgrades.platformAndHandling.chassisReinforcement"
-            label="Chassis Reinforcement"
-          />
           <EnumSelect
-            v-model="form.upgrades.platformAndHandling.ballast"
-            label="Ballast"
-            :type="BallastType"
+            v-model="form.upgrades.platformAndHandling.springs"
+            label="Springs"
+            :type="FMFullUpgrade"
           />
           <UpgradeSelect
             v-model="form.upgrades.platformAndHandling.frontArb"
@@ -197,70 +191,70 @@ Conversion
             v-model="form.upgrades.platformAndHandling.rearArb"
             label="Rear ARB"
           />
-          <EnumSelect
-            v-model="form.upgrades.platformAndHandling.springs"
-            label="Springs"
-            :type="FMFullUpgrade"
-          />
           <UpgradeSelect
             v-model="form.upgrades.platformAndHandling.weightReduction"
             label="Weight Reduction"
+          />
+          <UpgradeSelect
+            v-model="form.upgrades.platformAndHandling.chassisReinforcement"
+            label="Chassis Reinforcement"
+          />
+          <EnumSelect
+            v-model="form.upgrades.platformAndHandling.ballast"
+            label="Ballast"
+            :type="BallastType"
           />
         </div>
       </div>
       <div class="content">
         <h3>Tires</h3>
         <div class="set-upgrades">
-          <FrontRearInputs
-            v-model="form.upgrades.tires.width"
-            label="Tire Width"
-          />
-        </div>
-        <div class="set-upgrades">
           <EnumSelect
             v-model="form.upgrades.tires.compound"
             label="Compound"
             :type="FMTireCompound"
+          />
+          <FrontRearInputs
+            v-model="form.upgrades.tires.width"
+            label="Tire Width"
           />
         </div>
       </div>
       <div class="content">
         <h3>Wheels</h3>
         <div class="set-upgrades">
+          <FrontRearInputs
+            v-model="form.upgrades.wheels.size"
+            label="Size"
+          />
           <InputControl
             v-model="form.upgrades.wheels.style"
             label="Style"
             :disabled="form.upgrades.wheels.style === RimStyleType.stock"
           />
         </div>
-        <div class="set-upgrades">
-          <FrontRearInputs
-            v-model="form.upgrades.wheels.size"
-            label="Size"
-          />
-        </div>
       </div>
       <div class="content">
         <h3>Drivetrain</h3>
         <div class="set-upgrades">
+          <UpgradeSelect
+            v-model="form.upgrades.drivetrain.clutch"
+            label="Clutch"
+          />
           <EnumSelect
             v-model="form.upgrades.drivetrain.transmission"
             label="Transmission"
             :type="LimitedTransmissionUpgrade"
             rootClass="!min-w-[205px]"
           />
+          <UpgradeSelect
+            v-model="form.upgrades.drivetrain.driveline"
+            label="Driveline"
+          />
           <EnumSelect
             v-model="form.upgrades.drivetrain.differential"
             label="Differential"
             :type="FMFullUpgrade"
-          />
-          <UpgradeSelect
-            v-model="form.upgrades.drivetrain.clutch"
-            label="Clutch"
-          />
-          <UpgradeSelect
-            v-model="form.upgrades.drivetrain.driveline"
-            label="Driveline"
           />
         </div>
       </div>
@@ -302,18 +296,6 @@ Conversion
         <h3>Conversions</h3>
         <div class="set-upgrades">
           <InputControl
-            v-model="form.upgrades.conversions.aspiration"
-            label="Aspiration"
-            class="grow"
-          />
-          <InputControl
-            v-model="form.upgrades.conversions.bodyKit"
-            label="Body Kit"
-            class="grow"
-          />
-        </div>
-        <div class="set-upgrades">
-          <InputControl
             v-model="form.upgrades.conversions.engine"
             label="Engine"
             class="grow"
@@ -322,8 +304,19 @@ Conversion
             v-model="form.upgrades.conversions.drivetrain"
             rootClass="grow"
             label="Drivetrain"
-            note="(If stock, change it to the corresponding drivetype)"
             :type="DriveType"
+            class="grow"
+          />
+        </div>
+        <div class="set-upgrades">
+          <InputControl
+            v-model="form.upgrades.conversions.bodyKit"
+            label="Body Kit"
+            class="grow"
+          />
+          <InputControl
+            v-model="form.upgrades.conversions.aspiration"
+            label="Aspiration"
             class="grow"
           />
         </div>
