@@ -331,7 +331,7 @@ function formatSuspensionGeometry(tune: TuneSettings): string[] {
     lines.push(...formatFrontRearWithUnit('Roll Center Offset', tune.rollCenterHeightOffset, 1));
   }
   if (showFrontRearValues(tune.antiGeometryPercent)) {
-    lines.push(...formatFrontRear('Anti-Geometry', tune.antiGeometryPercent, 0, '%'));
+    lines.push(...formatFrontRear('Anti-Geometry', tune.antiGeometryPercent, 1, '%'));
   }
 
   if (lines.length === 1) return [];
