@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import iconDiscord from '../assets/icon-discord.png';
 import iconReddit from '../assets/icon-reddit.png';
+import Urls from '../lib/urls';
 
-const xboxClubLink = 'https://account.xbox.com/en-ca/clubs/profile?clubid=3379875686571131&csrf=8pknUkepH9Fer0B8L4kkDml3eJUBA0QC3XhOOHgAMwO7ie104Lkr4HI_cYBdFPkKDxqj13LJD7-VzHGV-6mANkBsOGM1&wa=wsignin1.0';
 </script>
 <template>
   <div>
@@ -17,7 +17,7 @@ const xboxClubLink = 'https://account.xbox.com/en-ca/clubs/profile?clubid=337987
       This website hosts many tools to help toward this, but the most effective way to interact is through our
 
       <a
-        href="https://discord.gg/K2Kk5Kj6PP"
+        :href="Urls.DiscordInvite"
         target="_blank"
         rel="noopener noreferrer"
         class="inline-flex items-center align-middle"
@@ -42,7 +42,7 @@ const xboxClubLink = 'https://account.xbox.com/en-ca/clubs/profile?clubid=337987
     <p>
       Challenges are posted every Monday on
       <a
-        href="https://reddit.com/r/ForzaOpenTunes"
+        :href="Urls.Reddit"
         target="_blank"
         rel="noopener noreferrer"
         class="inline-flex items-center align-middle"
@@ -57,7 +57,9 @@ const xboxClubLink = 'https://account.xbox.com/en-ca/clubs/profile?clubid=337987
       which is also where tunes must be posted to be eligible to win.
       Join the discussion on
       <a
-        href="https://discord.gg/UQQd9XdZnN"
+        :href="Urls.DiscordInvite"
+        target="_blank"
+        rel="noopener noreferrer"
         class="inline-flex items-center align-middle"
       >
         <img
@@ -73,7 +75,7 @@ const xboxClubLink = 'https://account.xbox.com/en-ca/clubs/profile?clubid=337987
       and more often than not push tuners outside their comfort zone to grow both their tuning
       and driving skills. Join the
       <a
-        :href="xboxClubLink"
+        :href="Urls.XboxClub"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -86,7 +88,7 @@ const xboxClubLink = 'https://account.xbox.com/en-ca/clubs/profile?clubid=337987
     <p>
       We have a
       <a
-        href="https://docs.google.com/document/d/1r5auWYA46yrxjB6hsg8bYs02qmJt6R2LyAK8TOG1I0M/edit?usp=sharing"
+        :href="Urls.TuningGuide"
         target="_blank"
         rel="noopener noreferrer"
       >

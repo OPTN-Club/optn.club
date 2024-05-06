@@ -39,8 +39,6 @@ export default function useSetupForm<T extends object>(props: FormattingFormProp
     }
   });
 
-  const linkUrl = computed(() => `https://optn.club${router.currentRoute.value.fullPath}`);
-
   function reset() {
     const defaultForm = blankFormFactory();
     Object.keys(defaultForm).forEach((k) => {

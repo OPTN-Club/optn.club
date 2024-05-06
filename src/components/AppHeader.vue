@@ -3,6 +3,7 @@ import iconDiscord from '../assets/icon-discord.png';
 import iconGithub from '../assets/icon-github.png';
 import iconReddit from '../assets/icon-reddit.png';
 import logoUrl from '../assets/OPTN_logo.png';
+import Urls from '../lib/urls';
 </script>
 <template>
   <header>
@@ -41,7 +42,7 @@ import logoUrl from '../assets/OPTN_logo.png';
       <ul class="link-bar">
         <li>
           <a
-            href="https://discord.gg/K2Kk5Kj6PP"
+            :href="Urls.DiscordInvite"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -53,7 +54,7 @@ import logoUrl from '../assets/OPTN_logo.png';
         </li>
         <li>
           <a
-            href="https://reddit.com/r/ForzaOpenTunes"
+            :href="Urls.Reddit"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -65,7 +66,7 @@ import logoUrl from '../assets/OPTN_logo.png';
         </li>
         <li>
           <a
-            href="https://github.com/OPTN-Club"
+            :href="Urls.GitHubOrg"
             target="_blank"
             rel="noopener noreferrer"
           >
