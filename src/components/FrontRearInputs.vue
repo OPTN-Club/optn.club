@@ -45,17 +45,18 @@ watch(() => props.modelValue, () => {
 </script>
 
 <template>
-  <div
+  <fieldset
     class="control !min-w-[250px]"
     :class="{ disabled }"
   >
-    <div class="label">{{ label }}</div>
+    <legend class="label">{{ label }}</legend>
     <div class="flex w-full">
       <slot name="attach-left" />
       <div class="relative flex-1 sm:flex-auto">
         <label
           :for="`${id}front`"
           class="prefix"
+          aria-label="Front"
         >F</label>
         <input
           :id="`${id}front`"
@@ -74,6 +75,7 @@ watch(() => props.modelValue, () => {
         <label
           :for="`${id}rear`"
           class="prefix"
+          aria-label="Rear"
         >R</label>
         <input
           :id="`${id}rear`"
@@ -90,5 +92,5 @@ watch(() => props.modelValue, () => {
       </div>
       <slot name="attach-right" />
     </div>
-  </div>
+  </fieldset>
 </template>

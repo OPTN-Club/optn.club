@@ -42,6 +42,7 @@ function onInput(e: Event) {
         v-for="option in options"
         :key="option.value"
         :value="option.value"
+        :aria-label="option.ariaLabel || option.label"
       >
         {{ option.label || option.value }}
       </option>

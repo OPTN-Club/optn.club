@@ -116,7 +116,7 @@ function onFormatSelect(e: Event) {
           value="reddit"
           @input="onFormatSelect"
         >
-        Reddit
+        <span class="visually-hidden">Format for</span> Reddit
       </label>
       <label class="radio cursor-pointer">
         <input
@@ -127,7 +127,7 @@ function onFormatSelect(e: Event) {
           value="discord"
           @input="onFormatSelect"
         >
-        Discord
+        <span class="visually-hidden">Format for</span> Discord
       </label>
     </div>
     <p
@@ -146,14 +146,18 @@ function onFormatSelect(e: Event) {
       Character Count: {{ formattedText.length }}
     </p> -->
     <button
+      id="copy-button"
       type="button"
       class="w-full secondary"
+      aria-label="Copy formatted text to clipboard"
       @click="onCopyClick"
     >
       {{ copyButtonText }}
     </button>
     <textarea
+      id="formatted-text"
       ref="textareaRef"
+      aria-label="formatted text"
       :value="formattedText"
       readonly
       class="markdown-text"

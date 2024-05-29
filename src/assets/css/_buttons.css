@@ -12,9 +12,11 @@
       justify-center
       rounded
       text-ghost-white
-      bg-optn-100
-      border-optn-100
+      bg-light-mist
+      bg-opacity-20
+      border-light-mist
       border
+      border-opacity-20
       font-bold
       h-10;
   }
