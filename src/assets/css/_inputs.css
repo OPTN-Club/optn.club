@@ -10,7 +10,10 @@
 
   label.checkbox,
   label.radio {
-    @apply font-normal;
+    @apply
+      font-normal
+      border-transparent
+      border;
   }
 
   label input[type=checkbox] {
@@ -118,6 +121,12 @@
       min-w-0
       h-auto
       leading-normal;
+  }
+
+  label.checkbox:focus-within,
+  label.radio:focus-within {
+    @apply
+      border-yellow;
   }
 
   input:focus,

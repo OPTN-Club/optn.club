@@ -52,7 +52,7 @@ function onInput(e: Event) {
     :class="[rootClass, { disabled }]"
   >
     <label
-      :for="`#${id}`"
+      :for="id"
       :class="{ required }"
     >
       <slot name="label">

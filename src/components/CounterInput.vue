@@ -136,7 +136,7 @@ onBeforeUnmount(() => {
   <div class="control">
     <label
       v-if="label"
-      :for="`#${id}`"
+      :for="id"
       :class="{ required }"
     >{{ label }}</label>
     <div class="flex items-center">

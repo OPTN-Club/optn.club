@@ -7,6 +7,7 @@ export interface FormattingFormProps {
 export interface SelectOption<T = string> {
   value: T;
   label?: string;
+  ariaLabel?: string;
 }
 
 export enum PressureUnit {

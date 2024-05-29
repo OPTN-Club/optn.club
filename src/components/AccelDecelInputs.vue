@@ -42,16 +42,17 @@ watch(() => props.modelValue, (current) => {
 </script>
 
 <template>
-  <div
+  <fieldset
     class="control !min-w-[250px] shrink-0"
     :class="{ disabled }"
   >
-    <div class="label">{{ label }}</div>
+    <legend class="label">{{ label }}</legend>
     <div class="flex">
       <div class="relative grow sm:grow-0">
         <label
           :for="`${id}front`"
           class="prefix"
+          aria-label="Acceleration"
         >Accel</label>
         <input
           :id="`${id}front`"
@@ -69,6 +70,7 @@ watch(() => props.modelValue, (current) => {
         <label
           :for="`${id}rear`"
           class="prefix"
+          aria-label="Deceleration"
         >Decel</label>
         <input
           :id="`${id}rear`"
@@ -83,5 +85,5 @@ watch(() => props.modelValue, (current) => {
         >
       </div>
     </div>
-  </div>
+  </fieldset>
 </template>

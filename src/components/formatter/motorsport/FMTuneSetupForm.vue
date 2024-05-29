@@ -228,6 +228,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
             label="Roll Center Height Offset"
             min="0.0"
             step="0.1"
+            attachRight
             :disabled="form.tune.rollCenterHeightOffset.na"
           >
             <template #attach-right>
