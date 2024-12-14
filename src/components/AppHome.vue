@@ -32,30 +32,15 @@ import Urls from '../lib/urls';
       server.
     </p>
 
-    <h2>Weekly Challenges</h2>
+    <h2>Bi-Weekly Challenges</h2>
     <p>
-      We have weekly challenges through Forza Rivals mode.
-      Follow this week’s restrictions (specific car, category or even other fun restrictions)
+      We host bi-weekly challenges through Forza Rivals mode.
+      Follow the current restrictions (specific car, category or even other fun restrictions)
       and try to be the fastest! Our community will do its best to help you improve both your
       driving and how you build and tune your cars.
     </p>
     <p>
-      Challenges are posted every Monday on
-      <a
-        :href="Urls.Reddit"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center align-middle"
-      >
-        <img
-          :src="iconReddit"
-          alt="Reddit"
-          class="h-8 mr-1"
-        >
-        <span>r/ForzaOpenTunes</span>
-      </a>
-      which is also where tunes must be posted to be eligible to win.
-      Join the discussion on
+      Challenges are posted every second Monday on
       <a
         :href="Urls.DiscordInvite"
         target="_blank"
@@ -69,6 +54,7 @@ import Urls from '../lib/urls';
         >
         <span>Discord</span>
       </a>
+      which is also where tunes must be posted to be eligible to win.
     </p>
     <p>
       The challenges are designed to be different,
