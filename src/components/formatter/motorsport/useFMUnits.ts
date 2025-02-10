@@ -35,8 +35,6 @@ export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnit
     }
   }
 
-  setStatsUnits(globalUnits.value.globalUnit);
-
   const units = computed(() => ({
     tires: form.tune.tires.units,
     springs: form.tune.springs.units,
