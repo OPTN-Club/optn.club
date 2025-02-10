@@ -25,7 +25,7 @@ const router = useRouter();
   <p class="sub-title">
     Create and share your tune.
     This tool will automatically create an easy-to-read
-    format you can share on our subreddit.
+    format you can share on our Discord server.
   </p>
 
   <div class="flex flex-col md:flex-row items-start">
