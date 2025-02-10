@@ -45,7 +45,7 @@ export default function useFormEncoder<T>(blankFormFactory: () => T) {
     return compressed;
   }
 
-  function decode(encoded?: string): T {
+  function decode(encoded: string = '', useLegacyDeserialization: boolean = false): T {
     const defaultForm = getBlankForm();
 
     if (!encoded) return defaultForm as T;
@@ -55,7 +55,7 @@ export default function useFormEncoder<T>(blankFormFactory: () => T) {
       console.error('Decompressed string is empty');
       return defaultForm as T;
     }
-    const flattened = deserializeFlatObject(json, flattenedKeys);
+    const flattened = deserializeFlatObject(json, flattenedKeys, useLegacyDeserialization);
     const form = unflattenFormInto(flattened, defaultForm);
     if (!form || !Object.keys(form).length) {
       throw new Error('Undefined or empty object.');
@@ -155,23 +155,29 @@ function serializeFlatObject(flattenedObj: FlattenedObject): string {
   return JSON.stringify(values);
 }
 
-function deserializeFlatObject(value: string, flattenedKeys: string[]): FlattenedObject {
+function deserializeFlatObject(
+  value: string,
+  flattenedKeys: string[],
+  useLegacyDeserialization: boolean = false,
+): FlattenedObject {
   const values = JSON.parse(value) as never[];
 
-  /**
-   * Added Tire Profile Size
-   * If a link is before this was added, we need to
-   * insert the values into the parsed array
-   */
-  if (values.length === VALUE_COUNT_BEFORE_TIRE_PROFILE_UPDATE) {
-    values.splice(TIRE_PROFILE_SIZE_INDEX, 0, 's' as never, 's' as never);
-  }
+  if (useLegacyDeserialization) {
+    /**
+     * Added Tire Profile Size
+     * If a link is before this was added, we need to
+     * insert the values into the parsed array
+     */
+    if (values.length === VALUE_COUNT_BEFORE_TIRE_PROFILE_UPDATE) {
+      values.splice(TIRE_PROFILE_SIZE_INDEX, 0, 's' as never, 's' as never);
+    }
 
-  /**
-   * Added Motor and Battery
-   */
-  if (values.length === VALUE_COUNT_BEFORE_MOTOR_AND_BATTERY_UPDATE) {
-    values.splice(MOTOR_AND_BATTERY_INDEX, 0, 'na' as never);
+    /**
+     * Added Motor and Battery
+     */
+    if (values.length === VALUE_COUNT_BEFORE_MOTOR_AND_BATTERY_UPDATE) {
+      values.splice(MOTOR_AND_BATTERY_INDEX, 0, 'na' as never);
+    }
   }
 
   const flattenedForm: FlattenedObject = {};

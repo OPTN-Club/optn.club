@@ -1,9 +1,4 @@
-import {
-  computed,
-  ComputedRef,
-  inject,
-  provide,
-} from 'vue';
+import { computed, ComputedRef, inject, provide } from 'vue';
 
 import { DriveType, FormattingFormProps } from '../../../lib/types';
 import useSetupForm from '../useSetupForm';
@@ -23,12 +18,7 @@ interface UseFHFormattingForm {
 const providerKey = 'fh-formatting-form';
 
 export function useFHSetupFormProvider(props: FormattingFormProps) {
-  const {
-    form,
-    encoded,
-    globalUnits,
-    reset,
-  } = useSetupForm(props, getLatestDefaultForm);
+  const { form, encoded, globalUnits, reset } = useSetupForm(props, getLatestDefaultForm, true);
 
   const driveType = computed(() => getDrivetrain(form.build));
 

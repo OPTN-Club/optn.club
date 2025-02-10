@@ -4,10 +4,13 @@ import { FormattingFormProps } from '../../../lib/types';
 
 import { useFMSetupFormProvider } from './useFMSetupForm';
 
-const ENCODED_FM_FORMS = {
+const FM_FORMS = {
   // Original implementation without "Motor and Battery" engine upgrade and "Tire Profile" upgrades
-  ORIGINAL:
-    'NoIgYg9hIDQgQgQwE6xAFgKxoJx52gEpqYAMpsO5ca65J9cAjGRc2yNjFnAGaVM4AawDm/GAFoATADpMkpnLgB2NOJBM2pJRO3yAzKT6wJZGIJDi6cLGrRNlXeZdjPMXTUbMvz1Iz9AANhkmexCwqTD9MPQwrg0ZQLDVZhkADjCCOEiAXXMpY3zfQs04AGMAW1gpZ3Ea8qqYGv8671FeAHoKxo0yOzg0vqaZAtkCkAAjFDRUOFmQecW0AGEAZWW0AE0AUwBnIgB1ABE0fUSAGQACADUkuF2ABzRH56f7t5AX99ef77/Pj5fAG/YH/IHgj6EbYVCAAN22IIhaAAEttELCAJ6IwE47FoAAm9l2ABciaSmu4YPpHOY0rS4JAIJckMhmYgAF5oKSkGogHJAA',
+  ORIGINAL: {
+    version: 'v2',
+    encodedForm:
+      'NoIgYg9hIDQgQgQwE6xAFgKxoJx52gEpqYAMpsO5ca65J9cAjGRc2yNjFnAGaVM4AawDm/GAFoATADpMkpnLgB2NOJBM2pJRO3yAzKT6wJZGIJDi6cLGrRNlXeZdjPMXTUbMvz1Iz9AANhkmexCwqTD9MPQwrg0ZQLDVZhkADjCCOEiAXXMpY3zfQs04AGMAW1gpZ3Ea8qqYGv8671FeAHoKxo0yOzg0vqaZAtkCkAAjFDRUOFmQecW0AGEAZWW0AE0AUwBnIgB1ABE0fUSAGQACADUkuF2ABzRH56f7t5AX99ef77/Pj5fAG/YH/IHgj6EbYVCAAN22IIhaAAEttELCAJ6IwE47FoAAm9l2ABciaSmu4YPpHOY0rS4JAIJckMhmYgAF5oKSkGogHJAA',
+  },
 };
 
 vi.mock('vue-router', () => ({
@@ -18,7 +21,7 @@ vi.mock('vue-router', () => ({
 
 describe('useFHSetupForm', () => {
   it('should correctly parse an encoded, original FH form', () => {
-    const state = useFMSetupFormProvider({ version: 'v2', encodedForm: ENCODED_FM_FORMS.ORIGINAL } as FormattingFormProps);
+    const state = useFMSetupFormProvider({ ...FM_FORMS.ORIGINAL } as FormattingFormProps);
 
     expect(state.form).toEqual({
       year: '2025',

@@ -12,12 +12,16 @@ interface UseFormattingForm<T> {
   reset(): void;
 }
 
-export default function useSetupForm<T extends object>(props: FormattingFormProps, blankFormFactory: () => T) {
+export default function useSetupForm<T extends object>(
+  props: FormattingFormProps,
+  blankFormFactory: () => T,
+  useLegacyDeserialization: boolean = false,
+) {
   const router = useRouter();
 
   const encoder = useFormEncoder<T>(blankFormFactory);
 
-  const form: T = reactive(encoder.decode(props.encodedForm)) as T;
+  const form: T = reactive(encoder.decode(props.encodedForm, useLegacyDeserialization)) as T;
 
   const globalUnits = useGlobalUnitsProvider();
 
@@ -29,8 +33,8 @@ export default function useSetupForm<T extends object>(props: FormattingFormProp
 
       router.replace({
         params: {
-          encodedForm: current
-        }
+          encodedForm: current,
+        },
       });
     }
   });
@@ -47,7 +51,7 @@ export default function useSetupForm<T extends object>(props: FormattingFormProp
     form,
     encoded: encodedForm,
     globalUnits,
-    reset
+    reset,
   };
 
   return state;
