@@ -150,8 +150,8 @@ export enum TransmissionUpgrade {
 
 export enum LimitedTransmissionUpgrade {
   stock = 'Stock',
-  sport = 'Sport',
   street = 'Street',
+  sport = 'Sport',
   race = 'Race',
 }
 
@@ -225,8 +225,7 @@ export type UnitOfMeasure =
   | TorqueUnit
   | WeightUnit;
 
-export interface FrontAndRearWithUnits<U extends UnitOfMeasure = UnitOfMeasure, T = string>
-  extends FrontAndRearSettings<T> {
+export interface FrontAndRearWithUnits<U extends UnitOfMeasure = UnitOfMeasure, T = string> extends FrontAndRearSettings<T> {
   units: U;
 }
 
