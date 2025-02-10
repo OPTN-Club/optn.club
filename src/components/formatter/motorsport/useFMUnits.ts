@@ -1,8 +1,4 @@
-import {
-  computed,
-  Ref,
-  watch,
-} from 'vue';
+import { computed, Ref, watch } from 'vue';
 
 import { convertTo, switchUnit } from '../../../lib/conversions';
 import {
@@ -43,23 +39,29 @@ export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnit
     rollCenterHeightOffset: form.tune.rollCenterHeightOffset.units,
   }));
 
-  watch(() => globalUnits.value.globalUnit, (current) => {
-    if (current === 'Metric') {
-      form.tune.tires.units = PressureUnit.bar;
-      form.tune.springs.units = SpringRateUnit.kgfmm;
-      form.tune.rideHeight.units = LengthUnit.cm;
-      form.tune.aero.units = ForceUnit.kgf;
-      form.tune.rollCenterHeightOffset.units = LengthUnit.cm;
-    } else {
-      form.tune.tires.units = PressureUnit.psi;
-      form.tune.springs.units = SpringRateUnit.lbfin;
-      form.tune.rideHeight.units = LengthUnit.in;
-      form.tune.aero.units = ForceUnit.lbf;
-      form.tune.rollCenterHeightOffset.units = LengthUnit.in;
-    }
+  watch(
+    () => globalUnits.value.globalUnit,
+    (current) => {
+      if (current === 'Metric') {
+        form.tune.tires.units = PressureUnit.bar;
+        form.tune.springs.units = SpringRateUnit.kgfmm;
+        form.tune.rideHeight.units = LengthUnit.cm;
+        form.tune.aero.units = ForceUnit.kgf;
+        form.tune.rollCenterHeightOffset.units = LengthUnit.cm;
+      } else {
+        form.tune.tires.units = PressureUnit.psi;
+        form.tune.springs.units = SpringRateUnit.lbfin;
+        form.tune.rideHeight.units = LengthUnit.in;
+        form.tune.aero.units = ForceUnit.lbf;
+        form.tune.rollCenterHeightOffset.units = LengthUnit.in;
+      }
 
-    setStatsUnits(current);
-  });
+      // Only convert if "Convert values when changed" is checked
+      if (globalUnits.value.convertOnUnitChange) {
+        setStatsUnits(current);
+      }
+    },
+  );
 
   const stored = useLocalStorageState('FM_UNITS', units.value);
   form.tune.tires.units = stored.value.tires;
@@ -72,28 +74,43 @@ export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnit
     stored.value = current;
   });
 
-  watch(() => form.tune.tires.units, (current) => {
-    form.tune.tires.front = convertTo(form.tune.tires.front, current, 1);
-    form.tune.tires.rear = convertTo(form.tune.tires.rear, current, 1);
-  });
+  watch(
+    () => form.tune.tires.units,
+    (current) => {
+      form.tune.tires.front = convertTo(form.tune.tires.front, current, 1);
+      form.tune.tires.rear = convertTo(form.tune.tires.rear, current, 1);
+    },
+  );
 
-  watch(() => form.tune.springs.units, (current) => {
-    form.tune.springs.front = convertTo(form.tune.springs.front, current, 1);
-    form.tune.springs.rear = convertTo(form.tune.springs.rear, current, 1);
-  });
+  watch(
+    () => form.tune.springs.units,
+    (current) => {
+      form.tune.springs.front = convertTo(form.tune.springs.front, current, 1);
+      form.tune.springs.rear = convertTo(form.tune.springs.rear, current, 1);
+    },
+  );
 
-  watch(() => form.tune.rideHeight.units, (current) => {
-    form.tune.rideHeight.front = convertTo(form.tune.rideHeight.front, current, 1);
-    form.tune.rideHeight.rear = convertTo(form.tune.rideHeight.rear, current, 1);
-  });
+  watch(
+    () => form.tune.rideHeight.units,
+    (current) => {
+      form.tune.rideHeight.front = convertTo(form.tune.rideHeight.front, current, 1);
+      form.tune.rideHeight.rear = convertTo(form.tune.rideHeight.rear, current, 1);
+    },
+  );
 
-  watch(() => form.tune.aero.units, (current) => {
-    form.tune.aero.front = convertTo(form.tune.aero.front, current, 1);
-    form.tune.aero.rear = convertTo(form.tune.aero.rear, current, 1);
-  });
+  watch(
+    () => form.tune.aero.units,
+    (current) => {
+      form.tune.aero.front = convertTo(form.tune.aero.front, current, 1);
+      form.tune.aero.rear = convertTo(form.tune.aero.rear, current, 1);
+    },
+  );
 
-  watch(() => form.tune.rollCenterHeightOffset.units, (current) => {
-    form.tune.rollCenterHeightOffset.front = convertTo(form.tune.rollCenterHeightOffset.front, current, 1);
-    form.tune.rollCenterHeightOffset.rear = convertTo(form.tune.rollCenterHeightOffset.rear, current, 1);
-  });
+  watch(
+    () => form.tune.rollCenterHeightOffset.units,
+    (current) => {
+      form.tune.rollCenterHeightOffset.front = convertTo(form.tune.rollCenterHeightOffset.front, current, 1);
+      form.tune.rollCenterHeightOffset.rear = convertTo(form.tune.rollCenterHeightOffset.rear, current, 1);
+    },
+  );
 }
