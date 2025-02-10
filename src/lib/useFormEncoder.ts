@@ -4,7 +4,7 @@ import { mangleValueMap } from './mangle-lookup';
 
 const VALUE_COUNT_BEFORE_TIRE_PROFILE_UPDATE = 98;
 const VALUE_COUNT_BEFORE_MOTOR_AND_BATTERY_UPDATE = 100;
-const TIRE_PROFILE_SIZE_INDEX = 39;
+const TIRE_PROFILE_SIZE_INDEX = 38;
 const MOTOR_AND_BATTERY_INDEX = 24;
 
 export interface FormEncoderOptions {
@@ -21,9 +21,7 @@ export interface FlattenedObject {
   [key: string]: string | number | string[] | number[] | boolean;
 }
 
-export default function useFormEncoder<T>(
-  blankFormFactory: () => T,
-) {
+export default function useFormEncoder<T>(blankFormFactory: () => T) {
   function getBlankForm(): GenericForm {
     const blankForm = blankFormFactory();
     return blankForm as unknown as GenericForm;
@@ -54,7 +52,8 @@ export default function useFormEncoder<T>(
 
     const json = decompressFromBase64(encoded);
     if (!json) {
-      throw new Error('Decompressed string is empty');
+      console.error('Decompressed string is empty');
+      return defaultForm as T;
     }
     const flattened = deserializeFlatObject(json, flattenedKeys);
     const form = unflattenFormInto(flattened, defaultForm);
@@ -86,17 +85,18 @@ export default function useFormEncoder<T>(
     return flattened;
   }
 
-  function unflattenFormInto(
-    source: FlattenedObject,
-    target: GenericForm,
-    path: string[] = [],
-  ): GenericForm {
+  function unflattenFormInto(source: FlattenedObject, target: GenericForm, path: string[] = []): GenericForm {
     const keys = Object.keys(target);
     keys.forEach((key) => {
       const valuePath = [...path, key];
       const targetValue = target[key];
 
-      if (typeof targetValue === 'boolean' || typeof targetValue === 'string' || typeof targetValue === 'number' || Array.isArray(targetValue)) {
+      if (
+        typeof targetValue === 'boolean' ||
+        typeof targetValue === 'string' ||
+        typeof targetValue === 'number' ||
+        Array.isArray(targetValue)
+      ) {
         const flattenedKey = valuePath.join('.');
         const sourceValue = source[flattenedKey];
         target[key] = sourceValue;
@@ -114,15 +114,13 @@ export default function useFormEncoder<T>(
   };
 }
 
-const unmangleValueMap: Record<string, string> = Object
-  .keys(mangleValueMap)
-  .reduce(
-    (prev, cur) => ({
-      ...prev,
-      [mangleValueMap[cur]]: cur,
-    }),
-    {},
-  );
+const unmangleValueMap: Record<string, string> = Object.keys(mangleValueMap).reduce(
+  (prev, cur) => ({
+    ...prev,
+    [mangleValueMap[cur]]: cur,
+  }),
+  {},
+);
 
 function mangleValue(value: unknown) {
   if (typeof value === 'boolean') return value ? 't' : 'f';
