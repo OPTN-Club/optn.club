@@ -1,10 +1,4 @@
-import {
-  computed,
-  ComputedRef,
-  reactive,
-  Ref,
-  watch,
-} from 'vue';
+import { computed, ComputedRef, reactive, Ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { FormattingFormProps } from '../../lib/types';
@@ -31,10 +25,12 @@ export default function useSetupForm<T extends object>(props: FormattingFormProp
 
   watch(encodedForm, (current, old) => {
     if (current !== old) {
+      console.log('Updated JSON: ', JSON.stringify(form));
+
       router.replace({
         params: {
-          encodedForm: current,
-        },
+          encodedForm: current
+        }
       });
     }
   });
@@ -51,7 +47,7 @@ export default function useSetupForm<T extends object>(props: FormattingFormProp
     form,
     encoded: encodedForm,
     globalUnits,
-    reset,
+    reset
   };
 
   return state;
