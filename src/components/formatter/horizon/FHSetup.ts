@@ -32,23 +32,17 @@ export enum FHPIClass {
   S2 = 'S2',
   X = 'X',
 }
-export const fhPiClassMap: Record<FHPIClass, number> = {
-  [FHPIClass.D]: 500,
-  [FHPIClass.C]: 600,
-  [FHPIClass.B]: 700,
-  [FHPIClass.A]: 800,
-  [FHPIClass.S1]: 900,
-  [FHPIClass.S2]: 998,
-  [FHPIClass.X]: 999,
+export const fhPiClassMap: Record<FHPIClass, string> = {
+  [FHPIClass.D]: '500',
+  [FHPIClass.C]: '600',
+  [FHPIClass.B]: '700',
+  [FHPIClass.A]: '800',
+  [FHPIClass.S1]: '900',
+  [FHPIClass.S2]: '998',
+  [FHPIClass.X]: '999',
 };
 
-type BuildUpgrade =
-  | Upgrade
-  | FullUpgrade
-  | TransmissionUpgrade
-  | LimitedUpgrade
-  | TurboUpgrade
-  | RestrictorUpgrade;
+type BuildUpgrade = Upgrade | FullUpgrade | TransmissionUpgrade | LimitedUpgrade | TurboUpgrade | RestrictorUpgrade;
 
 export interface BuildSectionUpgrades {
   [k: string]: BuildUpgrade;
@@ -128,15 +122,15 @@ export interface TuneSettings {
 }
 
 export interface TuneStatistics {
-  pi: number;
+  pi: string;
   classification: FHPIClass;
-  hp: number;
-  torque: number;
-  weight: number;
-  balance: number;
-  topSpeed: number;
-  zeroToSixty: number;
-  zeroToHundred: number;
+  hp: string;
+  torque: string;
+  weight: string;
+  balance: string;
+  topSpeed: string;
+  zeroToSixty: string;
+  zeroToHundred: string;
   shareCode: string;
 }
 
@@ -171,7 +165,7 @@ export function getFHDefaultForm(version: string): FHSetup {
 export const getLatestDefaultForm = getFHDefaultFormV1;
 
 interface DefaultFormMap<T> {
-  [key: string]: (() => T);
+  [key: string]: () => T;
 }
 
 const defaultFormMap: DefaultFormMap<FHSetup> = {
@@ -184,8 +178,8 @@ export default function getFHDefaultFormV1(): FHSetup {
     model: '',
     tune: {
       tires: {
-        front: '2',
-        rear: '2',
+        front: '',
+        rear: '',
         units: PressureUnit.bar,
       },
       gears: {
@@ -193,14 +187,14 @@ export default function getFHDefaultFormV1(): FHSetup {
         na: false,
       },
       camber: {
-        front: '-1',
-        rear: '-1',
+        front: '',
+        rear: '',
       },
       toe: {
-        front: '0',
-        rear: '0',
+        front: '',
+        rear: '',
       },
-      caster: '5',
+      caster: '',
       arb: {
         front: '',
         rear: '',
@@ -326,15 +320,15 @@ export default function getFHDefaultFormV1(): FHSetup {
       },
     },
     stats: {
-      pi: 800,
+      pi: '800',
       classification: FHPIClass.A,
-      hp: 0,
-      torque: 0,
-      weight: 0,
-      balance: 0,
-      topSpeed: 0,
-      zeroToSixty: 0,
-      zeroToHundred: 0,
+      hp: '',
+      torque: '',
+      weight: '',
+      balance: '',
+      topSpeed: '',
+      zeroToSixty: '',
+      zeroToHundred: '',
       shareCode: '',
     },
   };

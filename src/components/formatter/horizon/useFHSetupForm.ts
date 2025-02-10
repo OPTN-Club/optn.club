@@ -6,6 +6,7 @@ import useSetupForm from '../useSetupForm';
 import { getDrivetrain } from './fh-reddit-generator';
 import { FHSetup, getLatestDefaultForm } from './FHSetup';
 import { useFHEnabledControls, UseUpgrades } from './useFHEnabledControls';
+import useFHUnits from './useFHUnits';
 
 interface UseFHFormattingForm {
   form: FHSetup;
@@ -23,6 +24,8 @@ export function useFHSetupFormProvider(props: FormattingFormProps) {
   const driveType = computed(() => getDrivetrain(form.build));
 
   const show = useFHEnabledControls(form);
+
+  useFHUnits(form, globalUnits);
 
   const state: UseFHFormattingForm = {
     form,
