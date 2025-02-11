@@ -82,6 +82,7 @@ export interface EngineUpgrades {
   displacement: Upgrade;
   pistons: Upgrade;
   motorAndBattery: Upgrade;
+  rotorsAndCompression: Upgrade;
 }
 
 export interface PlatformAndHandlingUpgrades {
@@ -173,8 +174,14 @@ export interface FMSetup {
   make: string;
   model: string;
   stats: FMSetupStatistics;
-  upgrades: PerformanceUpgrades;
+  upgrades: Omit<PerformanceUpgrades, 'engine'> & {
+    engine: Omit<EngineUpgrades, 'rotorsAndCompression'>;
+  };
   tune: TuneSettings;
+}
+
+export interface FMSetupV3 extends Omit<FMSetup, 'upgrades'> {
+  upgrades: PerformanceUpgrades;
 }
 
 export function getEncoderOptions(version: string): FormEncoderOptions {
@@ -186,14 +193,22 @@ export function getFMDefaultForm(version: string): GenericForm {
   return creator() as unknown as GenericForm;
 }
 
+export function getFMFormFactory(version: FMFormVersion = 'v2'): () => FMSetup | FMSetupV3 {
+  const creator = defaultFormMap[version] ?? defaultFormMap.v2;
+  return creator;
+}
+
 export const getLatestDefaultForm = getFMDefaultFormV2;
 
+type FMFormVersion = 'v2' | 'v3';
+
 interface DefaultFormMap<T> {
-  [key: string]: (() => T);
+  [key: string]: () => T;
 }
 
 const defaultFormMap: DefaultFormMap<FMSetup> = {
   v2: getFMDefaultFormV2,
+  v3: getFMDefaultFormV3,
 };
 
 function getFMDefaultFormV2(): FMSetup {
@@ -378,4 +393,15 @@ function getFMDefaultFormV2(): FMSetup {
   };
 
   return defaultForm;
+}
+
+function getFMDefaultFormV3(): FMSetupV3 {
+  const v2Form = getFMDefaultFormV2();
+  const engine: Partial<EngineUpgrades> = {
+    rotorsAndCompression: Upgrade.na,
+  };
+
+  Object.assign(v2Form.upgrades.engine, engine);
+
+  return v2Form as FMSetupV3;
 }
