@@ -4,7 +4,7 @@ import { DriveType, FormattingFormProps } from '../../../lib/types';
 import { UseUpgrades } from '../../../lib/useUpgrades';
 import useSetupForm from '../useSetupForm';
 
-import { FMSetup, FMSetupV3, getFMFormFactory, getLatestDefaultForm } from './FMSetup';
+import { FMFormVersion, FMSetup, FMSetupV3, getFMFormFactory } from './FMSetup';
 import useFMEnabledControls from './useFMEnabledControls';
 import useFMUnits from './useFMUnits';
 
@@ -19,7 +19,7 @@ interface UseFMFormattingForm {
 const providerKey = 'fm-formatting-form';
 
 export function useFMSetupFormProvider(props: FormattingFormProps) {
-  const formFactory = getFMFormFactory(props.version);
+  const formFactory = getFMFormFactory(props.version as FMFormVersion);
   const { form, encoded, globalUnits, reset } = useSetupForm(props, formFactory);
 
   const driveType = computed(() => form.upgrades.conversions.drivetrain);

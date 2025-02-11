@@ -13,11 +13,7 @@ import {
 import { formatUnit } from '../../../lib/unitsOfMeasure';
 import { formatFloat, addSuffix as suffixize } from '../../../lib/utils';
 
-import {
-  FMSetup,
-  PerformanceUpgrades,
-  TuneSettings,
-} from './FMSetup';
+import { FMSetup, PerformanceUpgrades, TuneSettings, V2PerformanceUpgrades } from './FMSetup';
 
 const tableSeparator = '';
 
@@ -38,14 +34,7 @@ function h3(text: string): string {
   return `**${text}**`;
 }
 
-const falseyValues = [
-  null,
-  undefined,
-  '',
-  'N/A',
-  'Stock',
-  'None',
-];
+const falseyValues = [null, undefined, '', 'N/A', 'Stock', 'None'];
 
 function showValue(value: string | undefined): boolean {
   return !falseyValues.includes(value);
@@ -157,7 +146,13 @@ function formatTableRow(row: string[], widths: number[], alignment = TextAlign.l
   return rowText.join(' ').trim();
 }
 
-function formatFrontRear(header: string, values: FrontAndRearSettings, precision = 1, suffix = '', alignment = TextAlign.left): string[] {
+function formatFrontRear(
+  header: string,
+  values: FrontAndRearSettings,
+  precision = 1,
+  suffix = '',
+  alignment = TextAlign.left,
+): string[] {
   if (values.na || !showFrontRearValues(values)) {
     return [];
   }
@@ -204,10 +199,7 @@ function formatTires(tune: TuneSettings): string[] {
 
   if (table.length === 0) return [];
 
-  return [
-    h1('Tires'),
-    ...formatFrontRearWithUnit('', tune.tires, 1),
-  ];
+  return [h1('Tires'), ...formatFrontRearWithUnit('', tune.tires, 1)];
 }
 
 function formatGears(tune: TuneSettings): string[] {
@@ -217,9 +209,7 @@ function formatGears(tune: TuneSettings): string[] {
     return [];
   }
 
-  const body: string[][] = [
-    ['FR', parseFloat(tune.gears.ratios[0]).toFixed(precision)],
-  ];
+  const body: string[][] = [['FR', parseFloat(tune.gears.ratios[0]).toFixed(precision)]];
   for (let index = 1; index < tune.gears.ratios.length; index++) {
     if (!showValue(tune.gears.ratios[index])) break;
     const value = parseFloat(tune.gears.ratios[index]);
@@ -228,10 +218,7 @@ function formatGears(tune: TuneSettings): string[] {
 
   if (body.length === 1 && tune.gears.ratios[0] === '') return [];
 
-  return [
-    h1('Gearing'),
-    ...formatTable('', body),
-  ];
+  return [h1('Gearing'), ...formatTable('', body)];
 }
 
 function formatAlignment(tune: TuneSettings): string[] {
@@ -262,10 +249,7 @@ function formatAlignment(tune: TuneSettings): string[] {
     lines.push('');
   }
 
-  return [
-    h1('Alignment'),
-    ...lines,
-  ];
+  return [h1('Alignment'), ...lines];
 }
 
 function formatAntiRollbars(tune: TuneSettings): string[] {
@@ -273,10 +257,7 @@ function formatAntiRollbars(tune: TuneSettings): string[] {
     return [];
   }
 
-  return [
-    h1('Anti-roll Bars'),
-    ...formatFrontRear('', tune.arb),
-  ];
+  return [h1('Anti-roll Bars'), ...formatFrontRear('', tune.arb)];
 }
 
 function formatSprings(tune: TuneSettings): string[] {
@@ -294,19 +275,14 @@ function formatSprings(tune: TuneSettings): string[] {
 
   if (lines.length === 0) return [];
 
-  return [
-    h1('Springs'),
-    ...lines,
-  ];
+  return [h1('Springs'), ...lines];
 }
 
 function formatDamping(tune: TuneSettings): string[] {
   if (tune.rebound.na && tune.bump.na) {
     return [];
   }
-  const lines: string[] = [
-    h1('Damping'),
-  ];
+  const lines: string[] = [h1('Damping')];
   if (showFrontRearValues(tune.bump)) {
     lines.push(...formatFrontRear('Bump', tune.bump));
   }
@@ -323,9 +299,7 @@ function formatSuspensionGeometry(tune: TuneSettings): string[] {
   if (tune.rollCenterHeightOffset.na && tune.antiGeometryPercent.na) {
     return [];
   }
-  const lines: string[] = [
-    h1('Suspension Geometry'),
-  ];
+  const lines: string[] = [h1('Suspension Geometry')];
 
   if (showFrontRearValues(tune.rollCenterHeightOffset)) {
     lines.push(...formatFrontRearWithUnit('Roll Center Offset', tune.rollCenterHeightOffset, 1));
@@ -343,10 +317,7 @@ function formatAero(tune: TuneSettings): string[] {
   if (tune.aero.na) {
     return [];
   }
-  const lines: string[] = [
-    h1('Aero'),
-    ...formatFrontRearWithUnit('', tune.aero, 1),
-  ];
+  const lines: string[] = [h1('Aero'), ...formatFrontRearWithUnit('', tune.aero, 1)];
 
   if (lines.length === 1) return [];
   return lines;
@@ -368,10 +339,7 @@ function formatBrakes(tune: TuneSettings): string[] {
 
   if (lines.length === 0) return [];
 
-  return [
-    h1('Brakes'),
-    ...formatTable('', lines),
-  ];
+  return [h1('Brakes'), ...formatTable('', lines)];
 }
 
 function formatDiffLine(label: string, setting: AccelDecelSettings) {
@@ -408,10 +376,7 @@ function formatDifferential(diff: DifferentialTuneSettings, driveType: DriveType
   if (rear.length) body.push(rear);
 
   if (body.length) {
-    lines.push(...formatTable('', [
-      ['-', 'Accel', 'Decel'],
-      ...body,
-    ]));
+    lines.push(...formatTable('', [['-', 'Accel', 'Decel'], ...body]));
   }
 
   if (showValue(diff.center) && diff.center !== '50') {
@@ -420,10 +385,7 @@ function formatDifferential(diff: DifferentialTuneSettings, driveType: DriveType
 
   if (lines.length === 0) return [];
 
-  return [
-    h1('Differential'),
-    ...lines,
-  ];
+  return [h1('Differential'), ...lines];
 }
 
 function formatSteeringWheel(tune: TuneSettings): string[] {
@@ -442,10 +404,7 @@ function formatSteeringWheel(tune: TuneSettings): string[] {
 
   if (lines.length === 0) return [];
 
-  return [
-    h1('Steering Wheel'),
-    ...formatTable('', lines),
-  ];
+  return [h1('Steering Wheel'), ...formatTable('', lines)];
 }
 
 export function formatTune(form: FMSetup, model: string): string[] {
@@ -521,20 +480,17 @@ function formatUpgradesSection<T extends object>(header: string, section: T) {
 
   if (rows.length === 0) return [];
 
-  return [
-    h1(header),
-    ...formatTable('', rows),
-  ];
+  return [h1(header), ...formatTable('', rows)];
 }
 
-export function formatUpgrades(upgrades: PerformanceUpgrades, driveType: DriveType): string[] {
+export function formatUpgrades(upgrades: PerformanceUpgrades | V2PerformanceUpgrades, driveType: DriveType): string[] {
   const text = [
     ...formatUpgradesSection('Conversions', upgrades.conversions),
     ...formatUpgradesSection('Fuel and Air', upgrades.fuelAndAir),
     ...formatUpgradesSection('Engine', upgrades.engine),
     ...formatUpgradesSection('Platform And Handling', upgrades.platformAndHandling),
-    ...formatTireUpgrades(upgrades),
-    ...formatWheelUpgrades(upgrades),
+    ...formatTireUpgrades(upgrades as PerformanceUpgrades),
+    ...formatWheelUpgrades(upgrades as PerformanceUpgrades),
     ...formatUpgradesSection('Drivetrain', upgrades.drivetrain),
     // ...formatAeroBuild(upgrades),
     ...formatUpgradesSection('Aero and Appearance', upgrades.aeroAndAppearance),
@@ -581,38 +537,20 @@ export default function fmDiscordGenerator(form: FMSetup, globalUnit: GlobalUnit
 
   const stats = formatStatistics(form, globalUnit);
   if (stats.length) {
-    lines.push(
-      bold('Stats'),
-      '```',
-      ...stats,
-      '```',
-    );
+    lines.push(bold('Stats'), '```', ...stats, '```');
   }
 
   const upgrades = formatUpgrades(form.upgrades, form.upgrades.conversions.drivetrain);
   if (upgrades.length) {
-    lines.push(
-      bold('Upgrades'),
-      '```',
-      ...upgrades,
-      '```',
-    );
+    lines.push(bold('Upgrades'), '```', ...upgrades, '```');
   }
 
   const tune = formatTune(form, form.model);
   if (tune.length) {
-    lines.push(
-      bold('Tune'),
-      '```',
-      ...tune,
-      '```',
-    );
+    lines.push(bold('Tune'), '```', ...tune, '```');
   }
 
-  lines.push(
-    'Formatted using:',
-    'https://optn.club/formatter/forza/motorsport/v3',
-  );
+  lines.push('Formatted using:', 'https://optn.club/formatter/forza/motorsport/v3');
 
   // `[View this tune on optn.club](${linkUrl})`,
   // 'Formatted text generated by the [OPTN.club FM Setup Formatter](https://optn.club/formatter/forza/motorsport/v3)  \n',

@@ -67,11 +67,11 @@ export interface FuelAndAirUpgrades {
   restrictorPlate: string;
   fuelSystem: Upgrade;
   ignition: Upgrade;
-  singleTurbo: LimitedUpgrade;
-  twinTurbo: LimitedUpgrade;
-  supercharger: LimitedUpgrade; // sport and race only
-  centrifugalSupercharger: LimitedUpgrade; // sport and race only
-  intercooler: LimitedUpgrade;
+  singleTurbo: Upgrade;
+  twinTurbo: Upgrade;
+  supercharger: Upgrade; // sport and race only
+  centrifugalSupercharger: Upgrade; // sport and race only
+  intercooler: Upgrade;
 }
 
 export interface EngineUpgrades {
@@ -84,6 +84,8 @@ export interface EngineUpgrades {
   motorAndBattery: Upgrade;
   rotorsAndCompression: Upgrade;
 }
+
+export interface V2EngineUpgrades extends Omit<EngineUpgrades, 'rotorsAndCompression'> {}
 
 export interface PlatformAndHandlingUpgrades {
   brakes: Upgrade;
@@ -155,6 +157,10 @@ export interface PerformanceUpgrades {
   conversions: ConversionSettings;
 }
 
+export interface V2PerformanceUpgrades extends Omit<PerformanceUpgrades, 'engine'> {
+  engine: V2EngineUpgrades;
+}
+
 export interface FMSetupStatistics {
   pi: number;
   classification: FMPIClass;
@@ -174,9 +180,7 @@ export interface FMSetup {
   make: string;
   model: string;
   stats: FMSetupStatistics;
-  upgrades: Omit<PerformanceUpgrades, 'engine'> & {
-    engine: Omit<EngineUpgrades, 'rotorsAndCompression'>;
-  };
+  upgrades: V2PerformanceUpgrades;
   tune: TuneSettings;
 }
 
@@ -200,7 +204,7 @@ export function getFMFormFactory(version: FMFormVersion = 'v2'): () => FMSetup |
 
 export const getLatestDefaultForm = getFMDefaultFormV2;
 
-type FMFormVersion = 'v2' | 'v3';
+export type FMFormVersion = 'v2' | 'v3';
 
 interface DefaultFormMap<T> {
   [key: string]: () => T;
@@ -238,11 +242,11 @@ function getFMDefaultFormV2(): FMSetup {
         airFilter: Upgrade.stock,
         intakeManifold: Upgrade.stock,
         restrictorPlate: '',
-        centrifugalSupercharger: LimitedUpgrade.stock,
-        singleTurbo: LimitedUpgrade.stock,
-        twinTurbo: LimitedUpgrade.stock,
-        supercharger: LimitedUpgrade.stock,
-        intercooler: LimitedUpgrade.stock,
+        centrifugalSupercharger: Upgrade.stock,
+        singleTurbo: Upgrade.stock,
+        twinTurbo: Upgrade.stock,
+        supercharger: Upgrade.stock,
+        intercooler: Upgrade.stock,
       },
       engine: {
         camshaft: Upgrade.stock,

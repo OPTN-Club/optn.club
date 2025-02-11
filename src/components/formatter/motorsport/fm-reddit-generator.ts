@@ -14,11 +14,7 @@ import {
 import { formatUnit, formatUnitHeaders } from '../../../lib/unitsOfMeasure';
 import { formatFloat, addSuffix as suffixize } from '../../../lib/utils';
 
-import {
-  FMSetup,
-  PerformanceUpgrades,
-  TuneSettings,
-} from './FMSetup';
+import { FMSetup, PerformanceUpgrades, TuneSettings, V2PerformanceUpgrades } from './FMSetup';
 
 const tableSeparator = '\n######\n';
 
@@ -33,14 +29,7 @@ function formatTableRow(row: string[], boldFirstCol = false) {
   return `|${r.join('|')}|`;
 }
 
-const falseyValues = [
-  null,
-  undefined,
-  '',
-  'N/A',
-  'Stock',
-  'None',
-];
+const falseyValues = [null, undefined, '', 'N/A', 'Stock', 'None'];
 
 function showValue(value: string | undefined): boolean {
   return !falseyValues.includes(value);
@@ -90,10 +79,7 @@ function separate(values: string[], separator: string) {
 }
 
 function formatFrontRearWithUnit(header: string, value: FrontAndRearWithUnits, precision = 1): string[] {
-  const headers = [
-    header,
-    ...formatUnitHeaders(value.units),
-  ];
+  const headers = [header, ...formatUnitHeaders(value.units)];
 
   if (value.na) {
     return formatTable(headers, [['Not Applicable', ...formatUnit('', value.units, precision)]]);
@@ -119,9 +105,7 @@ function formatGears(tune: TuneSettings): string[] {
     return formatTable(headers, [['Not Applicable', '']]);
   }
 
-  const body: string[][] = [
-    ['Final Drive', parseFloat(tune.gears.ratios[0]).toFixed(precision)],
-  ];
+  const body: string[][] = [['Final Drive', parseFloat(tune.gears.ratios[0]).toFixed(precision)]];
   for (let index = 1; index < tune.gears.ratios.length; index++) {
     const value = parseFloat(tune.gears.ratios[index]);
     if (!value) break;
@@ -235,27 +219,15 @@ function formatDifferential(diff: DifferentialTuneSettings, driveType: DriveType
   const body: string[][] = [];
 
   if (showValue(diff.front.accel) || showValue(diff.front.decel)) {
-    body.push([
-      'Front',
-      formatFloat(diff.front.accel, 0, '%'),
-      formatFloat(diff.front.decel, 0, '%'),
-    ]);
+    body.push(['Front', formatFloat(diff.front.accel, 0, '%'), formatFloat(diff.front.decel, 0, '%')]);
   }
 
   if (showValue(diff.rear.accel) || showValue(diff.rear.decel)) {
-    body.push([
-      'Rear',
-      formatFloat(diff.rear.accel, 0, '%'),
-      formatFloat(diff.rear.decel, 0, '%'),
-    ]);
+    body.push(['Rear', formatFloat(diff.rear.accel, 0, '%'), formatFloat(diff.rear.decel, 0, '%')]);
   }
 
   if (showValue(diff.center)) {
-    body.push([
-      'Center',
-      formatFloat(diff.center, 0, '%'),
-      '',
-    ]);
+    body.push(['Center', formatFloat(diff.center, 0, '%'), '']);
   }
 
   return formatTable(header, body);
@@ -366,16 +338,21 @@ function formatUpgradesSection<T extends object>(section: T) {
     .map((key) => [capitalCase(key), section[key as keyof T]]);
 }
 
-export function formatUpgrades(upgrades: PerformanceUpgrades, driveType: DriveType): string[] {
+export function formatUpgrades(upgrades: PerformanceUpgrades | V2PerformanceUpgrades, driveType: DriveType): string[] {
   const text = [
-    ...formatConversions(upgrades, driveType),
+    ...formatConversions(upgrades as PerformanceUpgrades, driveType),
     ...formatTable(['Fuel and Air', ''], formatUpgradesSection(upgrades.fuelAndAir), false, TextAlign.left),
     ...formatTable(['Engine', ''], formatUpgradesSection(upgrades.engine), false, TextAlign.left),
-    ...formatTable(['Platform And Handling', ''], formatUpgradesSection(upgrades.platformAndHandling), false, TextAlign.left),
-    ...formatTireUpgrades(upgrades),
-    ...formatWheelUpgrades(upgrades),
+    ...formatTable(
+      ['Platform And Handling', ''],
+      formatUpgradesSection(upgrades.platformAndHandling),
+      false,
+      TextAlign.left,
+    ),
+    ...formatTireUpgrades(upgrades as PerformanceUpgrades),
+    ...formatWheelUpgrades(upgrades as PerformanceUpgrades),
     ...formatTable(['Drivetrain', ''], formatUpgradesSection(upgrades.drivetrain), false, TextAlign.left),
-    ...formatAeroBuild(upgrades),
+    ...formatAeroBuild(upgrades as PerformanceUpgrades),
   ];
 
   return text;
