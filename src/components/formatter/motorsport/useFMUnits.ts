@@ -17,7 +17,7 @@ import useLocalStorageState from '../../../lib/useLocalStorageState';
 import { FMSetup } from './FMSetup';
 
 export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnits>) {
-  function setStatsUnits(globalUnit: GlobalUnit) {
+  function convertValues(globalUnit: GlobalUnit): void {
     if (globalUnit === 'Metric') {
       form.stats.hp = convertTo(form.stats.hp, PowerUnit.kw, 0);
       form.stats.torque = convertTo(form.stats.torque, ForceUnit.kgf, 0);
@@ -31,6 +31,27 @@ export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnit
     }
   }
 
+  function setUnits(unit: GlobalUnit): void {
+    if (unit === 'Metric') {
+      form.tune.tires.units = PressureUnit.bar;
+      form.tune.springs.units = SpringRateUnit.kgfmm;
+      form.tune.rideHeight.units = LengthUnit.cm;
+      form.tune.aero.units = ForceUnit.kgf;
+      form.tune.rollCenterHeightOffset.units = LengthUnit.cm;
+    } else {
+      form.tune.tires.units = PressureUnit.psi;
+      form.tune.springs.units = SpringRateUnit.lbfin;
+      form.tune.rideHeight.units = LengthUnit.in;
+      form.tune.aero.units = ForceUnit.lbf;
+      form.tune.rollCenterHeightOffset.units = LengthUnit.in;
+    }
+
+    // Only convert if "Convert values when changed" is checked
+    if (globalUnits.value.convertOnUnitChange) {
+      convertValues(unit);
+    }
+  }
+
   const units = computed(() => ({
     tires: form.tune.tires.units,
     springs: form.tune.springs.units,
@@ -41,26 +62,7 @@ export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnit
 
   watch(
     () => globalUnits.value.globalUnit,
-    (current) => {
-      if (current === 'Metric') {
-        form.tune.tires.units = PressureUnit.bar;
-        form.tune.springs.units = SpringRateUnit.kgfmm;
-        form.tune.rideHeight.units = LengthUnit.cm;
-        form.tune.aero.units = ForceUnit.kgf;
-        form.tune.rollCenterHeightOffset.units = LengthUnit.cm;
-      } else {
-        form.tune.tires.units = PressureUnit.psi;
-        form.tune.springs.units = SpringRateUnit.lbfin;
-        form.tune.rideHeight.units = LengthUnit.in;
-        form.tune.aero.units = ForceUnit.lbf;
-        form.tune.rollCenterHeightOffset.units = LengthUnit.in;
-      }
-
-      // Only convert if "Convert values when changed" is checked
-      if (globalUnits.value.convertOnUnitChange) {
-        setStatsUnits(current);
-      }
-    },
+    (current) => setUnits(current),
   );
 
   const stored = useLocalStorageState('FM_UNITS', units.value);
