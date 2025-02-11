@@ -58,7 +58,7 @@ const trackWidthOptions = enumToOptions(TrackWidthType);
           />
           <UpgradeSelect
             v-model="form.build.engine.carburator"
-            label="Carburator"
+            label="Carburetor"
           />
           <UpgradeSelect
             v-model="form.build.engine.fuelSystem"
