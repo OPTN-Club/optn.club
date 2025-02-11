@@ -93,7 +93,7 @@ import Urls from '../lib/urls';
       The most important tools are our Setup Formatters for
       <RouterLink :to="{ name: 'formatter-fh5', params: { version: 'v1' } }">Forza Horizon 5</RouterLink>
       and
-      <RouterLink :to="{ name: 'formatter-fm8', params: { version: 'v2' } }">Forza Motorsport (2023)</RouterLink>.
+      <RouterLink :to="{ name: 'formatter-fm8', params: { version: 'v3' } }">Forza Motorsport (2023)</RouterLink>.
       OPTN in fact means “Open Tuning”, as this community is built on sharing open source tunes.
       Forza games lock the tunes so when you download it from someone else, you can't see exactly
       what the original tuner did to the car or edit it. The Tune Formatter was created as a workaround to this problem.

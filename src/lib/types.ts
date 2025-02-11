@@ -1,6 +1,7 @@
 export type GlobalUnit = 'Metric' | 'Imperial';
 
 export interface FormattingFormProps {
+  version?: string;
   encodedForm?: string;
 }
 

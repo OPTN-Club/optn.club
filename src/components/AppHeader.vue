@@ -27,7 +27,7 @@ import Urls from '../lib/urls';
         </router-link>
         <router-link
           class="nav-link"
-          :to="{ name: 'formatter-fm8', params: { version: 'v2' } }"
+          :to="{ name: 'formatter-fm8', params: { version: 'v3' } }"
         >
           FM Formatter
         </router-link>
