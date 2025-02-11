@@ -116,23 +116,23 @@ Conversion
             v-model="form.upgrades.fuelAndAir.restrictorPlate"
             label="Restrictor Plate"
           />
-          <LimitedUpgradeSelect
+          <UpgradeSelect
             v-model="form.upgrades.fuelAndAir.centrifugalSupercharger"
             label="Centrifugal Supercharger"
           />
-          <LimitedUpgradeSelect
+          <UpgradeSelect
             v-model="form.upgrades.fuelAndAir.singleTurbo"
             label="Turbo"
           />
-          <LimitedUpgradeSelect
+          <UpgradeSelect
             v-model="form.upgrades.fuelAndAir.twinTurbo"
             label="Twin Turbo"
           />
-          <LimitedUpgradeSelect
+          <UpgradeSelect
             v-model="form.upgrades.fuelAndAir.supercharger"
             label="Supercharger"
           />
-          <LimitedUpgradeSelect
+          <UpgradeSelect
             v-model="form.upgrades.fuelAndAir.intercooler"
             label="Intercooler"
           />

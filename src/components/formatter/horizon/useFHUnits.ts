@@ -14,9 +14,9 @@ import {
 import { UseGlobalUnits } from '../../../lib/useGlobalUnits';
 import useLocalStorageState from '../../../lib/useLocalStorageState';
 
-import { FMSetup } from './FMSetup';
+import { FHSetup } from './FHSetup';
 
-export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnits>) {
+export default function useFHUnits(form: FHSetup, globalUnits: Ref<UseGlobalUnits>) {
   function setStatsUnits(globalUnit: GlobalUnit) {
     if (globalUnit === 'Metric') {
       form.stats.hp = convertTo(form.stats.hp, PowerUnit.kw, 0);
@@ -36,7 +36,6 @@ export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnit
     springs: form.tune.springs.units,
     rideHeight: form.tune.rideHeight.units,
     aero: form.tune.aero.units,
-    rollCenterHeightOffset: form.tune.rollCenterHeightOffset.units,
   }));
 
   watch(
@@ -47,13 +46,11 @@ export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnit
         form.tune.springs.units = SpringRateUnit.kgfmm;
         form.tune.rideHeight.units = LengthUnit.cm;
         form.tune.aero.units = ForceUnit.kgf;
-        form.tune.rollCenterHeightOffset.units = LengthUnit.cm;
       } else {
         form.tune.tires.units = PressureUnit.psi;
         form.tune.springs.units = SpringRateUnit.lbfin;
         form.tune.rideHeight.units = LengthUnit.in;
         form.tune.aero.units = ForceUnit.lbf;
-        form.tune.rollCenterHeightOffset.units = LengthUnit.in;
       }
 
       // Only convert if "Convert values when changed" is checked
@@ -63,12 +60,11 @@ export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnit
     },
   );
 
-  const stored = useLocalStorageState('FM_UNITS', units.value);
+  const stored = useLocalStorageState('FH_UNITS', units.value);
   form.tune.tires.units = stored.value.tires;
   form.tune.springs.units = stored.value.springs;
   form.tune.rideHeight.units = stored.value.rideHeight;
   form.tune.aero.units = stored.value.aero;
-  form.tune.rollCenterHeightOffset.units = stored.value.rollCenterHeightOffset;
 
   watch(units, (current) => {
     stored.value = current;
@@ -103,14 +99,6 @@ export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnit
     (current) => {
       form.tune.aero.front = convertTo(form.tune.aero.front, current, 1);
       form.tune.aero.rear = convertTo(form.tune.aero.rear, current, 1);
-    },
-  );
-
-  watch(
-    () => form.tune.rollCenterHeightOffset.units,
-    (current) => {
-      form.tune.rollCenterHeightOffset.front = convertTo(form.tune.rollCenterHeightOffset.front, current, 1);
-      form.tune.rollCenterHeightOffset.rear = convertTo(form.tune.rollCenterHeightOffset.rear, current, 1);
     },
   );
 }

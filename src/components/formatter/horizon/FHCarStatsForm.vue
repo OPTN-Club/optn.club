@@ -42,7 +42,7 @@ watch(() => form.stats.classification, (current) => {
 
 </script>
 <template>
-  <section>
+  <section class="items-stretch">
     <div class="heading">
       <h2>Car</h2>
       <p>Which beast have you tamed?</p>

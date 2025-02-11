@@ -1,8 +1,4 @@
-import {
-  computed,
-  ComputedRef,
-  Ref,
-} from 'vue';
+import { computed, ComputedRef, Ref } from 'vue';
 
 import { DriveType, TransmissionUpgrade } from '../../../lib/types';
 
@@ -50,9 +46,9 @@ export function useFHEnabledControls(form: FHSetup) {
       count: getGearCount(form.build.drivetrain.transmission),
     },
     diff: {
-      front: [DriveType.awd, DriveType.fwd].includes(form.build.conversions.drivetrain),
-      rear: [DriveType.awd, DriveType.rwd].includes(form.build.conversions.drivetrain),
-      center: DriveType.awd === form.build.conversions.drivetrain,
+      front: [DriveType.stock, DriveType.awd, DriveType.fwd].includes(form.build.conversions.drivetrain),
+      rear: [DriveType.stock, DriveType.awd, DriveType.rwd].includes(form.build.conversions.drivetrain),
+      center: [DriveType.stock, DriveType.awd].includes(form.build.conversions.drivetrain),
     },
   }));
   return enabled;

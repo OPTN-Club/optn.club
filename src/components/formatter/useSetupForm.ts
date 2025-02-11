@@ -1,10 +1,4 @@
-import {
-  computed,
-  ComputedRef,
-  reactive,
-  Ref,
-  watch,
-} from 'vue';
+import { computed, ComputedRef, reactive, Ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { FormattingFormProps } from '../../lib/types';
@@ -18,12 +12,16 @@ interface UseFormattingForm<T> {
   reset(): void;
 }
 
-export default function useSetupForm<T extends object>(props: FormattingFormProps, blankFormFactory: () => T) {
+export default function useSetupForm<T extends object>(
+  props: FormattingFormProps,
+  blankFormFactory: () => T,
+  useLegacyDeserialization: boolean = false,
+) {
   const router = useRouter();
 
   const encoder = useFormEncoder<T>(blankFormFactory);
 
-  const form: T = reactive(encoder.decode(props.encodedForm)) as T;
+  const form: T = reactive(encoder.decode(props.encodedForm, useLegacyDeserialization)) as T;
 
   const globalUnits = useGlobalUnitsProvider();
 
@@ -31,6 +29,8 @@ export default function useSetupForm<T extends object>(props: FormattingFormProp
 
   watch(encodedForm, (current, old) => {
     if (current !== old) {
+      console.log('Updated JSON: ', JSON.stringify(form));
+
       router.replace({
         params: {
           encodedForm: current,

@@ -249,8 +249,8 @@ function getFMDefaultFormV2(): FMSetup {
       },
       tires: {
         width: {
-          front: 'Stock',
-          rear: 'Stock',
+          front: '',
+          rear: '',
         },
         compound: FMTireCompound.stock,
         trackWidth: {
@@ -261,8 +261,8 @@ function getFMDefaultFormV2(): FMSetup {
       wheels: {
         style: '',
         size: {
-          front: 'Stock',
-          rear: 'Stock',
+          front: '',
+          rear: '',
         },
       },
       drivetrain: {
@@ -272,11 +272,11 @@ function getFMDefaultFormV2(): FMSetup {
         driveline: Upgrade.stock,
       },
       aeroAndAppearance: {
-        frontBumper: 'Stock',
-        rearBumper: 'N/A',
-        rearWing: 'Stock',
-        sideSkirts: 'N/A',
-        hood: 'N/A',
+        frontBumper: '',
+        rearBumper: '',
+        rearWing: '',
+        sideSkirts: '',
+        hood: '',
       },
       conversions: {
         aspiration: '',
@@ -354,8 +354,8 @@ function getFMDefaultFormV2(): FMSetup {
       },
       brake: {
         na: false,
-        bias: '50',
-        pressure: '100',
+        bias: '',
+        pressure: '',
       },
       diff: {
         front: {
@@ -366,13 +366,13 @@ function getFMDefaultFormV2(): FMSetup {
           accel: '',
           decel: '',
         },
-        center: '50',
+        center: '',
         na: false,
       },
       steeringWheel: {
         na: true,
-        ffbScale: '100',
-        steeringLockRange: '900',
+        ffbScale: '',
+        steeringLockRange: '',
       },
     },
   };

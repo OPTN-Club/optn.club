@@ -38,7 +38,7 @@ export const multipliersFromMetric: Record<string, number> = {
   [PressureUnit.bar]: 14.503773773,
   [ForceUnit.kgf]: 2.20462262185,
   [WeightUnit.kg]: 2.20462262185,
-  [SpringRateUnit.kgfmm]: 5.59974147870,
+  [SpringRateUnit.kgfmm]: 5.5997414787,
   [LengthUnit.cm]: 0.3937007874157,
   [SpeedUnit.kph]: 0.62137119223733,
   [PowerUnit.kw]: 1.341022089595,
@@ -47,14 +47,17 @@ export const multipliersFromMetric: Record<string, number> = {
 
 export function convert<T extends UnitOfMeasure>(value: string | number, from: T, to: T, precision = 1): number {
   const valueFloat = ensureFloat(value);
-  const converted = from in multipliersFromMetric
-    ? valueFloat * multipliersFromMetric[from]
-    : valueFloat / multipliersFromMetric[to];
+  const converted =
+    from in multipliersFromMetric ? valueFloat * multipliersFromMetric[from] : valueFloat / multipliersFromMetric[to];
 
   return Number(converted.toFixed(precision));
 }
 
-export function getAllUnitValues<U extends UnitOfMeasure>(value: string | number, from: U, precision = 1): UnitOfMeasureValues<U, number> {
+export function getAllUnitValues<U extends UnitOfMeasure>(
+  value: string | number,
+  from: U,
+  precision = 1,
+): UnitOfMeasureValues<U, number> {
   const to = switchUnit(from);
   const converted = convert(value, from, to, precision);
   return {
@@ -64,6 +67,7 @@ export function getAllUnitValues<U extends UnitOfMeasure>(value: string | number
 }
 
 export function convertTo<T extends UnitOfMeasure>(value: string | number, to: T, precision = 0): string {
+  if (value === 0) return '0';
   if (!value) return '';
   return convert(value, switchUnit(to), to, precision).toString();
 }
