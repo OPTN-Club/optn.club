@@ -230,8 +230,8 @@ export default function getFHDefaultFormV1(): FHSetup {
       },
       brake: {
         na: false,
-        bias: '50',
-        pressure: '100',
+        bias: '',
+        pressure: '',
       },
       diff: {
         front: {
@@ -242,15 +242,15 @@ export default function getFHDefaultFormV1(): FHSetup {
           accel: '',
           decel: '',
         },
-        center: '50',
+        center: '',
         na: false,
       },
     },
     build: {
       conversions: {
-        engine: 'Stock',
-        drivetrain: DriveType.awd,
-        aspiration: 'Stock',
+        engine: '',
+        drivetrain: DriveType.stock,
+        aspiration: '',
         bodyKit: '',
       },
       engine: {
@@ -276,9 +276,9 @@ export default function getFHDefaultFormV1(): FHSetup {
       },
       platformAndHandling: {
         brakes: Upgrade.stock,
-        springs: FullUpgrade.race,
-        frontArb: Upgrade.race,
-        rearArb: Upgrade.race,
+        springs: FullUpgrade.stock,
+        frontArb: Upgrade.stock,
+        rearArb: Upgrade.stock,
         chassisReinforcement: Upgrade.stock,
         weightReduction: Upgrade.stock,
       },
@@ -286,21 +286,21 @@ export default function getFHDefaultFormV1(): FHSetup {
         clutch: Upgrade.stock,
         transmission: TransmissionUpgrade.stock,
         driveline: Upgrade.stock,
-        differential: FullUpgrade.race,
+        differential: FullUpgrade.stock,
       },
       tiresAndRims: {
         compound: TireCompound.stock,
         width: {
-          front: 'Stock',
-          rear: 'Stock',
+          front: '',
+          rear: '',
         },
         rimStyle: {
           type: RimStyleType.stock,
           name: '',
         },
         rimSize: {
-          front: 'Stock',
-          rear: 'Stock',
+          front: '',
+          rear: '',
         },
         trackWidth: {
           front: TrackWidthType.stock,
@@ -312,11 +312,11 @@ export default function getFHDefaultFormV1(): FHSetup {
         },
       },
       aeroAndAppearance: {
-        frontBumper: 'Stock',
-        rearBumper: 'N/A',
-        rearWing: 'Stock',
-        sideSkirts: 'N/A',
-        hood: 'N/A',
+        frontBumper: '',
+        rearBumper: '',
+        rearWing: '',
+        sideSkirts: '',
+        hood: '',
       },
     },
     stats: {
