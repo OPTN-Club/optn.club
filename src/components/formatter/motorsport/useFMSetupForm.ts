@@ -1,20 +1,15 @@
-import {
-  computed,
-  ComputedRef,
-  inject,
-  provide,
-} from 'vue';
+import { computed, ComputedRef, inject, provide } from 'vue';
 
 import { DriveType, FormattingFormProps } from '../../../lib/types';
 import { UseUpgrades } from '../../../lib/useUpgrades';
 import useSetupForm from '../useSetupForm';
 
-import { FMSetup, getLatestDefaultForm } from './FMSetup';
+import { FMFormVersion, FMSetup, FMSetupV3, getFMFormFactory } from './FMSetup';
 import useFMEnabledControls from './useFMEnabledControls';
 import useFMUnits from './useFMUnits';
 
 interface UseFMFormattingForm {
-  form: FMSetup;
+  form: FMSetup | FMSetupV3;
   driveType: ComputedRef<DriveType>;
   show: ComputedRef<UseUpgrades>;
   encoded: ComputedRef<string>;
@@ -24,12 +19,8 @@ interface UseFMFormattingForm {
 const providerKey = 'fm-formatting-form';
 
 export function useFMSetupFormProvider(props: FormattingFormProps) {
-  const {
-    form,
-    encoded,
-    globalUnits,
-    reset,
-  } = useSetupForm(props, getLatestDefaultForm);
+  const formFactory = getFMFormFactory(props.version as FMFormVersion);
+  const { form, encoded, globalUnits, reset } = useSetupForm(props, formFactory);
 
   const driveType = computed(() => form.upgrades.conversions.drivetrain);
 

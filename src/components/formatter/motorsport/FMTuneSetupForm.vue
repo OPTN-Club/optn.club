@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-import { PressureUnit } from '../../../lib/types';
+import { DriveType, FMFullUpgrade, PressureUnit } from '../../../lib/types';
 import { addSuffix } from '../../../lib/utils';
 import AccelDecelInputs from '../../AccelDecelInputs.vue';
 import CheckboxControl from '../../CheckboxControl.vue';
@@ -114,6 +114,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
           <NumberInput
             v-model="form.tune.alignment.steeringAngle"
             label="Steering Angle"
+            :disabled="![FMFullUpgrade.stock, FMFullUpgrade.drift].includes(form.upgrades.platformAndHandling.springs)"
             min="15"
             max="75"
             step="1"
@@ -325,7 +326,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
             min="0"
             max="100"
             step="1"
-            :disabled="form.tune.diff.na"
+            :disabled="form.tune.diff.na || form.upgrades.conversions.drivetrain === DriveType.rwd"
           />
           <AccelDecelInputs
             v-model="form.tune.diff.rear"
@@ -333,7 +334,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
             min="0"
             max="100"
             step="1"
-            :disabled="form.tune.diff.na"
+            :disabled="form.tune.diff.na || form.upgrades.conversions.drivetrain === DriveType.fwd"
           />
         </div>
         <div class="set-upgrades">
@@ -343,7 +344,7 @@ const tirePressureStep = computed(() => (form.tune.tires.units === PressureUnit.
             min="0"
             max="100"
             step="1"
-            :disabled="form.tune.diff.na"
+            :disabled="form.tune.diff.na || ![DriveType.stock, DriveType.awd].includes(form.upgrades.conversions.drivetrain)"
           />
         </div>
       </div>

@@ -13,6 +13,7 @@ import InputControl from '../../InputControl.vue';
 import LimitedUpgradeSelect from '../../LimitedUpgradeSelect.vue';
 import UpgradeSelect from '../../UpgradeSelect.vue';
 
+import { EngineUpgrades, PerformanceUpgrades } from './FMSetup';
 import { useFMSetupForm } from './useFMSetupForm';
 
 const { form } = useFMSetupForm();
@@ -116,23 +117,23 @@ Conversion
             v-model="form.upgrades.fuelAndAir.restrictorPlate"
             label="Restrictor Plate"
           />
-          <LimitedUpgradeSelect
+          <UpgradeSelect
             v-model="form.upgrades.fuelAndAir.centrifugalSupercharger"
             label="Centrifugal Supercharger"
           />
-          <LimitedUpgradeSelect
+          <UpgradeSelect
             v-model="form.upgrades.fuelAndAir.singleTurbo"
             label="Turbo"
           />
-          <LimitedUpgradeSelect
+          <UpgradeSelect
             v-model="form.upgrades.fuelAndAir.twinTurbo"
             label="Twin Turbo"
           />
-          <LimitedUpgradeSelect
+          <UpgradeSelect
             v-model="form.upgrades.fuelAndAir.supercharger"
             label="Supercharger"
           />
-          <LimitedUpgradeSelect
+          <UpgradeSelect
             v-model="form.upgrades.fuelAndAir.intercooler"
             label="Intercooler"
           />
@@ -158,12 +159,16 @@ Conversion
             label="Pistons"
           />
           <UpgradeSelect
+            v-model="(form.upgrades.engine as EngineUpgrades).rotorsAndCompression"
+            label="Rotors and Compression"
+          />
+          <UpgradeSelect
             v-model="form.upgrades.engine.flywheel"
             label="Flywheel"
           />
           <UpgradeSelect
             v-model="form.upgrades.engine.oilAndCooling"
-            label="Oil And Cooling"
+            label="Oil and Cooling"
           />
           <UpgradeSelect
             v-model="form.upgrades.engine.motorAndBattery"

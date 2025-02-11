@@ -4,7 +4,7 @@ import { mangleValueMap } from './mangle-lookup';
 
 const VALUE_COUNT_BEFORE_TIRE_PROFILE_UPDATE = 98;
 const VALUE_COUNT_BEFORE_MOTOR_AND_BATTERY_UPDATE = 100;
-const TIRE_PROFILE_SIZE_INDEX = 39;
+const TIRE_PROFILE_SIZE_INDEX = 38;
 const MOTOR_AND_BATTERY_INDEX = 24;
 
 export interface FormEncoderOptions {
@@ -21,9 +21,7 @@ export interface FlattenedObject {
   [key: string]: string | number | string[] | number[] | boolean;
 }
 
-export default function useFormEncoder<T>(
-  blankFormFactory: () => T,
-) {
+export default function useFormEncoder<T>(blankFormFactory: () => T) {
   function getBlankForm(): GenericForm {
     const blankForm = blankFormFactory();
     return blankForm as unknown as GenericForm;
@@ -47,16 +45,17 @@ export default function useFormEncoder<T>(
     return compressed;
   }
 
-  function decode(encoded?: string): T {
+  function decode(encoded: string = '', useLegacyDeserialization: boolean = false): T {
     const defaultForm = getBlankForm();
 
     if (!encoded) return defaultForm as T;
 
     const json = decompressFromBase64(encoded);
     if (!json) {
-      throw new Error('Decompressed string is empty');
+      console.error('Decompressed string is empty');
+      return defaultForm as T;
     }
-    const flattened = deserializeFlatObject(json, flattenedKeys);
+    const flattened = deserializeFlatObject(json, flattenedKeys, useLegacyDeserialization);
     const form = unflattenFormInto(flattened, defaultForm);
     if (!form || !Object.keys(form).length) {
       throw new Error('Undefined or empty object.');
@@ -86,17 +85,18 @@ export default function useFormEncoder<T>(
     return flattened;
   }
 
-  function unflattenFormInto(
-    source: FlattenedObject,
-    target: GenericForm,
-    path: string[] = [],
-  ): GenericForm {
+  function unflattenFormInto(source: FlattenedObject, target: GenericForm, path: string[] = []): GenericForm {
     const keys = Object.keys(target);
     keys.forEach((key) => {
       const valuePath = [...path, key];
       const targetValue = target[key];
 
-      if (typeof targetValue === 'boolean' || typeof targetValue === 'string' || typeof targetValue === 'number' || Array.isArray(targetValue)) {
+      if (
+        typeof targetValue === 'boolean' ||
+        typeof targetValue === 'string' ||
+        typeof targetValue === 'number' ||
+        Array.isArray(targetValue)
+      ) {
         const flattenedKey = valuePath.join('.');
         const sourceValue = source[flattenedKey];
         target[key] = sourceValue;
@@ -114,15 +114,13 @@ export default function useFormEncoder<T>(
   };
 }
 
-const unmangleValueMap: Record<string, string> = Object
-  .keys(mangleValueMap)
-  .reduce(
-    (prev, cur) => ({
-      ...prev,
-      [mangleValueMap[cur]]: cur,
-    }),
-    {},
-  );
+const unmangleValueMap: Record<string, string> = Object.keys(mangleValueMap).reduce(
+  (prev, cur) => ({
+    ...prev,
+    [mangleValueMap[cur]]: cur,
+  }),
+  {},
+);
 
 function mangleValue(value: unknown) {
   if (typeof value === 'boolean') return value ? 't' : 'f';
@@ -157,23 +155,29 @@ function serializeFlatObject(flattenedObj: FlattenedObject): string {
   return JSON.stringify(values);
 }
 
-function deserializeFlatObject(value: string, flattenedKeys: string[]): FlattenedObject {
+function deserializeFlatObject(
+  value: string,
+  flattenedKeys: string[],
+  useLegacyDeserialization: boolean = false,
+): FlattenedObject {
   const values = JSON.parse(value) as never[];
 
-  /**
-   * Added Tire Profile Size
-   * If a link is before this was added, we need to
-   * insert the values into the parsed array
-   */
-  if (values.length === VALUE_COUNT_BEFORE_TIRE_PROFILE_UPDATE) {
-    values.splice(TIRE_PROFILE_SIZE_INDEX, 0, 's' as never, 's' as never);
-  }
+  if (useLegacyDeserialization) {
+    /**
+     * Added Tire Profile Size
+     * If a link is before this was added, we need to
+     * insert the values into the parsed array
+     */
+    if (values.length === VALUE_COUNT_BEFORE_TIRE_PROFILE_UPDATE) {
+      values.splice(TIRE_PROFILE_SIZE_INDEX, 0, 's' as never, 's' as never);
+    }
 
-  /**
-   * Added Motor and Battery
-   */
-  if (values.length === VALUE_COUNT_BEFORE_MOTOR_AND_BATTERY_UPDATE) {
-    values.splice(MOTOR_AND_BATTERY_INDEX, 0, 'na' as never);
+    /**
+     * Added Motor and Battery
+     */
+    if (values.length === VALUE_COUNT_BEFORE_MOTOR_AND_BATTERY_UPDATE) {
+      values.splice(MOTOR_AND_BATTERY_INDEX, 0, 'na' as never);
+    }
   }
 
   const flattenedForm: FlattenedObject = {};

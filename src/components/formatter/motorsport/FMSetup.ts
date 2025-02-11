@@ -67,11 +67,11 @@ export interface FuelAndAirUpgrades {
   restrictorPlate: string;
   fuelSystem: Upgrade;
   ignition: Upgrade;
-  singleTurbo: LimitedUpgrade;
-  twinTurbo: LimitedUpgrade;
-  supercharger: LimitedUpgrade; // sport and race only
-  centrifugalSupercharger: LimitedUpgrade; // sport and race only
-  intercooler: LimitedUpgrade;
+  singleTurbo: Upgrade;
+  twinTurbo: Upgrade;
+  supercharger: Upgrade; // sport and race only
+  centrifugalSupercharger: Upgrade; // sport and race only
+  intercooler: Upgrade;
 }
 
 export interface EngineUpgrades {
@@ -82,7 +82,10 @@ export interface EngineUpgrades {
   displacement: Upgrade;
   pistons: Upgrade;
   motorAndBattery: Upgrade;
+  rotorsAndCompression: Upgrade;
 }
+
+export interface V2EngineUpgrades extends Omit<EngineUpgrades, 'rotorsAndCompression'> {}
 
 export interface PlatformAndHandlingUpgrades {
   brakes: Upgrade;
@@ -154,6 +157,10 @@ export interface PerformanceUpgrades {
   conversions: ConversionSettings;
 }
 
+export interface V2PerformanceUpgrades extends Omit<PerformanceUpgrades, 'engine'> {
+  engine: V2EngineUpgrades;
+}
+
 export interface FMSetupStatistics {
   pi: number;
   classification: FMPIClass;
@@ -173,8 +180,12 @@ export interface FMSetup {
   make: string;
   model: string;
   stats: FMSetupStatistics;
-  upgrades: PerformanceUpgrades;
+  upgrades: V2PerformanceUpgrades;
   tune: TuneSettings;
+}
+
+export interface FMSetupV3 extends Omit<FMSetup, 'upgrades'> {
+  upgrades: PerformanceUpgrades;
 }
 
 export function getEncoderOptions(version: string): FormEncoderOptions {
@@ -186,14 +197,22 @@ export function getFMDefaultForm(version: string): GenericForm {
   return creator() as unknown as GenericForm;
 }
 
+export function getFMFormFactory(version: FMFormVersion = 'v2'): () => FMSetup | FMSetupV3 {
+  const creator = defaultFormMap[version] ?? defaultFormMap.v2;
+  return creator;
+}
+
 export const getLatestDefaultForm = getFMDefaultFormV2;
 
+export type FMFormVersion = 'v2' | 'v3';
+
 interface DefaultFormMap<T> {
-  [key: string]: (() => T);
+  [key: string]: () => T;
 }
 
 const defaultFormMap: DefaultFormMap<FMSetup> = {
   v2: getFMDefaultFormV2,
+  v3: getFMDefaultFormV3,
 };
 
 function getFMDefaultFormV2(): FMSetup {
@@ -223,11 +242,11 @@ function getFMDefaultFormV2(): FMSetup {
         airFilter: Upgrade.stock,
         intakeManifold: Upgrade.stock,
         restrictorPlate: '',
-        centrifugalSupercharger: LimitedUpgrade.stock,
-        singleTurbo: LimitedUpgrade.stock,
-        twinTurbo: LimitedUpgrade.stock,
-        supercharger: LimitedUpgrade.stock,
-        intercooler: LimitedUpgrade.stock,
+        centrifugalSupercharger: Upgrade.stock,
+        singleTurbo: Upgrade.stock,
+        twinTurbo: Upgrade.stock,
+        supercharger: Upgrade.stock,
+        intercooler: Upgrade.stock,
       },
       engine: {
         camshaft: Upgrade.stock,
@@ -249,8 +268,8 @@ function getFMDefaultFormV2(): FMSetup {
       },
       tires: {
         width: {
-          front: 'Stock',
-          rear: 'Stock',
+          front: '',
+          rear: '',
         },
         compound: FMTireCompound.stock,
         trackWidth: {
@@ -261,8 +280,8 @@ function getFMDefaultFormV2(): FMSetup {
       wheels: {
         style: '',
         size: {
-          front: 'Stock',
-          rear: 'Stock',
+          front: '',
+          rear: '',
         },
       },
       drivetrain: {
@@ -272,11 +291,11 @@ function getFMDefaultFormV2(): FMSetup {
         driveline: Upgrade.stock,
       },
       aeroAndAppearance: {
-        frontBumper: 'Stock',
-        rearBumper: 'N/A',
-        rearWing: 'Stock',
-        sideSkirts: 'N/A',
-        hood: 'N/A',
+        frontBumper: '',
+        rearBumper: '',
+        rearWing: '',
+        sideSkirts: '',
+        hood: '',
       },
       conversions: {
         aspiration: '',
@@ -354,8 +373,8 @@ function getFMDefaultFormV2(): FMSetup {
       },
       brake: {
         na: false,
-        bias: '50',
-        pressure: '100',
+        bias: '',
+        pressure: '',
       },
       diff: {
         front: {
@@ -366,16 +385,27 @@ function getFMDefaultFormV2(): FMSetup {
           accel: '',
           decel: '',
         },
-        center: '50',
+        center: '',
         na: false,
       },
       steeringWheel: {
         na: true,
-        ffbScale: '100',
-        steeringLockRange: '900',
+        ffbScale: '',
+        steeringLockRange: '',
       },
     },
   };
 
   return defaultForm;
+}
+
+function getFMDefaultFormV3(): FMSetupV3 {
+  const v2Form = getFMDefaultFormV2();
+  const engine: Partial<EngineUpgrades> = {
+    rotorsAndCompression: Upgrade.na,
+  };
+
+  Object.assign(v2Form.upgrades.engine, engine);
+
+  return v2Form as FMSetupV3;
 }

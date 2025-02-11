@@ -9,16 +9,9 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "useDefineForClassFields": true,
-    "lib": [
-      "esnext",
-      "dom"
-    ],
-    "noUnusedLocals": false,
+    "lib": ["esnext", "dom"],
+    "noUnusedLocals": false
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": ["src/**/*.spec.ts"]
 }

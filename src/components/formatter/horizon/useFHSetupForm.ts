@@ -1,9 +1,4 @@
-import {
-  computed,
-  ComputedRef,
-  inject,
-  provide,
-} from 'vue';
+import { computed, ComputedRef, inject, provide } from 'vue';
 
 import { DriveType, FormattingFormProps } from '../../../lib/types';
 import useSetupForm from '../useSetupForm';
@@ -11,6 +6,7 @@ import useSetupForm from '../useSetupForm';
 import { getDrivetrain } from './fh-reddit-generator';
 import { FHSetup, getLatestDefaultForm } from './FHSetup';
 import { useFHEnabledControls, UseUpgrades } from './useFHEnabledControls';
+import useFHUnits from './useFHUnits';
 
 interface UseFHFormattingForm {
   form: FHSetup;
@@ -23,16 +19,13 @@ interface UseFHFormattingForm {
 const providerKey = 'fh-formatting-form';
 
 export function useFHSetupFormProvider(props: FormattingFormProps) {
-  const {
-    form,
-    encoded,
-    globalUnits,
-    reset,
-  } = useSetupForm(props, getLatestDefaultForm);
+  const { form, encoded, globalUnits, reset } = useSetupForm(props, getLatestDefaultForm, true);
 
   const driveType = computed(() => getDrivetrain(form.build));
 
   const show = useFHEnabledControls(form);
+
+  useFHUnits(form, globalUnits);
 
   const state: UseFHFormattingForm = {
     form,
