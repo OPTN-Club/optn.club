@@ -79,6 +79,9 @@ export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnit
   watch(
     () => form.tune.tires.units,
     (current) => {
+      // Only convert if "Convert values when changed" is checked
+      if (!globalUnits.value.convertOnUnitChange) return;
+
       form.tune.tires.front = convertTo(form.tune.tires.front, current, 1);
       form.tune.tires.rear = convertTo(form.tune.tires.rear, current, 1);
     },
@@ -87,6 +90,9 @@ export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnit
   watch(
     () => form.tune.springs.units,
     (current) => {
+      // Only convert if "Convert values when changed" is checked
+      if (!globalUnits.value.convertOnUnitChange) return;
+
       form.tune.springs.front = convertTo(form.tune.springs.front, current, 1);
       form.tune.springs.rear = convertTo(form.tune.springs.rear, current, 1);
     },
@@ -95,6 +101,9 @@ export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnit
   watch(
     () => form.tune.rideHeight.units,
     (current) => {
+      // Only convert if "Convert values when changed" is checked
+      if (!globalUnits.value.convertOnUnitChange) return;
+
       form.tune.rideHeight.front = convertTo(form.tune.rideHeight.front, current, 1);
       form.tune.rideHeight.rear = convertTo(form.tune.rideHeight.rear, current, 1);
     },
@@ -103,6 +112,9 @@ export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnit
   watch(
     () => form.tune.aero.units,
     (current) => {
+      // Only convert if "Convert values when changed" is checked
+      if (!globalUnits.value.convertOnUnitChange) return;
+
       form.tune.aero.front = convertTo(form.tune.aero.front, current, 1);
       form.tune.aero.rear = convertTo(form.tune.aero.rear, current, 1);
     },
@@ -111,6 +123,9 @@ export default function useFMUnits(form: FMSetup, globalUnits: Ref<UseGlobalUnit
   watch(
     () => form.tune.rollCenterHeightOffset.units,
     (current) => {
+      // Only convert if "Convert values when changed" is checked
+      if (!globalUnits.value.convertOnUnitChange) return;
+
       form.tune.rollCenterHeightOffset.front = convertTo(form.tune.rollCenterHeightOffset.front, current, 1);
       form.tune.rollCenterHeightOffset.rear = convertTo(form.tune.rollCenterHeightOffset.rear, current, 1);
     },

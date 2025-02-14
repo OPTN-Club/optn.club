@@ -17,7 +17,7 @@ import useLocalStorageState from '../../../lib/useLocalStorageState';
 import { FHSetup } from './FHSetup';
 
 export default function useFHUnits(form: FHSetup, globalUnits: Ref<UseGlobalUnits>) {
-  function setStatsUnits(globalUnit: GlobalUnit) {
+  function convertValues(globalUnit: GlobalUnit) {
     if (globalUnit === 'Metric') {
       form.stats.hp = convertTo(form.stats.hp, PowerUnit.kw, 0);
       form.stats.torque = convertTo(form.stats.torque, ForceUnit.kgf, 0);
@@ -31,6 +31,25 @@ export default function useFHUnits(form: FHSetup, globalUnits: Ref<UseGlobalUnit
     }
   }
 
+  function setUnits(unit: GlobalUnit): void {
+    if (unit === 'Metric') {
+      form.tune.tires.units = PressureUnit.bar;
+      form.tune.springs.units = SpringRateUnit.kgfmm;
+      form.tune.rideHeight.units = LengthUnit.cm;
+      form.tune.aero.units = ForceUnit.kgf;
+    } else {
+      form.tune.tires.units = PressureUnit.psi;
+      form.tune.springs.units = SpringRateUnit.lbfin;
+      form.tune.rideHeight.units = LengthUnit.in;
+      form.tune.aero.units = ForceUnit.lbf;
+    }
+
+    // Only convert if "Convert values when changed" is checked
+    if (globalUnits.value.convertOnUnitChange) {
+      convertValues(unit);
+    }
+  }
+
   const units = computed(() => ({
     tires: form.tune.tires.units,
     springs: form.tune.springs.units,
@@ -41,22 +60,7 @@ export default function useFHUnits(form: FHSetup, globalUnits: Ref<UseGlobalUnit
   watch(
     () => globalUnits.value.globalUnit,
     (current) => {
-      if (current === 'Metric') {
-        form.tune.tires.units = PressureUnit.bar;
-        form.tune.springs.units = SpringRateUnit.kgfmm;
-        form.tune.rideHeight.units = LengthUnit.cm;
-        form.tune.aero.units = ForceUnit.kgf;
-      } else {
-        form.tune.tires.units = PressureUnit.psi;
-        form.tune.springs.units = SpringRateUnit.lbfin;
-        form.tune.rideHeight.units = LengthUnit.in;
-        form.tune.aero.units = ForceUnit.lbf;
-      }
-
-      // Only convert if "Convert values when changed" is checked
-      if (globalUnits.value.convertOnUnitChange) {
-        setStatsUnits(current);
-      }
+      setUnits(current);
     },
   );
 
@@ -73,6 +77,9 @@ export default function useFHUnits(form: FHSetup, globalUnits: Ref<UseGlobalUnit
   watch(
     () => form.tune.tires.units,
     (current) => {
+      // Only convert if "Convert values when changed" is checked
+      if (!globalUnits.value.convertOnUnitChange) return;
+
       form.tune.tires.front = convertTo(form.tune.tires.front, current, 1);
       form.tune.tires.rear = convertTo(form.tune.tires.rear, current, 1);
     },
@@ -81,6 +88,9 @@ export default function useFHUnits(form: FHSetup, globalUnits: Ref<UseGlobalUnit
   watch(
     () => form.tune.springs.units,
     (current) => {
+      // Only convert if "Convert values when changed" is checked
+      if (!globalUnits.value.convertOnUnitChange) return;
+
       form.tune.springs.front = convertTo(form.tune.springs.front, current, 1);
       form.tune.springs.rear = convertTo(form.tune.springs.rear, current, 1);
     },
@@ -89,6 +99,9 @@ export default function useFHUnits(form: FHSetup, globalUnits: Ref<UseGlobalUnit
   watch(
     () => form.tune.rideHeight.units,
     (current) => {
+      // Only convert if "Convert values when changed" is checked
+      if (!globalUnits.value.convertOnUnitChange) return;
+
       form.tune.rideHeight.front = convertTo(form.tune.rideHeight.front, current, 1);
       form.tune.rideHeight.rear = convertTo(form.tune.rideHeight.rear, current, 1);
     },
@@ -97,6 +110,9 @@ export default function useFHUnits(form: FHSetup, globalUnits: Ref<UseGlobalUnit
   watch(
     () => form.tune.aero.units,
     (current) => {
+      // Only convert if "Convert values when changed" is checked
+      if (!globalUnits.value.convertOnUnitChange) return;
+
       form.tune.aero.front = convertTo(form.tune.aero.front, current, 1);
       form.tune.aero.rear = convertTo(form.tune.aero.rear, current, 1);
     },
