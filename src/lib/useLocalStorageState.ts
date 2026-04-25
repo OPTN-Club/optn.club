@@ -1,8 +1,4 @@
-import {
-  Ref,
-  ref,
-  watch,
-} from 'vue';
+import { Ref, ref, watch } from 'vue';
 
 export default function useLocalStorageState<T>(key: string, defaultState: T) {
   const stored = localStorage.getItem(key);

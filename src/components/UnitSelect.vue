@@ -2,13 +2,7 @@
 import { sentenceCase } from 'change-case';
 import { computed } from 'vue';
 
-import {
-  ForceUnit,
-  LengthUnit,
-  PressureUnit,
-  SpringRateUnit,
-  WeightUnit,
-} from '../lib/types';
+import { ForceUnit, LengthUnit, PressureUnit, SpringRateUnit, WeightUnit } from '../lib/types';
 
 import SelectInput from './SelectInput.vue';
 

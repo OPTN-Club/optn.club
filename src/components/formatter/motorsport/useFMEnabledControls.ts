@@ -1,8 +1,4 @@
-import {
-  computed,
-  ComputedRef,
-  Ref,
-} from 'vue';
+import { computed, ComputedRef, Ref } from 'vue';
 
 import { DriveType, LimitedTransmissionUpgrade } from '../../../lib/types';
 
