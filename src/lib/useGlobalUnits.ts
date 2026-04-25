@@ -1,8 +1,4 @@
-import {
-  inject,
-  provide,
-  Ref,
-} from 'vue';
+import { inject, provide, Ref } from 'vue';
 
 import { GlobalUnit } from './types';
 import useLocalStorageState from './useLocalStorageState';

@@ -14,12 +14,7 @@ import {
 import { formatUnit, formatUnitHeaders } from '../../../lib/unitsOfMeasure';
 import { formatFloat, addSuffix as suffixize } from '../../../lib/utils';
 
-import {
-  BuildSectionUpgrades,
-  BuildSettings,
-  FHSetup,
-  TuneSettings,
-} from './FHSetup';
+import { BuildSectionUpgrades, BuildSettings, FHSetup, TuneSettings } from './FHSetup';
 
 const tableSeparator = '\n######\n';
 

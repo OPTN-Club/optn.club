@@ -1,10 +1,6 @@
 <script setup lang="ts">import { computed } from 'vue';
 
-import {
-  FrontRear,
-  TuneCalculatorResult,
-  TuneInputs,
-} from '../../lib/tune-calculator';
+import { FrontRear, TuneCalculatorResult, TuneInputs } from '../../lib/tune-calculator';
 
 const props = defineProps<{
   tune: TuneCalculatorResult;

@@ -1,11 +1,5 @@
 <script setup lang="ts">
-import {
-  DriveType,
-  RimStyleType,
-  TireCompound,
-  TrackWidthType,
-  TransmissionUpgrade,
-} from '../../../lib/types';
+import { DriveType, RimStyleType, TireCompound, TrackWidthType, TransmissionUpgrade } from '../../../lib/types';
 import { enumToOptions } from '../../../lib/utils';
 import EnumSelect from '../../EnumSelect.vue';
 import FrontRearInputs from '../../FrontRearInputs.vue';

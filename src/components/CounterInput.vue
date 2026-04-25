@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { v4 as uuid } from 'uuid';
-import {
-  computed,
-  onBeforeUnmount,
-  reactive,
-  watch,
-} from 'vue';
+import { computed, onBeforeUnmount, reactive, watch } from 'vue';
 
 import RepeatButton, { Modifiers } from './RepeatButton.vue';
 

@@ -1,10 +1,7 @@
-import {
-  computed,
-  ComputedRef,
-  Ref,
-} from 'vue';
+import { computed, ComputedRef, Ref } from 'vue';
 
 import { FHSetup } from '../components/formatter/horizon/FHSetup';
+
 import { DriveType, TransmissionUpgrade } from './types';
 
 const finalRatio = [

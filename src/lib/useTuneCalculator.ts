@@ -1,8 +1,4 @@
-import {
-  computed,
-  reactive,
-  watch,
-} from 'vue';
+import { computed, reactive, watch } from 'vue';
 
 import { FHPIClass } from '../components/formatter/horizon/FHSetup';
 
@@ -20,11 +16,7 @@ import {
   TuneModifiers,
   valueDeltas,
 } from './tune-calculator';
-import {
-  DriveType,
-  SpringRateUnit,
-  WeightUnit,
-} from './types';
+import { DriveType, SpringRateUnit, WeightUnit } from './types';
 
 const multipliers = {
   springs: {

@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue';
 
-import {
-  PowerUnit,
-  SpeedUnit,
-  TorqueUnit,
-  WeightUnit,
-} from '../../../lib/types';
+import { PowerUnit, SpeedUnit, TorqueUnit, WeightUnit } from '../../../lib/types';
 import { useGlobalUnits } from '../../../lib/useGlobalUnits';
 import EnumSelect from '../../EnumSelect.vue';
 import MakeModelSelect from '../../MakeModelSelect.vue';
