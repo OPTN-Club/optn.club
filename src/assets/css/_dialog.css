@@ -1,0 +1,28 @@
+.unit-dialog {
+  @apply bg-gunmetal
+    rounded
+    shadow-xl
+    shadow-black/60
+    max-w-sm
+    w-full
+    p-6;
+}
+
+.unit-dialog-title {
+  @apply text-ghost-white
+    text-xl
+    font-semibold
+    mb-3;
+}
+
+.unit-dialog-body {
+  @apply text-ghost-white/80
+    text-sm
+    mb-6;
+}
+
+.unit-dialog-actions {
+  @apply flex
+    gap-3
+    justify-end;
+}

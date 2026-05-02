@@ -1,8 +1,9 @@
-@import "./_tailwind.css";
-@import "./_scrollbars.css";
-@import "./_base.css";
-@import "./_layout.css";
-@import "./_inputs.css";
-@import "./_forms.css";
-@import "./_buttons.css";
-@import "./_header.css";
+@import './_tailwind.css';
+@import './_scrollbars.css';
+@import './_base.css';
+@import './_layout.css';
+@import './_inputs.css';
+@import './_forms.css';
+@import './_buttons.css';
+@import './_header.css';
+@import './_dialog.css';
