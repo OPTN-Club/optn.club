@@ -100,13 +100,13 @@ watch(() => form.stats.classification, (current) => {
         <div class="set-upgrades">
           <NumberInput
             v-model="form.stats.zeroToSixty"
-            label="0-60"
+            :label="globalUnits.globalUnit === 'Metric' ? '0-97' : '0-60'"
           >
             <template #suffix>sec</template>
           </NumberInput>
           <NumberInput
             v-model="form.stats.zeroToHundred"
-            label="0-100"
+            :label="globalUnits.globalUnit === 'Metric' ? '0-161' : '0-100'"
           >
             <template #suffix>sec</template>
           </NumberInput>
