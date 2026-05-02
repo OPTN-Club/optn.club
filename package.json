@@ -11,6 +11,7 @@
     "test": "vitest --environment jsdom"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.23",
     "change-case": "^4.1.2",
     "compression": "^1.8.1",
     "deep-object-diff": "^1.1.9",
