@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import GlobalUnitSelect from '../../GlobalUnitSelect.vue';
+import FH6GlobalUnitSelect from '../../FH6GlobalUnitSelect.vue';
+import UnitConversionDialog from '../../UnitConversionDialog.vue';
 
 import FH6BuildSetupForm from './FH6BuildSetupForm.vue';
 import FH6CarStatsForm from './FH6CarStatsForm.vue';
@@ -13,7 +14,7 @@ const props = defineProps<{
   encodedForm?: string;
 }>();
 
-useFH6SetupFormProvider(props);
+const { dialog } = useFH6SetupFormProvider(props);
 </script>
 
 <template>
@@ -26,7 +27,7 @@ useFH6SetupFormProvider(props);
 
   <div class="flex flex-col md:flex-row items-start">
     <form class="grow">
-      <GlobalUnitSelect />
+      <FH6GlobalUnitSelect />
       <FH6CarStatsForm />
       <FH6ShareCodesForm />
       <FH6BuildSetupForm />
@@ -34,4 +35,10 @@ useFH6SetupFormProvider(props);
     </form>
     <FH6FormattedTuneTextarea />
   </div>
+
+  <UnitConversionDialog
+    :open="dialog.isOpen.value"
+    @confirm="dialog.confirm()"
+    @cancel="dialog.cancel()"
+  />
 </template>
