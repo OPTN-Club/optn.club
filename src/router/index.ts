@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import AppHome from '../components/AppHome.vue';
 import TuningChart from '../components/chart/TuningChart.vue';
 import FHFormatter from '../components/formatter/horizon/FHFormatter.vue';
+import FH6Formatter from '../components/formatter/horizon6/FH6Formatter.vue';
 import FMFormatter from '../components/formatter/motorsport/FMFormatter.vue';
 import MakesAndModels from '../components/MakesAndModels.vue';
 
@@ -27,6 +28,15 @@ const router = createRouter({
           name: 'formatter-fm8',
           path: 'forza/motorsport/:version/:encodedForm?',
           component: FMFormatter,
+          props: (route) => ({
+            version: route.params.version,
+            encodedForm: route.params.encodedForm,
+          }),
+        },
+        {
+          name: 'formatter-fh6',
+          path: 'forza/horizon6/:version/:encodedForm?',
+          component: FH6Formatter,
           props: (route) => ({
             version: route.params.version,
             encodedForm: route.params.encodedForm,

@@ -9,7 +9,8 @@ import logoUrl from '../assets/OPTN_logo.png';
 import Urls from '../lib/urls';
 
 const route = useRoute();
-const formatterRouteNames = ['formatter-fh5', 'formatter-fm8'];
+const formatterRouteNames = ['formatter-fh5', 'formatter-fm8', 'formatter-fh6'];
+const showFH6Link = Date.now() >= new Date('2026-05-15T00:00:00.000Z').getTime();
 
 function isFormatterActive() {
   return formatterRouteNames.includes(route.name as string);
@@ -67,6 +68,25 @@ function isFormatterActive() {
             leaveTo="transform scale-95 opacity-0"
           >
             <MenuItems class="nav-dropdown-menu">
+              <MenuItem
+                v-if="showFH6Link"
+                v-slot="{ close }"
+              >
+                <router-link
+                  v-slot="{ href, navigate }"
+                  :to="{ name: 'formatter-fh6', params: { version: 'v1' } }"
+                  custom
+                >
+                  <a
+                    :href="href"
+                    class="nav-dropdown-item"
+                    :class="{ active: route.name === 'formatter-fh6' }"
+                    @click="close(); navigate($event)"
+                  >
+                    Forza Horizon 6
+                  </a>
+                </router-link>
+              </MenuItem>
               <MenuItem v-slot="{ close }">
                 <router-link
                   v-slot="{ href, navigate }"

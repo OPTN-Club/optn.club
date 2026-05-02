@@ -1,0 +1,55 @@
+import { computed } from 'vue';
+
+import { DriveType, TransmissionUpgrade } from '../../../lib/types';
+
+import { FH6Setup } from './FH6Setup';
+
+const finalRatio = [
+  TransmissionUpgrade.sport,
+  TransmissionUpgrade.race,
+  TransmissionUpgrade.raceSix,
+  TransmissionUpgrade.raceSeven,
+  TransmissionUpgrade.raceEight,
+  TransmissionUpgrade.raceNine,
+  TransmissionUpgrade.raceTen,
+];
+
+const gearCounts: Record<string, number> = {
+  [TransmissionUpgrade.race]: 6,
+  [TransmissionUpgrade.raceSix]: 6,
+  [TransmissionUpgrade.raceSeven]: 7,
+  [TransmissionUpgrade.raceEight]: 8,
+  [TransmissionUpgrade.raceNine]: 9,
+  [TransmissionUpgrade.raceTen]: 10,
+};
+
+export interface UseUpgrades {
+  gears: {
+    final: boolean;
+    count: number;
+  };
+  diff: {
+    front: boolean;
+    rear: boolean;
+    center: boolean;
+  };
+}
+
+function getGearCount(transmission: TransmissionUpgrade): number {
+  return gearCounts[transmission] || 10;
+}
+
+export function useFH6EnabledControls(form: FH6Setup) {
+  const enabled = computed<UseUpgrades>(() => ({
+    gears: {
+      final: finalRatio.includes(form.build.drivetrain.transmission),
+      count: getGearCount(form.build.drivetrain.transmission),
+    },
+    diff: {
+      front: [DriveType.stock, DriveType.awd, DriveType.fwd].includes(form.build.conversions.drivetrain),
+      rear: [DriveType.stock, DriveType.awd, DriveType.rwd].includes(form.build.conversions.drivetrain),
+      center: [DriveType.stock, DriveType.awd].includes(form.build.conversions.drivetrain),
+    },
+  }));
+  return enabled;
+}
