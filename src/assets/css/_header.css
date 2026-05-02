@@ -1,15 +1,16 @@
 @layer base {
   header {
-    @apply
-      relative
+    @apply relative
       items-center
       flex
       flex-col
+      gap-5
       md:flex-row
       md:px-9
       lg:px-14
       py-6
-      md:py-12;
+      md:py-12
+      md:gap-0;
   }
 
   /* header + div > section {
@@ -21,8 +22,7 @@
   }
 
   .nav-bar {
-    @apply
-      w-full
+    @apply w-full
       mt-1
       md:mt-0
       text-center
@@ -30,31 +30,98 @@
       flex
       items-center;
   }
+  .nav-dropdown-toggle {
+    all: unset;
+  }
+
   .nav-link {
-    @apply
-      grow
+    @apply grow
       md:grow-0
-      sm:px-4
+      px-4
       py-2
       text-ghost-white
       whitespace-nowrap
       text-[4vw]
       sm:text-xl
       font-normal
-      border-y-4
-      border-y-transparent;
+      border-0
+      border-b-4
+      border-b-transparent
+      border-solid
+      inline-flex
+      items-center
+      gap-1
+      cursor-pointer;
   }
 
   .nav-link.router-link-active,
-  .nav-link:hover {
-    @apply
-      border-b-optn-50
+  .nav-link:hover,
+  .nav-link.nav-dropdown-toggle:hover,
+  .nav-link.nav-dropdown-toggle.active {
+    @apply border-b-optn-50
+      text-ghost-white;
+  }
+
+  .nav-link:hover,
+  .nav-link.nav-dropdown-toggle:hover {
+    @apply bg-black
+      bg-opacity-15;
+  }
+
+  .nav-dropdown {
+    @apply relative;
+  }
+
+  .nav-dropdown-caret {
+    @apply w-4 h-4 shrink-0 transition-transform duration-200;
+  }
+
+  .nav-dropdown-menu {
+    @apply absolute
+      top-full
+      left-0
+      mt-1
+      min-w-[10rem]
+      rounded
+      bg-gunmetal
+      border
+      border-transparent
+      shadow-lg
+      shadow-black/50
+      py-1
+      z-50
+      flex
+      flex-col
+      focus:outline-none;
+  }
+
+  .nav-dropdown-item {
+    @apply w-full
+      text-left
+      px-5
+      py-3
+      text-ghost-white
+      text-sm
+      sm:text-base
+      font-normal
+      whitespace-nowrap
+      bg-transparent
+      cursor-pointer
+      transition-colors
+      duration-100;
+  }
+
+  .nav-dropdown-item:hover {
+    @apply bg-optn-700;
+  }
+
+  .nav-dropdown-item.active {
+    @apply bg-optn-500
       text-ghost-white;
   }
 
   .link-bar {
-    @apply
-      hidden
+    @apply hidden
       md:flex
       justify-center
       overflow-hidden;
@@ -65,17 +132,15 @@
   }
 
   .link-bar img {
-    @apply
-      w-8
+    @apply w-8
       h-auto;
   }
 
   .header-image {
-    background: radial-gradient(50% 53% at 50% 50%, rgba(0, 26, 44, 0) 0%, #001A2C 100%), url(/images/OPTN_header_car.png);
+    background: radial-gradient(50% 53% at 50% 50%, rgba(0, 26, 44, 0) 0%, #001a2c 100%), url(/images/OPTN_header_car.png);
     background-size: auto, contain;
 
-    @apply
-      w-full
+    @apply w-full
       h-auto
       -mt-10
       md:-mt-16
@@ -84,6 +149,5 @@
   }
 
   @screen lg {
-
   }
 }

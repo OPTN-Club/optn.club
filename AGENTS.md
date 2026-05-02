@@ -38,3 +38,98 @@ The maintainers are comfortable with AI-assisted PRs as long as they're disclose
 ```
 *Authored with AI assistance. Every change was reviewed, verified locally with the project's lint/test/build pipeline, and is the maintainer's responsibility.*
 ```
+
+---
+
+## Formatter architecture
+
+The app has two formatters — **FH5** (Forza Horizon 5) and **FM** (Forza Motorsport) — that follow an identical layered pattern.
+
+### Folder structure
+
+```
+src/components/formatter/
+  useSetupForm.ts              ← generic form state manager (shared)
+  horizon/                     ← FH5-specific
+    FHFormatter.vue            ← top-level route component
+    FHSetup.ts                 ← Setup type + default form factories
+    useFHSetupForm.ts          ← provider/inject composable
+    useFHEnabledControls.ts    ← computed show/hide rules (gear count, diff sections)
+    useFHUnits.ts              ← unit conversion watchers
+    fh-reddit-generator.ts     ← Reddit markdown output
+    fh-discord-generator.ts    ← Discord text output
+    FH*.vue                    ← form section components
+  motorsport/                  ← FM-specific (same pattern)
+    FMFormatter.vue
+    FMSetup.ts
+    useFMSetupForm.ts
+    ...
+```
+
+### Data flow
+
+1. **Route** → `FHFormatter.vue` / `FMFormatter.vue` receive `version` and `encodedForm?` as props (defined in `src/router/index.ts`).
+2. **Provider composable** (`useFHSetupFormProvider` / `useFMSetupFormProvider`) calls `useSetupForm(props, blankFormFactory)`, which:
+   - Decodes `encodedForm` into a reactive `form` object.
+   - Watches `form` and calls `router.replace({ params: { encodedForm: ... } })` whenever it changes — **the URL is the single source of truth**.
+   - Exposes `{ form, encoded, globalUnits, reset }`.
+3. The provider enriches this with game-specific computed state (`driveType`, `show`) and calls `provide(key, state)`.
+4. **Child components** call `useFHSetupForm()` / `useFMSetupForm()` to `inject` the state — no prop drilling.
+
+### URL encoding pipeline
+
+```
+form object
+  → flattenObject()         nested object → flat dotted keys  e.g. "tune.tires.front"
+  → sort keys alphabetically
+  → mangleValue()           shorten enum strings & booleans   e.g. "Sport"→"sp", true→"t"
+  → JSON.stringify(values)  position-indexed array of values
+  → compressToBase64()      lz-string compression → URL-safe base64
+```
+
+Decoding is the exact reverse. The current generic implementation is **`src/lib/useFormEncoder.ts`** (used by both formatters). The legacy **`src/lib/base64Form.ts`** is the older FH5-only class — kept for reference but superseded.
+
+**Mangle maps** live in `src/lib/mangle-lookup.ts`:
+- `mangleKeyMap` — property name abbreviations (kept for reference; not used in the position-indexed encoding).
+- `mangleValueMap` — value abbreviations (`"Stock"→"s"`, `"N/A"→"na"`, `true→"t"`, `false→"f"`, etc.).
+
+**Legacy deserialization:** FH5 passes `useLegacyDeserialization: true` to `useSetupForm`. This splices in default values at known positions when decoding old URLs that pre-date field additions:
+- Tire Profile Size: 2 values spliced at index 38 (when array length is 98).
+- Motor & Battery: 1 value spliced at index 24 (when array length is 100).
+
+FM does not need this — it is a newer formatter with no legacy URLs to support.
+
+### Versioning
+
+Versions are URL route params (e.g. `/formatter/forza/horizon5/v1/`, `/formatter/forza/motorsport/v3/`).
+
+| Formatter | Versions   | Notes |
+|-----------|------------|-------|
+| FH5       | `v1` only  | Single version; `getLatestDefaultForm = getFHDefaultFormV1` |
+| FM        | `v2`, `v3` | `v3` adds `rotorsAndCompression` to engine upgrades; `getFMDefaultFormV3` mutates a v2 default form and casts it |
+
+The version param selects the `blankFormFactory` (the default form shape used for both decoding and encoding). **Adding a new version:**
+1. Add a new `getFMDefaultFormVN()` (or `getFHDefaultFormVN()`) factory in the relevant `*Setup.ts`.
+2. Register it in `defaultFormMap`.
+3. Update the router's default `version` param if it should become the new canonical URL.
+
+### Shared vs game-specific
+
+**Shared** (`src/lib/types.ts`):
+- All unit enums: `PressureUnit`, `SpringRateUnit`, `LengthUnit`, `SpeedUnit`, `PowerUnit`, `TorqueUnit`, …
+- All upgrade enums: `Upgrade`, `FullUpgrade`, `LimitedUpgrade`, `TransmissionUpgrade`, `TurboUpgrade`, `RestrictorUpgrade`, …
+- Shared interfaces: `FrontAndRearSettings`, `AccelDecelSettings`, `DifferentialTuneSettings`, `ConversionSettings`, `AeroAndAppearanceUpgrades`, `FormattingFormProps`
+
+**Shared UI components** (accept generic types, reused by both formatters):
+`AccelDecelInputs.vue`, `FrontRearInputs.vue`, `FrontRearSelects.vue`, `SetHeader.vue`, `UpgradeSelect.vue`, `CounterInput.vue`, `EnumSelect.vue`, `NumberInput.vue`, etc.
+
+**Game-specific differences:**
+
+| | FH5 | FM |
+|-|-----|----|
+| Build section | `build` (conversions + upgrade categories) | `upgrades` (performance upgrades) |
+| Car stats | `make`, `model` | `year`, `make`, `model` |
+| `driveType` source | derived via `getDrivetrain(form.build)` helper | read directly from `form.upgrades.conversions.drivetrain` |
+| Steering wheel | ✗ | ✓ `SteeringWheelTuneSettings` |
+| Legacy deserialization | ✓ | ✗ |
+| Versions | `v1` | `v2`, `v3` |

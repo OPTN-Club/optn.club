@@ -7,10 +7,10 @@ import EnumSelect from '../../EnumSelect.vue';
 import MakeModelSelect from '../../MakeModelSelect.vue';
 import NumberInput from '../../NumberInput.vue';
 
-import { FHPIClass, fhPiClassMap } from './FHSetup';
-import { useFHSetupForm } from './useFHSetupForm';
+import { FH6PIClass, fh6PiClassMap } from './FH6Setup';
+import { useFH6SetupForm } from './useFH6SetupForm';
 
-const { form } = useFHSetupForm();
+const { form } = useFH6SetupForm();
 const globalUnits = useGlobalUnits();
 
 const units = computed(() => {
@@ -24,7 +24,7 @@ const units = computed(() => {
   }
 
   return {
-    power: PowerUnit.hp, // Imperial horsepower; we'll use it for metric anyway because that's what most players do
+    power: PowerUnit.hp,
     torque: TorqueUnit.nm,
     weight: WeightUnit.kg,
     speed: SpeedUnit.kph,
@@ -32,9 +32,8 @@ const units = computed(() => {
 });
 
 watch(() => form.stats.classification, (current) => {
-  form.stats.pi = fhPiClassMap[current];
+  form.stats.pi = fh6PiClassMap[current];
 });
-
 </script>
 <template>
   <section class="items-stretch">
@@ -54,7 +53,7 @@ watch(() => form.stats.classification, (current) => {
           <EnumSelect
             v-model="form.stats.classification"
             label="Class"
-            :type="FHPIClass"
+            :type="FH6PIClass"
             rootClass="upgrade-select"
           />
           <NumberInput

@@ -1,7 +1,7 @@
 @layer base {
   .button,
-  button,
-  button[type='button'],
+  button:not(.nav-dropdown-toggle):not(.nav-dropdown-item),
+  button[type='button']:not(.nav-dropdown-toggle):not(.nav-dropdown-item),
   button[type='reset'],
   button[type='submit'] {
     @apply
