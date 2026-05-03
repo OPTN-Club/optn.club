@@ -35,23 +35,26 @@
     --font-title: 'M PLUS Rounded 1c';
 
     /* Text */
-    --color-foreground: 244 244 249;
-    --color-foreground-subtle: 232 212 221;
+    --color-foreground: 248 240 244;
+    --color-foreground-subtle: 232 195 214;
 
     /* Backgrounds */
-    --color-background: 15 9 11;
-    --color-surface: 338 22% 7%;
-    --color-surface-inset: 220 193 213;
-    --color-surface-elevated: 25 6 13;
+    --color-background: 12 4 8;
+    --color-surface: 336 45% 6%;
+    --color-surface-inset: 210 170 192;
+    --color-surface-elevated: 46 14 28; /* hsl(336, 54%, 12%) → RGB */
 
-    /* Primary */
-    --color-primary-50: 340 54% 85%;
-    --color-primary-500: 337 81% 77%;
-    --color-primary-700: 334 70% 65%;
-    --color-primary-1100: 345 20% 4%;
+    /* Primary — mapped directly from the three sakura logo bars:
+       darkest bar ≈ #b81f62 (deep magenta)
+       mid bar     ≈ #e0529a (vivid pink)
+       lightest bar≈ #f0a8cc (soft blush) */
+    --color-primary-50: 336 95% 74%;
+    --color-primary-500: 336 70% 60%;
+    --color-primary-700: 336 70% 42%;
+    --color-primary-1100: 336 60% 10%;
 
     /* Other */
-    --color-accent: var(--color-primary-700);
+    --color-accent: 235 30 110; /* hsl(336, 90%, 52%) → punchy deep pink RGB */
     --color-danger: 237 37 78;
   }
 
