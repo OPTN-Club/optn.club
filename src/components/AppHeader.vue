@@ -5,7 +5,6 @@ import { useRoute } from 'vue-router';
 import iconDiscord from '../assets/icon-discord.png';
 import iconGithub from '../assets/icon-github.png';
 import iconReddit from '../assets/icon-reddit.png';
-import logoUrl from '../assets/OPTN_logo.png';
 import Urls from '../lib/urls';
 
 const route = useRoute();
@@ -21,7 +20,7 @@ function isFormatterActive() {
     <div class="md:mr-8 z-10">
       <router-link :to="{ name: 'home' }">
         <img
-          :src="logoUrl"
+          src="/images/OPTN_logo.png"
           alt="OPTN Logo"
           class="w-auto h-10 mx-auto md:mx-0 min-w-[216px]"
         >
