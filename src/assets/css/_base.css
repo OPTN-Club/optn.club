@@ -40,7 +40,7 @@
 
     /* Backgrounds */
     --color-background: 12 4 8;
-    --color-surface: 336 45% 8%;
+    --color-surface: 336 45% 6%;
     --color-surface-inset: 210 170 192;
     --color-surface-elevated: 46 14 28; /* hsl(336, 54%, 12%) → RGB */
 
