@@ -67,26 +67,45 @@ export default async function useFH6Units(
     }
   }
 
+  let reverting = false;
+
   watch(
     () => globalUnits.value.globalUnit,
-    async (current) => {
+    async (current, previous) => {
+      if (reverting) {
+        reverting = false;
+        return;
+      }
+
+      if (!hasConvertibleValues(form)) {
+        // No values to convert — apply unit change immediately, no dialog needed
+        setUnits(current);
+        return;
+      }
+
+      const result = await dialog.requestConversion();
+
+      if (result === 'dismiss') {
+        // Revert the unit selection — user cancelled via backdrop/Escape
+        reverting = true;
+        globalUnits.value.globalUnit = previous;
+        return;
+      }
+
+      // 'confirm' or 'cancel': apply the new unit suffix
       setUnits(current);
 
-      if (hasConvertibleValues(form)) {
-        const shouldConvert = await dialog.requestConversion();
-        if (shouldConvert) {
-          convertValues(current);
-
-          // Also convert the individual tune unit values
-          form.tune.tires.front = convertTo(form.tune.tires.front, form.tune.tires.units, 1);
-          form.tune.tires.rear = convertTo(form.tune.tires.rear, form.tune.tires.units, 1);
-          form.tune.springs.front = convertTo(form.tune.springs.front, form.tune.springs.units, 1);
-          form.tune.springs.rear = convertTo(form.tune.springs.rear, form.tune.springs.units, 1);
-          form.tune.rideHeight.front = convertTo(form.tune.rideHeight.front, form.tune.rideHeight.units, 1);
-          form.tune.rideHeight.rear = convertTo(form.tune.rideHeight.rear, form.tune.rideHeight.units, 1);
-          form.tune.aero.front = convertTo(form.tune.aero.front, form.tune.aero.units, 1);
-          form.tune.aero.rear = convertTo(form.tune.aero.rear, form.tune.aero.units, 1);
-        }
+      if (result === 'confirm') {
+        // Convert all values to the new unit
+        convertValues(current);
+        form.tune.tires.front = convertTo(form.tune.tires.front, form.tune.tires.units, 1);
+        form.tune.tires.rear = convertTo(form.tune.tires.rear, form.tune.tires.units, 1);
+        form.tune.springs.front = convertTo(form.tune.springs.front, form.tune.springs.units, 1);
+        form.tune.springs.rear = convertTo(form.tune.springs.rear, form.tune.springs.units, 1);
+        form.tune.rideHeight.front = convertTo(form.tune.rideHeight.front, form.tune.rideHeight.units, 1);
+        form.tune.rideHeight.rear = convertTo(form.tune.rideHeight.rear, form.tune.rideHeight.units, 1);
+        form.tune.aero.front = convertTo(form.tune.aero.front, form.tune.aero.units, 1);
+        form.tune.aero.rear = convertTo(form.tune.aero.rear, form.tune.aero.units, 1);
       }
     },
   );

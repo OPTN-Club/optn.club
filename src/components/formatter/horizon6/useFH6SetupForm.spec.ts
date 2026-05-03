@@ -2,13 +2,13 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { FormattingFormProps } from '../../../lib/types';
 
+import { useFH6SetupFormProvider } from './useFH6SetupForm';
+
 vi.mock('vue-router', () => ({
   useRouter: () => ({
     replace: () => {},
   }),
 }));
-
-import { useFH6SetupFormProvider } from './useFH6SetupForm';
 
 const ENCODED_FH6_FORMS = {
   // v1 form with all fields including per-axle rim style and FH6 PI classes

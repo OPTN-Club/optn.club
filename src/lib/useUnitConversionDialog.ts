@@ -1,16 +1,13 @@
 import { ref } from 'vue';
 
-export interface UseUnitConversionDialog {
-  isOpen: ReturnType<typeof ref<boolean>>;
-  requestConversion(): Promise<boolean>;
-}
+export type UnitConversionDialogResult = 'confirm' | 'cancel' | 'dismiss';
 
 export default function useUnitConversionDialog() {
   const isOpen = ref(false);
 
-  let resolvePromise: ((value: boolean) => void) | null = null;
+  let resolvePromise: ((value: UnitConversionDialogResult) => void) | null = null;
 
-  function requestConversion(): Promise<boolean> {
+  function requestConversion(): Promise<UnitConversionDialogResult> {
     return new Promise((resolve) => {
       resolvePromise = resolve;
       isOpen.value = true;
@@ -19,13 +16,19 @@ export default function useUnitConversionDialog() {
 
   function confirm() {
     isOpen.value = false;
-    resolvePromise?.(true);
+    resolvePromise?.('confirm');
     resolvePromise = null;
   }
 
   function cancel() {
     isOpen.value = false;
-    resolvePromise?.(false);
+    resolvePromise?.('cancel');
+    resolvePromise = null;
+  }
+
+  function dismiss() {
+    isOpen.value = false;
+    resolvePromise?.('dismiss');
     resolvePromise = null;
   }
 
@@ -34,6 +37,7 @@ export default function useUnitConversionDialog() {
     requestConversion,
     confirm,
     cancel,
+    dismiss,
   };
 }
 
