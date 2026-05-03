@@ -13,7 +13,7 @@ const route = useRoute();
 
 const globalUnits = useGlobalUnits();
 
-const selectedFormat = ref<'reddit' | 'discord'>('reddit');
+const selectedFormat = ref<'reddit' | 'discord'>('discord');
 const copyButtonText = ref('Copy To Clipboard');
 const copyUrlButtonText = ref('Copy URL');
 const errorText = ref('');
