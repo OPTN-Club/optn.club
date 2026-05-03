@@ -1,6 +1,11 @@
 @layer base {
   :root,
   [data-theme='chibbell'] {
+    /* Fonts */
+    --font-title: 'Exo 2';
+    --font-body: 'Work Sans';
+    --font-mono: 'Inconsolate';
+
     /* Text */
     --color-foreground: 244 244 249;
     --color-foreground-subtle: 193 216 220;

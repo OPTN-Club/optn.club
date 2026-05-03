@@ -6,9 +6,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        title: '"Exo 2"',
-        body: '"Work Sans"',
-        mono: 'Inconsolata',
+        title: ['var(--font-title)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        body: ['var(--font-body)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       colors: {
         /**
