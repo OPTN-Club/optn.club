@@ -1,14 +1,20 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import AppFooter from './components/AppFooter.vue';
 import AppHeader from './components/AppHeader.vue';
+import CherryBlossoms from './components/CherryBlossoms.vue';
+import { useTheme } from './lib/useTheme';
 
 const localhost = window.location.hostname === 'localhost';
+const theme = useTheme();
+const isSakura = computed(() => theme.value === 'sakura');
 </script>
 
 <template>
   <div class="wrapper">
     <div class="z-10">
       <AppHeader />
+      <CherryBlossoms v-if="isSakura" />
       <div class="grow mx-4 md:mx-9 lg:mx-14">
         <router-view />
       </div>
