@@ -1,58 +1,61 @@
 @layer base {
   html {
-    @apply
-      bg-rich-black
+    @apply bg-background
       h-full;
-
   }
 
   body {
-    @apply
-      font-body
+    @apply font-body
       text-base
-      text-ghost-white
+      text-foreground
       overflow-y-scroll;
   }
 
   .wrapper {
-    @apply
-      relative
+    @apply relative
       flex
       flex-col
       min-h-screen
       max-w-6xl
       my-0
       mx-auto
-      bg-dark
+      bg-surface
       overflow-visible;
   }
 
   a {
-    @apply
-      text-optn-50
+    @apply text-primary-50
       font-semibold
       no-underline;
   }
 
-  p, ul, ol, table, pre, dl {
+  p,
+  ul,
+  ol,
+  table,
+  pre,
+  dl {
     @apply m-0;
   }
 
   h1 + p {
-    @apply
-      mt-2
+    @apply mt-2;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply p-0
       font-title
       font-bold
-      text-ghost-white;
+      text-foreground;
   }
 
   h1 {
-    @apply
-      uppercase
+    @apply uppercase
       font-black
       italic
       text-4xl
@@ -61,8 +64,7 @@
   }
 
   h2 {
-    @apply
-      text-2xl
+    @apply text-2xl
       mb-3;
   }
 
@@ -75,13 +77,12 @@
   }
 
   .sub-title {
-    @apply
-      font-title
+    @apply font-title
       text-lg
       text-center
       mx-auto
       max-w-3xl
-      text-light-mist
+      text-foreground-subtle
       mb-10;
   }
 
@@ -90,14 +91,12 @@
   }
 
   footer {
-    @apply
-      p-4
+    @apply p-4
       overflow-hidden;
   }
 
   footer a {
-    @apply
-      text-white
+    @apply text-white
       font-bold;
   }
 
@@ -120,10 +119,20 @@
   }
 
   @screen md {
-    h1 { @apply text-6xl; }
-    h2 { @apply text-3xl; }
-    h3 { @apply text-xl; }
-    h4 { @apply text-lg; }
-    .sub-title { @apply text-2xl; }
+    h1 {
+      @apply text-6xl;
+    }
+    h2 {
+      @apply text-3xl;
+    }
+    h3 {
+      @apply text-xl;
+    }
+    h4 {
+      @apply text-lg;
+    }
+    .sub-title {
+      @apply text-2xl;
+    }
   }
 }

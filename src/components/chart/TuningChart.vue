@@ -77,9 +77,9 @@ const data: ChartData = {
   <p class="sub-title" />
   <div class="mb-6">
     <p>This chart assumes that your base tune has no glaring issues:</p>
-    <ul class="list-disc list-outside ml-7 text-yellow">
-      <li><span class="text-ghost-white">Be sure your car doesn't bottom out and doesn't roll excessively during cornering.<br></span></li>
-      <li><span class="text-ghost-white">Otherwise this chart will create more issues than it solves.</span></li>
+    <ul class="list-disc list-outside ml-7 text-accent">
+      <li><span class="text-foreground">Be sure your car doesn't bottom out and doesn't roll excessively during cornering.<br></span></li>
+      <li><span class="text-foreground">Otherwise this chart will create more issues than it solves.</span></li>
     </ul>
   </div>
   <section class="tune-chart">
@@ -98,16 +98,16 @@ const data: ChartData = {
       <h3>General Tips</h3>
     </div>
     <div class="grow">
-      <ul class="list-disc list-outside  ml-7 text-yellow">
-        <li><span class="text-ghost-white">Don't lower the car too much.  A car touching the ground will never handle properly.</span></li>
-        <li><span class="text-ghost-white">Increasing damping is an easy way to make the car react quicker to inputs.</span></li>
+      <ul class="list-disc list-outside  ml-7 text-accent">
+        <li><span class="text-foreground">Don't lower the car too much.  A car touching the ground will never handle properly.</span></li>
+        <li><span class="text-foreground">Increasing damping is an easy way to make the car react quicker to inputs.</span></li>
         <li>
-          <span class="text-ghost-white">
+          <span class="text-foreground">
             Generally speaking if you need more than 0.2&deg; of toe there are issues elsewhere in the tune.</span>
         </li>
-        <li><span class="text-ghost-white">If you lower the car you will need stiffer springs to avoid bottoming out</span></li>
+        <li><span class="text-foreground">If you lower the car you will need stiffer springs to avoid bottoming out</span></li>
         <li>
-          <span class="text-ghost-white">
+          <span class="text-foreground">
             If you increase downforce you will need stiffer springs to compensate,
             as well as stiffer damping so the car doesn't feel too heavy in corners.
           </span>
@@ -120,7 +120,7 @@ const data: ChartData = {
 <style>
 .asterisk {
   @apply
-    text-red
+    text-danger
     font-bold
     text-lg
     leading-4;
@@ -131,7 +131,7 @@ const data: ChartData = {
     flex
     flex-col
     items-stretch
-    text-ghost-white;
+    text-foreground;
 }
 
 .chart-row {
@@ -140,7 +140,7 @@ const data: ChartData = {
     flex-col
     items-stretch
     gap-6
-    /* bg-light-mist
+    /* bg-surface-inset
     bg-opacity-5 */
     ;
 }
@@ -164,7 +164,7 @@ const data: ChartData = {
     flex-col
     grow
     rounded
-    bg-light-mist
+    bg-surface-inset
     bg-opacity-5
     p-4
     md:p-6
@@ -208,8 +208,8 @@ const data: ChartData = {
     rounded
     p-4
     md:p-6
-    text-ghost-white
-    bg-light-mist
+    text-foreground
+    bg-surface-inset
     bg-opacity-5
     h-full;
 }
@@ -235,7 +235,7 @@ const data: ChartData = {
 }
 
 .tune-chart h4 {
-  @apply text-yellow;
+  @apply text-accent;
 }
 
 </style>

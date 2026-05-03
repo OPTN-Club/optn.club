@@ -18,7 +18,7 @@ const state = useTuneCalculator();
       Based on diquee's tune calculator spreadsheet.
       <br>
       <span class="sub-title text-base">
-        <span class="text-yellow font-bold">Note:</span>
+        <span class="text-accent font-bold">Note:</span>
         This calculator is still very much a work in progress.
         It is intended to give a decent starting point.<br>
         If you have any suggestions please let SharpSeeEr know on discord!

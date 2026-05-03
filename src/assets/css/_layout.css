@@ -1,6 +1,5 @@
 section {
-  @apply
-    flex
+  @apply flex
     flex-col
     grow
     pb-12
@@ -8,19 +7,16 @@ section {
 }
 
 section .heading {
-  @apply
-    text-light-mist
+  @apply text-foreground-subtle
     mb-6;
 }
 
 .section-desc {
-  @apply
-    text-light-mist;
+  @apply text-foreground-subtle;
 }
 
 section .content {
-  @apply
-    bg-light-mist
+  @apply bg-surface-inset
     bg-opacity-5
     p-4
     w-full;
@@ -28,8 +24,7 @@ section .content {
 
 section .content > h3,
 section .content > .content-header {
-  @apply
-    mb-3
+  @apply mb-3
     flex
     flex-col
     sm:items-end
@@ -37,9 +32,8 @@ section .content > .content-header {
 }
 
 section + section {
-  @apply
-    border-t-2
-    border-t-light-mist
+  @apply border-t-2
+    border-t-surface-inset
     border-opacity-10
     pt-8;
 }
@@ -49,12 +43,11 @@ section + section {
 }
 
 .note {
-  @apply text-light-mist;
+  @apply text-foreground-subtle;
 }
 
 .set-upgrades {
-  @apply
-    flex
+  @apply flex
     flex-wrap
     gap-4
     items-end
@@ -67,8 +60,7 @@ section + section {
 }
 
 .set-upgrades.vertical {
-  @apply
-    flex-col
+  @apply flex-col
     items-start;
 }
 
@@ -83,8 +75,7 @@ section + section {
 } */
 
 .control {
-  @apply
-    min-w-[155px]
+  @apply min-w-[155px]
     max-w-full
     flex-1
     sm:flex-auto
@@ -92,19 +83,17 @@ section + section {
 }
 
 .control label {
-  @apply max-w-full
+  @apply max-w-full;
 }
 
 .control input,
 .control select {
-  @apply
-    w-full;
+  @apply w-full;
 }
 
 .control .prefix,
 .control .suffix {
-  @apply
-    text-yellow
+  @apply text-accent
     absolute
     top-0
     bottom-0
@@ -128,13 +117,11 @@ section + section {
 
 @screen lg {
   section {
-    @apply
-      flex-row;
+    @apply flex-row;
   }
 
   section .heading {
-    @apply
-      w-56
+    @apply w-56
       shrink-0
       mr-6
       sticky
@@ -142,7 +129,6 @@ section + section {
   }
 
   section .content {
-    @apply
-      p-6
+    @apply p-6;
   }
 }

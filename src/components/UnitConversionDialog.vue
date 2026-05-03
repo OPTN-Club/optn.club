@@ -56,14 +56,12 @@ const emit = defineEmits<{
             <div class="unit-dialog-actions">
               <button
                 type="button"
-                class="secondary"
                 @click="emit('confirm')"
               >
                 Yes, convert
               </button>
               <button
                 type="button"
-                class="outlined"
                 @click="emit('cancel')"
               >
                 No, keep values

@@ -60,7 +60,7 @@ const options = computed(() => units[props.type]);
     :modelValue="modelValue"
     :options="options"
     :aria-label="label"
-    class="text-yellow"
+    class="text-accent"
     @update:modelValue="onUpdate"
   />
 </template>
