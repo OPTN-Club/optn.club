@@ -40,5 +40,6 @@ const { dialog } = useFH6SetupFormProvider(props);
     :open="dialog.isOpen.value"
     @confirm="dialog.confirm()"
     @cancel="dialog.cancel()"
+    @dismiss="dialog.dismiss()"
   />
 </template>

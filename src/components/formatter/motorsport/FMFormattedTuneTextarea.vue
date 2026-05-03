@@ -13,7 +13,7 @@ const route = useRoute();
 
 const globalUnits = useGlobalUnits();
 
-const storedFormat = (localStorage.getItem('SELECTED_FORMATTER') || 'reddit') as 'reddit' | 'discord';
+const storedFormat = (localStorage.getItem('SELECTED_FORMATTER') || 'discord') as 'reddit' | 'discord';
 const selectedFormat = ref<'reddit' | 'discord'>(storedFormat);
 
 const copyButtonText = ref('Copy To Clipboard');

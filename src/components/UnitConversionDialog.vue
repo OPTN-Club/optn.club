@@ -8,6 +8,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'confirm'): void;
   (e: 'cancel'): void;
+  (e: 'dismiss'): void;
 }>();
 </script>
 
@@ -18,7 +19,7 @@ const emit = defineEmits<{
   >
     <Dialog
       class="relative z-50"
-      @close="emit('cancel')"
+      @close="emit('dismiss')"
     >
       <TransitionChild
         as="template"
