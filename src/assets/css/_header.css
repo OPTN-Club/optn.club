@@ -144,8 +144,8 @@
       h-auto
       -mt-10
       md:-mt-16
-      -mb-6
-      sm:-mb-10;
+      -mb-2
+      sm:-mb-4;
   }
 
   @screen lg {
