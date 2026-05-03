@@ -105,12 +105,13 @@
     @apply w-auto
       min-w-0
       h-auto
-      leading-normal;
+      leading-normal
+      accent-accent;
   }
 
   label.checkbox:focus-within,
   label.radio:focus-within {
-    @apply border-accent;
+    @apply border-accent rounded-sm;
   }
 
   input:focus,
