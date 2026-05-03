@@ -39,7 +39,7 @@
       md:grow-0
       px-4
       py-2
-      text-ghost-white
+      text-foreground
       whitespace-nowrap
       text-[4vw]
       sm:text-xl
@@ -58,8 +58,8 @@
   .nav-link:hover,
   .nav-link.nav-dropdown-toggle:hover,
   .nav-link.nav-dropdown-toggle.active {
-    @apply border-b-optn-50
-      text-ghost-white;
+    @apply border-b-primary-50
+      text-foreground;
   }
 
   .nav-link:hover,
@@ -83,7 +83,7 @@
       mt-1
       min-w-[10rem]
       rounded
-      bg-gunmetal
+      bg-surface-elevated
       border
       border-transparent
       shadow-lg
@@ -100,7 +100,7 @@
       text-left
       px-5
       py-3
-      text-ghost-white
+      text-foreground
       text-sm
       sm:text-base
       font-normal
@@ -112,12 +112,12 @@
   }
 
   .nav-dropdown-item:hover {
-    @apply bg-optn-700;
+    @apply bg-primary-700;
   }
 
   .nav-dropdown-item.active {
-    @apply bg-optn-500
-      text-ghost-white;
+    @apply bg-primary-500
+      text-foreground;
   }
 
   .link-bar {
@@ -137,7 +137,7 @@
   }
 
   .header-image {
-    background: radial-gradient(50% 53% at 50% 50%, rgba(0, 26, 44, 0) 0%, #001a2c 100%), url(/images/OPTN_header_car.png);
+    background: radial-gradient(50% 53% at 50% 50%, rgba(0, 26, 44, 0) 0%, hsl(var(--color-surface)) 100%), var(--header-image-url);
     background-size: auto, contain;
 
     @apply w-full

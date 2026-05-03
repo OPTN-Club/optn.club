@@ -1,22 +1,20 @@
 @layer base {
   label,
   .label {
-    @apply
-      font-semibold
+    @apply font-semibold
       mb-1
       block
-      text-ghost-white;
+      text-foreground;
   }
 
   label.checkbox,
   label.radio {
-    @apply
-      font-normal
+    @apply font-normal
       border-transparent
       border;
   }
 
-  label input[type=checkbox] {
+  label input[type='checkbox'] {
     @apply mr-1;
   }
 
@@ -26,37 +24,27 @@
   }
 
   .label-note {
-    @apply
-      font-normal
+    @apply font-normal
       ml-2
-      text-light-mist;
-  }
-
-  .label-unit {
-    @apply
-      ml-2
-      text-green
-      whitespace-nowrap;
+      text-foreground-subtle;
   }
 
   .disabled label,
   .disabled .label {
-    @apply
-      text-opacity-30;
+    @apply text-opacity-30;
   }
 
   input,
   select,
   textarea {
-    @apply
-      h-10
+    @apply h-10
       leading-10
       border
       border-transparent
       px-4
       rounded
-      text-ghost-white
-      bg-light-mist
+      text-foreground
+      bg-surface-inset
       bg-opacity-20
       outline-none
       sm:min-w-[116px];
@@ -73,14 +61,14 @@
     background-image:
       linear-gradient(45deg, transparent 50%, rgb(244, 244, 249) 50%),
       linear-gradient(135deg, rgb(244, 244, 249) 50%, transparent 50%);
-      /* linear-gradient(to right, #ccc, #ccc); */
+    /* linear-gradient(to right, #ccc, #ccc); */
     background-position:
       calc(100% - 22px) calc(1em + 2px),
       calc(100% - 16px) calc(1em + 2px);
     background-size:
       6px 6px,
       6px 6px;
-      /* 1px 1.5em; */
+    /* 1px 1.5em; */
     background-repeat: no-repeat;
   }
 
@@ -89,20 +77,18 @@
   }
 
   textarea {
-    @apply
-      resize-y
+    @apply resize-y
       leading-normal;
   }
 
   textarea.markdown-text {
-    @apply
-      w-full
+    @apply w-full
       h-80
       formatted-text
       mb-4
-      bg-optn-1100
+      bg-primary-1100
       font-mono
-      text-light-mist
+      text-foreground-subtle
       leading-[17px]
       p-2
       overflow-auto
@@ -110,40 +96,37 @@
       whitespace-pre;
   }
 
-  input[type=number] {
+  input[type='number'] {
     @apply pr-0;
   }
 
-  input[type=checkbox],
-  input[type=radio] {
-    @apply
-      w-auto
+  input[type='checkbox'],
+  input[type='radio'] {
+    @apply w-auto
       min-w-0
       h-auto
-      leading-normal;
+      leading-normal
+      accent-accent;
   }
 
   label.checkbox:focus-within,
   label.radio:focus-within {
-    @apply
-      border-yellow;
+    @apply border-accent rounded-sm;
   }
 
   input:focus,
   select:focus,
   textarea:focus {
-    @apply
-      border-yellow
+    @apply border-accent
       shadow-inner;
   }
 
   input:disabled,
   select:disabled,
   textarea:disabled {
-    @apply
-      opacity-50
+    @apply opacity-50
       cursor-not-allowed
-      bg-light-mist
+      bg-surface-inset
       bg-opacity-20;
   }
 
@@ -151,25 +134,26 @@
   select.touched:invalid,
   textarea.touched:invalid {
     border: 1px solid #dc3545;
-    box-shadow: inset 0 1px 1px rgb(0, 0, 0, .08), 0 0 8px #dc3545;
+    box-shadow:
+      inset 0 1px 1px rgb(0, 0, 0, 0.08),
+      0 0 8px #dc3545;
   }
 
-  input.touched:invalid~label,
-  select.touched:invalid~label,
-  textarea.touched:invalid~label,
+  input.touched:invalid ~ label,
+  select.touched:invalid ~ label,
+  textarea.touched:invalid ~ label,
   .validation-message {
     color: #dc3545;
   }
 
-  input.touched:invalid~.validation-message,
-  select.touched:invalid~.validation-message,
-  textarea.touched:invalid~.validation-message {
+  input.touched:invalid ~ .validation-message,
+  select.touched:invalid ~ .validation-message,
+  textarea.touched:invalid ~ .validation-message {
     opacity: 1;
   }
 
   .validation-message {
-    @apply
-      text-sm;
+    @apply text-sm;
     opacity: 0;
     font-size: 0.8rem;
     margin-top: 3px;

@@ -42,7 +42,7 @@
   .set-content {
     @apply
       border
-      border-optn-500
+      border-primary-500
       rounded-xl
       mt-1
       p-4

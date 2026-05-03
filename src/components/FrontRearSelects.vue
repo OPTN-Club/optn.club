@@ -86,7 +86,7 @@ watch(() => props.modelValue, (current) => {
 .front-rear-selects {
   @apply
     flex
-    bg-light-mist
+    bg-surface-inset
     bg-opacity-20
     rounded;
 }

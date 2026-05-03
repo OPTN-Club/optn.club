@@ -53,7 +53,7 @@ const modifiedStep = computed(() => {
   return props.step;
 });
 
-const containerClass = computed(() => (state.focused ? 'border-yellow' : 'border-gray-400'));
+const containerClass = computed(() => (state.focused ? 'border-accent' : 'border-gray-400'));
 
 function emitModelValue() {
   if (!state.pressed) emit('update:modelValue', state.value);
@@ -198,7 +198,7 @@ onBeforeUnmount(() => {
     rounded
     overflow-hidden
     items-center
-    bg-light-mist
+    bg-surface-inset
     bg-opacity-20;
 }
 
@@ -232,7 +232,7 @@ input[type='number']::-webkit-outer-spin-button {
     font-thin
     border-none
     rounded-none
-    text-ghost-white
+    text-foreground
     bg-transparent;
 }
 </style>

@@ -67,7 +67,7 @@ Conversion
   <section>
     <div class="heading">
       <h2>Performance Upgrades</h2>
-      <p class="text-yellow font-bold mb-3">
+      <p class="text-accent font-bold mb-3">
         When to use N/A<br>(not available)
       </p>
       <ul class="list-disc pl-4">
@@ -75,7 +75,7 @@ Conversion
           If you do not use a certain category (eg. No natural aspiration) mark it as N/A.
         </li>
       </ul>
-      <p class="text-yellow font-bold my-3">Set stock values</p>
+      <p class="text-accent font-bold my-3">Set stock values</p>
       <ul class="list-disc pl-4">
         <li>
           If you leave something stock (eg. tire width),

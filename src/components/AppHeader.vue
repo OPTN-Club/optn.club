@@ -1,15 +1,20 @@
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItem, MenuItems, TransitionRoot } from '@headlessui/vue';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 import iconDiscord from '../assets/icon-discord.png';
 import iconGithub from '../assets/icon-github.png';
 import iconReddit from '../assets/icon-reddit.png';
 import Urls from '../lib/urls';
+import { useTheme } from '../lib/useTheme';
 
 const route = useRoute();
 const formatterRouteNames = ['formatter-fh5', 'formatter-fm8', 'formatter-fh6'];
 const showFH6Link = Date.now() >= new Date('2026-05-15T00:00:00.000Z').getTime();
+
+const theme = useTheme();
+const logoSrc = computed(() => (theme.value === 'sakura' ? '/images/OPTN_logo_sakura.png' : '/images/OPTN_logo.png'));
 
 function isFormatterActive() {
   return formatterRouteNames.includes(route.name as string);
@@ -20,7 +25,7 @@ function isFormatterActive() {
     <div class="md:mr-8 z-10">
       <router-link :to="{ name: 'home' }">
         <img
-          src="/images/OPTN_logo.png"
+          :src="logoSrc"
           alt="OPTN Logo"
           class="w-auto h-10 mx-auto md:mx-0 min-w-[216px]"
         >

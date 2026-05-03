@@ -124,7 +124,7 @@ function onFormatSelect(e: Event) {
     </div>
 
     <p class="text-sm px-1 text-center mb-4">
-      <span class="text-yellow font-bold">NOTE:</span>
+      <span class="text-accent font-bold">NOTE:</span>
       <template v-if="selectedFormat === 'reddit'">
         Be sure the editor is in &quot;Markdown&quot; mode<br>
         when creating your post on Reddit!
@@ -136,7 +136,7 @@ function onFormatSelect(e: Event) {
 
     <button
       type="button"
-      class="w-full secondary"
+      class="w-full"
       @click="onCopyClick"
     >
       {{ copyButtonText }}
@@ -151,7 +151,7 @@ function onFormatSelect(e: Event) {
     />
     <button
       type="button"
-      class="w-full outlined"
+      class="w-full"
       @click="onResetClick"
     >
       Reset Form
