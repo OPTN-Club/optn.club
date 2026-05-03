@@ -1,7 +1,11 @@
 import { watch } from 'vue';
+
 import useLocalStorageState from './useLocalStorageState';
 
 export type Theme = 'chibbell' | 'sakura';
+
+// Captured before useLocalStorageState writes the default value
+export const themeExistedOnLoad = localStorage.getItem('optn-theme') !== null;
 
 // Singleton ref — all consumers share the same reactive state
 const theme = useLocalStorageState<Theme>('optn-theme', 'chibbell');
