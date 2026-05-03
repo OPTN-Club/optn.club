@@ -11,7 +11,7 @@ const theme = useTheme();
       <select
         id="theme-select"
         v-model="theme"
-        class="bg-surface-elevated text-foreground text-sm rounded pl-2 pr-10 py-1 border border-primary-700 cursor-pointer"
+        class="bg-surface-elevated text-foreground text-sm rounded pl-2 pr-10 py-1 border border-primary-1100 cursor-pointer"
       >
         <option value="chibbell">Chibbell Theme</option>
         <option value="sakura">Sakura Theme</option>

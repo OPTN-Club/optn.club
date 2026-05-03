@@ -137,7 +137,7 @@
   }
 
   .header-image {
-    background: radial-gradient(50% 53% at 50% 50%, rgba(0, 26, 44, 0) 0%, #001a2c 100%), url(/images/OPTN_header_car.png);
+    background: radial-gradient(50% 53% at 50% 50%, rgba(0, 26, 44, 0) 0%, hsl(var(--color-surface)) 100%), var(--header-image-url);
     background-size: auto, contain;
 
     @apply w-full

@@ -1,6 +1,9 @@
 @layer base {
   :root,
   [data-theme='chibbell'] {
+    /* Images */
+    --header-image-url: url(/images/OPTN_header_car.png);
+
     /* Fonts */
     --font-title: 'Exo 2';
     --font-body: 'Work Sans';
@@ -18,18 +21,9 @@
 
     /* Primary */
     --color-primary-50: 191 100% 47%;
-    --color-primary-100: 191 100% 43%;
-    --color-primary-200: 192 92% 41%;
-    --color-primary-300: 192 93% 37%;
-    --color-primary-400: 190 100% 32%;
     --color-primary-500: 191 100% 28%;
-    --color-primary-600: 192 95% 25%;
     --color-primary-700: 192 93% 21%;
-    --color-primary-800: 192 100% 17%;
-    --color-primary-900: 192 92% 14%;
-    --color-primary-1000: 190 100% 9%;
     --color-primary-1100: 194 93% 5%;
-    --color-primary-1200: 190 100% 1%;
 
     /* Other */
     --color-accent: 255 189 51;
@@ -37,7 +31,28 @@
   }
 
   [data-theme='sakura'] {
-    --color-foreground: 244 144 249;
+    /* Fonts */
+    --font-title: 'M PLUS Rounded 1c';
+
+    /* Text */
+    --color-foreground: 244 244 249;
+    --color-foreground-subtle: 232 212 221;
+
+    /* Backgrounds */
+    --color-background: 15 9 11;
+    --color-surface: 338 22% 7%;
+    --color-surface-inset: 220 193 213;
+    --color-surface-elevated: 25 6 13;
+
+    /* Primary */
+    --color-primary-50: 340 54% 85%;
+    --color-primary-500: 337 81% 77%;
+    --color-primary-700: 334 70% 65%;
+    --color-primary-1100: 345 20% 4%;
+
+    /* Other */
+    --color-accent: var(--color-primary-700);
+    --color-danger: 237 37 78;
   }
 
   html {
