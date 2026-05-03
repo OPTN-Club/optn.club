@@ -1,5 +1,6 @@
 @layer base {
-  :root {
+  :root,
+  [data-theme='chibbell'] {
     /* Text */
     --color-foreground: 244 244 249;
     --color-foreground-subtle: 193 216 220;
@@ -28,6 +29,10 @@
     /* Other */
     --color-accent: 255 189 51;
     --color-danger: 237 37 78;
+  }
+
+  [data-theme='sakura'] {
+    --color-foreground: 244 144 249;
   }
 
   html {
