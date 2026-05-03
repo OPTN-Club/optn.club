@@ -1,18 +1,7 @@
 <script setup lang="ts">
-import { watch } from 'vue';
+import { useTheme } from '../lib/useTheme';
 
-import useLocalStorageState from '../lib/useLocalStorageState';
-
-type Theme = 'chibbell' | 'sakura';
-
-const theme = useLocalStorageState<Theme>('optn-theme', 'chibbell');
-
-function applyTheme(t: Theme) {
-  document.documentElement.setAttribute('data-theme', t);
-}
-
-applyTheme(theme.value);
-watch(theme, applyTheme);
+const theme = useTheme();
 </script>
 
 <template>
