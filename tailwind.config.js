@@ -15,33 +15,33 @@ module.exports = {
          * Semantics
          */
         // Text colors
-        foreground: 'rgb(244, 244, 249)',
-        'foreground-subtle': 'rgb(193, 216, 220)',
+        foreground: 'rgb(var(--color-foreground) / <alpha-value>)',
+        'foreground-subtle': 'rgb(var(--color-foreground-subtle) / <alpha-value>)',
 
         // Backgrounds
-        background: 'rgb(0, 21, 26)',
-        surface: 'hsl(205, 100%, 9%)',
-        'surface-inset': 'rgb(193, 216, 220)',
-        'surface-elevated': 'rgb(0, 42, 51)',
+        background: 'rgb(var(--color-background) / <alpha-value>)',
+        surface: 'hsl(var(--color-surface) / <alpha-value>)',
+        'surface-inset': 'rgb(var(--color-surface-inset) / <alpha-value>)',
+        'surface-elevated': 'rgb(var(--color-surface-elevated) / <alpha-value>)',
 
         // Other
         primary: {
-          50: 'hsl(191, 100%, 47%)',
-          100: 'hsl(191, 100%, 43%)',
-          200: 'hsl(192, 92%, 41%)',
-          300: 'hsl(192, 93%, 37%)',
-          400: 'hsl(190, 100%, 32%)',
-          500: 'hsl(191, 100%, 28%)',
-          600: 'hsl(192, 95%, 25%)',
-          700: 'hsl(192, 93%, 21%)',
-          800: 'hsl(192, 100%, 17%)',
-          900: 'hsl(192, 92%, 14%)',
-          1000: 'hsla(190, 100%, 9%, 1)',
-          1100: 'hsla(194, 93%, 5%, 1)',
-          1200: 'hsla(190, 100%, 1%, 1)',
+          50: 'hsl(var(--color-primary-50) / <alpha-value>)',
+          100: 'hsl(var(--color-primary-100) / <alpha-value>)',
+          200: 'hsl(var(--color-primary-200) / <alpha-value>)',
+          300: 'hsl(var(--color-primary-300) / <alpha-value>)',
+          400: 'hsl(var(--color-primary-400) / <alpha-value>)',
+          500: 'hsl(var(--color-primary-500) / <alpha-value>)',
+          600: 'hsl(var(--color-primary-600) / <alpha-value>)',
+          700: 'hsl(var(--color-primary-700) / <alpha-value>)',
+          800: 'hsl(var(--color-primary-800) / <alpha-value>)',
+          900: 'hsl(var(--color-primary-900) / <alpha-value>)',
+          1000: 'hsl(var(--color-primary-1000) / <alpha-value>)',
+          1100: 'hsl(var(--color-primary-1100) / <alpha-value>)',
+          1200: 'hsl(var(--color-primary-1200) / <alpha-value>)',
         },
-        accent: 'rgb(255, 189, 51)',
-        danger: 'rgb(237, 37, 78)',
+        accent: 'rgb(var(--color-accent) / <alpha-value>)',
+        danger: 'rgb(var(--color-danger) / <alpha-value>)',
 
         /**
          * Old colors

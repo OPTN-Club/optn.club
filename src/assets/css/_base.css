@@ -1,4 +1,35 @@
 @layer base {
+  :root {
+    /* Text */
+    --color-foreground: 244 244 249;
+    --color-foreground-subtle: 193 216 220;
+
+    /* Backgrounds */
+    --color-background: 0 21 26;
+    --color-surface: 205 100% 9%;
+    --color-surface-inset: 193 216 220;
+    --color-surface-elevated: 0 42 51;
+
+    /* Primary */
+    --color-primary-50: 191 100% 47%;
+    --color-primary-100: 191 100% 43%;
+    --color-primary-200: 192 92% 41%;
+    --color-primary-300: 192 93% 37%;
+    --color-primary-400: 190 100% 32%;
+    --color-primary-500: 191 100% 28%;
+    --color-primary-600: 192 95% 25%;
+    --color-primary-700: 192 93% 21%;
+    --color-primary-800: 192 100% 17%;
+    --color-primary-900: 192 92% 14%;
+    --color-primary-1000: 190 100% 9%;
+    --color-primary-1100: 194 93% 5%;
+    --color-primary-1200: 190 100% 1%;
+
+    /* Other */
+    --color-accent: 255 189 51;
+    --color-danger: 237 37 78;
+  }
+
   html {
     @apply bg-background
       h-full;
