@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, watchEffect } from 'vue';
 
 import AppFooter from './components/AppFooter.vue';
 import AppHeader from './components/AppHeader.vue';
@@ -8,6 +8,15 @@ import { useTheme } from './lib/useTheme';
 
 const theme = useTheme();
 const isSakura = computed(() => theme.value === 'sakura');
+
+watchEffect(() => {
+  const favicon = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+  if (favicon) {
+    favicon.href = isSakura.value
+      ? '/images/OPTN_bars_favicon_Sakura.png'
+      : '/images/OPTN_bars_favicon.png';
+  }
+});
 </script>
 
 <template>
@@ -20,14 +29,5 @@ const isSakura = computed(() => theme.value === 'sakura');
       </div>
       <AppFooter />
     </div>
-    <!-- <div v-if="localhost" class="fixed top-2 left-2 bg-black opacity-70 px-3 py-2 w-14 text-center font-bold">
-      <div class="sm:hidden">XS</div>
-      <div class="hidden sm:block md:hidden">Sm</div>
-      <div class="hidden md:block lg:hidden">Med</div>
-      <div class="hidden lg:block xl:hidden">Lg</div>
-      <div class="hidden xl:block 2xl:hidden">XL</div>
-      <div class="hidden 2xl:block 3xl:hidden">2XL</div>
-      <div class="hidden 3xl:block">3XL</div>
-    </div> -->
   </div>
 </template>
