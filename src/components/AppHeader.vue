@@ -11,7 +11,6 @@ import { useTheme } from '../lib/useTheme';
 
 const route = useRoute();
 const formatterRouteNames = ['formatter-fh5', 'formatter-fm8', 'formatter-fh6'];
-const showFH6Link = Date.now() >= new Date('2026-05-15T00:00:00.000Z').getTime();
 
 const theme = useTheme();
 const logoSrc = computed(() => (theme.value === 'sakura' ? '/images/OPTN_logo_sakura.png' : '/images/OPTN_logo.png'));
@@ -73,7 +72,6 @@ function isFormatterActive() {
           >
             <MenuItems class="nav-dropdown-menu">
               <MenuItem
-                v-if="showFH6Link"
                 v-slot="{ close }"
               >
                 <router-link
