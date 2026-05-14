@@ -8,34 +8,41 @@
 
 .petal {
   position: absolute;
-  top: -16px;
-  border-radius: 150% 0 150% 0;
+  top: -10vh;
   background-color: hsl(var(--color-primary-500) / 0.18);
   border: 1px solid hsl(var(--color-primary-50) / 0.12);
-  animation: fall linear infinite;
-  transform: rotate(var(--initial-rotation, 0deg));
+  border-radius: 150% 0 150% 0;
+  opacity: var(--opacity, 0.5);
+  transform: rotate(var(--rotate, 0deg));
+  filter: blur(var(--blur, 0px));
+  animation:
+    petal-fall var(--duration, 12s) linear var(--delay, 0s) infinite,
+    petal-sway var(--sway-duration, 3s) ease-in-out var(--delay, 0s) infinite alternate;
 }
 
-@keyframes fall {
-  0% {
-    transform: translateY(-20px) translateX(0px) rotate(var(--initial-rotation, 0deg));
-    opacity: 0;
+@keyframes petal-fall {
+  from {
+    top: -10vh;
+    transform: translateX(0) rotate(0deg);
   }
-  5% {
-    opacity: 1;
+  to {
+    top: 110vh;
+    transform: translateX(var(--drift, 0px)) rotate(720deg);
   }
-  25% {
-    transform: translateY(25vh) translateX(30px) rotate(calc(var(--initial-rotation, 0deg) + 90deg));
+}
+
+@keyframes petal-sway {
+  from {
+    margin-left: calc(var(--sway, 30px) * -1);
   }
-  50% {
-    transform: translateY(50vh) translateX(-20px) rotate(calc(var(--initial-rotation, 0deg) + 200deg));
+  to {
+    margin-left: var(--sway, 30px);
   }
-  75% {
-    transform: translateY(75vh) translateX(25px) rotate(calc(var(--initial-rotation, 0deg) + 380deg));
-    opacity: 0.6;
-  }
-  100% {
-    transform: translateY(105vh) translateX(-10px) rotate(calc(var(--initial-rotation, 0deg) + 540deg));
-    opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .petal {
+    animation: none;
+    display: none;
   }
 }
