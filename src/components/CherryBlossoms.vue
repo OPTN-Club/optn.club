@@ -1,14 +1,24 @@
 <script setup lang="ts">
-// 18 petals with varied sizes, positions, durations and delays for a natural feel
-const petals = Array.from({ length: 18 }, (_, i) => ({
-  id: i,
-  left: `${((i * 5.7) + 2) % 100}%`,
-  size: `${6 + ((i * 3) % 8)}px`,
-  duration: `${8 + ((i * 1.3) % 10)}s`,
-  delay: `${-((i * 1.7) % 12)}s`,
-  wobble: `${1.5 + ((i * 0.4) % 3)}s`,
-  rotation: `${(i * 47) % 360}deg`,
-}));
+const rand = (min: number, max: number) => Math.random() * (max - min) + min;
+
+// 28 petals with fully randomised properties for a natural, non-repeating feel
+const petals = Array.from({ length: 28 }, (_, i) => {
+  const duration = rand(10, 19);
+  return {
+    id: i,
+    left: `${rand(0, 100)}vw`,
+    size: `${rand(8, 18)}px`,
+    duration: `${duration}s`,
+    // Negative delay so petals are already mid-fall on load; spread across the full duration
+    delay: `${-rand(0, duration)}s`,
+    drift: `${rand(-80, 80).toFixed(1)}px`,
+    sway: `${rand(20, 60).toFixed(1)}px`,
+    swayDuration: `${rand(2, 5)}s`,
+    opacity: `${rand(0.35, 0.8)}`,
+    blur: Math.random() > 0.75 ? '1px' : '0px',
+    rotate: `${rand(0, 360)}deg`,
+  };
+});
 </script>
 
 <template>
@@ -24,10 +34,14 @@ const petals = Array.from({ length: 18 }, (_, i) => ({
         left: petal.left,
         width: petal.size,
         height: petal.size,
-        animationDuration: petal.duration,
-        animationDelay: petal.delay,
-        '--wobble-duration': petal.wobble,
-        '--initial-rotation': petal.rotation,
+        '--duration': petal.duration,
+        '--delay': petal.delay,
+        '--drift': petal.drift,
+        '--sway': petal.sway,
+        '--sway-duration': petal.swayDuration,
+        '--opacity': petal.opacity,
+        '--blur': petal.blur,
+        '--rotate': petal.rotate,
       }"
     />
   </div>

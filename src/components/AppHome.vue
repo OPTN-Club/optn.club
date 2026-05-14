@@ -32,15 +32,14 @@ import Urls from '../lib/urls';
       server.
     </p>
 
-    <h2>Bi-Weekly Challenges</h2>
+    <h2>Rivals Challenges</h2>
     <p>
-      We host bi-weekly challenges through Forza Rivals mode.
-      Follow the current restrictions (specific car, category or even other fun restrictions)
-      and try to be the fastest! Our community will do its best to help you improve both your
-      driving and how you build and tune your cars.
+      We host Rivals challenges through Forza Rivals mode.
+      Follow the current restrictions (specific car, category or even other fun restrictions) and try to be the fastest!
+      Our community will do its best to help you improve both your driving and how you build and tune your cars.
     </p>
     <p>
-      Challenges are posted every second Monday on
+      Challenges are posted on Mondays on
       <a
         :href="Urls.DiscordInvite"
         target="_blank"
@@ -54,20 +53,15 @@ import Urls from '../lib/urls';
         >
         <span>Discord</span>
       </a>
-      which is also where tunes must be posted to be eligible to win.
+      which is also where tunes must be posted to be eligible for a podium position.
     </p>
     <p>
       The challenges are designed to be different,
       and more often than not push tuners outside their comfort zone to grow both their tuning
-      and driving skills. Join the
-      <a
-        :href="Urls.XboxClub"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        OPTN Club on Xbox
-      </a>
-      to see how you score against other open tuners!
+      and driving skills. Details on how to participate are on the Discord server.
+    </p>
+    <p>
+      Join to see how you score against other open tuners, but more importantly to see how much you can improve!
     </p>
 
     <h2>Tuning Guide</h2>
@@ -91,7 +85,8 @@ import Urls from '../lib/urls';
     <h2>Tune Formatter</h2>
     <p>
       The most important tools are our Setup Formatters for
-      <RouterLink :to="{ name: 'formatter-fh5', params: { version: 'v1' } }">Forza Horizon 5</RouterLink>
+      <RouterLink :to="{ name: 'formatter-fh5', params: { version: 'v1' } }">Forza Horizon 5</RouterLink>,
+      <RouterLink :to="{ name: 'formatter-fh6', params: { version: 'v1' } }">Forza Horizon 6</RouterLink>
       and
       <RouterLink :to="{ name: 'formatter-fm8', params: { version: 'v3' } }">Forza Motorsport (2023)</RouterLink>.
       OPTN in fact means “Open Tuning”, as this community is built on sharing open source tunes.
