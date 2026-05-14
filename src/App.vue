@@ -6,7 +6,6 @@ import AppHeader from './components/AppHeader.vue';
 import CherryBlossoms from './components/CherryBlossoms.vue';
 import { useTheme } from './lib/useTheme';
 
-const localhost = window.location.hostname === 'localhost';
 const theme = useTheme();
 const isSakura = computed(() => theme.value === 'sakura');
 </script>
