@@ -16,6 +16,16 @@ watchEffect(() => {
       ? '/images/OPTN_bars_favicon_Sakura.png'
       : '/images/OPTN_bars_favicon.png';
   }
+
+  const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+  if (themeColor) {
+    const hslColor = window.getComputedStyle(themeColor).getPropertyValue('--color-surface-elevated');
+    const opacity = window.getComputedStyle(themeColor).getPropertyValue('--tw-bg-opacity');
+
+    if (hslColor) {
+      themeColor.setAttribute('content', `rgb(${hslColor} / ${opacity})`);
+    }
+  }
 });
 </script>
 
