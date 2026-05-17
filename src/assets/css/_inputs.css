@@ -117,8 +117,7 @@
   input:focus,
   select:focus,
   textarea:focus {
-    @apply border-accent
-      shadow-inner;
+    @apply border-accent shadow-inner outline-none;
   }
 
   input:disabled,

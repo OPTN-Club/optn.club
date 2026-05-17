@@ -1,35 +1,18 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
-import { themeExistedOnLoad, useTheme } from '../lib/useTheme';
+import { useTheme } from '../lib/useTheme';
 
 const theme = useTheme();
-
-const UNLOCK_CLICKS = 5;
-const unlocked = ref(themeExistedOnLoad);
-let clickCount = 0;
-
-function handleFooterClick() {
-  if (unlocked.value) return;
-  clickCount += 1;
-  if (clickCount >= UNLOCK_CLICKS) {
-    unlocked.value = true;
-  }
-}
 </script>
 
 <template>
   <footer class="text-center text-sm">
     <p
       class="cursor-default select-none"
-      @click="handleFooterClick"
-      @keydown.enter="handleFooterClick"
     >
       Created by [Root, SharpSeeEr, Doubiez]
     </p>
     <div
-      v-if="unlocked"
-      class="mt-5 flex flex-col items-center justify-center gap-2"
+      class="mt-5 mb-10 flex flex-col items-center justify-center gap-2"
     >
       <select
         id="theme-select"
