@@ -19,8 +19,8 @@ watchEffect(() => {
 
   const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
   if (themeColor) {
-    const hslColor = window.getComputedStyle(themeColor).getPropertyValue('--color-surface-elevated');
-    const opacity = window.getComputedStyle(themeColor).getPropertyValue('--tw-bg-opacity');
+    const hslColor = window.getComputedStyle(document.body).getPropertyValue('--color-surface-elevated');
+    const opacity = window.getComputedStyle(document.body).getPropertyValue('--tw-bg-opacity');
 
     if (hslColor) {
       themeColor.setAttribute('content', `rgb(${hslColor} / ${opacity})`);
